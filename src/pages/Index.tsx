@@ -122,7 +122,7 @@ function Navbar() {
 // ─── S1 · Hero ───────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section id="seccion-1-hero" className="py-16 px-6">
+    <section id="seccion-1-hero" className="bg-secondary py-24 px-6">
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm px-10 py-16 text-center">
           <div className="inline-block mb-6">
