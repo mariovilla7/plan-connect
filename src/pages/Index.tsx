@@ -388,6 +388,180 @@ function ProblemSection() {
   );
 }
 
+// ─── S2b · Voces Reales (Evidence Strip) ─────────────────────────────────────
+const evidenceCards = [
+  {
+    profile: "Nutrióloga · Madrid, ES",
+    pain: "Domingos de planes",
+    quote: "Se me cuela al finde, y me deja sin vida.",
+    city: "Madrid (ES)",
+  },
+  {
+    profile: "Nutrióloga · Valencia, ES",
+    pain: "Variedad agotadora",
+    quote: "Entre decidir y ejecutar, acabo repitiendo lo de siempre.",
+    city: "Valencia (ES)",
+  },
+  {
+    profile: "Nutrióloga · CDMX, MX",
+    pain: "Cambios que descuadran",
+    quote: "Cambio una cosa y se descompensa todo.",
+    city: "CDMX (MX)",
+  },
+  {
+    profile: "Nutrióloga · Lima, PE",
+    pain: "Edición eterna",
+    quote: "Siempre hay que retocar algo antes de enviarlo.",
+    city: "Lima (PE)",
+  },
+  {
+    profile: "Nutrióloga · Tegucigalpa, HN",
+    pain: "Local vs irreal",
+    quote: "No quiero recetas raras: quiero algo que se pueda hacer aquí.",
+    city: "Tegucigalpa (HN)",
+  },
+  {
+    profile: "Nutrióloga · (Ciudad), (País)",
+    pain: "Entrega lenta",
+    quote: "Se me junta todo y lo mando días después.",
+    city: "(Ciudad)",
+  },
+];
+
+const cityQuotes: Record<string, { quote: string; profile: string; summary: string }> = {
+  "Madrid (ES)": {
+    quote: "Estoy harta de hacer menús.",
+    profile: "Nutrióloga · Madrid, ES",
+    summary: "Carga mental + trabajo que se cuela al finde.",
+  },
+  "Valencia (ES)": {
+    quote: "Si el caso es complejo, el plan me come el día.",
+    profile: "Nutrióloga · Valencia, ES",
+    summary: "Personalización real = más tiempo.",
+  },
+  "CDMX (MX)": {
+    quote: "Se mueven las calorías y me da no sé qué.",
+    profile: "Nutrióloga · CDMX, MX",
+    summary: "Control de calidad manual constante.",
+  },
+  "Lima (PE)": {
+    quote: "Si cambio algo, me descuadra y tengo que recomponer.",
+    profile: "Nutrióloga · Lima, PE",
+    summary: "Rebalanceo manual tras sustituciones.",
+  },
+  "Tegucigalpa (HN)": {
+    quote: "La variedad cuesta si tiene que ser aplicable aquí.",
+    profile: "Nutrióloga · Tegucigalpa, HN",
+    summary: "Localización + realismo del menú.",
+  },
+  "(Ciudad)": {
+    quote: "Siempre hay algo pendiente de mandar.",
+    profile: "Nutrióloga · (Ciudad), (País)",
+    summary: "Acumulación de pendientes + entrega tardía.",
+  },
+};
+
+const cityChips = Object.keys(cityQuotes);
+
+function EvidenceStrip() {
+  const [activeChip, setActiveChip] = useState(cityChips[0]);
+  const [visible, setVisible] = useState(true);
+
+  const handleChip = (chip: string) => {
+    if (chip === activeChip) return;
+    setVisible(false);
+    setTimeout(() => {
+      setActiveChip(chip);
+      setVisible(true);
+    }, 180);
+  };
+
+  const active = cityQuotes[activeChip];
+
+  return (
+    <section className="py-10 px-6 bg-muted/30">
+      <div className="container max-w-5xl mx-auto space-y-8">
+
+        {/* Header */}
+        <div className="text-center space-y-1">
+          <h3 className="text-xl md:text-2xl font-bold font-serif text-foreground">
+            Hecho con 12 nutricionistas
+          </h3>
+          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
+            Sin nombres. Con contexto real.
+          </p>
+          <p className="text-sm text-muted-foreground max-w-md mx-auto pt-1">
+            Kleia no salió de una idea bonita. Salió de escuchar lo mismo una y otra vez.
+          </p>
+        </div>
+
+        {/* Mini-cards strip */}
+        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory md:flex-wrap md:overflow-x-visible md:pb-0 md:justify-center">
+          {evidenceCards.map((card, i) => (
+            <div
+              key={i}
+              className="snap-start shrink-0 w-52 md:w-44 bg-card border border-border rounded-xl p-4 space-y-2 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200"
+            >
+              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide leading-tight">
+                {card.profile}
+              </p>
+              <p className="text-xs font-semibold text-foreground">
+                Dolor: <span className="font-normal text-primary">{card.pain}</span>
+              </p>
+              <p className="text-xs text-foreground/80 leading-snug italic">
+                <span className="text-muted-foreground text-base leading-none mr-0.5">"</span>
+                {card.quote}
+                <span className="text-muted-foreground text-base leading-none ml-0.5">"</span>
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Chips + Quote block */}
+        <div className="space-y-5">
+          {/* City chips */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {cityChips.map((chip) => (
+              <button
+                key={chip}
+                onClick={() => handleChip(chip)}
+                aria-pressed={activeChip === chip}
+                className={[
+                  "rounded-full px-3.5 py-1.5 text-xs font-medium border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  activeChip === chip
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
+                ].join(" ")}
+              >
+                {chip}
+              </button>
+            ))}
+          </div>
+
+          {/* Quote destacada */}
+          <div
+            className="bg-card border border-border rounded-2xl p-6 md:p-8 text-center space-y-3 shadow-sm transition-opacity duration-200"
+            style={{ opacity: visible ? 1 : 0 }}
+            aria-live="polite"
+          >
+            <p className="text-lg md:text-xl font-serif font-semibold text-foreground leading-snug">
+              <span className="text-primary text-2xl leading-none">"</span>
+              {active.quote}
+              <span className="text-primary text-2xl leading-none">"</span>
+            </p>
+            <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">
+              {active.profile}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground">Resumen:</span> {active.summary}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
   { value: "Menú que encaja de verdad", label: "realista y clínico", time: "+10''", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
@@ -1435,6 +1609,7 @@ export default function Index() {
       <main>
         <FadeSection><Hero /></FadeSection>
         <FadeSection><ProblemSection /></FadeSection>
+        <FadeSection><EvidenceStrip /></FadeSection>
         <FadeSection><ResultsSection /></FadeSection>
         <FadeSection><HowItWorksSection /></FadeSection>
         <FadeSection><FeaturesSection /></FadeSection>
