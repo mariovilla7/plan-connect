@@ -982,21 +982,6 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
   const prefersReduced = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
   const isTouchDevice = typeof window !== "undefined" ? window.matchMedia("(hover: none)").matches : false;
 
-  // Swipe detection for mobile flip
-  const [startX, setStartX] = React.useState<number | null>(null);
-  const [flipped, setFlipped] = React.useState(false);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setStartX(e.touches[0].clientX);
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (startX === null) return;
-    const diff = e.changedTouches[0].clientX - startX;
-    if (Math.abs(diff) > 50) {
-      setFlipped((f) => !f);
-    }
-    setStartX(null);
-  };
   const handleClick = () => {
     if (isTouchDevice || prefersReduced) onOpenModal();
   };
@@ -1005,8 +990,6 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
     <div
       className="flip-card-root group h-auto sm:min-h-[420px] md:min-h-[460px]"
       onClick={handleClick}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
       role="button"
       tabIndex={0}
       aria-label={`Ver detalles de ${arch.title}`}
@@ -1019,15 +1002,9 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
           transformStyle: "preserve-3d",
           transition: prefersReduced ? "opacity 0.2s ease" : "transform 0.55s cubic-bezier(0.45,0.05,0.55,0.95)",
           minHeight: "inherit",
-          transform: flipped || (!prefersReduced && !isTouchDevice) ? undefined : "none",
         }}
-        // Desktop: hover flip via CSS. Mobile: swipe flip via state.
-        data-flipped={flipped}
       >
-        {/* Apply hover flip only on non-touch, swipe flip always via data-flipped */}
         <style>{`
-          .flip-card-root:not(:hover) .flip-card-inner[data-flipped="false"] { transform: rotateY(0deg); }
-          .flip-card-root:not(:hover) .flip-card-inner[data-flipped="true"] { transform: rotateY(180deg); }
           @media (hover: hover) {
             .flip-card-root:hover .flip-card-inner { transform: rotateY(180deg) !important; }
           }
@@ -1044,7 +1021,7 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
               <span className="hidden md:inline text-base">↻</span>
               <span className="md:hidden text-base">👆</span>
               <span className="hidden md:inline">Pasa el cursor para ver más</span>
-              <span className="md:hidden">Deslizá o tocá para ver más</span>
+              <span className="md:hidden">Tocá para ver más</span>
             </p>
           </div>
         </div>
