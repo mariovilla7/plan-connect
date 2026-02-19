@@ -162,7 +162,7 @@ function Hero() {
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight mb-6 text-foreground mt-[2px]">
-            Dejá de pensar en menús.{" "}
+            Dejá de pensar en menús.<br />
             <span className="text-primary">Terminá tu día con todos los planes enviados.</span>
           </h1>
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto mt-[2px]">
