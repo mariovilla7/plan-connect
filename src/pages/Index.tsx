@@ -736,10 +736,13 @@ const archetypes = [
     highlight: true,
   },
   {
-    badge: "🙂 Estoy bien",
+    badge: "🙂💧",
     badgeColor: "bg-muted text-muted-foreground border-border",
-    title: "La de 'Estoy bien así'",
-    subtitle: "Te compensa seguir como estás (aunque te cueste tiempo).",
+    title: "La de 'Estoy bien así (según yo)'",
+    subtitleNode: (
+      <><em className="text-xs not-italic opacity-70">todo bajo control</em>{"…hasta que te explota la semana."}</>
+    ),
+    subtitle: "",
     bullets: [
       "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
       "Te gusta perderte en mil páginas buscando recetas 'a ver cuál encaja' para cada paciente.",
@@ -747,7 +750,7 @@ const archetypes = [
       "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
     ],
     microcopy: "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
-    cta: "Entonces no la necesito (por ahora)",
+    cta: "Enséñame cómo sería",
     accent: "border-border hover:border-muted-foreground/40",
     highlight: false,
     muted: true,
@@ -806,7 +809,7 @@ function FitSection() {
                     <h3 className="font-semibold text-foreground leading-snug mb-1">
                       {arch.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">{arch.subtitle}</p>
+                    <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
                   </div>
 
                   {/* Bullets */}
