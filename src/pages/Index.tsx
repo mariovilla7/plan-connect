@@ -423,6 +423,15 @@ function FeaturesSection() {
               </div>
             ))}
           </div>
+          <div className="mt-8 text-center">
+            <Button
+              onClick={scrollToForm}
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md"
+            >
+              Jugar con Kleia →
+            </Button>
+          </div>
         </div>
       </div>
     </section>
