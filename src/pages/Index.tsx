@@ -1,5 +1,6 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import problemaIlustracion from "@/assets/problema-ilustracion.png";
+import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
 import { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
@@ -331,7 +332,7 @@ const stats = [
 function ResultsSection() {
   return (
     <section id="seccion-3-resultados" className="py-6 px-6">
-      <div className="container max-w-4xl mx-auto">
+      <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
@@ -341,14 +342,25 @@ function ResultsSection() {
               Menos carga, más control
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.map(({ value, label, desc }) => (
-              <div key={value} className="text-center p-5 rounded-2xl bg-background">
-                <p className="text-3xl font-bold font-serif text-primary mb-1">{value}</p>
-                <p className="text-sm font-semibold mb-2">{label}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
-              </div>
-            ))}
+          <div className="flex flex-col md:flex-row items-center gap-10">
+            {/* Imagen izquierda */}
+            <div className="flex-shrink-0 w-full md:w-80">
+              <img
+                src={resultadosIlustracion}
+                alt="Nutricionista usando Kleia"
+                className="w-full object-contain"
+              />
+            </div>
+            {/* Stats derecha */}
+            <div className="flex-1 grid grid-cols-2 gap-4">
+              {stats.map(({ value, label, desc }) => (
+                <div key={value} className="text-center p-5 rounded-2xl bg-background">
+                  <p className="text-3xl font-bold font-serif text-primary mb-1">{value}</p>
+                  <p className="text-sm font-semibold mb-2">{label}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
