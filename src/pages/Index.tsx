@@ -383,10 +383,10 @@ function ProblemSection() {
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "10–20 min", label: "Plan completo", desc: "Generás un plan semanal personalizado desde cero, sin quedarte en blanco." },
-  { value: "1–3 min", label: "Ajuste fino", desc: "Cambiás un alimento y el plan se recalcula solo, sin romper nada." },
-  { value: "6+ horas", label: "Recuperadas a la semana", desc: "Tiempo que antes se iba en armar y enviar planes manualmente." },
-  { value: "1 click", label: "Entrega al paciente", desc: "PDF listo para compartir por WhatsApp o mail, sin formatear nada." },
+  { value: "Menú que encaja de verdad", label: "realista y clínico", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
+  { value: "Plan completo", label: "sin hoja en blanco", desc: 'Pasas de "\u00bfqué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.' },
+  { value: "Ajuste fino", label: "sin descompensar el plan", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
+  { value: "Entrega al paciente", label: "", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra." },
 ];
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
