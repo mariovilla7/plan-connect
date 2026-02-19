@@ -60,7 +60,7 @@ function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50 shadow-sm">
+    <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border shadow-sm">
       <div className="container max-w-5xl mx-auto flex items-center justify-between h-16 px-6">
         {/* Logo */}
         <div className="flex items-center">
@@ -103,7 +103,7 @@ function Navbar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <nav className="md:hidden border-t border-border bg-background/95 backdrop-blur px-6 py-4 flex flex-col gap-3">
+        <nav className="md:hidden border-t border-border bg-white/95 backdrop-blur px-6 py-4 flex flex-col gap-3">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
@@ -151,7 +151,7 @@ function Hero() {
   const { plazas, flash } = usePlazasCounter();
 
   return (
-    <section id="seccion-1-hero" className="px-6 pt-20 pb-0 overflow-hidden">
+    <section id="seccion-1-hero" className="bg-white px-6 pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
         {/* Texto + CTA — centrado arriba */}
         <div className="text-center pb-12">
@@ -240,7 +240,7 @@ function ProblemSection() {
   return (
     <section id="seccion-2-problema" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               El Problema
@@ -279,7 +279,7 @@ function ResultsSection() {
   return (
     <section id="seccion-3-resultados" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               RESULTADOS CON KLEIA
@@ -316,7 +316,7 @@ function HowItWorksSection() {
   return (
     <section id="seccion-4-flujo" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Flujo
@@ -355,7 +355,7 @@ function FeaturesSection() {
   return (
     <section id="seccion-5-incluido" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Incluido
@@ -399,7 +399,7 @@ function ComparisonSection() {
   return (
     <section id="seccion-6-comparativa" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 overflow-x-auto border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10 overflow-x-auto">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Comparativa
@@ -455,7 +455,7 @@ function FitSection() {
   return (
     <section id="seccion-7-encaje" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Encaje
@@ -501,7 +501,7 @@ function BonusesSection() {
   return (
     <section id="seccion-8-extras" className="py-6 px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Extras
@@ -580,7 +580,7 @@ function DemoForm() {
   return (
     <section id="agendar-demo" className="py-6 px-6">
       <div className="container max-w-lg mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-8">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Demo
@@ -663,7 +663,7 @@ function FAQSection() {
   return (
     <section id="seccion-11-faq" className="py-6 px-6">
       <div className="container max-w-3xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm p-10 border border-border/50">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               FAQ
@@ -693,14 +693,14 @@ function FooterCTA() {
   return (
     <footer id="seccion-12-footer" className="py-6 px-6 pb-12">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-card rounded-3xl shadow-sm px-10 py-16 text-center border border-border/50">
+        <div className="bg-foreground rounded-3xl shadow-sm px-10 py-16 text-center text-background">
           <div className="flex items-center justify-center mb-6">
-            <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto" />
+            <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto brightness-0 invert" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 leading-tight">
             Recuperá tu tiempo. Entregá planes que te enorgullezcan.
           </h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed max-w-xl mx-auto">
+          <p className="text-background/70 mb-8 leading-relaxed max-w-xl mx-auto">
             Kleia está en piloto cerrado. Solo 10 plazas disponibles. Agendá una demo sin compromiso
             y descubrí si Kleia es para vos.
           </p>
@@ -711,7 +711,7 @@ function FooterCTA() {
           >
             Agendar demo →
           </Button>
-          <p className="mt-10 text-xs text-muted-foreground">
+          <p className="mt-10 text-xs text-background/40">
             © 2025 Kleia · Hecho con amor para nutricionistas
           </p>
         </div>
