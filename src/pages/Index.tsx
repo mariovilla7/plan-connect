@@ -710,10 +710,10 @@ const forWho = [
 ];
 
 const notForWho = [
-  "No es para ti, si preferís gastar 3 horas en un Excel propio en vez de poder disfrutar de una comida con tus amigos",
-  "El crecimiento profesional para ti es algo que 'con el tiempo y más clientes' será diferente",
-  "No es para ti, si te gusta pasar tus fines de semana trabajando",
-  "No es para ti, si 'estás feliz con tu trabajo y procesos' pero nunca has hecho un análisis de ello, ni has pedido una opinión constructiva a tus pacientes",
+  "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
+  "Te gusta perderte en mil páginas buscando recetas \"a ver cuál encaja\" para cada paciente.",
+  "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo \"porque así lo controlas\".",
+  "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
 ];
 
 // ─── S7 · Encaje ─────────────────────────────────────────────────────────────
@@ -726,7 +726,7 @@ function FitSection() {
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Encaje
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Kleia es para vos?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Kleia es para mí?</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
@@ -742,18 +742,23 @@ function FitSection() {
                 ))}
               </ul>
             </div>
-            <div className="p-6 rounded-2xl bg-destructive/5 border border-destructive/20">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">
-                <XCircle className="h-5 w-5 text-destructive" /> Para quién NO es
-              </h3>
-              <ul className="space-y-3">
-                {notForWho.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <X className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-4">
+              <div className="p-6 rounded-2xl bg-destructive/5 border border-destructive/20">
+                <h3 className="font-semibold mb-4 flex items-center gap-2">
+                  <XCircle className="h-5 w-5 text-destructive" /> NO, si…
+                </h3>
+                <ul className="space-y-3">
+                  {notForWho.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <X className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="text-xs text-muted-foreground italic px-1">
+                Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.
+              </p>
             </div>
           </div>
         </div>
