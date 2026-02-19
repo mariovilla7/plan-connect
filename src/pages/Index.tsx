@@ -60,20 +60,20 @@ function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-card/90 backdrop-blur border-b border-border">
+    <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border shadow-sm">
       <div className="container max-w-5xl mx-auto flex items-center justify-between h-16 px-6">
         {/* Logo */}
         <div className="flex items-center">
           <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto" />
         </div>
 
-        {/* Desktop nav links */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Desktop nav links — pill style como la referencia */}
+        <nav className="hidden md:flex items-center gap-1 bg-muted rounded-full px-2 py-1.5">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-card rounded-full px-3 py-1.5 transition-all"
             >
               {label}
             </button>
@@ -84,7 +84,7 @@ function Navbar() {
         <div className="flex items-center gap-3">
           <Button
             onClick={scrollToForm}
-            className="bg-teal text-primary-foreground hover:bg-teal-dark rounded-full px-5 text-sm font-medium"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 text-sm font-medium shadow-sm"
           >
             Agendar demo
           </Button>
@@ -103,7 +103,7 @@ function Navbar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <nav className="md:hidden border-t border-border bg-card/95 backdrop-blur px-6 py-4 flex flex-col gap-3">
+        <nav className="md:hidden border-t border-border bg-white/95 backdrop-blur px-6 py-4 flex flex-col gap-3">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
@@ -122,31 +122,33 @@ function Navbar() {
 // ─── S1 · Hero ───────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section id="seccion-1-hero" className="py-24 px-6 text-center bg-background">
-      <div className="container max-w-3xl mx-auto">
-        <div className="inline-block mb-6">
-          <span className="bg-teal-light text-teal-dark text-xs font-medium px-4 py-2 rounded-full border border-teal/20">
-            Para nutricionistas con agenda llena que quieren volver a tener control de su tiempo
-          </span>
+    <section id="seccion-1-hero" className="py-16 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm px-10 py-16 text-center">
+          <div className="inline-block mb-6">
+            <span className="bg-primary/10 text-primary text-xs font-medium px-4 py-2 rounded-full">
+              Para nutricionistas con agenda llena que quieren volver a tener control de su tiempo
+            </span>
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight mb-6 text-foreground">
+            Dejá de pensar en menús.{" "}
+            <span className="text-primary">Terminá tu día con todos los planes enviados.</span>
+          </h1>
+          <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+            Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos,
+            respetando las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
+          </p>
+          <Button
+            onClick={scrollToForm}
+            size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 text-base font-medium shadow-md"
+          >
+            Agendar demo →
+          </Button>
+          <p className="mt-4 text-xs text-muted-foreground">
+            Acceso por invitación · Piloto cerrado: 10 plazas
+          </p>
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold font-serif leading-tight mb-6 text-navy">
-          Dejá de pensar en menús.{" "}
-          <span className="text-teal">Terminá tu día con todos los planes enviados.</span>
-        </h1>
-        <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-          Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos,
-          respetando las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
-        </p>
-        <Button
-          onClick={scrollToForm}
-          size="lg"
-          className="bg-teal text-primary-foreground hover:bg-teal-dark rounded-full px-8 text-base font-medium"
-        >
-          Agendar demo →
-        </Button>
-        <p className="mt-4 text-xs text-muted-foreground">
-          Acceso por invitación · Piloto cerrado: 10 plazas
-        </p>
       </div>
     </section>
   );
@@ -183,27 +185,29 @@ const problems = [
 // ─── S2 · El Problema ────────────────────────────────────────────────────────
 function ProblemSection() {
   return (
-    <section id="seccion-2-problema" className="py-20 px-6 bg-muted/40">
-      <div className="container max-w-4xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          El Problema
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">¿Te suena familiar?</h2>
-      </div>
-      <div className="container max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        {problems.map(({ icon: Icon, title, description }) => (
-          <Card key={title} className="border border-border shadow-sm">
-            <CardContent className="p-6 flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-teal-light flex items-center justify-center">
-                <Icon className="h-5 w-5 text-teal" />
+    <section id="seccion-2-problema" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              El Problema
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {problems.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Icon className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1 text-base">{title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-navy mb-1 text-base font-sans">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -220,25 +224,27 @@ const stats = [
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
 function ResultsSection() {
   return (
-    <section id="seccion-3-resultados" className="py-20 px-6 bg-background">
-      <div className="container max-w-4xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          Resultados
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">
-          Resultados con Kleia: Menos carga, más control
-        </h2>
-      </div>
-      <div className="container max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-        {stats.map(({ value, label, desc }) => (
-          <Card key={value} className="border border-border shadow-sm text-center">
-            <CardContent className="p-6">
-              <p className="text-3xl font-bold font-serif text-teal mb-1">{value}</p>
-              <p className="text-sm font-semibold text-navy mb-2">{label}</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
-            </CardContent>
-          </Card>
-        ))}
+    <section id="seccion-3-resultados" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Resultados
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">
+              Resultados con Kleia: Menos carga, más control
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {stats.map(({ value, label, desc }) => (
+              <div key={value} className="text-center p-5 rounded-2xl bg-background">
+                <p className="text-3xl font-bold font-serif text-primary mb-1">{value}</p>
+                <p className="text-sm font-semibold mb-2">{label}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -255,21 +261,25 @@ const steps = [
 // ─── S4 · Cómo funciona ──────────────────────────────────────────────────────
 function HowItWorksSection() {
   return (
-    <section id="seccion-4-flujo" className="py-20 px-6 bg-muted/40">
-      <div className="container max-w-4xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          Flujo
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">Cómo funciona</h2>
-      </div>
-      <div className="container max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
-        {steps.map(({ num, title, desc }) => (
-          <div key={num} className="flex flex-col items-start">
-            <span className="text-4xl font-bold font-serif text-teal/25 mb-3">{num}</span>
-            <h3 className="font-semibold text-navy mb-2 font-sans">{title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+    <section id="seccion-4-flujo" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Flujo
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">Cómo funciona</h2>
           </div>
-        ))}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {steps.map(({ num, title, desc }) => (
+              <div key={num} className="flex flex-col items-start p-5 rounded-2xl bg-background">
+                <span className="text-4xl font-bold font-serif text-primary/20 mb-3">{num}</span>
+                <h3 className="font-semibold mb-2">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -290,20 +300,24 @@ const features = [
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
   return (
-    <section id="seccion-5-incluido" className="py-20 px-6 bg-background">
-      <div className="container max-w-3xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          Incluido
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">Qué incluye Kleia</h2>
-      </div>
-      <div className="container max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3">
-        {features.map((f) => (
-          <div key={f} className="flex items-start gap-3">
-            <CheckCircle2 className="h-5 w-5 text-teal flex-shrink-0 mt-0.5" />
-            <span className="text-sm text-navy-mid">{f}</span>
+    <section id="seccion-5-incluido" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Incluido
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
-        ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {features.map((f) => (
+              <div key={f} className="flex items-start gap-3 p-3 rounded-xl hover:bg-background transition-colors">
+                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-sm">{f}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -330,36 +344,38 @@ function CellValue({ val }: { val: boolean | string }) {
 // ─── S6 · Comparativa ────────────────────────────────────────────────────────
 function ComparisonSection() {
   return (
-    <section id="seccion-6-comparativa" className="py-20 px-6 bg-muted/40">
-      <div className="container max-w-4xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          Comparativa
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">¿Por qué Kleia y no otra cosa?</h2>
-      </div>
-      <div className="container max-w-4xl mx-auto overflow-x-auto">
-        <table className="w-full text-sm border-collapse">
-          <thead>
-            <tr>
-              <th className="text-left p-4 text-muted-foreground font-medium">Funcionalidad</th>
-              <th className="p-4 text-center text-muted-foreground font-medium">Excel / Word</th>
-              <th className="p-4 text-center text-muted-foreground font-medium">Avena / Nutriind</th>
-              <th className="p-4 text-center text-muted-foreground font-medium">Plan artesanal</th>
-              <th className="p-4 text-center text-teal font-semibold bg-teal-light rounded-t-lg">Kleia</th>
-            </tr>
-          </thead>
-          <tbody>
-            {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
-              <tr key={feature} className={i % 2 === 0 ? "bg-card" : "bg-background"}>
-                <td className="p-4 text-navy-mid">{feature}</td>
-                <td className="p-4 text-center"><CellValue val={excel} /></td>
-                <td className="p-4 text-center"><CellValue val={avena} /></td>
-                <td className="p-4 text-center"><CellValue val={artesanal} /></td>
-                <td className="p-4 text-center bg-teal-light/50"><CellValue val={kleia} /></td>
+    <section id="seccion-6-comparativa" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10 overflow-x-auto">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Comparativa
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
+          </div>
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr>
+                <th className="text-left p-4 text-muted-foreground font-medium">Funcionalidad</th>
+                <th className="p-4 text-center text-muted-foreground font-medium">Excel / Word</th>
+                <th className="p-4 text-center text-muted-foreground font-medium">Avena / Nutriind</th>
+                <th className="p-4 text-center text-muted-foreground font-medium">Plan artesanal</th>
+                <th className="p-4 text-center text-primary font-semibold bg-primary/10 rounded-t-xl">Kleia</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
+                <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
+                  <td className="p-4 text-foreground/80">{feature}</td>
+                  <td className="p-4 text-center"><CellValue val={excel} /></td>
+                  <td className="p-4 text-center"><CellValue val={avena} /></td>
+                  <td className="p-4 text-center"><CellValue val={artesanal} /></td>
+                  <td className="p-4 text-center bg-primary/5"><CellValue val={kleia} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
@@ -384,44 +400,44 @@ const notForWho = [
 // ─── S7 · Encaje ─────────────────────────────────────────────────────────────
 function FitSection() {
   return (
-    <section id="seccion-7-encaje" className="py-20 px-6 bg-background">
-      <div className="container max-w-4xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          Encaje
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">¿Kleia es para vos?</h2>
-      </div>
-      <div className="container max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border border-teal/20 bg-teal-light/30">
-          <CardContent className="p-6">
-            <h3 className="font-semibold text-navy mb-4 flex items-center gap-2 font-sans">
-              <CheckCircle2 className="h-5 w-5 text-teal" /> Para quién es
-            </h3>
-            <ul className="space-y-3">
-              {forWho.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm text-navy-mid">
-                  <Check className="h-4 w-4 text-teal flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-        <Card className="border border-destructive/20 bg-destructive/5">
-          <CardContent className="p-6">
-            <h3 className="font-semibold text-navy mb-4 flex items-center gap-2 font-sans">
-              <XCircle className="h-5 w-5 text-destructive" /> Para quién NO es
-            </h3>
-            <ul className="space-y-3">
-              {notForWho.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm text-navy-mid">
-                  <X className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+    <section id="seccion-7-encaje" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Encaje
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Kleia es para vos?</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
+              <h3 className="font-semibold mb-4 flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-primary" /> Para quién es
+              </h3>
+              <ul className="space-y-3">
+                {forWho.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-6 rounded-2xl bg-destructive/5 border border-destructive/20">
+              <h3 className="font-semibold mb-4 flex items-center gap-2">
+                <XCircle className="h-5 w-5 text-destructive" /> Para quién NO es
+              </h3>
+              <ul className="space-y-3">
+                {notForWho.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <X className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -430,53 +446,43 @@ function FitSection() {
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
-    <section id="seccion-8-extras" className="py-20 px-6 bg-muted/40">
-      <div className="container max-w-4xl mx-auto text-center mb-12">
-        <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-          Extras
-        </Badge>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">Bonos incluidos en el piloto</h2>
-      </div>
-      <div className="container max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        {[
-          {
-            icon: Gift,
-            title: "Bono 1: Setup asistido",
-            desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo. Sin perderte en la herramienta.",
-          },
-          {
-            icon: MessageSquare,
-            title: "Bono 2: Canal de Expertos",
-            desc: "Acceso a un canal privado donde podés consultar dudas de nutrición con otros profesionales y con el equipo de Kleia.",
-          },
-          {
-            icon: ShieldCheck,
-            title: "Garantía: Cancelación simple",
-            desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelás sin preguntas. Sin contratos largos ni penalidades.",
-          },
-        ].map(({ icon: Icon, title, desc }) => (
-          <Card key={title} className="border border-border shadow-sm text-center">
-            <CardContent className="p-6">
-              <div className="w-12 h-12 rounded-full bg-teal-light flex items-center justify-center mx-auto mb-4">
-                <Icon className="h-6 w-6 text-teal" />
-              </div>
-              <h3 className="font-semibold text-navy mb-2 font-sans">{title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      <div className="container max-w-4xl mx-auto flex flex-wrap justify-center gap-4">
-        {[
-          { icon: Star, text: "Construido a partir de 12 entrevistas" },
-          { icon: CheckCircle2, text: "Cohorte piloto activa ahora" },
-          { icon: Leaf, text: "Piloto cerrado: 10 plazas" },
-        ].map(({ icon: Icon, text }) => (
-          <div key={text} className="flex items-center gap-2 bg-teal-light border border-teal/20 rounded-full px-4 py-2">
-            <Icon className="h-4 w-4 text-teal" />
-            <span className="text-xs text-teal-dark font-medium">{text}</span>
+    <section id="seccion-8-extras" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Extras
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">Bonos incluidos en el piloto</h2>
           </div>
-        ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+            {[
+              { icon: Gift, title: "Bono 1: Setup asistido", desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo. Sin perderte en la herramienta." },
+              { icon: MessageSquare, title: "Bono 2: Canal de Expertos", desc: "Acceso a un canal privado donde podés consultar dudas de nutrición con otros profesionales y con el equipo de Kleia." },
+              { icon: ShieldCheck, title: "Garantía: Cancelación simple", desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelás sin preguntas. Sin contratos largos ni penalidades." },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="text-center p-6 rounded-2xl bg-background">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="font-semibold mb-2">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              { icon: Star, text: "Construido a partir de 12 entrevistas" },
+              { icon: CheckCircle2, text: "Cohorte piloto activa ahora" },
+              { icon: Leaf, text: "Piloto cerrado: 10 plazas" },
+            ].map(({ icon: Icon, text }) => (
+              <div key={text} className="flex items-center gap-2 bg-primary/10 rounded-full px-4 py-2">
+                <Icon className="h-4 w-4 text-primary" />
+                <span className="text-xs text-primary font-medium">{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -485,22 +491,24 @@ function BonusesSection() {
 // ─── S9 · CTA intermedio ─────────────────────────────────────────────────────
 function MidCTA() {
   return (
-    <section id="seccion-9-cta" className="py-20 px-6 bg-teal text-primary-foreground text-center">
-      <div className="container max-w-2xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4">
-          Las plazas del piloto son limitadas
-        </h2>
-        <p className="text-primary-foreground/80 mb-8 text-lg leading-relaxed">
-          Solo hay 10 lugares en esta primera cohorte. Si querés ser parte, agendá una demo ahora
-          y te contamos cómo funciona sin compromiso.
-        </p>
-        <Button
-          onClick={scrollToForm}
-          size="lg"
-          className="bg-primary-foreground text-teal hover:bg-primary-foreground/90 rounded-full px-8 font-medium"
-        >
-          Agendar demo →
-        </Button>
+    <section id="seccion-9-cta" className="py-6 px-6">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-primary rounded-3xl shadow-sm px-10 py-16 text-center text-primary-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4">
+            Las plazas del piloto son limitadas
+          </h2>
+          <p className="text-primary-foreground/80 mb-8 text-lg leading-relaxed max-w-xl mx-auto">
+            Solo hay 10 lugares en esta primera cohorte. Si querés ser parte, agendá una demo ahora
+            y te contamos cómo funciona sin compromiso.
+          </p>
+          <Button
+            onClick={scrollToForm}
+            size="lg"
+            className="bg-white text-primary hover:bg-white/90 rounded-full px-8 font-medium shadow-md"
+          >
+            Agendar demo →
+          </Button>
+        </div>
       </div>
     </section>
   );
@@ -517,79 +525,57 @@ function DemoForm() {
   };
 
   return (
-    <section id="agendar-demo" className="py-20 px-6 bg-background">
+    <section id="agendar-demo" className="py-6 px-6">
       <div className="container max-w-lg mx-auto">
-        <div className="text-center mb-10">
-          <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-            Demo
-          </Badge>
-          <h2 className="text-3xl font-bold font-serif text-navy">Agendá tu demo</h2>
-          <p className="text-muted-foreground mt-2 text-sm">
-            Completá el formulario y te contactamos en menos de 24 horas.
-          </p>
-        </div>
-        {submitted ? (
-          <Card className="border border-teal/30 bg-teal-light/30">
-            <CardContent className="p-10 text-center">
-              <CheckCircle2 className="h-12 w-12 text-teal mx-auto mb-4" />
-              <h3 className="text-xl font-bold font-serif text-navy mb-2">¡Gracias, {form.name}!</h3>
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-8">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Demo
+            </Badge>
+            <h2 className="text-3xl font-bold font-serif">Agendá tu demo</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              Completá el formulario y te contactamos en menos de 24 horas.
+            </p>
+          </div>
+          {submitted ? (
+            <div className="p-10 text-center rounded-2xl bg-primary/5">
+              <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-bold font-serif mb-2">¡Gracias, {form.name}!</h3>
               <p className="text-muted-foreground text-sm">
                 Recibimos tu solicitud. Nos comunicamos con vos a <strong>{form.email}</strong> en las próximas 24 horas.
               </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card className="border border-border shadow-md">
-            <CardContent className="p-8">
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-1.5">
-                  <Label htmlFor="name" className="text-navy text-sm font-medium">Nombre</Label>
-                  <Input
-                    id="name"
-                    placeholder="Tu nombre"
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="border-border focus-visible:ring-teal"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-navy text-sm font-medium">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="tu@email.com"
-                    required
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="border-border focus-visible:ring-teal"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="message" className="text-navy text-sm font-medium">
-                    Contanos brevemente tu situación{" "}
-                    <span className="text-muted-foreground font-normal">(opcional)</span>
-                  </Label>
-                  <Textarea
-                    id="message"
-                    placeholder="¿Cuántos pacientes tenés? ¿Qué parte del flujo más te cuesta?"
-                    rows={3}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="border-border focus-visible:ring-teal"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-teal text-primary-foreground hover:bg-teal-dark rounded-full font-medium"
-                >
-                  Agendar demo →
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        )}
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="space-y-1.5">
+                <Label htmlFor="name" className="text-sm font-medium">Nombre</Label>
+                <Input id="name" placeholder="Tu nombre" required value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="rounded-xl border-border" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                <Input id="email" type="email" placeholder="tu@email.com" required value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="rounded-xl border-border" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="message" className="text-sm font-medium">
+                  Contanos brevemente tu situación{" "}
+                  <span className="text-muted-foreground font-normal">(opcional)</span>
+                </Label>
+                <Textarea id="message" placeholder="¿Cuántos pacientes tenés? ¿Qué parte del flujo más te cuesta?"
+                  rows={3} value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="rounded-xl border-border" />
+              </div>
+              <Button type="submit" size="lg"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full font-medium">
+                Agendar demo →
+              </Button>
+            </form>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -622,26 +608,28 @@ const faqs = [
 // ─── S11 · FAQ ───────────────────────────────────────────────────────────────
 function FAQSection() {
   return (
-    <section id="seccion-11-faq" className="py-20 px-6 bg-muted/40">
+    <section id="seccion-11-faq" className="py-6 px-6">
       <div className="container max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
-            FAQ
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold font-serif text-navy">Preguntas frecuentes</h2>
+        <div className="bg-white rounded-3xl shadow-sm p-10">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              FAQ
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif">Preguntas frecuentes</h2>
+          </div>
+          <Accordion type="single" collapsible className="space-y-2">
+            {faqs.map(({ q, a }, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-2xl px-4">
+                <AccordionTrigger className="font-medium text-sm text-left hover:no-underline">
+                  {q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
+                  {a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
-        <Accordion type="single" collapsible className="space-y-2">
-          {faqs.map(({ q, a }, i) => (
-            <AccordionItem key={i} value={`faq-${i}`} className="bg-card border border-border rounded-lg px-4">
-              <AccordionTrigger className="text-navy font-medium text-sm text-left hover:no-underline">
-                {q}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
-                {a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
       </div>
     </section>
   );
@@ -650,28 +638,30 @@ function FAQSection() {
 // ─── S12 · Footer CTA ────────────────────────────────────────────────────────
 function FooterCTA() {
   return (
-    <footer id="seccion-12-footer" className="py-20 px-6 bg-navy text-primary-foreground text-center">
-      <div className="container max-w-2xl mx-auto">
-        <div className="flex items-center justify-center mb-6">
-          <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto brightness-0 invert" />
+    <footer id="seccion-12-footer" className="py-6 px-6 pb-12">
+      <div className="container max-w-4xl mx-auto">
+        <div className="bg-foreground rounded-3xl shadow-sm px-10 py-16 text-center text-background">
+          <div className="flex items-center justify-center mb-6">
+            <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto brightness-0 invert" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 leading-tight">
+            Recuperá tu tiempo. Entregá planes que te enorgullezcan.
+          </h2>
+          <p className="text-background/70 mb-8 leading-relaxed max-w-xl mx-auto">
+            Kleia está en piloto cerrado. Solo 10 plazas disponibles. Agendá una demo sin compromiso
+            y descubrí si Kleia es para vos.
+          </p>
+          <Button
+            onClick={scrollToForm}
+            size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md"
+          >
+            Agendar demo →
+          </Button>
+          <p className="mt-10 text-xs text-background/40">
+            © 2025 Kleia · Hecho con amor para nutricionistas
+          </p>
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 leading-tight">
-          Recuperá tu tiempo. Entregá planes que te enorgullezcan.
-        </h2>
-        <p className="text-primary-foreground/70 mb-8 leading-relaxed">
-          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Agendá una demo sin compromiso
-          y descubrí si Kleia es para vos.
-        </p>
-        <Button
-          onClick={scrollToForm}
-          size="lg"
-          className="bg-teal text-primary-foreground hover:bg-teal-dark rounded-full px-8 font-medium"
-        >
-          Agendar demo →
-        </Button>
-        <p className="mt-10 text-xs text-primary-foreground/40">
-          © 2025 Kleia · Hecho con amor para nutricionistas
-        </p>
       </div>
     </footer>
   );
