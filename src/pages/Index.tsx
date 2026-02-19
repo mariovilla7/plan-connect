@@ -1,5 +1,5 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
 // Wrapper que aplica fade-in al entrar en el viewport
@@ -120,7 +120,36 @@ function Navbar() {
 }
 
 // ─── S1 · Hero ───────────────────────────────────────────────────────────────
+const TOTAL_PLAZAS = 10;
+
+function usePlazasCounter() {
+  const [plazas, setPlazas] = useState(TOTAL_PLAZAS);
+  const [flash, setFlash] = useState(false);
+
+  useEffect(() => {
+    // Simula que alguien reserva una plaza cada 45–120 segundos
+    function scheduleNext() {
+      const delay = Math.random() * 75_000 + 45_000; // 45s – 120s
+      return setTimeout(() => {
+        setPlazas((prev) => {
+          if (prev <= 1) return prev; // nunca llegar a 0
+          setFlash(true);
+          setTimeout(() => setFlash(false), 800);
+          return prev - 1;
+        });
+        scheduleNext();
+      }, delay);
+    }
+    const id = scheduleNext();
+    return () => clearTimeout(id);
+  }, []);
+
+  return { plazas, flash };
+}
+
 function Hero() {
+  const { plazas, flash } = usePlazasCounter();
+
   return (
     <section id="seccion-1-hero" className="bg-white px-6 pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
@@ -147,13 +176,25 @@ function Hero() {
             >
               Agendar demo →
             </Button>
-            <span className="absolute -top-2.5 -right-2 bg-success text-success-foreground text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap">
-              10 plazas
+            <span
+              className={`absolute -top-2.5 -right-2 bg-success text-success-foreground text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap transition-transform duration-200 ${flash ? "scale-125" : "scale-100"}`}
+            >
+              {plazas} plazas
             </span>
           </div>
-          <p className="mt-4 text-xs text-muted-foreground">
-            Acceso por invitación · Piloto cerrado: 10 plazas
-          </p>
+          {/* Live counter */}
+          <div className="mt-5 flex items-center justify-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive" />
+            </span>
+            <p className="text-xs text-muted-foreground">
+              <span className={`font-semibold text-foreground tabular-nums transition-all duration-300 ${flash ? "text-destructive" : ""}`}>
+                {plazas} plazas disponibles
+              </span>
+              {" "}· Piloto cerrado · Acceso por invitación
+            </p>
+          </div>
         </div>
 
         {/* Componente de imagen — mockup del producto */}
