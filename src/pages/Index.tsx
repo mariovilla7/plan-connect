@@ -28,20 +28,77 @@ const scrollToForm = () => {
 };
 
 // ─── S0 · Navbar ─────────────────────────────────────────────────────────────
+const navLinks = [
+  { label: "El problema",  id: "seccion-2-problema" },
+  { label: "Resultados",   id: "seccion-3-resultados" },
+  { label: "Cómo funciona",id: "seccion-4-flujo" },
+  { label: "Incluido",     id: "seccion-5-incluido" },
+  { label: "FAQ",          id: "seccion-11-faq" },
+];
+
+function scrollTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
+
 function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-card/90 backdrop-blur border-b border-border">
       <div className="container max-w-5xl mx-auto flex items-center justify-between h-16 px-6">
+        {/* Logo */}
         <div className="flex items-center">
           <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto" />
         </div>
-        <Button
-          onClick={scrollToForm}
-          className="bg-teal text-primary-foreground hover:bg-teal-dark rounded-full px-5 text-sm font-medium"
-        >
-          Agendar demo
-        </Button>
+
+        {/* Desktop nav links */}
+        <nav className="hidden md:flex items-center gap-6">
+          {navLinks.map(({ label, id }) => (
+            <button
+              key={id}
+              onClick={() => scrollTo(id)}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+
+        {/* CTA + mobile menu toggle */}
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={scrollToForm}
+            className="bg-teal text-primary-foreground hover:bg-teal-dark rounded-full px-5 text-sm font-medium"
+          >
+            Agendar demo
+          </Button>
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden flex flex-col gap-1.5 p-1"
+            onClick={() => setOpen(!open)}
+            aria-label="Menú"
+          >
+            <span className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-foreground transition-opacity ${open ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
+        </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <nav className="md:hidden border-t border-border bg-card/95 backdrop-blur px-6 py-4 flex flex-col gap-3">
+          {navLinks.map(({ label, id }) => (
+            <button
+              key={id}
+              onClick={() => { scrollTo(id); setOpen(false); }}
+              className="text-sm text-muted-foreground hover:text-foreground text-left transition-colors"
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }
