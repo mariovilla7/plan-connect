@@ -735,7 +735,7 @@ function FooterCTA() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Index() {
   return (
-    <div className="min-h-screen font-sans">
+    <div className="min-h-screen font-sans bg-white">
       <Navbar />
       <main>
         <FadeSection><Hero /></FadeSection>
