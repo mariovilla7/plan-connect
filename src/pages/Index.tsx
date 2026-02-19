@@ -1,4 +1,5 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
+import problemaIlustracion from "@/assets/problema-ilustracion.png";
 import { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
@@ -239,7 +240,7 @@ const problems = [
 function ProblemSection() {
   return (
     <section id="seccion-2-problema" className="py-6 px-6">
-      <div className="container max-w-4xl mx-auto">
+      <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
@@ -247,18 +248,29 @@ function ProblemSection() {
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {problems.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Icon className="h-5 w-5 text-primary" />
+          <div className="flex flex-col md:flex-row gap-10 items-center">
+            {/* Lista de problemas */}
+            <div className="flex-1 grid grid-cols-1 gap-5">
+              {problems.map(({ icon: Icon, title, description }) => (
+                <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1 text-base">{title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-1 text-base">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            {/* Ilustración */}
+            <div className="flex-shrink-0 w-full md:w-80 flex items-center justify-center">
+              <img
+                src={problemaIlustracion}
+                alt="Nutricionista agotada frente al ordenador"
+                className="w-full max-w-xs md:max-w-full object-contain opacity-90"
+              />
+            </div>
           </div>
         </div>
       </div>
