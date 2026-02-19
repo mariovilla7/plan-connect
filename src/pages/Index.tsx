@@ -236,10 +236,10 @@ function ResultsSection() {
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
-              Resultados
+              RESULTADOS CON KLEIA
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">
-              Resultados con Kleia: Menos carga, más control
+              Menos carga, más control
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
