@@ -407,7 +407,7 @@ const features = [
 function FeaturesSection() {
   return (
     <section id="seccion-5-incluido" className="py-6 px-6">
-      <div className="container max-w-4xl mx-auto">
+      <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
@@ -415,17 +415,27 @@ function FeaturesSection() {
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
-          <div className="flex flex-wrap gap-3 justify-center">
-            {features.map((f) => (
-              <span
-                key={f}
-                className="inline-flex items-center gap-2 bg-primary/8 hover:bg-primary/15 text-primary border border-primary/20 rounded-full px-5 py-2.5 text-sm font-medium transition-colors cursor-default"
-              >
-                <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
-                {f}
-              </span>
-            ))}
+
+          <div className="flex flex-col md:flex-row gap-10 items-center">
+            {/* Mockup placeholder */}
+            <div className="flex-shrink-0 w-full md:w-80 h-72 md:h-96 rounded-2xl bg-muted border border-border flex items-center justify-center">
+              <p className="text-muted-foreground text-sm">[ Product mockup ]</p>
+            </div>
+
+            {/* Features como pills ordenados en columna */}
+            <div className="flex-1 flex flex-col gap-2.5">
+              {features.map((f) => (
+                <span
+                  key={f}
+                  className="inline-flex items-center gap-3 bg-primary/8 hover:bg-primary/15 text-primary border border-primary/20 rounded-full px-5 py-2.5 text-sm font-medium transition-colors cursor-default"
+                >
+                  <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
+                  {f}
+                </span>
+              ))}
+            </div>
           </div>
+
           <div className="mt-8 text-center">
             <Button
               onClick={scrollToForm}
