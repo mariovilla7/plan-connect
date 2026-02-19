@@ -1,5 +1,21 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import { useState } from "react";
+import { useInView } from "@/hooks/use-in-view";
+
+// Wrapper que aplica fade-in al entrar en el viewport
+function FadeSection({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
+  const { ref, inView } = useInView();
+  return (
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      id={id}
+      className={`transition-opacity duration-700 ${inView ? "opacity-100" : "opacity-0"} ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -667,19 +683,19 @@ export default function Index() {
     <div className="min-h-screen font-sans">
       <Navbar />
       <main>
-        <Hero />
-        <ProblemSection />
-        <ResultsSection />
-        <HowItWorksSection />
-        <FeaturesSection />
-        <ComparisonSection />
-        <FitSection />
-        <BonusesSection />
-        <MidCTA />
-        <DemoForm />
-        <FAQSection />
+        <FadeSection><Hero /></FadeSection>
+        <FadeSection><ProblemSection /></FadeSection>
+        <FadeSection><ResultsSection /></FadeSection>
+        <FadeSection><HowItWorksSection /></FadeSection>
+        <FadeSection><FeaturesSection /></FadeSection>
+        <FadeSection><ComparisonSection /></FadeSection>
+        <FadeSection><FitSection /></FadeSection>
+        <FadeSection><BonusesSection /></FadeSection>
+        <FadeSection><MidCTA /></FadeSection>
+        <FadeSection><DemoForm /></FadeSection>
+        <FadeSection><FAQSection /></FadeSection>
       </main>
-      <FooterCTA />
+      <FadeSection><FooterCTA /></FadeSection>
     </div>
   );
 }
