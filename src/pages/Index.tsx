@@ -415,12 +415,15 @@ function FeaturesSection() {
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="flex flex-wrap gap-3 justify-center">
             {features.map((f) => (
-              <div key={f} className="flex items-start gap-3 p-3 rounded-xl hover:bg-background transition-colors">
-                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-sm">{f}</span>
-              </div>
+              <span
+                key={f}
+                className="inline-flex items-center gap-2 bg-primary/8 hover:bg-primary/15 text-primary border border-primary/20 rounded-full px-5 py-2.5 text-sm font-medium transition-colors cursor-default"
+              >
+                <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
+                {f}
+              </span>
             ))}
           </div>
           <div className="mt-8 text-center">
