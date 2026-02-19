@@ -506,7 +506,7 @@ function ResultsSection() {
                     key={value}
                     className="flex rounded-xl overflow-hidden border shadow-sm transition-all"
                     style={{
-                      opacity: visible ? (done ? 0.72 : 1) : 0,
+                      opacity: visible ? 1 : 0,
                       transform: visible
                         ? reducedMotion
                           ? "none"
@@ -516,9 +516,7 @@ function ResultsSection() {
                       transitionDuration: reducedMotion ? "0ms" : "520ms",
                       transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
                       transitionDelay: reducedMotion ? "0ms" : `${i * 90}ms`,
-                      borderColor: done
-                        ? "hsl(var(--primary) / 0.35)"
-                        : "hsl(var(--border))",
+                      borderColor: "hsl(var(--border))",
                     }}
                   >
                     {/* Panel lila — 1/3 */}
