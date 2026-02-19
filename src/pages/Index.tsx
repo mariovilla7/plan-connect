@@ -498,18 +498,17 @@ function ComparisonSection() {
 
 // ─── Fit Section ──────────────────────────────────────────────────────────────
 const forWho = [
-  "Nutricionistas con más de 10 pacientes activos",
-  "Querés recuperar tiempo sin bajar la calidad",
-  "Hacés planes semana a semana desde cero",
-  "Te importa la personalización de cada paciente",
-  "Querés ser parte de definir la herramienta",
+  "Te gustaría ahorrar más de 6 horas por semana, y tener una vida equilibrada",
+  "Estás harto de buscar menús variados en todo el internet",
+  "Te cansa el switch entre herramientas con el fin de sentirte profesional y personalizar los planes",
+  "Quieres no sentirte el cuello de la botella para tu crecimiento profesional",
 ];
 
 const notForWho = [
-  "Recién empezando y con pocos pacientes",
-  "Preferís hacer todo 100% a mano",
-  "No querés dar feedback durante el piloto",
-  "Buscás una solución definitiva ya terminada",
+  "No es para ti, si preferís gastar 3 horas en un Excel propio en vez de poder disfrutar de una comida con tus amigos",
+  "El crecimiento profesional para ti es algo que 'con el tiempo y más clientes' será diferente",
+  "No es para ti, si te gusta pasar tus fines de semana trabajando",
+  "No es para ti, si 'estás feliz con tu trabajo y procesos' pero nunca has hecho un análisis de ello, ni has pedido una opinión constructiva a tus pacientes",
 ];
 
 // ─── S7 · Encaje ─────────────────────────────────────────────────────────────
