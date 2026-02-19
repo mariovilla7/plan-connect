@@ -8,6 +8,9 @@ import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
 import card1Img from "@/assets/kleiacard_1.png";
 import card2Img from "@/assets/kleiacard_2.png";
 import card3Img from "@/assets/kleiacard_3.png";
+import storyImg1 from "@/assets/story_image_1.png";
+import storyImg2 from "@/assets/story_image_2.png";
+import storyImg3 from "@/assets/story_image_3.png";
 import React, { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
@@ -1097,6 +1100,109 @@ function FitForYouSection() {
   );
 }
 
+// ─── S7c · Historia detrás de Kleia ──────────────────────────────────────────
+const storyPhotos = [
+  { src: storyImg1, caption: "La obsesión: quitar fricción que te quema." },
+  { src: storyImg2, caption: "El patrón: planes, ajustes, mensajes… siempre." },
+  { src: storyImg3, caption: "La chispa: la lista de la compra a mano." },
+];
+
+const storyText = `Durante años he trabajado creando productos digitales con una obsesión: hacerle la vida más fácil a la gente, quitando fricción donde nadie la ve… hasta que te quema.
+
+Al principio lo viví como usuaria: con mi entrenador todo era WhatsApp, calendarios, recordatorios, pagos… y pensé: 'esto se podría simplificar muchísimo'. Esa idea se me quedó dentro.
+
+Más tarde, trabajando con un nutricionista (David), volví a ver el mismo patrón: pequeñas cosas repetidas cada semana que, sumadas, te roban tiempo y cabeza. Y cada vez que proponía una mejora, la respuesta era la misma: 'sí, eso me ayudaría'. Ahí entendí que no era un caso: era algo que le pasa a más gente.
+
+El click definitivo llegó con una escena muy simple: una familia haciendo la lista de la compra a mano para poder seguir una dieta. Y pensé: si esto pasa aquí, pasa en todas partes.
+
+En ese momento supe que no podía hacerlo sola. Le escribí a Mario —con quien ya había trabajado y sabía que compartíamos valores aunque seamos distintos— y cuando dijo 'sí', todo empezó a fluir. Porque Kleia no nace de una idea bonita: nace de un problema real y de un equipo que quiere resolverlo sin rendirse.
+
+Así nació Kleia: un asistente para nutricionistas que te ayuda a crear menús que encajan, editar sin descuadres y entregar rápido — para que el plan no se te coma la semana.`;
+
+function StorySection() {
+  return (
+    <section id="seccion-7c-historia" className="py-6 px-6">
+      <div className="container max-w-5xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              Por qué existe
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">La historia detrás de Kleia</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Nació para quitarte trabajo invisible: el que empieza cuando termina la consulta.
+            </p>
+          </div>
+
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start mb-10">
+            {/* Left: story text */}
+            <div className="space-y-4">
+              {storyText.split("\n\n").map((para, i) => (
+                <p key={i} className="text-sm md:text-base text-foreground/80 leading-relaxed">
+                  {para}
+                </p>
+              ))}
+            </div>
+
+            {/* Right: photo stack */}
+            <div className="flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x md:snap-none">
+              {storyPhotos.map(({ src, caption }, i) => (
+                <div
+                  key={i}
+                  className="flex-shrink-0 snap-center w-56 md:w-full rounded-2xl border border-border/60 overflow-hidden shadow-sm transition-shadow duration-200 hover:shadow-md bg-muted/20"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={src}
+                      alt={caption}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="px-3 py-2 text-xs text-muted-foreground italic leading-snug">
+                    {caption}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mini-cards row */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            <div className="rounded-2xl border border-border/60 bg-primary/5 p-5">
+              <h3 className="font-semibold text-foreground mb-1.5 text-sm">✨ La chispa</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Ver a gente haciendo la lista de la compra a mano para poder cumplir el plan.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-border/60 bg-muted/30 p-5">
+              <h3 className="font-semibold text-foreground mb-1.5 text-sm">🧠 Nuestro enfoque</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                No queríamos 'otro software'. Queríamos un asistente que te quite lo pesado sin quitarte el criterio.
+              </p>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <button
+              onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+            >
+              Enséñame cómo sería
+            </button>
+            <p className="text-xs text-muted-foreground italic mt-2">
+              Acceso por invitación · Piloto cerrado: 10 plazas
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
@@ -1335,6 +1441,7 @@ export default function Index() {
         <FadeSection><ComparisonSection /></FadeSection>
         <FadeSection><FitSection /></FadeSection>
         <FadeSection><FitForYouSection /></FadeSection>
+        <FadeSection><StorySection /></FadeSection>
         <FadeSection><BonusesSection /></FadeSection>
         <FadeSection><MidCTA /></FadeSection>
         <FadeSection><DemoForm /></FadeSection>
