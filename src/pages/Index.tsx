@@ -426,6 +426,10 @@ function ResultsSection() {
   const cardVisible = (i: number) => inView && (reducedMotion || phase >= i + 1);
   const cardDone = (i: number) => phase === 5;
 
+  // Contador: 0 → 2 → 4 → 5 → 6+ según el phase
+  const hourValues = ["0", "2", "4", "5", "6+"];
+  const displayHours = hourValues[Math.min(phase, 4)];
+
   return (
     <section
       id="seccion-3-resultados"
@@ -464,7 +468,7 @@ function ResultsSection() {
                     opacity: inView ? 1 : 0,
                   }}
                 >
-                  6+ horas
+                  {reducedMotion ? "6+" : displayHours} horas
                 </p>
                 <p className="text-sm font-semibold mt-1" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.2s" }}>
                   más a la semana
