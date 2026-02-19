@@ -995,6 +995,108 @@ function FitSection() {
   );
 }
 
+// ─── S7b · ¿Kleia es para ti? ────────────────────────────────────────────────
+const fitYesBullets = [
+  "Quieres devolverte los fines de semana y las tardes: para dormir… o tomarte una cerveza agüita con tus amigos.",
+  "Te encanta la variedad, pero estás harta de que entre decidir y ejecutar se te vaya la vida (y acabes repitiendo 'lo de siempre').",
+  "Te gusta tener control, pero estás dispuesta a delegar la parte pesada a un asistente (hola, Kleia) para no recomponer todo a mano.",
+  "Te importa que el paciente empiece rápido: plan en 24 horas. Si pasan 48, ya es nivel 'faltan señales de vida'… hasta en comisaría se preocupan.",
+];
+
+const fitNoBullets = [
+  "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
+  "Te gusta perderte en mil páginas buscando recetas 'a ver cuál encaja' para cada paciente.",
+  "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo 'porque así lo controlas'.",
+  "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
+];
+
+function FitForYouSection() {
+  return (
+    <section id="seccion-7b-para-ti" className="py-6 px-6">
+      <div className="container max-w-5xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+              ¿Es para ti?
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">¿Kleia es para ti?</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">En 10 segundos lo tienes claro.</p>
+          </div>
+
+          {/* Two-column cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* SÍ card */}
+            <div className="group rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-white p-7 shadow-sm transition-all duration-200 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-md motion-safe:hover:border-primary/40 flex flex-col">
+              <div className="flex items-center gap-2 mb-5">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-success/15 text-success">
+                  <Check className="h-4 w-4" />
+                </span>
+                <h3 className="text-xl font-bold font-serif text-foreground">SÍ, si…</h3>
+              </div>
+              <ul className="space-y-3 flex-1 mb-6">
+                {fitYesBullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80 leading-relaxed">
+                    <span className="mt-[6px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-success" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              {/* CTA block */}
+              <div className="mt-auto pt-5 border-t border-primary/15">
+                <button
+                  onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
+                  className="w-full py-2.5 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+                >
+                  Únete a Kleia
+                </button>
+                <p className="text-center text-xs text-muted-foreground mt-2">
+                  (Piloto cerrado: 10 plazas. Acceso por invitación.)
+                </p>
+              </div>
+            </div>
+
+            {/* NO card */}
+            <div className="group rounded-2xl border border-border bg-muted/30 p-7 shadow-sm transition-all duration-200 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-md motion-safe:hover:border-border/80 flex flex-col">
+              <div className="flex items-center gap-2 mb-5">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                  <X className="h-4 w-4" />
+                </span>
+                <h3 className="text-xl font-bold font-serif text-foreground">NO, si…</h3>
+              </div>
+              <ul className="space-y-3 flex-1 mb-6">
+                {fitNoBullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80 leading-relaxed">
+                    <span className="mt-[6px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-muted-foreground/50" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              {/* Microcopy only — no CTA button */}
+              <p className="mt-auto pt-5 border-t border-border text-xs text-muted-foreground italic leading-relaxed">
+                Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.
+              </p>
+            </div>
+          </div>
+
+          {/* Global CTA */}
+          <div className="text-center mt-10">
+            <button
+              onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+            >
+              Agendar demo →
+            </button>
+            <p className="text-xs text-muted-foreground italic mt-2">
+              Acceso por invitación. Piloto cerrado: 10 plazas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
@@ -1232,6 +1334,7 @@ export default function Index() {
         <FadeSection><FeaturesSection /></FadeSection>
         <FadeSection><ComparisonSection /></FadeSection>
         <FadeSection><FitSection /></FadeSection>
+        <FadeSection><FitForYouSection /></FadeSection>
         <FadeSection><BonusesSection /></FadeSection>
         <FadeSection><MidCTA /></FadeSection>
         <FadeSection><DemoForm /></FadeSection>
