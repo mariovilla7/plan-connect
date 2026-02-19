@@ -74,13 +74,13 @@ function Navbar() {
 
   return (
     <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border shadow-sm">
-      <div className="container max-w-5xl mx-auto flex items-center justify-between h-16 px-6">
+      <div className="container max-w-5xl mx-auto flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
         {/* Logo */}
         <div className="flex items-center">
-          <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto" />
+          <img src={kleiaLogo} alt="Kleia" className="h-7 md:h-8 w-auto" />
         </div>
 
-        {/* Desktop nav links — pill style como la referencia */}
+        {/* Desktop nav links */}
         <nav className="hidden md:flex items-center gap-1 bg-muted rounded-full px-2 py-1.5">
           {navLinks.map(({ label, id }) => (
             <button
@@ -94,16 +94,16 @@ function Navbar() {
         </nav>
 
         {/* CTA + mobile menu toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Button
             onClick={scrollToForm}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 text-sm font-medium shadow-sm"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-4 md:px-5 text-xs md:text-sm font-medium shadow-sm h-8 md:h-9"
           >
             Agendar demo
           </Button>
           {/* Mobile hamburger */}
           <button
-            className="md:hidden flex flex-col gap-1.5 p-1"
+            className="md:hidden flex flex-col gap-1.5 p-1.5 rounded-lg hover:bg-muted transition-colors"
             onClick={() => setOpen(!open)}
             aria-label="Menú"
           >
@@ -116,12 +116,12 @@ function Navbar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <nav className="md:hidden border-t border-border bg-white/95 backdrop-blur px-6 py-4 flex flex-col gap-3">
+        <nav className="md:hidden border-t border-border bg-white/95 backdrop-blur px-4 py-3 flex flex-col gap-0">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => { scrollTo(id); setOpen(false); }}
-              className="text-sm text-muted-foreground hover:text-foreground text-left transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground text-left transition-colors py-2.5 border-b border-border/40 last:border-b-0"
             >
               {label}
             </button>
@@ -164,20 +164,20 @@ function Hero() {
   const { plazas, flash } = usePlazasCounter();
 
   return (
-    <section id="seccion-1-hero" className="bg-white px-6 pt-20 pb-0 overflow-hidden">
+    <section id="seccion-1-hero" className="bg-white px-4 md:px-6 pt-12 md:pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
-        {/* Texto + CTA — centrado arriba */}
-        <div className="text-center pb-12">
-          <div className="inline-block mb-6">
-            <span className="bg-primary/10 text-primary text-xs font-medium px-4 py-2 rounded-full">
+        {/* Texto + CTA */}
+        <div className="text-center pb-8 md:pb-12">
+          <div className="inline-block mb-4 md:mb-6 max-w-[90vw]">
+            <span className="bg-primary/10 text-primary text-[11px] md:text-xs font-medium px-3 md:px-4 py-1.5 md:py-2 rounded-full leading-snug">
               Para nutricionistas con agenda llena que quieren volver a tener control de su tiempo
             </span>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight mb-6 text-foreground mt-[2px]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight mb-4 md:mb-6 text-foreground px-2">
             Dejá de pensar en menús.<br />
             <span className="text-primary">Terminá tu día con todos los planes enviados.</span>
           </h1>
-          <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto mt-[2px]">
+          <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto px-2">
             Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos,
             respetando las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
           </p>
@@ -185,7 +185,7 @@ function Hero() {
             <Button
               onClick={scrollToForm}
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 text-base font-medium shadow-md"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 text-sm md:text-base font-medium shadow-md"
             >
               Agendar demo →
             </Button>
@@ -196,7 +196,7 @@ function Hero() {
             </span>
           </div>
           {/* Live counter */}
-          <div className="mt-5 flex items-center justify-center gap-2">
+          <div className="mt-4 md:mt-5 flex items-center justify-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive" />
@@ -210,8 +210,8 @@ function Hero() {
           </div>
         </div>
 
-        {/* Componente de imagen — mockup del producto */}
-        <div className="w-full rounded-t-3xl bg-muted border border-border border-b-0 min-h-[420px] flex items-center justify-center overflow-hidden">
+        {/* Mockup del producto */}
+        <div className="w-full rounded-t-2xl md:rounded-t-3xl bg-muted border border-border border-b-0 min-h-[220px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
           <p className="text-muted-foreground text-sm">[ Product mockup ]</p>
         </div>
       </div>
@@ -255,23 +255,65 @@ const problemImages = [problemaIlustracion, problema1, problema2, problema3, pro
 const imagePositions = [270, 342, 54, 126, 198]; // top, top-right, bottom-right, bottom-left, top-left
 
 function ProblemSection() {
-  const circleR = 130; // radio del círculo de fotos
-  const cx = 200;      // centro SVG x
-  const cy = 200;      // centro SVG y
+  const circleR = 130;
+  const cx = 200;
+  const cy = 200;
   const svgSize = 400;
 
   return (
-    <section id="seccion-2-problema" className="py-6 px-6">
+    <section id="seccion-2-problema" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-6xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               El Problema
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center gap-6">
+          {/* Mobile: stack de cards + SVG compacto al centro */}
+          <div className="flex flex-col md:hidden gap-3">
+            {/* SVG compacto — solo el círculo de fotos, sin las flechas laterales */}
+            <div className="w-full max-w-[240px] mx-auto">
+              <svg viewBox="0 0 400 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  {problemImages.map((_, i) => (
+                    <clipPath key={i} id={`clip-img-m-${i}`}>
+                      <circle cx="0" cy="0" r="38" />
+                    </clipPath>
+                  ))}
+                </defs>
+                <circle cx={cx} cy={cy} r={circleR} fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.12" strokeDasharray="6 5" />
+                {imagePositions.map((angleDeg, i) => {
+                  const rad = (angleDeg * Math.PI) / 180;
+                  const ix = cx + circleR * Math.cos(rad);
+                  const iy = cy + circleR * Math.sin(rad);
+                  return (
+                    <g key={i} transform={`translate(${ix}, ${iy})`}>
+                      <circle r="40" fill="white" opacity="0.9" />
+                      <image href={problemImages[i]} x="-38" y="-38" width="76" height="76" clipPath={`url(#clip-img-m-${i})`} preserveAspectRatio="xMidYMid slice" />
+                      <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
+            {/* 4 problem cards en stack */}
+            {problems.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="group p-4 rounded-xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                <div className="flex items-center gap-2.5 mb-2">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Icon className="h-3.5 w-3.5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: layout 3 columnas original */}
+          <div className="hidden md:flex md:flex-row items-center gap-6">
             {/* Columna izquierda: 2 problemas */}
             <div className="flex-1 flex flex-col gap-4">
               {problems.slice(0, 2).map(({ icon: Icon, title, description }) => (
@@ -287,13 +329,9 @@ function ProblemSection() {
               ))}
             </div>
 
-            {/* Centro: SVG con círculo invisible + 5 fotos + flechas */}
+            {/* Centro: SVG completo con flechas */}
             <div className="flex-shrink-0 w-full md:w-[400px]">
-              <svg
-                viewBox={`0 0 ${svgSize} ${svgSize}`}
-                className="w-full h-auto"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg viewBox={`0 0 ${svgSize} ${svgSize}`} className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <marker id="arr-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
                     <path d="M 0 1 L 9 5 L 0 9 z" fill="hsl(var(--primary))" opacity="0.4" />
@@ -307,46 +345,11 @@ function ProblemSection() {
                     </clipPath>
                   ))}
                 </defs>
-
-                {/* Círculo casi invisible */}
-                <circle
-                  cx={cx} cy={cy} r={circleR}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1"
-                  opacity="0.12"
-                  strokeDasharray="6 5"
-                />
-
-                {/* Flechas izquierda → círculo */}
-                <path
-                  d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`}
-                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
-                  strokeLinecap="round" fill="none" opacity="0.4"
-                  markerEnd="url(#arr-l)"
-                />
-                <path
-                  d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`}
-                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
-                  strokeLinecap="round" fill="none" opacity="0.4"
-                  markerEnd="url(#arr-l)"
-                />
-
-                {/* Flechas derecha → círculo */}
-                <path
-                  d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`}
-                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
-                  strokeLinecap="round" fill="none" opacity="0.4"
-                  markerEnd="url(#arr-r)"
-                />
-                <path
-                  d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`}
-                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
-                  strokeLinecap="round" fill="none" opacity="0.4"
-                  markerEnd="url(#arr-r)"
-                />
-
-                {/* 5 fotos distribuidas en el círculo */}
+                <circle cx={cx} cy={cy} r={circleR} fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.12" strokeDasharray="6 5" />
+                <path d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-l)" />
+                <path d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-l)" />
+                <path d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-r)" />
+                <path d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-r)" />
                 {imagePositions.map((angleDeg, i) => {
                   const rad = (angleDeg * Math.PI) / 180;
                   const ix = cx + circleR * Math.cos(rad);
@@ -354,12 +357,7 @@ function ProblemSection() {
                   return (
                     <g key={i} transform={`translate(${ix}, ${iy})`}>
                       <circle r="40" fill="white" opacity="0.9" />
-                      <image
-                        href={problemImages[i]}
-                        x="-38" y="-38" width="76" height="76"
-                        clipPath={`url(#clip-img-${i})`}
-                        preserveAspectRatio="xMidYMid slice"
-                      />
+                      <image href={problemImages[i]} x="-38" y="-38" width="76" height="76" clipPath={`url(#clip-img-${i})`} preserveAspectRatio="xMidYMid slice" />
                       <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
                     </g>
                   );
@@ -479,46 +477,48 @@ function EvidenceStrip() {
   const active = cityQuotes[activeChip];
 
   return (
-    <section className="py-10 px-6 bg-muted/30">
-      <div className="container max-w-5xl mx-auto space-y-8">
+    <section className="py-6 md:py-10 px-4 md:px-6 bg-muted/30">
+      <div className="container max-w-5xl mx-auto space-y-6 md:space-y-8">
 
         {/* Header */}
         <div className="text-center space-y-1">
-          <h3 className="text-xl md:text-2xl font-bold font-serif text-foreground">
+          <h3 className="text-lg md:text-2xl font-bold font-serif text-foreground">
             Hecho con 12 nutricionistas
           </h3>
-          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
+          <p className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest">
             Sin nombres. Con contexto real.
           </p>
-          <p className="text-sm text-muted-foreground max-w-md mx-auto pt-1">
+          <p className="text-xs md:text-sm text-muted-foreground max-w-md mx-auto pt-1">
             Kleia no salió de una idea bonita. Salió de escuchar lo mismo una y otra vez.
           </p>
         </div>
 
-        {/* Mini-cards strip */}
-        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory md:flex-wrap md:overflow-x-visible md:pb-0 md:justify-center">
-          {evidenceCards.map((card, i) => (
-            <div
-              key={i}
-              className="snap-start shrink-0 w-52 md:w-44 bg-card border border-border rounded-xl p-4 space-y-2 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200"
-            >
-              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide leading-tight">
-                {card.profile}
-              </p>
-              <p className="text-xs font-semibold text-foreground">
-                Dolor: <span className="font-normal text-primary">{card.pain}</span>
-              </p>
-              <p className="text-xs text-foreground/80 leading-snug italic">
-                <span className="text-muted-foreground text-base leading-none mr-0.5">"</span>
-                {card.quote}
-                <span className="text-muted-foreground text-base leading-none ml-0.5">"</span>
-              </p>
-            </div>
-          ))}
+        {/* Mini-cards strip — horizontal scroll en mobile */}
+        <div className="-mx-4 md:mx-0 px-4 md:px-0">
+          <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory md:flex-wrap md:overflow-x-visible md:pb-0 md:justify-center scrollbar-hide">
+            {evidenceCards.map((card, i) => (
+              <div
+                key={i}
+                className="snap-start shrink-0 w-44 md:w-44 bg-card border border-border rounded-xl p-3 md:p-4 space-y-2 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200"
+              >
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide leading-tight">
+                  {card.profile}
+                </p>
+                <p className="text-xs font-semibold text-foreground">
+                  Dolor: <span className="font-normal text-primary">{card.pain}</span>
+                </p>
+                <p className="text-xs text-foreground/80 leading-snug italic">
+                  <span className="text-muted-foreground text-base leading-none mr-0.5">"</span>
+                  {card.quote}
+                  <span className="text-muted-foreground text-base leading-none ml-0.5">"</span>
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Chips + Quote block */}
-        <div className="space-y-5">
+        <div className="space-y-4 md:space-y-5">
           {/* City chips */}
           <div className="flex flex-wrap gap-2 justify-center">
             {cityChips.map((chip) => (
@@ -527,7 +527,7 @@ function EvidenceStrip() {
                 onClick={() => handleChip(chip)}
                 aria-pressed={activeChip === chip}
                 className={[
-                  "rounded-full px-3.5 py-1.5 text-xs font-medium border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  "rounded-full px-3 py-1.5 text-xs font-medium border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   activeChip === chip
                     ? "bg-primary text-primary-foreground border-primary shadow-sm"
                     : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
@@ -540,19 +540,19 @@ function EvidenceStrip() {
 
           {/* Quote destacada */}
           <div
-            className="bg-card border border-border rounded-2xl p-6 md:p-8 text-center space-y-3 shadow-sm transition-opacity duration-200"
+            className="bg-card border border-border rounded-2xl p-5 md:p-8 text-center space-y-2 md:space-y-3 shadow-sm transition-opacity duration-200"
             style={{ opacity: visible ? 1 : 0 }}
             aria-live="polite"
           >
-            <p className="text-lg md:text-xl font-serif font-semibold text-foreground leading-snug">
-              <span className="text-primary text-2xl leading-none">"</span>
+            <p className="text-base md:text-xl font-serif font-semibold text-foreground leading-snug">
+              <span className="text-primary text-xl md:text-2xl leading-none">"</span>
               {active.quote}
-              <span className="text-primary text-2xl leading-none">"</span>
+              <span className="text-primary text-xl md:text-2xl leading-none">"</span>
             </p>
-            <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">
+            <p className="text-[10px] md:text-xs text-muted-foreground font-medium uppercase tracking-widest">
               {active.profile}
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs md:text-sm text-muted-foreground">
               <span className="font-semibold text-foreground">Resumen:</span> {active.summary}
             </p>
           </div>
@@ -611,27 +611,27 @@ function ResultsSection() {
   return (
     <section
       id="seccion-3-resultados"
-      className="py-6 px-6"
+      className="py-4 md:py-6 px-4 md:px-6"
       ref={ref as React.RefObject<HTMLElement>}
     >
       <div className="container max-w-5xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               RESULTADOS CON KLEIA
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">
               Menos carga, más control
             </h2>
           </div>
-          <div className="flex flex-col md:flex-row items-center gap-10">
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
 
-            {/* ── Columna izquierda: imagen + métrica destino ── */}
+            {/* ── Imagen + métrica destino ── */}
             <div className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
               <img
                 src={resultadosIlustracion}
                 alt="Nutricionista usando Kleia"
-                className="w-full object-contain"
+                className="w-full max-w-[220px] md:max-w-none object-contain"
               />
               <div className="mt-4 text-center">
                 {/* Métrica "destino" — pulsa cada vez que llega una card */}
@@ -920,7 +920,7 @@ function HowItWorksSection() {
   }) {
     return (
       <div
-        className="relative z-10 flex flex-col p-7 rounded-2xl transition-all duration-500"
+        className="relative z-10 flex flex-col p-5 md:p-7 rounded-2xl transition-all duration-500"
         style={{
           backgroundColor: highlighted ? "hsl(var(--primary) / 0.06)" : "hsl(var(--card))",
           borderWidth: "1.5px",
@@ -932,14 +932,14 @@ function HowItWorksSection() {
           ...style,
         }}
       >
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-4 md:mb-6">
           <span
-            className="text-5xl font-bold font-serif leading-none transition-colors duration-500"
+            className="text-4xl md:text-5xl font-bold font-serif leading-none transition-colors duration-500"
             style={{ color: highlighted ? "hsl(var(--primary) / 0.40)" : "hsl(var(--primary) / 0.15)" }}
           >
             {num}
           </span>
-          <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
+          <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
             {image ? (
               <img src={image} alt={title} className="w-full h-full object-cover" />
             ) : (
@@ -948,73 +948,40 @@ function HowItWorksSection() {
           </div>
         </div>
         <div className="mt-auto">
-          <h3 className="font-semibold mb-2 text-base text-foreground">{title}</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+          <h3 className="font-semibold mb-1.5 md:mb-2 text-sm md:text-base text-foreground">{title}</h3>
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <section id="seccion-4-flujo" className="py-6 px-6" ref={sectionRef}>
+    <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 md:px-6" ref={sectionRef}>
       <div className="container max-w-6xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-12">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-8 md:mb-12">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Flujo
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">Cómo funciona</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Cómo funciona</h2>
           </div>
 
           {/* ── DESKTOP: Shah-mat 2×2 + SVG S-curve overlay ── */}
           <div className="hidden md:block">
             <div className="relative" style={{ paddingBottom: 48 }}>
-
-              {/* SVG overlay — sits behind cards (z-0) */}
               {svgPath && (
                 <svg
                   className="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"
                   aria-hidden="true"
                   style={{ width: svgDims.w, height: svgDims.h }}
                 >
-                  {/* Base dotted path — grey-blue, drawn in */}
-                  <path
-                    ref={basePathRef}
-                    d={svgPath}
-                    fill="none"
-                    stroke="hsl(var(--primary) / 0.20)"
-                    strokeWidth="2"
-                    strokeDasharray="5 8"
-                    strokeLinecap="round"
-                    style={{ strokeDashoffset: reducedMotion ? "0" : "99999" }}
-                  />
-                  {/* Progress trail — accent, revealed as dot travels */}
-                  <path
-                    ref={progressPathRef}
-                    d={svgPath}
-                    fill="none"
-                    stroke="hsl(var(--primary) / 0.32)"
-                    strokeWidth="2.5"
-                    strokeDasharray="5 8"
-                    strokeLinecap="round"
-                    style={{ strokeDashoffset: "99999" }}
-                  />
-                  {/* Traveling dot */}
+                  <path ref={basePathRef} d={svgPath} fill="none" stroke="hsl(var(--primary) / 0.20)" strokeWidth="2" strokeDasharray="5 8" strokeLinecap="round" style={{ strokeDashoffset: reducedMotion ? "0" : "99999" }} />
+                  <path ref={progressPathRef} d={svgPath} fill="none" stroke="hsl(var(--primary) / 0.32)" strokeWidth="2.5" strokeDasharray="5 8" strokeLinecap="round" style={{ strokeDashoffset: "99999" }} />
                   {!reducedMotion && (
-                    <circle
-                      ref={dotRef}
-                      cx="-200" cy="-200" r="5"
-                      fill="hsl(var(--primary))"
-                      style={{
-                        opacity: 0,
-                        filter: "drop-shadow(0 0 5px hsl(var(--primary) / 0.55))",
-                      }}
-                    />
+                    <circle ref={dotRef} cx="-200" cy="-200" r="5" fill="hsl(var(--primary))" style={{ opacity: 0, filter: "drop-shadow(0 0 5px hsl(var(--primary) / 0.55))" }} />
                   )}
                 </svg>
               )}
-
-              {/* 2×2 shah-mat grid — z-10 above SVG */}
               <div ref={gridRef} className="grid grid-cols-2 gap-8">
                 <StepCard {...steps[0]} highlighted={isHighlighted(0)} style={{ marginTop: STEP_OFFSETS[0] }} />
                 <StepCard {...steps[1]} highlighted={isHighlighted(1)} style={{ marginTop: STEP_OFFSETS[1] }} />
@@ -1024,37 +991,32 @@ function HowItWorksSection() {
             </div>
           </div>
 
-          {/* ── MOBILE: Vertical stack + S-curve dotted connectors ── */}
-          <div className="md:hidden flex flex-col gap-0">
-            {steps.map(({ num, title, desc, image }, i) => (
-              <React.Fragment key={num}>
-                <StepCard num={num} title={title} desc={desc} image={image} highlighted={isHighlighted(i)} />
-                {i < steps.length - 1 && (
-                  <div className="flex justify-center" aria-hidden="true">
-                    <svg width="28" height="56" overflow="visible">
-                      <path
-                        d="M 14,0 C 14,0 4,14 14,28 C 24,42 14,56 14,56"
-                        fill="none"
-                        stroke="hsl(var(--primary) / 0.22)"
-                        strokeWidth="2"
-                        strokeDasharray="4 6"
-                        strokeLinecap="round"
-                      />
-                      {!reducedMotion && isHighlighted(i) && (
-                        <circle
-                          cx="14" cy="28" r="4.5"
-                          fill="hsl(var(--primary))"
-                          style={{ filter: "drop-shadow(0 0 4px hsl(var(--primary) / 0.5))" }}
-                        >
-                          <animate attributeName="r" values="4.5;6;4.5" dur="1.4s" repeatCount="indefinite" />
-                          <animate attributeName="opacity" values="0.85;1;0.85" dur="1.4s" repeatCount="indefinite" />
-                        </circle>
-                      )}
-                    </svg>
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
+          {/* ── MOBILE: 2 columns grid + vertical connector ── */}
+          <div className="md:hidden">
+            <div className="grid grid-cols-2 gap-3">
+              {steps.map(({ num, title, desc, image }, i) => (
+                <StepCard key={num} num={num} title={title} desc={desc} image={image} highlighted={isHighlighted(i)} />
+              ))}
+            </div>
+            {/* Simple vertical flow indicator below the grid */}
+            <div className="flex items-center justify-center gap-2 mt-4" aria-hidden="true">
+              {steps.map((s, i) => (
+                <React.Fragment key={s.num}>
+                  <span
+                    className="text-[10px] font-bold rounded-full px-2 py-0.5 transition-all duration-300"
+                    style={{
+                      backgroundColor: isHighlighted(i) ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.15)",
+                      color: isHighlighted(i) ? "hsl(var(--primary-foreground))" : "hsl(var(--primary) / 0.5)",
+                    }}
+                  >
+                    {s.num}
+                  </span>
+                  {i < steps.length - 1 && (
+                    <span className="text-muted-foreground/40 text-xs">→</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
 
         </div>
@@ -1078,30 +1040,30 @@ const features = [
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
   return (
-    <section id="seccion-5-incluido" className="py-6 px-6">
+    <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-5xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Incluido
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-10 items-center">
-            {/* Mockup placeholder */}
-            <div className="flex-shrink-0 w-full md:w-80 h-72 md:h-96 rounded-2xl bg-muted border border-border flex items-center justify-center">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+            {/* Mockup placeholder — hidden on mobile to save space */}
+            <div className="hidden md:flex flex-shrink-0 w-full md:w-80 h-72 md:h-96 rounded-2xl bg-muted border border-border items-center justify-center">
               <p className="text-muted-foreground text-sm">[ Product mockup ]</p>
             </div>
 
-            {/* Features como pills ordenados en columna + CTA */}
-            <div className="flex-1 flex flex-col gap-2.5">
+            {/* Features como pills + CTA */}
+            <div className="flex-1 flex flex-col gap-2">
               {features.map((f) => (
                 <span
                   key={f}
-                  className="inline-flex items-center gap-3 bg-primary/8 hover:bg-primary/15 text-primary border border-primary/20 rounded-full px-5 py-2.5 text-sm font-medium transition-colors cursor-default"
+                  className="inline-flex items-center gap-2.5 md:gap-3 bg-primary/8 hover:bg-primary/15 text-primary border border-primary/20 rounded-full px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-sm font-medium transition-colors cursor-default"
                 >
-                  <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
+                  <CheckCircle2 className="h-3.5 w-3.5 md:h-4 md:w-4 flex-shrink-0" />
                   {f}
                 </span>
               ))}
@@ -1109,7 +1071,7 @@ function FeaturesSection() {
                 <Button
                   onClick={scrollToForm}
                   size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 text-sm md:text-base font-medium shadow-md w-full sm:w-auto"
                 >
                   Jugar con Kleia →
                 </Button>
@@ -1143,37 +1105,42 @@ function CellValue({ val }: { val: boolean | string }) {
 // ─── S6 · Comparativa ────────────────────────────────────────────────────────
 function ComparisonSection() {
   return (
-    <section id="seccion-6-comparativa" className="py-6 px-6">
+    <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10 overflow-x-auto">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Comparativa
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
           </div>
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr>
-                <th className="text-left p-4 text-muted-foreground font-medium">Funcionalidad</th>
-                <th className="p-4 text-center text-muted-foreground font-medium">Excel / Word</th>
-                <th className="p-4 text-center text-muted-foreground font-medium">Avena / Nutriind</th>
-                <th className="p-4 text-center text-muted-foreground font-medium">Plan artesanal</th>
-                <th className="p-4 text-center text-success font-semibold bg-success/10 rounded-t-xl">Kleia</th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
-                <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
-                  <td className="p-4 text-foreground/80">{feature}</td>
-                  <td className="p-4 text-center"><CellValue val={excel} /></td>
-                  <td className="p-4 text-center"><CellValue val={avena} /></td>
-                  <td className="p-4 text-center"><CellValue val={artesanal} /></td>
-                  <td className="p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {/* Table wrapper — horizontal scroll on mobile */}
+          <div className="-mx-5 md:mx-0 overflow-x-auto">
+            <div className="min-w-[540px] md:min-w-0 px-5 md:px-0">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr>
+                    <th className="text-left p-2.5 md:p-4 text-muted-foreground font-medium text-xs md:text-sm">Funcionalidad</th>
+                    <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Excel</th>
+                    <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Avena</th>
+                    <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Artesanal</th>
+                    <th className="p-2.5 md:p-4 text-center text-success font-semibold bg-success/10 rounded-t-xl text-xs md:text-sm">Kleia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
+                    <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
+                      <td className="p-2.5 md:p-4 text-foreground/80 text-xs md:text-sm">{feature}</td>
+                      <td className="p-2.5 md:p-4 text-center"><CellValue val={excel} /></td>
+                      <td className="p-2.5 md:p-4 text-center"><CellValue val={avena} /></td>
+                      <td className="p-2.5 md:p-4 text-center"><CellValue val={artesanal} /></td>
+                      <td className="p-2.5 md:p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1373,32 +1340,32 @@ function FitSection() {
   const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
 
   return (
-    <section id="seccion-7-encaje" className="py-6 px-6">
+    <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-5xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-8 lg:p-12">
           {/* Header */}
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Encaje
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">Elige tu perfil</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">Elige tu perfil</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
               Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.
             </p>
           </div>
 
-          {/* Cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Cards grid — single column on mobile (flip cards are tall) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {archetypes.map((arch, i) => (
               <FlipCard key={i} arch={arch} onOpenModal={() => setModalIdx(i)} />
             ))}
           </div>
 
           {/* Global CTA */}
-          <div className="text-center mt-10">
+          <div className="text-center mt-6 md:mt-10">
             <button
               onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 md:px-8 py-3 md:py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-sm md:text-base"
             >
               Agendar demo →
             </button>
@@ -1488,29 +1455,29 @@ const fitNoBullets = [
 
 function FitForYouSection() {
   return (
-    <section id="seccion-7b-para-ti" className="py-6 px-6">
+    <section id="seccion-7b-para-ti" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-5xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-8 lg:p-12">
           {/* Header */}
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               ¿Es para ti?
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">¿Kleia es para ti?</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">En 10 segundos lo tienes claro.</p>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">¿Kleia es para ti?</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">En 10 segundos lo tienes claro.</p>
           </div>
 
           {/* Two-column cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-stretch">
             {/* SÍ card */}
-            <div className="group rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-white p-7 shadow-sm transition-all duration-200 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-md motion-safe:hover:border-primary/40 flex flex-col">
-              <div className="flex items-center gap-2 mb-5">
+            <div className="group rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-white p-5 md:p-7 shadow-sm transition-all duration-200 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-md motion-safe:hover:border-primary/40 flex flex-col">
+              <div className="flex items-center gap-2 mb-4 md:mb-5">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-success/15 text-success">
                   <Check className="h-4 w-4" />
                 </span>
-                <h3 className="text-xl font-bold font-serif text-foreground">SÍ, si…</h3>
+                <h3 className="text-lg md:text-xl font-bold font-serif text-foreground">SÍ, si…</h3>
               </div>
-              <ul className="space-y-3 flex-1 mb-6">
+              <ul className="space-y-2.5 md:space-y-3 flex-1 mb-5 md:mb-6">
                 {fitYesBullets.map((b, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80 leading-relaxed">
                     <span className="mt-[6px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-success" />
@@ -1518,8 +1485,7 @@ function FitForYouSection() {
                   </li>
                 ))}
               </ul>
-              {/* CTA block */}
-              <div className="mt-auto pt-5 border-t border-primary/15">
+              <div className="mt-auto pt-4 md:pt-5 border-t border-primary/15">
                 <button
                   onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
                   className="w-full py-2.5 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
@@ -1533,14 +1499,14 @@ function FitForYouSection() {
             </div>
 
             {/* NO card */}
-            <div className="group rounded-2xl border border-border bg-muted/30 p-7 shadow-sm transition-all duration-200 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-md motion-safe:hover:border-border/80 flex flex-col">
-              <div className="flex items-center gap-2 mb-5">
+            <div className="group rounded-2xl border border-border bg-muted/30 p-5 md:p-7 shadow-sm transition-all duration-200 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-md motion-safe:hover:border-border/80 flex flex-col">
+              <div className="flex items-center gap-2 mb-4 md:mb-5">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-muted-foreground">
                   <X className="h-4 w-4" />
                 </span>
-                <h3 className="text-xl font-bold font-serif text-foreground">NO, si…</h3>
+                <h3 className="text-lg md:text-xl font-bold font-serif text-foreground">NO, si…</h3>
               </div>
-              <ul className="space-y-3 flex-1 mb-6">
+              <ul className="space-y-2.5 md:space-y-3 flex-1 mb-5 md:mb-6">
                 {fitNoBullets.map((b, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80 leading-relaxed">
                     <span className="mt-[6px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-muted-foreground/50" />
@@ -1548,18 +1514,17 @@ function FitForYouSection() {
                   </li>
                 ))}
               </ul>
-              {/* Microcopy only — no CTA button */}
-              <p className="mt-auto pt-5 border-t border-border text-xs text-muted-foreground italic leading-relaxed">
+              <p className="mt-auto pt-4 md:pt-5 border-t border-border text-xs text-muted-foreground italic leading-relaxed">
                 Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.
               </p>
             </div>
           </div>
 
           {/* Global CTA */}
-          <div className="text-center mt-10">
+          <div className="text-center mt-6 md:mt-10">
             <button
               onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 md:px-8 py-3 md:py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-sm md:text-base"
             >
               Agendar demo →
             </button>
@@ -1594,65 +1559,60 @@ Así nació Kleia: un asistente para nutricionistas que te ayuda a crear menús 
 
 function StorySection() {
   return (
-    <section id="seccion-7c-historia" className="py-6 px-6">
+    <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-5xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-8 lg:p-12">
           {/* Header */}
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Por qué existe
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">La historia detrás de Kleia</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">La historia detrás de Kleia</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
               Nació para quitarte trabajo invisible: el que empieza cuando termina la consulta.
             </p>
           </div>
 
           {/* Two-column layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-14 items-start mb-6 md:mb-10">
             {/* Left: story text */}
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               {storyText.split("\n\n").map((para, i) => (
-                <p key={i} className="text-sm md:text-base text-foreground/80 leading-relaxed">
+                <p key={i} className="text-sm text-foreground/80 leading-relaxed">
                   {para}
                 </p>
               ))}
             </div>
 
-            {/* Right: photo stack */}
-            <div className="flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x md:snap-none">
-              {storyPhotos.map(({ src, caption }, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 snap-center w-56 md:w-full rounded-2xl border border-border/60 overflow-hidden shadow-sm transition-shadow duration-200 hover:shadow-md bg-muted/20"
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={src}
-                      alt={caption}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
+            {/* Right: photo strip — horizontal scroll on mobile */}
+            <div className="-mx-5 md:mx-0 px-5 md:px-0">
+              <div className="flex flex-row md:flex-col gap-3 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x md:snap-none">
+                {storyPhotos.map(({ src, caption }, i) => (
+                  <div
+                    key={i}
+                    className="flex-shrink-0 snap-center w-48 md:w-full rounded-xl border border-border/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-muted/20"
+                  >
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img src={src} alt={caption} className="w-full h-full object-cover" loading="lazy" />
+                    </div>
+                    <p className="px-3 py-2 text-xs text-muted-foreground italic leading-snug">{caption}</p>
                   </div>
-                  <p className="px-3 py-2 text-xs text-muted-foreground italic leading-snug">
-                    {caption}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Mini-cards row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-            <div className="rounded-2xl border border-border/60 bg-primary/5 p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-10">
+            <div className="rounded-xl md:rounded-2xl border border-border/60 bg-primary/5 p-4 md:p-5">
               <h3 className="font-semibold text-foreground mb-1.5 text-sm">✨ La chispa</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                 Ver a gente haciendo la lista de la compra a mano para poder cumplir el plan.
               </p>
             </div>
-            <div className="rounded-2xl border border-border/60 bg-muted/30 p-5">
+            <div className="rounded-xl md:rounded-2xl border border-border/60 bg-muted/30 p-4 md:p-5">
               <h3 className="font-semibold text-foreground mb-1.5 text-sm">🧠 Nuestro enfoque</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                 No queríamos 'otro software'. Queríamos un asistente que te quite lo pesado sin quitarte el criterio.
               </p>
             </div>
@@ -1662,7 +1622,7 @@ function StorySection() {
           <div className="text-center">
             <button
               onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 md:px-8 py-3 md:py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-sm md:text-base"
             >
               Enséñame cómo sería
             </button>
@@ -1679,39 +1639,39 @@ function StorySection() {
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
-    <section id="seccion-8-extras" className="py-6 px-6">
+    <section id="seccion-8-extras" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Extras
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">Bonos incluidos en el piloto</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Bonos incluidos en el piloto</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 mb-6 md:mb-10">
             {[
               { icon: Gift, title: "Bono 1: Setup asistido", desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo. Sin perderte en la herramienta." },
               { icon: MessageSquare, title: "Bono 2: Canal de Expertos", desc: "Acceso a un canal privado donde podés consultar dudas de nutrición con otros profesionales y con el equipo de Kleia." },
               { icon: ShieldCheck, title: "Garantía: Cancelación simple", desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelás sin preguntas. Sin contratos largos ni penalidades." },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="text-center p-6 rounded-2xl bg-background">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Icon className="h-6 w-6 text-primary" />
+              <div key={title} className="text-center p-4 md:p-6 rounded-2xl bg-background">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <Icon className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                 </div>
-                <h3 className="font-semibold mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                <h3 className="font-semibold mb-1.5 md:mb-2 text-sm md:text-base">{title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4">
             {[
               { icon: Star, text: "Construido a partir de 12 entrevistas" },
               { icon: CheckCircle2, text: "Cohorte piloto activa ahora" },
               { icon: Leaf, text: "Piloto cerrado: 10 plazas" },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-2 bg-primary/10 rounded-full px-4 py-2">
-                <Icon className="h-4 w-4 text-primary" />
-                <span className="text-xs text-primary font-medium">{text}</span>
+              <div key={text} className="flex items-center gap-2 bg-primary/10 rounded-full px-3 md:px-4 py-1.5 md:py-2">
+                <Icon className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+                <span className="text-[11px] md:text-xs text-primary font-medium">{text}</span>
               </div>
             ))}
           </div>
@@ -1724,20 +1684,20 @@ function BonusesSection() {
 // ─── S9 · CTA intermedio ─────────────────────────────────────────────────────
 function MidCTA() {
   return (
-    <section id="seccion-9-cta" className="py-6 px-6">
+    <section id="seccion-9-cta" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-primary rounded-3xl shadow-sm px-10 py-16 text-center text-primary-foreground">
-          <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4">
+        <div className="bg-primary rounded-2xl md:rounded-3xl shadow-sm px-6 md:px-10 py-10 md:py-16 text-center text-primary-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-3 md:mb-4">
             Las plazas del piloto son limitadas
           </h2>
-          <p className="text-primary-foreground/80 mb-8 text-lg leading-relaxed max-w-xl mx-auto">
+          <p className="text-primary-foreground/80 mb-6 md:mb-8 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
             Solo hay 10 lugares en esta primera cohorte. Si querés ser parte, agendá una demo ahora
             y te contamos cómo funciona sin compromiso.
           </p>
           <Button
             onClick={scrollToForm}
             size="lg"
-            className="bg-white text-primary hover:bg-white/90 rounded-full px-8 font-medium shadow-md"
+            className="bg-white text-primary hover:bg-white/90 rounded-full px-6 md:px-8 font-medium shadow-md text-sm md:text-base"
           >
             Agendar demo →
           </Button>
@@ -1758,28 +1718,28 @@ function DemoForm() {
   };
 
   return (
-    <section id="agendar-demo" className="py-6 px-6">
+    <section id="agendar-demo" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-lg mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-8">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-10">
+          <div className="text-center mb-6 md:mb-8">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Demo
             </Badge>
-            <h2 className="text-3xl font-bold font-serif">Agendá tu demo</h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-serif">Agendá tu demo</h2>
             <p className="text-muted-foreground mt-2 text-sm">
               Completá el formulario y te contactamos en menos de 24 horas.
             </p>
           </div>
           {submitted ? (
-            <div className="p-10 text-center rounded-2xl bg-primary/5">
-              <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-bold font-serif mb-2">¡Gracias, {form.name}!</h3>
+            <div className="p-6 md:p-10 text-center rounded-2xl bg-primary/5">
+              <CheckCircle2 className="h-10 w-10 md:h-12 md:w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-lg md:text-xl font-bold font-serif mb-2">¡Gracias, {form.name}!</h3>
               <p className="text-muted-foreground text-sm">
                 Recibimos tu solicitud. Nos comunicamos con vos a <strong>{form.email}</strong> en las próximas 24 horas.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
               <div className="space-y-1.5">
                 <Label htmlFor="name" className="text-sm font-medium">Nombre</Label>
                 <Input id="name" placeholder="Tu nombre" required value={form.name}
@@ -1841,22 +1801,22 @@ const faqs = [
 // ─── S11 · FAQ ───────────────────────────────────────────────────────────────
 function FAQSection() {
   return (
-    <section id="seccion-11-faq" className="py-6 px-6">
+    <section id="seccion-11-faq" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-3xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+          <div className="text-center mb-6 md:mb-10">
+            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               FAQ
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">Preguntas frecuentes</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Preguntas frecuentes</h2>
           </div>
           <Accordion type="single" collapsible className="space-y-2">
             {faqs.map(({ q, a }, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-2xl px-4">
-                <AccordionTrigger className="font-medium text-sm text-left hover:no-underline">
+              <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-xl md:rounded-2xl px-3 md:px-4">
+                <AccordionTrigger className="font-medium text-xs md:text-sm text-left hover:no-underline py-3 md:py-4">
                   {q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
+                <AccordionContent className="text-muted-foreground text-xs md:text-sm leading-relaxed">
                   {a}
                 </AccordionContent>
               </AccordionItem>
@@ -1871,27 +1831,27 @@ function FAQSection() {
 // ─── S12 · Footer CTA ────────────────────────────────────────────────────────
 function FooterCTA() {
   return (
-    <footer id="seccion-12-footer" className="py-6 px-6 pb-12">
+    <footer id="seccion-12-footer" className="py-4 md:py-6 px-4 md:px-6 pb-10 md:pb-12">
       <div className="container max-w-4xl mx-auto">
-        <div className="bg-foreground rounded-3xl shadow-sm px-10 py-16 text-center text-background">
-          <div className="flex items-center justify-center mb-6">
-            <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto brightness-0 invert" />
+        <div className="bg-foreground rounded-2xl md:rounded-3xl shadow-sm px-6 md:px-10 py-10 md:py-16 text-center text-background">
+          <div className="flex items-center justify-center mb-5 md:mb-6">
+            <img src={kleiaLogo} alt="Kleia" className="h-7 md:h-8 w-auto brightness-0 invert" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 leading-tight">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-3 md:mb-4 leading-tight">
             Recuperá tu tiempo. Entregá planes que te enorgullezcan.
           </h2>
-          <p className="text-background/70 mb-8 leading-relaxed max-w-xl mx-auto">
+          <p className="text-background/70 mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-sm md:text-base">
             Kleia está en piloto cerrado. Solo 10 plazas disponibles. Agendá una demo sin compromiso
             y descubrí si Kleia es para vos.
           </p>
           <Button
             onClick={scrollToForm}
             size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 font-medium shadow-md text-sm md:text-base"
           >
             Agendar demo →
           </Button>
-          <p className="mt-10 text-xs text-background/40">
+          <p className="mt-8 md:mt-10 text-xs text-background/40">
             © 2025 Kleia · Hecho con amor para nutricionistas
           </p>
         </div>
