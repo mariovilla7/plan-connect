@@ -1203,6 +1203,71 @@ function StorySection() {
   );
 }
 
+// ─── S7d · En una frase ───────────────────────────────────────────────────────
+const storySnapshotCards = [
+  {
+    icon: "🧠",
+    title: "La obsesión",
+    text: "Quitar fricción invisible: la que te roba tiempo y cabeza sin que te des cuenta.",
+  },
+  {
+    icon: "🔁",
+    title: "El patrón",
+    text: "Lo vi repetirse: menús, ajustes, mensajes… y el trabajo se cuela al finde.",
+  },
+  {
+    icon: "🛒",
+    title: "La chispa",
+    text: "Una familia haciendo la lista de la compra a mano. Ahí se encendió todo.",
+  },
+];
+
+function StorySnapshotSection() {
+  return (
+    <section id="seccion-7d-snapshot" className="py-6 px-6">
+      <div className="container max-w-5xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">En una frase</h2>
+            <p className="text-muted-foreground max-w-lg mx-auto">
+              Kleia existe para que el plan no se te coma la semana.
+            </p>
+          </div>
+
+          {/* 3 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+            {storySnapshotCards.map(({ icon, title, text }) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-border/60 bg-muted/20 p-6 flex flex-col gap-3 transition-shadow duration-200 hover:shadow-md"
+              >
+                <span className="text-3xl leading-none">{icon}</span>
+                <h3 className="font-semibold text-foreground text-base">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Mini-CTA */}
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-4">Si te suena, te lo enseño con un caso real.</p>
+            <button
+              onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-7 py-3 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+            >
+              Enséñame cómo sería
+            </button>
+            <p className="text-xs text-muted-foreground italic mt-2">
+              Acceso por invitación · Piloto cerrado: 10 plazas
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
@@ -1442,6 +1507,7 @@ export default function Index() {
         <FadeSection><FitSection /></FadeSection>
         <FadeSection><FitForYouSection /></FadeSection>
         <FadeSection><StorySection /></FadeSection>
+        <FadeSection><StorySnapshotSection /></FadeSection>
         <FadeSection><BonusesSection /></FadeSection>
         <FadeSection><MidCTA /></FadeSection>
         <FadeSection><DemoForm /></FadeSection>
