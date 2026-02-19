@@ -755,238 +755,308 @@ const steps = [
   },
 ];
 
+// Shah-mat vertical offsets per card (desktop, px)
+const STEP_OFFSETS = [0, 36, -36, 0];
+
 // ─── S4 · Cómo funciona ──────────────────────────────────────────────────────
 function HowItWorksSection() {
-  const { ref, inView } = useInView(0.25);
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+  const basePathRef = React.useRef<SVGPathElement>(null);
+  const progressPathRef = React.useRef<SVGPathElement>(null);
+  const dotRef = React.useRef<SVGCircleElement>(null);
+
   const [activeStep, setActiveStep] = useState(-1);
-  const [dotPlayed, setDotPlayed] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [svgPath, setSvgPath] = useState("");
+  const [svgDims, setSvgDims] = useState({ w: 800, h: 600 });
 
   const reducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // When section enters view, run the dot animation once
-  useEffect(() => {
-    if (!inView || dotPlayed || reducedMotion) {
-      if (reducedMotion && inView) setActiveStep(3); // show all highlighted if reduced motion
-      return;
-    }
-    setActiveStep(-1);
-    const TOTAL_DURATION = 2000; // ms across all 4 steps
-    const stepDelay = TOTAL_DURATION / 4;
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    steps.forEach((_, i) => {
-      timers.push(setTimeout(() => setActiveStep(i), stepDelay * i + 200));
+  // ── Compute S-curve SVG path from actual card DOM positions ───────────────
+  function computePath(): string {
+    const grid = gridRef.current;
+    if (!grid) return "";
+    const cards = Array.from(grid.children) as HTMLElement[];
+    if (cards.length < 4) return "";
+    const gridRect = grid.getBoundingClientRect();
+
+    // Anchor point: top-center of step number area (~18% from card top)
+    const pts = cards.map((card) => {
+      const r = card.getBoundingClientRect();
+      return {
+        x: r.left - gridRect.left + r.width / 2,
+        y: r.top - gridRect.top + r.height * 0.18,
+      };
     });
-    // Reset active after animation so all cards stay highlighted at final state
-    timers.push(setTimeout(() => setActiveStep(4), TOTAL_DURATION + 400));
-    setDotPlayed(true);
-    return () => timers.forEach(clearTimeout);
-  }, [inView, dotPlayed, reducedMotion]);
 
-  // Reset on re-entry: allow replay with a cooldown
-  const prevInView = React.useRef(false);
+    const [p0, p1, p2, p3] = pts;
+
+    // Segment 01→02: smooth rightward arc
+    const cx12 = (p0.x + p1.x) / 2;
+    const seg1 = `C ${cx12},${p0.y} ${cx12},${p1.y} ${p1.x},${p1.y}`;
+
+    // Segment 02→03: diagonal S drop
+    const cy23 = (p1.y + p2.y) / 2;
+    const seg2 = `C ${p1.x},${cy23} ${p2.x},${cy23} ${p2.x},${p2.y}`;
+
+    // Segment 03→04: smooth rightward arc upward
+    const cx34 = (p2.x + p3.x) / 2;
+    const seg3 = `C ${cx34},${p2.y} ${cx34},${p3.y} ${p3.x},${p3.y}`;
+
+    return `M ${p0.x},${p0.y} ${seg1} ${seg2} ${seg3}`;
+  }
+
+  function refreshSvg() {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const r = grid.getBoundingClientRect();
+    setSvgDims({ w: r.width, h: r.height + 80 });
+    setSvgPath(computePath());
+  }
+
+  // Recompute on mount + resize
   useEffect(() => {
-    if (!inView && prevInView.current) {
-      // User scrolled away — allow one more replay after 3s cooldown
-      const t = setTimeout(() => setDotPlayed(false), 3000);
-      return () => clearTimeout(t);
-    }
-    prevInView.current = inView;
-  }, [inView]);
+    const t = setTimeout(refreshSvg, 120);
+    window.addEventListener("resize", refreshSvg);
+    return () => { clearTimeout(t); window.removeEventListener("resize", refreshSvg); };
+  }, []);
 
-  const isHighlighted = (i: number) =>
-    reducedMotion ? true : activeStep >= i;
+  // ── IntersectionObserver — play once ─────────────────────────────────────
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasPlayed) {
+          refreshSvg();
+          setTimeout(() => runAnimation(), 150);
+          setHasPlayed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasPlayed]);
+
+  // ── Animation engine ──────────────────────────────────────────────────────
+  function runAnimation() {
+    if (reducedMotion) { setActiveStep(4); return; }
+
+    const basePath = basePathRef.current;
+    const progressPath = progressPathRef.current;
+    const dot = dotRef.current;
+    if (!basePath || !progressPath || !dot) return;
+
+    const totalLength = basePath.getTotalLength();
+    if (!totalLength) return;
+
+    // A) Line draw
+    const dashArray = "5 8";
+    basePath.style.strokeDasharray = dashArray;
+    basePath.style.strokeDashoffset = String(totalLength * 4);
+    basePath.style.transition = "none";
+    void basePath.getBoundingClientRect();
+    basePath.style.transition = "stroke-dashoffset 2.0s cubic-bezier(0.65,0,0.35,1)";
+    basePath.style.strokeDashoffset = "0";
+
+    // B+C) Dot + progress trail
+    const DOT_DURATION = 2400;
+    const DOT_DELAY = 150;
+    progressPath.style.strokeDasharray = String(totalLength);
+    progressPath.style.strokeDashoffset = String(totalLength);
+
+    const stepFractions = [0.05, 0.38, 0.65, 0.93];
+    let nextStep = 0;
+    const startTime = performance.now() + DOT_DELAY;
+    let rafId: number;
+
+    function frame(now: number) {
+      const elapsed = now - startTime;
+      if (elapsed < 0) { rafId = requestAnimationFrame(frame); return; }
+
+      const t = Math.min(elapsed / DOT_DURATION, 1);
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const dist = eased * totalLength;
+
+      const pt = basePath.getPointAtLength(dist);
+      dot.setAttribute("cx", String(pt.x));
+      dot.setAttribute("cy", String(pt.y));
+      dot.style.opacity = "1";
+
+      progressPath.style.strokeDashoffset = String(totalLength - dist);
+
+      // Pulse radius
+      dot.setAttribute("r", String(5 + Math.sin(elapsed / 200) * 1.2));
+
+      while (nextStep < stepFractions.length && eased >= stepFractions[nextStep]) {
+        setActiveStep(nextStep);
+        nextStep++;
+      }
+
+      if (t < 1) {
+        rafId = requestAnimationFrame(frame);
+      } else {
+        setActiveStep(4);
+        dot.setAttribute("r", "5");
+      }
+    }
+
+    rafId = requestAnimationFrame(frame);
+  }
+
+  const isHighlighted = (i: number) => reducedMotion ? true : activeStep >= i;
+
+  // ── Card sub-component ────────────────────────────────────────────────────
+  function StepCard({
+    num, title, desc, image, highlighted, style,
+  }: {
+    num: string; title: string; desc: string; image: string | null;
+    highlighted: boolean; style?: React.CSSProperties;
+  }) {
+    return (
+      <div
+        className="relative z-10 flex flex-col p-7 rounded-2xl transition-all duration-500"
+        style={{
+          backgroundColor: highlighted ? "hsl(var(--primary) / 0.06)" : "hsl(var(--card))",
+          borderWidth: "1.5px",
+          borderStyle: "solid",
+          borderColor: highlighted ? "hsl(var(--primary) / 0.40)" : "hsl(var(--border))",
+          boxShadow: highlighted
+            ? "0 4px 24px -4px hsl(var(--primary) / 0.14), 0 0 0 3px hsl(var(--primary) / 0.07)"
+            : "0 1px 6px hsl(var(--foreground) / 0.04)",
+          ...style,
+        }}
+      >
+        <div className="flex items-start justify-between mb-6">
+          <span
+            className="text-5xl font-bold font-serif leading-none transition-colors duration-500"
+            style={{ color: highlighted ? "hsl(var(--primary) / 0.40)" : "hsl(var(--primary) / 0.15)" }}
+          >
+            {num}
+          </span>
+          <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
+            {image ? (
+              <img src={image} alt={title} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-muted-foreground/30 text-[10px] font-medium">img</span>
+            )}
+          </div>
+        </div>
+        <div className="mt-auto">
+          <h3 className="font-semibold mb-2 text-base text-foreground">{title}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section
-      id="seccion-4-flujo"
-      className="py-6 px-6"
-      ref={ref as React.RefObject<HTMLElement>}
-    >
+    <section id="seccion-4-flujo" className="py-6 px-6" ref={sectionRef}>
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
-          <div className="text-center mb-10">
+          <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Flujo
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">Cómo funciona</h2>
           </div>
 
-          {/* ── Desktop: 4 cards en fila con conector SVG horizontal ── */}
-          <div className="hidden md:block relative">
-            {/* SVG connector row — sits between top padding and card content */}
-            <div className="absolute left-0 right-0 top-[44px] h-0 pointer-events-none z-10 px-[calc(12.5%+28px)]">
-              <svg
-                className="w-full overflow-visible"
-                height="2"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                {/* Dotted line */}
-                <line
-                  x1="0" y1="1" x2="100%" y2="1"
-                  stroke="hsl(var(--primary) / 0.25)"
-                  strokeWidth="2"
-                  strokeDasharray="4 6"
-                  strokeLinecap="round"
-                />
-                {/* Traveling dot — animates from left to right */}
-                {!reducedMotion && inView && (
-                  <circle r="5" fill="hsl(var(--primary))" opacity="0.85">
-                    <animateMotion
-                      dur="2s"
-                      begin="0.2s"
-                      fill="freeze"
-                      calcMode="spline"
-                      keySplines="0.4 0 0.2 1"
-                      keyTimes="0;1"
-                    >
-                      <mpath>
-                        <animate
-                          attributeName="d"
-                          from="M 0,0"
-                          to="M 100%,0"
-                          dur="0s"
-                        />
-                      </mpath>
-                    </animateMotion>
-                    {/* Fallback: CSS animation on cx */}
-                    <animate
-                      attributeName="cx"
-                      from="0"
-                      to="100%"
-                      dur="2s"
-                      begin="0.2s"
-                      fill="freeze"
-                      calcMode="spline"
-                      keySplines="0.25 0.1 0.25 1"
-                    />
-                    <animate
-                      attributeName="cy"
-                      values="1;1"
-                      dur="2s"
-                      begin="0.2s"
-                      fill="freeze"
-                    />
-                    {/* Pulse */}
-                    <animate
-                      attributeName="r"
-                      values="5;7;5"
-                      dur="0.6s"
-                      begin="0.2s"
-                      repeatCount="3"
-                    />
-                    <animate
-                      attributeName="opacity"
-                      values="0.85;1;0.85"
-                      dur="0.6s"
-                      begin="0.2s"
-                      repeatCount="3"
-                    />
-                  </circle>
-                )}
-              </svg>
-            </div>
+          {/* ── DESKTOP: Shah-mat 2×2 + SVG S-curve overlay ── */}
+          <div className="hidden md:block">
+            <div className="relative" style={{ paddingBottom: 48 }}>
 
-            <div className="grid grid-cols-4 gap-6 relative">
-              {steps.map(({ num, title, desc, image }, i) => (
-                <div
-                  key={num}
-                  className="flex flex-col items-start p-7 rounded-2xl aspect-square justify-between transition-all duration-500"
-                  style={{
-                    backgroundColor: isHighlighted(i)
-                      ? "hsl(var(--primary) / 0.06)"
-                      : "hsl(var(--background))",
-                    borderWidth: "1.5px",
-                    borderStyle: "solid",
-                    borderColor: isHighlighted(i)
-                      ? "hsl(var(--primary) / 0.35)"
-                      : "hsl(var(--border))",
-                    boxShadow: isHighlighted(i)
-                      ? "0 0 0 3px hsl(var(--primary) / 0.08)"
-                      : "none",
-                  }}
+              {/* SVG overlay — sits behind cards (z-0) */}
+              {svgPath && (
+                <svg
+                  className="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"
+                  aria-hidden="true"
+                  style={{ width: svgDims.w, height: svgDims.h }}
                 >
-                  {/* Image slot */}
-                  <div className="flex w-full justify-between items-start">
-                    <span className="text-5xl font-bold font-serif text-primary/20">{num}</span>
-                    <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
-                      {image ? (
-                        <img src={image} alt={title} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-muted-foreground/40 text-xs">img</span>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2 text-base">{title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              ))}
+                  {/* Base dotted path — grey-blue, drawn in */}
+                  <path
+                    ref={basePathRef}
+                    d={svgPath}
+                    fill="none"
+                    stroke="hsl(var(--primary) / 0.20)"
+                    strokeWidth="2"
+                    strokeDasharray="5 8"
+                    strokeLinecap="round"
+                    style={{ strokeDashoffset: reducedMotion ? "0" : "99999" }}
+                  />
+                  {/* Progress trail — accent, revealed as dot travels */}
+                  <path
+                    ref={progressPathRef}
+                    d={svgPath}
+                    fill="none"
+                    stroke="hsl(var(--primary) / 0.32)"
+                    strokeWidth="2.5"
+                    strokeDasharray="5 8"
+                    strokeLinecap="round"
+                    style={{ strokeDashoffset: "99999" }}
+                  />
+                  {/* Traveling dot */}
+                  {!reducedMotion && (
+                    <circle
+                      ref={dotRef}
+                      cx="-200" cy="-200" r="5"
+                      fill="hsl(var(--primary))"
+                      style={{
+                        opacity: 0,
+                        filter: "drop-shadow(0 0 5px hsl(var(--primary) / 0.55))",
+                      }}
+                    />
+                  )}
+                </svg>
+              )}
+
+              {/* 2×2 shah-mat grid — z-10 above SVG */}
+              <div ref={gridRef} className="grid grid-cols-2 gap-8">
+                <StepCard {...steps[0]} highlighted={isHighlighted(0)} style={{ marginTop: STEP_OFFSETS[0] }} />
+                <StepCard {...steps[1]} highlighted={isHighlighted(1)} style={{ marginTop: STEP_OFFSETS[1] }} />
+                <StepCard {...steps[2]} highlighted={isHighlighted(2)} style={{ marginTop: STEP_OFFSETS[2] }} />
+                <StepCard {...steps[3]} highlighted={isHighlighted(3)} style={{ marginTop: STEP_OFFSETS[3] }} />
+              </div>
             </div>
           </div>
 
-          {/* ── Mobile / Tablet: cards apiladas con conector vertical ── */}
+          {/* ── MOBILE: Vertical stack + S-curve dotted connectors ── */}
           <div className="md:hidden flex flex-col gap-0">
             {steps.map(({ num, title, desc, image }, i) => (
               <React.Fragment key={num}>
-                <div
-                  className="flex flex-col p-6 rounded-2xl transition-all duration-500"
-                  style={{
-                    backgroundColor: isHighlighted(i)
-                      ? "hsl(var(--primary) / 0.06)"
-                      : "hsl(var(--background))",
-                    borderWidth: "1.5px",
-                    borderStyle: "solid",
-                    borderColor: isHighlighted(i)
-                      ? "hsl(var(--primary) / 0.35)"
-                      : "hsl(var(--border))",
-                    boxShadow: isHighlighted(i)
-                      ? "0 0 0 3px hsl(var(--primary) / 0.08)"
-                      : "none",
-                  }}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <span className="text-4xl font-bold font-serif text-primary/20">{num}</span>
-                    <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
-                      {image ? (
-                        <img src={image} alt={title} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-muted-foreground/40 text-xs">img</span>
-                      )}
-                    </div>
-                  </div>
-                  <h3 className="font-semibold mb-1.5 text-base">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                </div>
-
-                {/* Vertical dotted connector between cards */}
+                <StepCard num={num} title={title} desc={desc} image={image} highlighted={isHighlighted(i)} />
                 {i < steps.length - 1 && (
-                  <div className="flex justify-center items-center py-0" aria-hidden="true">
-                    <div className="relative flex flex-col items-center" style={{ height: 40 }}>
-                      <svg width="12" height="40" aria-hidden="true">
-                        <line
-                          x1="6" y1="0" x2="6" y2="40"
-                          stroke="hsl(var(--primary) / 0.25)"
-                          strokeWidth="2"
-                          strokeDasharray="4 5"
-                          strokeLinecap="round"
-                        />
-                        {!reducedMotion && inView && isHighlighted(i) && (
-                          <circle cx="6" cy="20" r="4" fill="hsl(var(--primary))" opacity="0.7">
-                            <animate attributeName="opacity" values="0.7;1;0.7" dur="1.2s" repeatCount="indefinite" />
-                            <animate attributeName="r" values="4;5.5;4" dur="1.2s" repeatCount="indefinite" />
-                          </circle>
-                        )}
-                      </svg>
-                    </div>
+                  <div className="flex justify-center" aria-hidden="true">
+                    <svg width="28" height="56" overflow="visible">
+                      <path
+                        d="M 14,0 C 14,0 4,14 14,28 C 24,42 14,56 14,56"
+                        fill="none"
+                        stroke="hsl(var(--primary) / 0.22)"
+                        strokeWidth="2"
+                        strokeDasharray="4 6"
+                        strokeLinecap="round"
+                      />
+                      {!reducedMotion && isHighlighted(i) && (
+                        <circle
+                          cx="14" cy="28" r="4.5"
+                          fill="hsl(var(--primary))"
+                          style={{ filter: "drop-shadow(0 0 4px hsl(var(--primary) / 0.5))" }}
+                        >
+                          <animate attributeName="r" values="4.5;6;4.5" dur="1.4s" repeatCount="indefinite" />
+                          <animate attributeName="opacity" values="0.85;1;0.85" dur="1.4s" repeatCount="indefinite" />
+                        </circle>
+                      )}
+                    </svg>
                   </div>
                 )}
               </React.Fragment>
             ))}
           </div>
+
         </div>
       </div>
     </section>
