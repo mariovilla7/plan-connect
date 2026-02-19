@@ -559,7 +559,7 @@ const steps = [
 function HowItWorksSection() {
   return (
     <section id="seccion-4-flujo" className="py-6 px-6">
-      <div className="container max-w-4xl mx-auto">
+      <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
