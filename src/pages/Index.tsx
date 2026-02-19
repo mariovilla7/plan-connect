@@ -703,7 +703,7 @@ function ComparisonSection() {
 
 // ─── Fit Section ──────────────────────────────────────────────────────────────
 const forWho = [
-  <>Quieres devolverte los fines de semana y las tardes: para dormir… o tomarte una <s>cerveza</s> agüita con tus amigos.</>,
+  <>Quieres devolverte los fines de semana y las tardes: para dormir… o tomarte una <s>cerveza</s>{" "}agüita con tus amigos.</>,
   <>Te encanta la variedad, pero estás harta de que entre decidir y ejecutar se te vaya la vida (y acabes repitiendo "lo de siempre").</>,
   <>Te gusta tener control, pero estás dispuesta a delegar la parte pesada a un asistente (hola, Kleia) para no recomponer todo a mano.</>,
   <>Te importa que el paciente empiece rápido: plan en 24 horas. Si pasan 48, ya es nivel "faltan señales de vida"… hasta en comisaría se preocupan.</>,
