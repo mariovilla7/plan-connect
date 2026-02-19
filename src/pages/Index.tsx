@@ -5,6 +5,9 @@ import problema2 from "@/assets/problema-2.png";
 import problema3 from "@/assets/problema-3.png";
 import problema4 from "@/assets/problema-4.png";
 import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
+import card1Img from "@/assets/kleiacard_1.png";
+import card2Img from "@/assets/kleiacard_2.png";
+import card3Img from "@/assets/kleiacard_3.png";
 import React, { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
@@ -702,64 +705,196 @@ function ComparisonSection() {
 }
 
 // ─── Fit Section ──────────────────────────────────────────────────────────────
+
 const archetypes = [
   {
     badge: "⏳ Saturada",
     badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+    image: card1Img,
     title: "La Saturada (pero responsable)",
     subtitle: "Agenda llena. Planes que se te cuelan al finde.",
+    subtitleNode: null,
     bullets: [
       "Estoy hasta arriba de hacer menús.",
       "Empiezo el plan 'cuando puedo'… y a veces se me va a días.",
       "Me prometo que este finde no… y al final cae el domingo.",
     ],
-    want: "Recuperar tardes y fines de semana sin perder control.",
     withKleia: "Plan en 10–20 min, ajustes en 1–3 min y entrega en 1 click.",
     cta: "Soy esta. Quiero demo.",
-    accent: "border-amber-300 hover:border-amber-400",
+    accentBorder: "#d97706",
     highlight: false,
+    muted: false,
+    microcopy: null,
   },
   {
     badge: "⚡ 24h",
-    badgeColor: "bg-primary/8 text-primary border-primary/25",
+    badgeColor: "bg-primary/10 text-primary border-primary/25",
+    image: card2Img,
     title: "La de '24h o nada'",
     subtitle: "Te importa que el paciente empiece ya.",
+    subtitleNode: null,
     bullets: [
       "Quieres entregar el plan en las primeras 24 horas.",
       "Si pasan más de 48, ya es 'alerta': hasta en comisaría se preocupan 😅",
       "Odias que un cambio descompense el plan y te robe tiempo.",
     ],
-    want: "Rapidez con coherencia clínica (sin ideas al tuntún).",
     withKleia: "Menú que encaja (realista y clínico) + recalculo del plan completo.",
     cta: "Soy esta. Agendar demo.",
-    accent: "border-primary/30 hover:border-primary/60",
+    accentBorder: "hsl(var(--primary))",
     highlight: true,
+    muted: false,
+    microcopy: null,
   },
   {
-    badge: "🙂💧",
+    badge: "🙂💧 Estoy bien",
     badgeColor: "bg-muted text-muted-foreground border-border",
+    image: card3Img,
     title: "La de 'Estoy bien así (según yo)'",
-    subtitleNode: (
-      <><em className="text-xs not-italic opacity-70">todo bajo control</em>{"…hasta que te explota la semana."}</>
-    ),
     subtitle: "",
+    subtitleNode: (
+      <><em className="not-italic opacity-60 text-xs">todo bajo control</em>{" "}…hasta que te explota la semana.</>
+    ),
     bullets: [
       "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
       "Te gusta perderte en mil páginas buscando recetas 'a ver cuál encaja' para cada paciente.",
       "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo 'porque así lo controlas'.",
       "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
     ],
-    microcopy: "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
+    withKleia: null,
     cta: "Enséñame cómo sería",
-    accent: "border-border hover:border-muted-foreground/40",
+    accentBorder: "hsl(var(--border))",
     highlight: false,
     muted: true,
+    microcopy: "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
   },
 ];
 
+// ─── FlipCard component ────────────────────────────────────────────────────────
+function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenModal: () => void }) {
+  const prefersReduced = typeof window !== "undefined"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
+  const isTouchDevice = typeof window !== "undefined"
+    ? window.matchMedia("(hover: none)").matches
+    : false;
+
+  const handleClick = () => {
+    if (isTouchDevice || prefersReduced) onOpenModal();
+  };
+
+  return (
+    <div
+      className="flip-card-root group"
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      aria-label={`Ver detalles de ${arch.title}`}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleClick(); }}
+      style={{ perspective: "1100px", height: "460px" }}
+    >
+      <div
+        className={[
+          "flip-card-inner relative w-full h-full",
+          prefersReduced ? "" : "group-hover:[transform:rotateY(180deg)]",
+          prefersReduced ? "group-hover:opacity-80" : "",
+        ].join(" ")}
+        style={{
+          transformStyle: "preserve-3d",
+          transition: prefersReduced ? "opacity 0.2s ease" : "transform 0.55s cubic-bezier(0.45,0.05,0.55,0.95)",
+        }}
+      >
+        {/* ── FRONT ── */}
+        <div
+          className="absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden"
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+        >
+          {/* Image area */}
+          <div className="relative flex-1 bg-muted/30 overflow-hidden">
+            <img
+              src={arch.image}
+              alt={arch.title}
+              className="w-full h-full object-contain p-4"
+            />
+            {/* Badge overlay */}
+            <span className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}>
+              {arch.badge}
+            </span>
+          </div>
+
+          {/* Text area */}
+          <div className="px-5 py-4 border-t border-border bg-white">
+            <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
+            <p className="text-sm text-muted-foreground">
+              {arch.subtitleNode ?? arch.subtitle}
+            </p>
+            <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
+              <span className="text-base">↻</span> Pasa el cursor para ver más
+            </p>
+          </div>
+        </div>
+
+        {/* ── BACK ── */}
+        <div
+          className="absolute inset-0 rounded-2xl border bg-white shadow-lg flex flex-col p-6 overflow-hidden"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+            borderColor: arch.accentBorder,
+          }}
+        >
+          {/* Badge */}
+          <span className={`inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-4 ${arch.badgeColor}`}>
+            {arch.badge}
+          </span>
+
+          {/* Bullets */}
+          <ul className="space-y-2.5 flex-1">
+            {arch.bullets.map((b, j) => (
+              <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
+                <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          {/* Microcopy card 3 */}
+          {arch.microcopy && (
+            <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mt-3">
+              {arch.microcopy}
+            </p>
+          )}
+
+          {/* Con Kleia */}
+          {arch.withKleia && (
+            <p className="text-sm border-t border-border pt-3 mt-3">
+              <span className="font-semibold text-primary">Con Kleia: </span>
+              <span className="text-muted-foreground">{arch.withKleia}</span>
+            </p>
+          )}
+
+          {/* CTA */}
+          <button
+            onClick={(e) => { e.stopPropagation(); document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" }); }}
+            className={[
+              "mt-4 w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+              arch.muted
+                ? "bg-muted text-muted-foreground hover:bg-muted/70"
+                : "bg-primary text-primary-foreground hover:bg-primary/90",
+            ].join(" ")}
+          >
+            {arch.cta}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── S7 · Encaje ─────────────────────────────────────────────────────────────
 function FitSection() {
-  const [selected, setSelected] = React.useState<number | null>(null);
+  const [modalIdx, setModalIdx] = React.useState<number | null>(null);
+  const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
 
   return (
     <section id="seccion-7-encaje" className="py-6 px-6">
@@ -776,93 +911,17 @@ function FitSection() {
             </p>
           </div>
 
-          {/* Cards — desktop 3 cols, tablet 2 cols, mobile scroll */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {archetypes.map((arch, i) => {
-              const isSelected = selected === i;
-              return (
-                <button
-                  key={i}
-                  role="button"
-                  aria-pressed={isSelected}
-                  onClick={() => setSelected(isSelected ? null : i)}
-                  className={[
-                    "group text-left rounded-2xl border bg-white p-6 flex flex-col gap-4 transition-all duration-200",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-                    "motion-safe:hover:scale-[1.01] motion-safe:active:scale-[1.005]",
-                    arch.accent,
-                    isSelected
-                      ? "shadow-lg ring-2 ring-primary/30"
-                      : "shadow-sm hover:shadow-md",
-                    arch.highlight
-                      ? "bg-gradient-to-b from-primary/3 to-white"
-                      : "",
-                  ].join(" ")}
-                >
-                  {/* Badge */}
-                  <span className={`inline-flex items-center gap-1.5 self-start text-xs font-medium px-2.5 py-1 rounded-full border ${arch.badgeColor}`}>
-                    {arch.badge}
-                  </span>
-
-                  {/* Title + subtitle */}
-                  <div>
-                    <h3 className="font-semibold text-foreground leading-snug mb-1">
-                      {arch.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
-                  </div>
-
-                  {/* Bullets */}
-                  <ul className="space-y-2 flex-1">
-                    {arch.bullets.map((b, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0" />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Want + With Kleia (cards 1 & 2) */}
-                  {arch.want && (
-                    <div className="space-y-1.5 text-sm border-t border-border pt-4">
-                      <p>
-                        <span className="font-semibold text-foreground">Lo que quieres: </span>
-                        <span className="text-muted-foreground">{arch.want}</span>
-                      </p>
-                      <p>
-                        <span className="font-semibold text-primary">Con Kleia: </span>
-                        <span className="text-muted-foreground">{arch.withKleia}</span>
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Microcopy (card 3) */}
-                  {arch.microcopy && (
-                    <p className="text-xs text-muted-foreground italic border-t border-border pt-4">
-                      {arch.microcopy}
-                    </p>
-                  )}
-
-                  {/* Mini CTA */}
-                  <span
-                    className={[
-                      "mt-auto w-full text-center py-2.5 px-4 rounded-xl text-sm font-medium transition-colors",
-                      arch.muted
-                        ? "bg-muted text-muted-foreground group-hover:bg-muted/80"
-                        : "bg-primary text-primary-foreground group-hover:bg-primary/90",
-                    ].join(" ")}
-                  >
-                    {arch.cta}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {archetypes.map((arch, i) => (
+              <FlipCard key={i} arch={arch} onOpenModal={() => setModalIdx(i)} />
+            ))}
           </div>
 
           {/* Global CTA */}
           <div className="text-center mt-10">
             <button
-              onClick={() => document.getElementById('agendar-demo')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" })}
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
             >
               Agendar demo →
@@ -873,6 +932,65 @@ function FitSection() {
           </div>
         </div>
       </div>
+
+      {/* Mobile modal */}
+      {modalArch && (
+        <div
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-4 pb-4 sm:pb-0"
+          onClick={() => setModalIdx(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalArch.title}
+        >
+          <div
+            className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${modalArch.badgeColor}`}>
+                {modalArch.badge}
+              </span>
+              <button
+                onClick={() => setModalIdx(null)}
+                className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label="Cerrar"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <h3 className="font-bold text-foreground text-lg mb-1">{modalArch.title}</h3>
+            <p className="text-sm text-muted-foreground mb-4">{modalArch.subtitleNode ?? modalArch.subtitle}</p>
+            <ul className="space-y-2.5 mb-4">
+              {modalArch.bullets.map((b, j) => (
+                <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
+                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                  {b}
+                </li>
+              ))}
+            </ul>
+            {modalArch.microcopy && (
+              <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mb-4">{modalArch.microcopy}</p>
+            )}
+            {modalArch.withKleia && (
+              <p className="text-sm border-t border-border pt-3 mb-4">
+                <span className="font-semibold text-primary">Con Kleia: </span>
+                <span className="text-muted-foreground">{modalArch.withKleia}</span>
+              </p>
+            )}
+            <button
+              onClick={() => { setModalIdx(null); document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" }); }}
+              className={[
+                "w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+                modalArch.muted
+                  ? "bg-muted text-muted-foreground hover:bg-muted/70"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90",
+              ].join(" ")}
+            >
+              {modalArch.cta}
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
