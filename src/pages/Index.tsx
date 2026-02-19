@@ -5,7 +5,7 @@ import problema2 from "@/assets/problema-2.png";
 import problema3 from "@/assets/problema-3.png";
 import problema4 from "@/assets/problema-4.png";
 import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
 // Wrapper que aplica fade-in al entrar en el viewport
@@ -392,8 +392,46 @@ const stats = [
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
 function ResultsSection() {
+  const { ref, inView } = useInView(0.25);
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Phase state: 0 = idle, 1..4 = card i arrived, 5 = all done
+  const [phase, setPhase] = useState(0);
+  const [metricPulse, setMetricPulse] = useState(false);
+
+  useEffect(() => {
+    if (!inView) return;
+    if (reducedMotion) { setPhase(5); return; }
+
+    // Stagger: card reveals at 0.3s intervals, each "arrives" 0.6s later
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    [0, 1, 2, 3].forEach((i) => {
+      // card fly-in starts at i*320ms
+      // "arrival" pulse fires 600ms after card starts moving
+      timers.push(
+        setTimeout(() => {
+          setPhase(i + 1);
+          setMetricPulse(true);
+          setTimeout(() => setMetricPulse(false), 400);
+        }, 400 + i * 380)
+      );
+    });
+    // final emphasis
+    timers.push(setTimeout(() => setPhase(5), 400 + 3 * 380 + 500));
+    return () => timers.forEach(clearTimeout);
+  }, [inView, reducedMotion]);
+
+  const cardVisible = (i: number) => inView && (reducedMotion || phase >= i + 1);
+  const cardDone = (i: number) => phase === 5;
+
   return (
-    <section id="seccion-3-resultados" className="py-6 px-6">
+    <section
+      id="seccion-3-resultados"
+      className="py-6 px-6"
+      ref={ref as React.RefObject<HTMLElement>}
+    >
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
@@ -405,7 +443,8 @@ function ResultsSection() {
             </h2>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-10">
-            {/* Imagen izquierda + stat relacionado debajo */}
+
+            {/* ── Columna izquierda: imagen + métrica destino ── */}
             <div className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
               <img
                 src={resultadosIlustracion}
@@ -413,34 +452,91 @@ function ResultsSection() {
                 className="w-full object-contain"
               />
               <div className="mt-4 text-center">
-                <p className="text-4xl font-bold font-serif text-primary">6+ horas</p>
-                <p className="text-sm font-semibold mt-1">más a la semana</p>
-                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Que antes se iban en armar y enviar planes</p>
+                {/* Métrica "destino" — pulsa cada vez que llega una card */}
+                <p
+                  className={[
+                    "text-4xl font-bold font-serif text-primary transition-all duration-300",
+                    phase === 5 ? "scale-110" : "",
+                    metricPulse && !reducedMotion ? "scale-105" : "scale-100",
+                  ].join(" ")}
+                  style={{
+                    transition: "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease",
+                    opacity: inView ? 1 : 0,
+                  }}
+                >
+                  6+ horas
+                </p>
+                <p className="text-sm font-semibold mt-1" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.2s" }}>
+                  más a la semana
+                </p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.4s" }}>
+                  Que antes se iban en armar y enviar planes
+                </p>
+
+                {/* Indicadores de progreso — uno por card */}
+                <div className="flex gap-1.5 justify-center mt-4">
+                  {[0, 1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="h-1 rounded-full transition-all duration-500"
+                      style={{
+                        width: phase > i ? "20px" : "6px",
+                        backgroundColor: phase > i ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.2)",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-            {/* Stats derecha */}
+
+            {/* ── Columna derecha: 4 cards animadas ── */}
             <div className="flex-1 flex flex-col gap-3">
-              {/* Label superior */}
-              <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">detalles que nos importan</p>
-              {/* 4 cajas divididas: título (fondo primary) + descripción (fondo blanco) */}
-              {stats.map(({ value, label, time, desc }) => (
-                <div key={value} className="flex rounded-xl overflow-hidden border border-border shadow-sm">
-                  {/* Componente 1: título con fondo lila/primary — siempre 1/3 */}
-                  <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0 gap-1.5">
-                    <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">{value}</p>
-                    {label && <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">{label}</p>}
-                    <div className="flex items-center gap-1 mt-0.5 bg-primary/20 rounded-full px-2 py-0.5">
-                      <Clock className="h-2.5 w-2.5 text-primary" />
-                      <span className="text-[0.6rem] font-bold text-primary">{time}</span>
+              <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
+                detalles que nos importan
+              </p>
+              {stats.map(({ value, label, time, desc }, i) => {
+                const visible = cardVisible(i);
+                const done = cardDone(i);
+                return (
+                  <div
+                    key={value}
+                    className="flex rounded-xl overflow-hidden border shadow-sm transition-all"
+                    style={{
+                      opacity: visible ? (done ? 0.72 : 1) : 0,
+                      transform: visible
+                        ? reducedMotion
+                          ? "none"
+                          : "translateX(0) scale(1)"
+                        : "translateX(32px) scale(0.97)",
+                      transitionProperty: "opacity, transform, border-color",
+                      transitionDuration: reducedMotion ? "0ms" : "520ms",
+                      transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+                      transitionDelay: reducedMotion ? "0ms" : `${i * 90}ms`,
+                      borderColor: done
+                        ? "hsl(var(--primary) / 0.35)"
+                        : "hsl(var(--border))",
+                    }}
+                  >
+                    {/* Panel lila — 1/3 */}
+                    <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0 gap-1.5">
+                      <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">{value}</p>
+                      {label && (
+                        <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">{label}</p>
+                      )}
+                      <div className="flex items-center gap-1 mt-0.5 bg-primary/20 rounded-full px-2 py-0.5">
+                        <Clock className="h-2.5 w-2.5 text-primary" />
+                        <span className="text-[0.6rem] font-bold text-primary">{time}</span>
+                      </div>
+                    </div>
+                    {/* Panel blanco — 2/3 */}
+                    <div className="flex items-center bg-white px-4 py-3 w-2/3">
+                      <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
                     </div>
                   </div>
-                  {/* Componente 2: descripción sobre fondo blanco — los 2/3 restantes */}
-                  <div className="flex items-center bg-white px-4 py-3 w-2/3">
-                    <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
           </div>
         </div>
       </div>
