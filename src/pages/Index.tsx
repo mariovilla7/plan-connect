@@ -702,77 +702,171 @@ function ComparisonSection() {
 }
 
 // ─── Fit Section ──────────────────────────────────────────────────────────────
-const forWho = [
-  <>Quieres devolverte los fines de semana y las tardes: para dormir… o tomarte una <s>cerveza</s>{" "}agüita con tus amigos.</>,
-  <>Te encanta la variedad, pero estás harta de que entre decidir y ejecutar se te vaya la vida (y acabes repitiendo "lo de siempre").</>,
-  <>Te gusta tener control, pero estás dispuesta a delegar la parte pesada a un asistente (hola, Kleia) para no recomponer todo a mano.</>,
-  <>Te importa que el paciente empiece rápido: plan en 24 horas. Si pasan 48, ya es nivel "faltan señales de vida"… hasta en comisaría se preocupan.</>,
-];
-
-const notForWho = [
-  "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
-  "Te gusta perderte en mil páginas buscando recetas \"a ver cuál encaja\" para cada paciente.",
-  "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo \"porque así lo controlas\".",
-  "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
+const archetypes = [
+  {
+    badge: "⏳ Saturada",
+    badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+    title: "La Saturada (pero responsable)",
+    subtitle: "Agenda llena. Planes que se te cuelan al finde.",
+    bullets: [
+      "Estoy hasta arriba de hacer menús.",
+      "Empiezo el plan 'cuando puedo'… y a veces se me va a días.",
+      "Me prometo que este finde no… y al final cae el domingo.",
+    ],
+    want: "Recuperar tardes y fines de semana sin perder control.",
+    withKleia: "Plan en 10–20 min, ajustes en 1–3 min y entrega en 1 click.",
+    cta: "Soy esta. Quiero demo.",
+    accent: "border-amber-300 hover:border-amber-400",
+    highlight: false,
+  },
+  {
+    badge: "⚡ 24h",
+    badgeColor: "bg-primary/8 text-primary border-primary/25",
+    title: "La de '24h o nada'",
+    subtitle: "Te importa que el paciente empiece ya.",
+    bullets: [
+      "Quieres entregar el plan en las primeras 24 horas.",
+      "Si pasan más de 48, ya es 'alerta': hasta en comisaría se preocupan 😅",
+      "Odias que un cambio descompense el plan y te robe tiempo.",
+    ],
+    want: "Rapidez con coherencia clínica (sin ideas al tuntún).",
+    withKleia: "Menú que encaja (realista y clínico) + recalculo del plan completo.",
+    cta: "Soy esta. Agendar demo.",
+    accent: "border-primary/30 hover:border-primary/60",
+    highlight: true,
+  },
+  {
+    badge: "🙂 Estoy bien",
+    badgeColor: "bg-muted text-muted-foreground border-border",
+    title: "La de 'Estoy bien así'",
+    subtitle: "Te compensa seguir como estás (aunque te cueste tiempo).",
+    bullets: [
+      "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
+      "Te gusta perderte en mil páginas buscando recetas 'a ver cuál encaja' para cada paciente.",
+      "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo 'porque así lo controlas'.",
+      "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
+    ],
+    microcopy: "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
+    cta: "Entonces no la necesito (por ahora)",
+    accent: "border-border hover:border-muted-foreground/40",
+    highlight: false,
+    muted: true,
+  },
 ];
 
 // ─── S7 · Encaje ─────────────────────────────────────────────────────────────
 function FitSection() {
+  const [selected, setSelected] = React.useState<number | null>(null);
+
   return (
     <section id="seccion-7-encaje" className="py-6 px-6">
-      <div className="container max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-sm p-10">
+      <div className="container max-w-5xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12">
+          {/* Header */}
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               Encaje
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Kleia es para mí?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-3">Elige tu perfil</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col gap-4">
-              <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
-                <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-primary" /> SÍ, si…
-                </h3>
-                <ul className="space-y-3">
-                  {forWho.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="px-1">
+
+          {/* Cards — desktop 3 cols, tablet 2 cols, mobile scroll */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {archetypes.map((arch, i) => {
+              const isSelected = selected === i;
+              return (
                 <button
-                  onClick={() => document.getElementById('agendar-demo')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
+                  key={i}
+                  role="button"
+                  aria-pressed={isSelected}
+                  onClick={() => setSelected(isSelected ? null : i)}
+                  className={[
+                    "group text-left rounded-2xl border bg-white p-6 flex flex-col gap-4 transition-all duration-200",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                    "motion-safe:hover:scale-[1.01] motion-safe:active:scale-[1.005]",
+                    arch.accent,
+                    isSelected
+                      ? "shadow-lg ring-2 ring-primary/30"
+                      : "shadow-sm hover:shadow-md",
+                    arch.highlight
+                      ? "bg-gradient-to-b from-primary/3 to-white"
+                      : "",
+                  ].join(" ")}
                 >
-                  Únete a Kleia
+                  {/* Badge */}
+                  <span className={`inline-flex items-center gap-1.5 self-start text-xs font-medium px-2.5 py-1 rounded-full border ${arch.badgeColor}`}>
+                    {arch.badge}
+                  </span>
+
+                  {/* Title + subtitle */}
+                  <div>
+                    <h3 className="font-semibold text-foreground leading-snug mb-1">
+                      {arch.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">{arch.subtitle}</p>
+                  </div>
+
+                  {/* Bullets */}
+                  <ul className="space-y-2 flex-1">
+                    {arch.bullets.map((b, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Want + With Kleia (cards 1 & 2) */}
+                  {arch.want && (
+                    <div className="space-y-1.5 text-sm border-t border-border pt-4">
+                      <p>
+                        <span className="font-semibold text-foreground">Lo que quieres: </span>
+                        <span className="text-muted-foreground">{arch.want}</span>
+                      </p>
+                      <p>
+                        <span className="font-semibold text-primary">Con Kleia: </span>
+                        <span className="text-muted-foreground">{arch.withKleia}</span>
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Microcopy (card 3) */}
+                  {arch.microcopy && (
+                    <p className="text-xs text-muted-foreground italic border-t border-border pt-4">
+                      {arch.microcopy}
+                    </p>
+                  )}
+
+                  {/* Mini CTA */}
+                  <span
+                    className={[
+                      "mt-auto w-full text-center py-2.5 px-4 rounded-xl text-sm font-medium transition-colors",
+                      arch.muted
+                        ? "bg-muted text-muted-foreground group-hover:bg-muted/80"
+                        : "bg-primary text-primary-foreground group-hover:bg-primary/90",
+                    ].join(" ")}
+                  >
+                    {arch.cta}
+                  </span>
                 </button>
-                <p className="text-xs text-muted-foreground italic text-center mt-2">
-                  Piloto cerrado: 10 plazas. Acceso por invitación.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="p-6 rounded-2xl bg-destructive/5 border border-destructive/20">
-                <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <XCircle className="h-5 w-5 text-destructive" /> NO, si…
-                </h3>
-                <ul className="space-y-3">
-                  {notForWho.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <X className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <p className="text-xs text-muted-foreground italic px-1">
-                Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.
-              </p>
-            </div>
+              );
+            })}
+          </div>
+
+          {/* Global CTA */}
+          <div className="text-center mt-10">
+            <button
+              onClick={() => document.getElementById('agendar-demo')?.scrollIntoView({ behavior: 'smooth' })}
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md"
+            >
+              Agendar demo →
+            </button>
+            <p className="text-xs text-muted-foreground italic mt-2">
+              Acceso por invitación. Piloto cerrado: 10 plazas.
+            </p>
           </div>
         </div>
       </div>
