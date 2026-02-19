@@ -153,13 +153,19 @@ function Hero() {
             Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos,
             respetando las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
           </p>
-          <Button
-            onClick={openWhatsApp}
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 text-sm md:text-base font-medium shadow-md"
-          >
-            Agendar demo →
-          </Button>
+          <div className="inline-flex flex-col items-center gap-2">
+            <Button
+              onClick={openWhatsApp}
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 text-sm md:text-base font-medium shadow-md relative"
+            >
+              Agendar demo →
+              <span className="absolute -top-2.5 -right-2.5 text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none shadow-sm border" style={{ backgroundColor: "hsl(45 95% 60%)", color: "hsl(30 80% 20%)", borderColor: "hsl(45 90% 50%)" }}>
+                10 plazas
+              </span>
+            </Button>
+            <p className="text-xs text-muted-foreground">Piloto cerrado · Acceso por invitación.</p>
+          </div>
         </div>
 
         {/* Mockup del producto */}
@@ -595,17 +601,20 @@ function HowItWorksSection() {
 
     const [p0, p1, p2, p3] = pts;
 
-    // Segmento 01→02: arco horizontal suave con más holgura vertical
+    // Segmento 01→02: arco horizontal muy suave, tangentes extendidas
     const cx12 = (p0.x + p1.x) / 2;
-    const seg1 = `C ${cx12},${p0.y - 30} ${cx12},${p1.y - 30} ${p1.x},${p1.y}`;
+    const vSlack1 = Math.abs(p1.y - p0.y) * 0.5 + 60;
+    const seg1 = `C ${cx12},${p0.y - vSlack1} ${cx12},${p1.y - vSlack1} ${p1.x},${p1.y}`;
 
-    // Segmento 02→03: S diagonal — control points más alejados para ángulo más suave
+    // Segmento 02→03: S diagonal — tangentes muy largas para ángulo casi recto
     const cy23 = (p1.y + p2.y) / 2;
-    const seg2 = `C ${p1.x + 40},${cy23} ${p2.x - 40},${cy23} ${p2.x},${p2.y}`;
+    const hSlack23 = Math.abs(p2.x - p1.x) * 0.55 + 60;
+    const seg2 = `C ${p1.x + hSlack23},${cy23} ${p2.x - hSlack23},${cy23} ${p2.x},${p2.y}`;
 
-    // Segmento 03→04: arco horizontal suave hacia arriba
+    // Segmento 03→04: arco horizontal muy suave hacia abajo
     const cx34 = (p2.x + p3.x) / 2;
-    const seg3 = `C ${cx34},${p2.y + 30} ${cx34},${p3.y + 30} ${p3.x},${p3.y}`;
+    const vSlack3 = Math.abs(p3.y - p2.y) * 0.5 + 60;
+    const seg3 = `C ${cx34},${p2.y + vSlack3} ${cx34},${p3.y + vSlack3} ${p3.x},${p3.y}`;
 
     return `M ${p0.x},${p0.y} ${seg1} ${seg2} ${seg3}`;
   }
@@ -1123,6 +1132,14 @@ function StorySection() {
   const prev = () => setCurrent((c) => (c - 1 + total) % total);
   const next = () => setCurrent((c) => (c + 1) % total);
 
+  // Auto-advance loop
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((c) => (c + 1) % total);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [total]);
+
   return (
     <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 md:px-6">
       <div className="container max-w-5xl mx-auto">
@@ -1351,29 +1368,27 @@ function FAQSection() {
 // ─── S12 · Footer CTA ────────────────────────────────────────────────────────
 function FooterCTA() {
   return (
-    <footer id="seccion-12-footer" className="py-4 md:py-6 px-4 md:px-6 pb-10 md:pb-12">
-      <div className="container max-w-4xl mx-auto">
-        <div className="bg-foreground rounded-2xl md:rounded-3xl shadow-sm px-6 md:px-10 py-10 md:py-16 text-center text-background">
-          <div className="flex items-center justify-center mb-5 md:mb-6">
-            <img src={kleiaLogo} alt="Kleia" className="h-7 md:h-8 w-auto brightness-0 invert" />
-          </div>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-3 md:mb-4 leading-tight">
-            Recuperá tu tiempo. Entregá planes que te enorgullezcan.
-          </h2>
-          <p className="text-background/70 mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-sm md:text-base">
-            Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escribinos por WhatsApp y descubrí si Kleia es para vos.
-          </p>
-          <Button
-            onClick={openWhatsApp}
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 font-medium shadow-md text-sm md:text-base"
-          >
-            Agendar demo →
-          </Button>
-          <p className="mt-8 md:mt-10 text-xs text-background/40">
-            © 2025 Kleia · Hecho con amor para nutricionistas
-          </p>
+    <footer id="seccion-12-footer" className="pt-4 md:pt-6 pb-0">
+      <div className="bg-foreground px-6 md:px-10 py-10 md:py-16 text-center text-background">
+        <div className="flex items-center justify-center mb-5 md:mb-6">
+          <img src={kleiaLogo} alt="Kleia" className="h-7 md:h-8 w-auto brightness-0 invert" />
         </div>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-3 md:mb-4 leading-tight">
+          Recuperá tu tiempo. Entregá planes que te enorgullezcan.
+        </h2>
+        <p className="text-background/70 mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-sm md:text-base">
+          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escribinos por WhatsApp y descubrí si Kleia es para vos.
+        </p>
+        <Button
+          onClick={openWhatsApp}
+          size="lg"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 md:px-8 font-medium shadow-md text-sm md:text-base"
+        >
+          Agendar demo →
+        </Button>
+        <p className="mt-8 md:mt-10 text-xs text-background/40">
+          © 2025 Kleia · Hecho con amor para nutricionistas
+        </p>
       </div>
     </footer>
   );
