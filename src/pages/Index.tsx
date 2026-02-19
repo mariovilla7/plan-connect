@@ -1124,7 +1124,11 @@ function ComparisonSection() {
                     <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Excel</th>
                     <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Avena</th>
                     <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Artesanal</th>
-                    <th className="p-2.5 md:p-4 text-center text-success font-semibold bg-success/10 rounded-t-xl text-xs md:text-sm">Kleia</th>
+                    <th className="p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
+                      <div className="flex items-center justify-center py-0.5">
+                        <img src={kleiaLogo} alt="Kleia" className="h-5 md:h-7 w-auto" />
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
