@@ -360,7 +360,7 @@ function ComparisonSection() {
                 <th className="p-4 text-center text-muted-foreground font-medium">Excel / Word</th>
                 <th className="p-4 text-center text-muted-foreground font-medium">Avena / Nutriind</th>
                 <th className="p-4 text-center text-muted-foreground font-medium">Plan artesanal</th>
-                <th className="p-4 text-center text-primary font-semibold bg-primary/10 rounded-t-xl">Kleia</th>
+                <th className="p-4 text-center text-success font-semibold bg-success/10 rounded-t-xl">Kleia</th>
               </tr>
             </thead>
             <tbody>
@@ -370,7 +370,7 @@ function ComparisonSection() {
                   <td className="p-4 text-center"><CellValue val={excel} /></td>
                   <td className="p-4 text-center"><CellValue val={avena} /></td>
                   <td className="p-4 text-center"><CellValue val={artesanal} /></td>
-                  <td className="p-4 text-center bg-primary/5"><CellValue val={kleia} /></td>
+                  <td className="p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
                 </tr>
               ))}
             </tbody>
