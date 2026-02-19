@@ -33,6 +33,7 @@ import {
   Brain,
   Sliders,
   RefreshCw,
+  Clock,
   BatteryLow,
   Leaf,
   CheckCircle2,
@@ -383,10 +384,10 @@ function ProblemSection() {
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "Menú que encaja de verdad", label: "realista y clínico", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
-  { value: "Plan completo", label: "sin hoja en blanco", desc: 'Pasas de "\u00bfqué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.' },
-  { value: "Ajuste fino", label: "sin descompensar el plan", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
-  { value: "Entrega al paciente", label: "", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra." },
+  { value: "Menú que encaja de verdad", label: "realista y clínico", time: "10''", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
+  { value: "Plan completo", label: "sin hoja en blanco", time: "+20''", desc: 'Pasas de "\u00bfqué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.' },
+  { value: "Ajuste fino", label: "sin descompensar el plan", time: "15''", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
+  { value: "Entrega al paciente", label: "", time: "7''", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra." },
 ];
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
@@ -422,12 +423,16 @@ function ResultsSection() {
               {/* Label superior */}
               <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">detalles que nos importan</p>
               {/* 4 cajas divididas: título (fondo primary) + descripción (fondo blanco) */}
-              {stats.map(({ value, label, desc }) => (
+              {stats.map(({ value, label, time, desc }) => (
                 <div key={value} className="flex rounded-xl overflow-hidden border border-border shadow-sm">
                   {/* Componente 1: título con fondo lila/primary — siempre 1/3 */}
-                  <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0">
+                  <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0 gap-1.5">
                     <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">{value}</p>
-                    {label && <p className="text-[0.55rem] font-semibold text-primary/70 mt-1 text-center leading-tight">{label}</p>}
+                    {label && <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">{label}</p>}
+                    <div className="flex items-center gap-1 mt-0.5 bg-primary/20 rounded-full px-2 py-0.5">
+                      <Clock className="h-2.5 w-2.5 text-primary" />
+                      <span className="text-[0.6rem] font-bold text-primary">{time}</span>
+                    </div>
                   </div>
                   {/* Componente 2: descripción sobre fondo blanco — los 2/3 restantes */}
                   <div className="flex items-center bg-white px-4 py-3 w-2/3">
