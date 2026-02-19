@@ -27,10 +27,10 @@ const scrollToForm = () => {
   document.getElementById("agendar-demo")?.scrollIntoView({ behavior: "smooth" });
 };
 
-// ─── Nav ────────────────────────────────────────────────────────────────────
+// ─── S0 · Navbar ─────────────────────────────────────────────────────────────
 function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-card/90 backdrop-blur border-b border-border">
+    <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-card/90 backdrop-blur border-b border-border">
       <div className="container max-w-5xl mx-auto flex items-center justify-between h-16 px-6">
         <div className="flex items-center">
           <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto" />
@@ -46,10 +46,10 @@ function Navbar() {
   );
 }
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
+// ─── S1 · Hero ───────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section className="py-24 px-6 text-center bg-background">
+    <section id="seccion-1-hero" className="py-24 px-6 text-center bg-background">
       <div className="container max-w-3xl mx-auto">
         <div className="inline-block mb-6">
           <span className="bg-teal-light text-teal-dark text-xs font-medium px-4 py-2 rounded-full border border-teal/20">
@@ -107,9 +107,10 @@ const problems = [
   },
 ];
 
+// ─── S2 · El Problema ────────────────────────────────────────────────────────
 function ProblemSection() {
   return (
-    <section className="py-20 px-6 bg-muted/40">
+    <section id="seccion-2-problema" className="py-20 px-6 bg-muted/40">
       <div className="container max-w-4xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           El Problema
@@ -143,9 +144,10 @@ const stats = [
   { value: "1 click", label: "Entrega al paciente", desc: "PDF listo para compartir por WhatsApp o mail" },
 ];
 
+// ─── S3 · Resultados ─────────────────────────────────────────────────────────
 function ResultsSection() {
   return (
-    <section className="py-20 px-6 bg-background">
+    <section id="seccion-3-resultados" className="py-20 px-6 bg-background">
       <div className="container max-w-4xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           Resultados
@@ -177,9 +179,10 @@ const steps = [
   { num: "04", title: "Entregá en 1 click", desc: "Exportá el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar." },
 ];
 
+// ─── S4 · Cómo funciona ──────────────────────────────────────────────────────
 function HowItWorksSection() {
   return (
-    <section className="py-20 px-6 bg-muted/40">
+    <section id="seccion-4-flujo" className="py-20 px-6 bg-muted/40">
       <div className="container max-w-4xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           Flujo
@@ -211,9 +214,10 @@ const features = [
   "Soporte dedicado durante el piloto",
 ];
 
+// ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
   return (
-    <section className="py-20 px-6 bg-background">
+    <section id="seccion-5-incluido" className="py-20 px-6 bg-background">
       <div className="container max-w-3xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           Incluido
@@ -250,9 +254,10 @@ function CellValue({ val }: { val: boolean | string }) {
   return <span className="text-xs text-muted-foreground">{val}</span>;
 }
 
+// ─── S6 · Comparativa ────────────────────────────────────────────────────────
 function ComparisonSection() {
   return (
-    <section className="py-20 px-6 bg-muted/40">
+    <section id="seccion-6-comparativa" className="py-20 px-6 bg-muted/40">
       <div className="container max-w-4xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           Comparativa
@@ -303,9 +308,10 @@ const notForWho = [
   "Buscás una solución definitiva ya terminada",
 ];
 
+// ─── S7 · Encaje ─────────────────────────────────────────────────────────────
 function FitSection() {
   return (
-    <section className="py-20 px-6 bg-background">
+    <section id="seccion-7-encaje" className="py-20 px-6 bg-background">
       <div className="container max-w-4xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           Encaje
@@ -348,10 +354,10 @@ function FitSection() {
   );
 }
 
-// ─── Bonuses ──────────────────────────────────────────────────────────────────
+// ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
-    <section className="py-20 px-6 bg-muted/40">
+    <section id="seccion-8-extras" className="py-20 px-6 bg-muted/40">
       <div className="container max-w-4xl mx-auto text-center mb-12">
         <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
           Extras
@@ -403,10 +409,10 @@ function BonusesSection() {
   );
 }
 
-// ─── Mid CTA ──────────────────────────────────────────────────────────────────
+// ─── S9 · CTA intermedio ─────────────────────────────────────────────────────
 function MidCTA() {
   return (
-    <section className="py-20 px-6 bg-teal text-primary-foreground text-center">
+    <section id="seccion-9-cta" className="py-20 px-6 bg-teal text-primary-foreground text-center">
       <div className="container max-w-2xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4">
           Las plazas del piloto son limitadas
@@ -427,7 +433,7 @@ function MidCTA() {
   );
 }
 
-// ─── Demo Form ────────────────────────────────────────────────────────────────
+// ─── S10 · Formulario demo ───────────────────────────────────────────────────
 function DemoForm() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -540,9 +546,10 @@ const faqs = [
   },
 ];
 
+// ─── S11 · FAQ ───────────────────────────────────────────────────────────────
 function FAQSection() {
   return (
-    <section className="py-20 px-6 bg-muted/40">
+    <section id="seccion-11-faq" className="py-20 px-6 bg-muted/40">
       <div className="container max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 text-teal border-teal/30 bg-teal-light text-xs uppercase tracking-widest">
@@ -567,10 +574,10 @@ function FAQSection() {
   );
 }
 
-// ─── Footer CTA ───────────────────────────────────────────────────────────────
+// ─── S12 · Footer CTA ────────────────────────────────────────────────────────
 function FooterCTA() {
   return (
-    <footer className="py-20 px-6 bg-navy text-primary-foreground text-center">
+    <footer id="seccion-12-footer" className="py-20 px-6 bg-navy text-primary-foreground text-center">
       <div className="container max-w-2xl mx-auto">
         <div className="flex items-center justify-center mb-6">
           <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto brightness-0 invert" />
