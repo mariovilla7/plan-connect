@@ -422,7 +422,7 @@ function FeaturesSection() {
               <p className="text-muted-foreground text-sm">[ Product mockup ]</p>
             </div>
 
-            {/* Features como pills ordenados en columna */}
+            {/* Features como pills ordenados en columna + CTA */}
             <div className="flex-1 flex flex-col gap-2.5">
               {features.map((f) => (
                 <span
@@ -433,17 +433,16 @@ function FeaturesSection() {
                   {f}
                 </span>
               ))}
+              <div className="mt-4">
+                <Button
+                  onClick={scrollToForm}
+                  size="lg"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md"
+                >
+                  Jugar con Kleia →
+                </Button>
+              </div>
             </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Button
-              onClick={scrollToForm}
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md"
-            >
-              Jugar con Kleia →
-            </Button>
           </div>
         </div>
       </div>
