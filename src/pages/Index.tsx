@@ -383,9 +383,10 @@ function ProblemSection() {
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "10–20 min", label: "Plan completo", desc: "Tiempo promedio para generar un plan personalizado" },
-  { value: "1–3 min", label: "Ajuste fino", desc: "Para modificar un alimento sin romper el balance" },
-  { value: "1 click", label: "Entrega al paciente", desc: "PDF listo para compartir por WhatsApp o mail" },
+  { value: "10–20 min", label: "Plan completo", desc: "Generás un plan semanal personalizado desde cero, sin quedarte en blanco." },
+  { value: "1–3 min", label: "Ajuste fino", desc: "Cambiás un alimento y el plan se recalcula solo, sin romper nada." },
+  { value: "6+ horas", label: "Recuperadas a la semana", desc: "Tiempo que antes se iba en armar y enviar planes manualmente." },
+  { value: "1 click", label: "Entrega al paciente", desc: "PDF listo para compartir por WhatsApp o mail, sin formatear nada." },
 ];
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
@@ -417,17 +418,21 @@ function ResultsSection() {
               </div>
             </div>
             {/* Stats derecha */}
-            <div className="flex-1 flex flex-col gap-4">
-              {/* Caja especial "detalles que nos importan" */}
-              <div className="p-5 rounded-2xl bg-white border border-border text-center">
-                <p className="font-semibold" style={{ fontSize: "0.7rem" }}>detalles que nos importan</p>
-              </div>
-              {/* Las 3 cajas restantes */}
+            <div className="flex-1 flex flex-col gap-3">
+              {/* Label superior */}
+              <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">detalles que nos importan</p>
+              {/* 4 cajas divididas: título (fondo primary) + descripción (fondo blanco) */}
               {stats.map(({ value, label, desc }) => (
-                <div key={value} className="text-center p-5 rounded-2xl bg-background">
-                  <p className="text-3xl font-bold font-serif text-primary mb-1">{value}</p>
-                  <p className="text-sm font-semibold mb-2">{label}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                <div key={value} className="flex rounded-xl overflow-hidden border border-border shadow-sm">
+                  {/* Componente 1: título con fondo lila/primary */}
+                  <div className="flex flex-col items-center justify-center bg-primary/10 px-4 py-3 min-w-[110px] max-w-[120px]">
+                    <p className="text-xl font-bold font-serif text-primary leading-none">{value}</p>
+                    <p className="text-[0.6rem] font-semibold text-primary/80 mt-1 text-center leading-tight">{label}</p>
+                  </div>
+                  {/* Componente 2: descripción sobre fondo blanco */}
+                  <div className="flex items-center bg-white px-4 py-3 flex-1">
+                    <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
