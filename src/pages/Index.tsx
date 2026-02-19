@@ -139,13 +139,18 @@ function Hero() {
             Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos,
             respetando las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
           </p>
-          <Button
-            onClick={scrollToForm}
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 text-base font-medium shadow-md"
-          >
-            Agendar demo →
-          </Button>
+          <div className="relative inline-block">
+            <Button
+              onClick={scrollToForm}
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 text-base font-medium shadow-md"
+            >
+              Agendar demo →
+            </Button>
+            <span className="absolute -top-2.5 -right-2 bg-success text-success-foreground text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+              10 plazas
+            </span>
+          </div>
           <p className="mt-4 text-xs text-muted-foreground">
             Acceso por invitación · Piloto cerrado: 10 plazas
           </p>
