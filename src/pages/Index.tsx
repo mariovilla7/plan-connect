@@ -16,7 +16,7 @@ import { useInView } from "@/hooks/use-in-view";
 
 // ─── WhatsApp CTA ─────────────────────────────────────────────────────────────
 // 🔧 Reemplazá este número con el tuyo (con código de país, sin + ni espacios)
-const WA_NUMBER = "34600000000";
+const WA_NUMBER = "359896676923";
 const WA_MESSAGE = encodeURIComponent(
   "Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?"
 );
@@ -981,12 +981,32 @@ const archetypes = [
 function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenModal: () => void }) {
   const prefersReduced = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
   const isTouchDevice = typeof window !== "undefined" ? window.matchMedia("(hover: none)").matches : false;
-  const handleClick = () => { if (isTouchDevice || prefersReduced) onOpenModal(); };
+
+  // Swipe detection for mobile flip
+  const [startX, setStartX] = React.useState<number | null>(null);
+  const [flipped, setFlipped] = React.useState(false);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartX(e.touches[0].clientX);
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (startX === null) return;
+    const diff = e.changedTouches[0].clientX - startX;
+    if (Math.abs(diff) > 50) {
+      setFlipped((f) => !f);
+    }
+    setStartX(null);
+  };
+  const handleClick = () => {
+    if (isTouchDevice || prefersReduced) onOpenModal();
+  };
 
   return (
     <div
       className="flip-card-root group h-auto sm:min-h-[420px] md:min-h-[460px]"
       onClick={handleClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       role="button"
       tabIndex={0}
       aria-label={`Ver detalles de ${arch.title}`}
@@ -994,9 +1014,24 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
       style={{ perspective: "1100px", minHeight: "380px" }}
     >
       <div
-        className={["flip-card-inner relative w-full h-full", prefersReduced ? "" : "group-hover:[transform:rotateY(180deg)]", prefersReduced ? "group-hover:opacity-80" : ""].join(" ")}
-        style={{ transformStyle: "preserve-3d", transition: prefersReduced ? "opacity 0.2s ease" : "transform 0.55s cubic-bezier(0.45,0.05,0.55,0.95)", minHeight: "inherit" }}
+        className="flip-card-inner relative w-full h-full"
+        style={{
+          transformStyle: "preserve-3d",
+          transition: prefersReduced ? "opacity 0.2s ease" : "transform 0.55s cubic-bezier(0.45,0.05,0.55,0.95)",
+          minHeight: "inherit",
+          transform: flipped || (!prefersReduced && !isTouchDevice) ? undefined : "none",
+        }}
+        // Desktop: hover flip via CSS. Mobile: swipe flip via state.
+        data-flipped={flipped}
       >
+        {/* Apply hover flip only on non-touch, swipe flip always via data-flipped */}
+        <style>{`
+          .flip-card-root:not(:hover) .flip-card-inner[data-flipped="false"] { transform: rotateY(0deg); }
+          .flip-card-root:not(:hover) .flip-card-inner[data-flipped="true"] { transform: rotateY(180deg); }
+          @media (hover: hover) {
+            .flip-card-root:hover .flip-card-inner { transform: rotateY(180deg) !important; }
+          }
+        `}</style>
         <div className="absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
           <div className="relative flex-1 bg-muted/30 overflow-hidden">
             <img src={arch.image} alt={arch.title} className="w-full h-full object-contain p-4" />
@@ -1005,11 +1040,16 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
           <div className="px-5 py-4 border-t border-border bg-white">
             <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
             <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
-            <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1"><span className="text-base">↻</span> Pasa el cursor para ver más</p>
+            <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
+              <span className="hidden md:inline text-base">↻</span>
+              <span className="md:hidden text-base">👆</span>
+              <span className="hidden md:inline">Pasa el cursor para ver más</span>
+              <span className="md:hidden">Deslizá o tocá para ver más</span>
+            </p>
           </div>
         </div>
         <div
-          className="absolute inset-0 rounded-2xl border bg-white shadow-lg flex flex-col p-6 overflow-hidden"
+          className="absolute inset-0 rounded-2xl border bg-white shadow-lg flex flex-col p-6 overflow-auto"
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", borderColor: arch.accentBorder }}
         >
           <span className={`inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-4 ${arch.badgeColor}`}>{arch.badge}</span>
@@ -1070,11 +1110,11 @@ function FitSection() {
       </div>
       {modalArch && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-4 pb-4 sm:pb-0"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
           onClick={() => setModalIdx(null)}
           role="dialog" aria-modal="true" aria-label={modalArch.title}
         >
-          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl animate-fade-in" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto p-6 shadow-2xl animate-fade-in" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
               <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${modalArch.badgeColor}`}>{modalArch.badge}</span>
               <button onClick={() => setModalIdx(null)} className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Cerrar">
