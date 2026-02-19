@@ -273,7 +273,7 @@ function ProblemSection() {
                     <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Icon className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <h3 className="font-semibold text-sm leading-snug text-foreground italic">{title}</h3>
+                    <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
                 </div>
@@ -368,7 +368,7 @@ function ProblemSection() {
                     <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Icon className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <h3 className="font-semibold text-sm leading-snug text-foreground italic">{title}</h3>
+                    <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
                 </div>
