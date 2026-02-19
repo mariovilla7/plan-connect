@@ -10,28 +10,28 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Lavender page background — como en la referencia */
-    --background: 237 30% 93%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark navy canvas — inspired by Framer-style glow bg */
+    --background: 228 35% 6%;
+    --foreground: 220 20% 94%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 228 30% 10%;
+    --card-foreground: 220 20% 94%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 228 30% 10%;
+    --popover-foreground: 220 20% 94%;
 
     /* Brand: azul-índigo del NutriGenius */
     --primary: 235 88% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 228 28% 14%;
+    --secondary-foreground: 220 20% 80%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 228 28% 14%;
+    --muted-foreground: 220 14% 55%;
 
-    --accent: 235 88% 95%;
-    --accent-foreground: 235 88% 50%;
+    --accent: 235 88% 20%;
+    --accent-foreground: 235 88% 80%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -39,8 +39,8 @@ All colors MUST be HSL.
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 228 25% 18%;
+    --input: 228 25% 18%;
     --ring: 235 88% 62%;
 
     --radius: 0.75rem;
@@ -52,43 +52,47 @@ All colors MUST be HSL.
     --brand-600: 235 88% 55%;
     --brand-700: 235 88% 48%;
 
-    /* Alias tokens — mapped to brand for Kleia components */
+    /* Alias tokens */
     --teal: 235 88% 62%;
-    --teal-light: 235 88% 95%;
+    --teal-light: 235 88% 20%;
     --teal-dark: 235 88% 48%;
-    --navy: 222 84% 8%;
-    --navy-mid: 222 30% 25%;
+    --navy: 228 35% 6%;
+    --navy-mid: 228 30% 25%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
+    /* Glow orb */
+    --glow-primary: hsl(235 88% 62% / 0.35);
+    --glow-secondary: hsl(260 80% 55% / 0.18);
+
+    --sidebar-background: 228 30% 10%;
+    --sidebar-foreground: 220 14% 70%;
+    --sidebar-primary: 235 88% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 228 28% 14%;
+    --sidebar-accent-foreground: 220 20% 80%;
+    --sidebar-border: 228 25% 18%;
     --sidebar-ring: 235 88% 62%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 228 35% 6%;
+    --foreground: 220 20% 94%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 228 30% 10%;
+    --card-foreground: 220 20% 94%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 228 30% 10%;
+    --popover-foreground: 220 20% 94%;
 
     --primary: 235 88% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 228 28% 14%;
+    --secondary-foreground: 220 20% 80%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 228 28% 14%;
+    --muted-foreground: 220 14% 55%;
 
-    --accent: 235 50% 25%;
+    --accent: 235 88% 20%;
     --accent-foreground: 235 88% 80%;
 
     --destructive: 0 62.8% 30.6%;
@@ -97,23 +101,23 @@ All colors MUST be HSL.
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 228 25% 18%;
+    --input: 228 25% 18%;
     --ring: 235 88% 62%;
 
     --teal: 235 88% 62%;
-    --teal-light: 235 50% 25%;
+    --teal-light: 235 50% 20%;
     --teal-dark: 235 88% 48%;
-    --navy: 222 84% 4%;
-    --navy-mid: 222 30% 70%;
+    --navy: 228 35% 4%;
+    --navy-mid: 228 30% 25%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 228 30% 10%;
+    --sidebar-foreground: 220 14% 70%;
+    --sidebar-primary: 235 88% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-accent: 228 28% 14%;
+    --sidebar-accent-foreground: 220 20% 80%;
+    --sidebar-border: 228 25% 18%;
     --sidebar-ring: 235 88% 62%;
   }
 }
@@ -126,6 +130,11 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
+    /* Framer-style radial glow orb — brand indigo */
+    background-image:
+      radial-gradient(ellipse 80% 60% at 60% -10%, hsl(235 88% 62% / 0.28) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 90% 50%, hsl(260 80% 55% / 0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, hsl(235 88% 55% / 0.12) 0%, transparent 60%);
   }
 
   h1, h2, h3 {
