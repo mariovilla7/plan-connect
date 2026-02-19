@@ -703,10 +703,10 @@ function ComparisonSection() {
 
 // ─── Fit Section ──────────────────────────────────────────────────────────────
 const forWho = [
-  "Te gustaría ahorrar más de 6 horas por semana, y tener una vida equilibrada",
-  "Estás harto de buscar menús variados en todo el internet",
-  "Te cansa el switch entre herramientas con el fin de sentirte profesional y personalizar los planes",
-  "Quieres no sentirte el cuello de la botella para tu crecimiento profesional",
+  <>Quieres devolverte los fines de semana y las tardes: para dormir… o tomarte una <s>cerveza</s> agüita con tus amigos.</>,
+  <>Te encanta la variedad, pero estás harta de que entre decidir y ejecutar se te vaya la vida (y acabes repitiendo "lo de siempre").</>,
+  <>Te gusta tener control, pero estás dispuesta a delegar la parte pesada a un asistente (hola, Kleia) para no recomponer todo a mano.</>,
+  <>Te importa que el paciente empiece rápido: plan en 24 horas. Si pasan 48, ya es nivel "faltan señales de vida"… hasta en comisaría se preocupan.</>,
 ];
 
 const notForWho = [
@@ -729,18 +729,31 @@ function FitSection() {
             <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Kleia es para mí?</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" /> Para quién es
-              </h3>
-              <ul className="space-y-3">
-                {forWho.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-4">
+              <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
+                <h3 className="font-semibold mb-4 flex items-center gap-2">
+                  <CheckCircle2 className="h-5 w-5 text-primary" /> SÍ, si…
+                </h3>
+                <ul className="space-y-3">
+                  {forWho.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="px-1">
+                <button
+                  onClick={() => document.getElementById('agendar-demo')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
+                >
+                  Únete a Kleia
+                </button>
+                <p className="text-xs text-muted-foreground italic text-center mt-2">
+                  Piloto cerrado: 10 plazas. Acceso por invitación.
+                </p>
+              </div>
             </div>
             <div className="flex flex-col gap-4">
               <div className="p-6 rounded-2xl bg-destructive/5 border border-destructive/20">
