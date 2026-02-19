@@ -569,10 +569,12 @@ function HowItWorksSection() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {steps.map(({ num, title, desc }) => (
-              <div key={num} className="flex flex-col items-start p-5 rounded-2xl bg-background">
-                <span className="text-4xl font-bold font-serif text-primary/20 mb-3">{num}</span>
-                <h3 className="font-semibold mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              <div key={num} className="flex flex-col items-start p-7 rounded-2xl bg-background aspect-square justify-between">
+                <span className="text-5xl font-bold font-serif text-primary/20">{num}</span>
+                <div>
+                  <h3 className="font-semibold mb-2 text-base">{title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                </div>
               </div>
             ))}
           </div>
