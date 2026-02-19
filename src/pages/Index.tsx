@@ -265,15 +265,19 @@ function ProblemSection() {
               ))}
             </div>
 
-            {/* Columna derecha: foto flotante con sombra dramática */}
-            <div className="flex-shrink-0 w-full md:w-72 flex items-center justify-center md:justify-end">
+            {/* Columna derecha: foto flotante con forma de huevo */}
+            <div className="flex-shrink-0 w-full md:w-96 flex items-center justify-center md:justify-end">
               <div className="relative">
                 {/* Sombra de fondo desplazada */}
-                <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl bg-primary/10 blur-sm" />
+                <div
+                  className="absolute inset-0 translate-x-4 translate-y-4 bg-primary/10 blur-sm"
+                  style={{ borderRadius: "60% 60% 55% 55% / 65% 65% 50% 50%" }}
+                />
                 <img
                   src={problemaIlustracion}
                   alt="Nutricionista agotada frente al ordenador"
-                  className="relative w-full max-w-[260px] md:max-w-full object-contain drop-shadow-xl"
+                  className="relative w-full max-w-[320px] md:max-w-full object-contain drop-shadow-xl"
+                  style={{ borderRadius: "60% 60% 55% 55% / 65% 65% 50% 50%", background: "hsl(var(--primary)/0.04)" }}
                 />
               </div>
             </div>
