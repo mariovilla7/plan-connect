@@ -1,3 +1,4 @@
+import kleiaLogo from "@/assets/kleia-logo.svg";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -31,9 +32,8 @@ function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-card/90 backdrop-blur border-b border-border">
       <div className="container max-w-5xl mx-auto flex items-center justify-between h-16 px-6">
-        <div className="flex items-center gap-2">
-          <Leaf className="h-6 w-6 text-teal" />
-          <span className="text-xl font-bold font-serif text-navy">Kleia</span>
+        <div className="flex items-center">
+          <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto" />
         </div>
         <Button
           onClick={scrollToForm}
@@ -572,9 +572,8 @@ function FooterCTA() {
   return (
     <footer className="py-20 px-6 bg-navy text-primary-foreground text-center">
       <div className="container max-w-2xl mx-auto">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <Leaf className="h-5 w-5 text-teal" />
-          <span className="text-lg font-bold font-serif">Kleia</span>
+        <div className="flex items-center justify-center mb-6">
+          <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto brightness-0 invert" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 leading-tight">
           Recuperá tu tiempo. Entregá planes que te enorgullezcan.
