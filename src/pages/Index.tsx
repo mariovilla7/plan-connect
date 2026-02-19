@@ -217,27 +217,27 @@ function Hero() {
 const problems = [
   {
     icon: Brain,
-    title: "Carga mental de inventar menús",
+    title: "Estoy hasta arriba de hacer menús",
     description:
-      "Cada semana volvés a empezar desde cero. Recordar qué comió cada paciente, qué puede y qué no puede comer, es un trabajo invisible que agota.",
+      "Se te acaban las ideas y la cabeza no da para más. No es difícil: es un desgaste diario que te deja sin paciencia.",
   },
   {
     icon: Sliders,
-    title: "Opciones irrelevantes",
+    title: "No quiero ideas al tuntún: tiene que encajar con MI paciente",
     description:
-      "Las herramientas genéricas no conocen las preferencias de tus pacientes. Te dan opciones que igual tenés que descartar manualmente.",
+      "Variedad sí, pero con sentido clínico y realista: gustos, patologías, intolerancias, horarios y comida que pueda hacer y encontrar sin complicarse.",
   },
   {
     icon: RefreshCw,
-    title: "Un ajuste puede romper el plan",
+    title: "Tocas una cosa… y se descompensa todo",
     description:
-      "Cambiás un alimento y tenés que recalcular todo. Cada modificación lleva tiempo y concentración que podrías usar en consultar.",
+      "Cambias un ingrediente y se mueven calorías/macros (y el resto del día). Acabas recomponiendo comidas para que el plan vuelva a cuadrar.",
   },
   {
     icon: BatteryLow,
-    title: "Agotamiento por retrabajo",
+    title: "El plan se te mete en la noche y el finde",
     description:
-      "Después de un día de consultas, todavía te quedás horas armando y enviando planes. La energía que te sobra no alcanza.",
+      'Atiendes todo el día y el plan cae "para después". Se acumula, lo haces a ratos o en domingo… y a veces se te va a varios días.',
   },
 ];
 
@@ -264,18 +264,18 @@ function ProblemSection() {
             <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center gap-4">
+          <div className="flex flex-col md:flex-row items-center gap-6">
             {/* Columna izquierda: 2 problemas */}
-            <div className="flex-1 flex flex-col gap-3">
+            <div className="flex-1 flex flex-col gap-4">
               {problems.slice(0, 2).map(({ icon: Icon, title, description }) => (
-                <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-4 w-4 text-primary" />
+                <div key={title} className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-sm leading-snug text-foreground italic">{title}</h3>
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-0.5 text-sm">{title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
-                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
                 </div>
               ))}
             </div>
@@ -294,7 +294,7 @@ function ProblemSection() {
                   <marker id="arr-r" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                     <path d="M 10 1 L 1 5 L 10 9 z" fill="hsl(var(--primary))" opacity="0.4" />
                   </marker>
-                  {problemImages.map((src, i) => (
+                  {problemImages.map((_, i) => (
                     <clipPath key={i} id={`clip-img-${i}`}>
                       <circle cx="0" cy="0" r="38" />
                     </clipPath>
@@ -311,15 +311,13 @@ function ProblemSection() {
                   strokeDasharray="6 5"
                 />
 
-                {/* Flechas izquierda → círculo (2 problemas izq) */}
-                {/* Problema 0: flecha desde izquierda arriba */}
+                {/* Flechas izquierda → círculo */}
                 <path
                   d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`}
                   stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
                   strokeLinecap="round" fill="none" opacity="0.4"
                   markerEnd="url(#arr-l)"
                 />
-                {/* Problema 1: flecha desde izquierda abajo */}
                 <path
                   d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`}
                   stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
@@ -327,15 +325,13 @@ function ProblemSection() {
                   markerEnd="url(#arr-l)"
                 />
 
-                {/* Flechas derecha → círculo (2 problemas der) */}
-                {/* Problema 2: flecha desde derecha arriba */}
+                {/* Flechas derecha → círculo */}
                 <path
                   d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`}
                   stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
                   strokeLinecap="round" fill="none" opacity="0.4"
                   markerEnd="url(#arr-r)"
                 />
-                {/* Problema 3: flecha desde derecha abajo */}
                 <path
                   d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`}
                   stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
@@ -365,16 +361,16 @@ function ProblemSection() {
             </div>
 
             {/* Columna derecha: 2 problemas */}
-            <div className="flex-1 flex flex-col gap-3">
+            <div className="flex-1 flex flex-col gap-4">
               {problems.slice(2).map(({ icon: Icon, title, description }) => (
-                <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-4 w-4 text-primary" />
+                <div key={title} className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-sm leading-snug text-foreground italic">{title}</h3>
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-0.5 text-sm">{title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
-                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
                 </div>
               ))}
             </div>
