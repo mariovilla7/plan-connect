@@ -425,9 +425,9 @@ function ResultsSection() {
               {stats.map(({ value, label, desc }) => (
                 <div key={value} className="flex rounded-xl overflow-hidden border border-border shadow-sm">
                   {/* Componente 1: título con fondo lila/primary — siempre 1/3 */}
-                  <div className="flex flex-col items-center justify-center bg-primary/10 py-3 w-1/3 shrink-0">
-                    <p className="text-xl font-bold font-serif text-primary leading-none">{value}</p>
-                    <p className="text-[0.6rem] font-semibold text-primary/80 mt-1 text-center leading-tight px-2">{label}</p>
+                  <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0">
+                    <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">{value}</p>
+                    {label && <p className="text-[0.55rem] font-semibold text-primary/70 mt-1 text-center leading-tight">{label}</p>}
                   </div>
                   {/* Componente 2: descripción sobre fondo blanco — los 2/3 restantes */}
                   <div className="flex items-center bg-white px-4 py-3 w-2/3">
