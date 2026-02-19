@@ -405,21 +405,19 @@ function ResultsSection() {
     if (!inView) return;
     if (reducedMotion) { setPhase(5); return; }
 
-    // Stagger: card reveals at 0.3s intervals, each "arrives" 0.6s later
+    // Stagger: card reveals at 0.5s intervals, each "arrives" 0.65s later
     const timers: ReturnType<typeof setTimeout>[] = [];
     [0, 1, 2, 3].forEach((i) => {
-      // card fly-in starts at i*320ms
-      // "arrival" pulse fires 600ms after card starts moving
       timers.push(
         setTimeout(() => {
           setPhase(i + 1);
           setMetricPulse(true);
-          setTimeout(() => setMetricPulse(false), 400);
-        }, 400 + i * 380)
+          setTimeout(() => setMetricPulse(false), 500);
+        }, 500 + i * 500)
       );
     });
     // final emphasis
-    timers.push(setTimeout(() => setPhase(5), 400 + 3 * 380 + 500));
+    timers.push(setTimeout(() => setPhase(5), 500 + 3 * 500 + 600));
     return () => timers.forEach(clearTimeout);
   }, [inView, reducedMotion]);
 
@@ -459,13 +457,16 @@ function ResultsSection() {
                 {/* Métrica "destino" — pulsa cada vez que llega una card */}
                 <p
                   className={[
-                    "text-4xl font-bold font-serif text-primary transition-all duration-300",
+                    "text-4xl font-bold font-serif transition-all duration-300",
                     phase === 5 ? "scale-110" : "",
-                    metricPulse && !reducedMotion ? "scale-105" : "scale-100",
+                    metricPulse && !reducedMotion ? "scale-110" : "scale-100",
                   ].join(" ")}
                   style={{
-                    transition: "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease",
+                    transition: "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, color 0.25s ease",
                     opacity: inView ? 1 : 0,
+                    color: metricPulse && !reducedMotion
+                      ? "hsl(142 71% 45%)"
+                      : "hsl(var(--primary))",
                   }}
                 >
                   {reducedMotion ? "6+" : displayHours} horas
