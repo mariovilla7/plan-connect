@@ -384,10 +384,10 @@ function ProblemSection() {
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "Menú que encaja de verdad", label: "realista y clínico", time: "10''", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
+  { value: "Menú que encaja de verdad", label: "realista y clínico", time: "+10''", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
   { value: "Plan completo", label: "sin hoja en blanco", time: "+20''", desc: 'Pasas de "\u00bfqué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.' },
-  { value: "Ajuste fino", label: "sin descompensar el plan", time: "15''", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
-  { value: "Entrega al paciente", label: "", time: "7''", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra." },
+  { value: "Ajuste fino", label: "sin descompensar el plan", time: "+15''", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
+  { value: "Entrega al paciente", label: "", time: "+7''", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra." },
 ];
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
