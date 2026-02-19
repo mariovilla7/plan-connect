@@ -122,9 +122,10 @@ function Navbar() {
 // ─── S1 · Hero ───────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section id="seccion-1-hero" className="bg-white py-24 px-6">
-      <div className="container max-w-4xl mx-auto">
-        <div className="bg-white px-10 py-16 text-center">
+    <section id="seccion-1-hero" className="bg-white px-6 pt-20 pb-0 overflow-hidden">
+      <div className="container max-w-5xl mx-auto flex flex-col">
+        {/* Texto + CTA — centrado arriba */}
+        <div className="text-center pb-12">
           <div className="inline-block mb-6">
             <span className="bg-primary/10 text-primary text-xs font-medium px-4 py-2 rounded-full">
               Para nutricionistas con agenda llena que quieren volver a tener control de su tiempo
@@ -149,10 +150,16 @@ function Hero() {
             Acceso por invitación · Piloto cerrado: 10 plazas
           </p>
         </div>
+
+        {/* Componente de imagen — mockup del producto */}
+        <div className="w-full rounded-t-3xl bg-muted border border-border border-b-0 min-h-[420px] flex items-center justify-center overflow-hidden">
+          <p className="text-muted-foreground text-sm">[ Product mockup ]</p>
+        </div>
       </div>
     </section>
   );
 }
+
 
 // ─── Problem ─────────────────────────────────────────────────────────────────
 const problems = [
