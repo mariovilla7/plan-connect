@@ -729,16 +729,81 @@ function ResultsSection() {
 
 // ─── How It Works ─────────────────────────────────────────────────────────────
 const steps = [
-  { num: "01", title: "Carga lo mínimo", desc: "Ingresá las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre." },
-  { num: "02", title: "Generá el plan", desc: "Con un click, Kleia crea un plan semanal completo, balanceado y adaptado al perfil del paciente." },
-  { num: "03", title: "Ajustá sin descuadres", desc: "Cambiá cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real." },
-  { num: "04", title: "Entregá en 1 click", desc: "Exportá el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar." },
+  {
+    num: "01",
+    title: "Carga lo mínimo",
+    desc: "Ingresá las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre.",
+    image: null as string | null,
+  },
+  {
+    num: "02",
+    title: "Generá el plan",
+    desc: "Con un click, Kleia crea un plan semanal completo, balanceado y adaptado al perfil del paciente.",
+    image: null as string | null,
+  },
+  {
+    num: "03",
+    title: "Ajustá sin descuadres",
+    desc: "Cambiá cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real.",
+    image: null as string | null,
+  },
+  {
+    num: "04",
+    title: "Entregá en 1 click",
+    desc: "Exportá el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar.",
+    image: null as string | null,
+  },
 ];
 
 // ─── S4 · Cómo funciona ──────────────────────────────────────────────────────
 function HowItWorksSection() {
+  const { ref, inView } = useInView(0.25);
+  const [activeStep, setActiveStep] = useState(-1);
+  const [dotPlayed, setDotPlayed] = useState(false);
+
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // When section enters view, run the dot animation once
+  useEffect(() => {
+    if (!inView || dotPlayed || reducedMotion) {
+      if (reducedMotion && inView) setActiveStep(3); // show all highlighted if reduced motion
+      return;
+    }
+    setActiveStep(-1);
+    const TOTAL_DURATION = 2000; // ms across all 4 steps
+    const stepDelay = TOTAL_DURATION / 4;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    steps.forEach((_, i) => {
+      timers.push(setTimeout(() => setActiveStep(i), stepDelay * i + 200));
+    });
+    // Reset active after animation so all cards stay highlighted at final state
+    timers.push(setTimeout(() => setActiveStep(4), TOTAL_DURATION + 400));
+    setDotPlayed(true);
+    return () => timers.forEach(clearTimeout);
+  }, [inView, dotPlayed, reducedMotion]);
+
+  // Reset on re-entry: allow replay with a cooldown
+  const prevInView = React.useRef(false);
+  useEffect(() => {
+    if (!inView && prevInView.current) {
+      // User scrolled away — allow one more replay after 3s cooldown
+      const t = setTimeout(() => setDotPlayed(false), 3000);
+      return () => clearTimeout(t);
+    }
+    prevInView.current = inView;
+  }, [inView]);
+
+  const isHighlighted = (i: number) =>
+    reducedMotion ? true : activeStep >= i;
+
   return (
-    <section id="seccion-4-flujo" className="py-6 px-6">
+    <section
+      id="seccion-4-flujo"
+      className="py-6 px-6"
+      ref={ref as React.RefObject<HTMLElement>}
+    >
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
@@ -747,15 +812,179 @@ function HowItWorksSection() {
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">Cómo funciona</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {steps.map(({ num, title, desc }) => (
-              <div key={num} className="flex flex-col items-start p-7 rounded-2xl bg-background aspect-square justify-between">
-                <span className="text-5xl font-bold font-serif text-primary/20">{num}</span>
-                <div>
-                  <h3 className="font-semibold mb-2 text-base">{title}</h3>
+
+          {/* ── Desktop: 4 cards en fila con conector SVG horizontal ── */}
+          <div className="hidden md:block relative">
+            {/* SVG connector row — sits between top padding and card content */}
+            <div className="absolute left-0 right-0 top-[44px] h-0 pointer-events-none z-10 px-[calc(12.5%+28px)]">
+              <svg
+                className="w-full overflow-visible"
+                height="2"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                {/* Dotted line */}
+                <line
+                  x1="0" y1="1" x2="100%" y2="1"
+                  stroke="hsl(var(--primary) / 0.25)"
+                  strokeWidth="2"
+                  strokeDasharray="4 6"
+                  strokeLinecap="round"
+                />
+                {/* Traveling dot — animates from left to right */}
+                {!reducedMotion && inView && (
+                  <circle r="5" fill="hsl(var(--primary))" opacity="0.85">
+                    <animateMotion
+                      dur="2s"
+                      begin="0.2s"
+                      fill="freeze"
+                      calcMode="spline"
+                      keySplines="0.4 0 0.2 1"
+                      keyTimes="0;1"
+                    >
+                      <mpath>
+                        <animate
+                          attributeName="d"
+                          from="M 0,0"
+                          to="M 100%,0"
+                          dur="0s"
+                        />
+                      </mpath>
+                    </animateMotion>
+                    {/* Fallback: CSS animation on cx */}
+                    <animate
+                      attributeName="cx"
+                      from="0"
+                      to="100%"
+                      dur="2s"
+                      begin="0.2s"
+                      fill="freeze"
+                      calcMode="spline"
+                      keySplines="0.25 0.1 0.25 1"
+                    />
+                    <animate
+                      attributeName="cy"
+                      values="1;1"
+                      dur="2s"
+                      begin="0.2s"
+                      fill="freeze"
+                    />
+                    {/* Pulse */}
+                    <animate
+                      attributeName="r"
+                      values="5;7;5"
+                      dur="0.6s"
+                      begin="0.2s"
+                      repeatCount="3"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      values="0.85;1;0.85"
+                      dur="0.6s"
+                      begin="0.2s"
+                      repeatCount="3"
+                    />
+                  </circle>
+                )}
+              </svg>
+            </div>
+
+            <div className="grid grid-cols-4 gap-6 relative">
+              {steps.map(({ num, title, desc, image }, i) => (
+                <div
+                  key={num}
+                  className="flex flex-col items-start p-7 rounded-2xl aspect-square justify-between transition-all duration-500"
+                  style={{
+                    backgroundColor: isHighlighted(i)
+                      ? "hsl(var(--primary) / 0.06)"
+                      : "hsl(var(--background))",
+                    borderWidth: "1.5px",
+                    borderStyle: "solid",
+                    borderColor: isHighlighted(i)
+                      ? "hsl(var(--primary) / 0.35)"
+                      : "hsl(var(--border))",
+                    boxShadow: isHighlighted(i)
+                      ? "0 0 0 3px hsl(var(--primary) / 0.08)"
+                      : "none",
+                  }}
+                >
+                  {/* Image slot */}
+                  <div className="flex w-full justify-between items-start">
+                    <span className="text-5xl font-bold font-serif text-primary/20">{num}</span>
+                    <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
+                      {image ? (
+                        <img src={image} alt={title} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-muted-foreground/40 text-xs">img</span>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2 text-base">{title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Mobile / Tablet: cards apiladas con conector vertical ── */}
+          <div className="md:hidden flex flex-col gap-0">
+            {steps.map(({ num, title, desc, image }, i) => (
+              <React.Fragment key={num}>
+                <div
+                  className="flex flex-col p-6 rounded-2xl transition-all duration-500"
+                  style={{
+                    backgroundColor: isHighlighted(i)
+                      ? "hsl(var(--primary) / 0.06)"
+                      : "hsl(var(--background))",
+                    borderWidth: "1.5px",
+                    borderStyle: "solid",
+                    borderColor: isHighlighted(i)
+                      ? "hsl(var(--primary) / 0.35)"
+                      : "hsl(var(--border))",
+                    boxShadow: isHighlighted(i)
+                      ? "0 0 0 3px hsl(var(--primary) / 0.08)"
+                      : "none",
+                  }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <span className="text-4xl font-bold font-serif text-primary/20">{num}</span>
+                    <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
+                      {image ? (
+                        <img src={image} alt={title} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-muted-foreground/40 text-xs">img</span>
+                      )}
+                    </div>
+                  </div>
+                  <h3 className="font-semibold mb-1.5 text-base">{title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
                 </div>
-              </div>
+
+                {/* Vertical dotted connector between cards */}
+                {i < steps.length - 1 && (
+                  <div className="flex justify-center items-center py-0" aria-hidden="true">
+                    <div className="relative flex flex-col items-center" style={{ height: 40 }}>
+                      <svg width="12" height="40" aria-hidden="true">
+                        <line
+                          x1="6" y1="0" x2="6" y2="40"
+                          stroke="hsl(var(--primary) / 0.25)"
+                          strokeWidth="2"
+                          strokeDasharray="4 5"
+                          strokeLinecap="round"
+                        />
+                        {!reducedMotion && inView && isHighlighted(i) && (
+                          <circle cx="6" cy="20" r="4" fill="hsl(var(--primary))" opacity="0.7">
+                            <animate attributeName="opacity" values="0.7;1;0.7" dur="1.2s" repeatCount="indefinite" />
+                            <animate attributeName="r" values="4;5.5;4" dur="1.2s" repeatCount="indefinite" />
+                          </circle>
+                        )}
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>
