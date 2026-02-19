@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export function useInView(threshold = 0.15) {
+export function useInView(threshold = 0.1) {
   const ref = useRef<HTMLElement | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -15,7 +15,7 @@ export function useInView(threshold = 0.15) {
           observer.disconnect(); // solo una vez
         }
       },
-      { threshold }
+      { threshold, rootMargin: "0px 0px -50px 0px" }
     );
 
     observer.observe(el);

@@ -9,7 +9,7 @@ function FadeSection({ children, className = "", id }: { children: React.ReactNo
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       id={id}
-      className={`transition-opacity duration-700 ${inView ? "opacity-100" : "opacity-0"} ${className}`}
+      className={`transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"} ${className}`}
     >
       {children}
     </div>
