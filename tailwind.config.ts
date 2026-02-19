@@ -104,10 +104,15 @@ export default {
             height: "0",
           },
         },
+        "section-fade": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "section-fade": "section-fade 0.7s ease-out forwards",
       },
     },
   },
