@@ -248,28 +248,34 @@ function ProblemSection() {
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
-          <div className="flex flex-col md:flex-row gap-10 items-center">
-            {/* Lista de problemas */}
-            <div className="flex-1 grid grid-cols-1 gap-5">
+
+          <div className="flex flex-col md:flex-row gap-8 items-stretch">
+            {/* Columna izquierda: 4 cajas apiladas */}
+            <div className="flex-1 flex flex-col gap-3">
               {problems.map(({ icon: Icon, title, description }) => (
                 <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-5 w-5 text-primary" />
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Icon className="h-4 w-4 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1 text-base">{title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+                    <h3 className="font-semibold mb-0.5 text-sm">{title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
                   </div>
                 </div>
               ))}
             </div>
-            {/* Ilustración */}
-            <div className="flex-shrink-0 w-full md:w-80 flex items-center justify-center">
-              <img
-                src={problemaIlustracion}
-                alt="Nutricionista agotada frente al ordenador"
-                className="w-full max-w-xs md:max-w-full object-contain opacity-90"
-              />
+
+            {/* Columna derecha: foto flotante con sombra dramática */}
+            <div className="flex-shrink-0 w-full md:w-72 flex items-center justify-center md:justify-end">
+              <div className="relative">
+                {/* Sombra de fondo desplazada */}
+                <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl bg-primary/10 blur-sm" />
+                <img
+                  src={problemaIlustracion}
+                  alt="Nutricionista agotada frente al ordenador"
+                  className="relative w-full max-w-[260px] md:max-w-full object-contain drop-shadow-xl"
+                />
+              </div>
             </div>
           </div>
         </div>
