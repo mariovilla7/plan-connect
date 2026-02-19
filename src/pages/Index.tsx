@@ -249,7 +249,7 @@ function ProblemSection() {
             <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-8 items-stretch">
+          <div className="flex flex-col md:flex-row items-stretch">
             {/* Columna izquierda: 4 cajas apiladas */}
             <div className="flex-1 flex flex-col gap-3">
               {problems.map(({ icon: Icon, title, description }) => (
@@ -263,6 +263,37 @@ function ProblemSection() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Conector SVG — flechas curvas de cada caja hacia la imagen */}
+            <div className="hidden md:block flex-shrink-0 w-16 self-stretch">
+              <svg
+                viewBox="0 0 64 420"
+                className="w-full h-full"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="5" markerHeight="5" orient="auto">
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="hsl(var(--primary))" opacity="0.45" />
+                  </marker>
+                </defs>
+                {/* 4 curved arrows — one per card, converging toward center-right (image center ≈ y 210) */}
+                {[52, 155, 258, 361].map((startY, i) => (
+                  <path
+                    key={i}
+                    d={`M 2 ${startY} C 20 ${startY} 44 210 62 210`}
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="1.5"
+                    strokeDasharray="5 4"
+                    strokeLinecap="round"
+                    fill="none"
+                    opacity="0.4"
+                    markerEnd="url(#arrowhead)"
+                  />
+                ))}
+              </svg>
             </div>
 
             {/* Columna derecha: foto flotante con forma de huevo */}
