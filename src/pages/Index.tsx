@@ -1,5 +1,9 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import problemaIlustracion from "@/assets/problema-ilustracion.png";
+import problema1 from "@/assets/problema-1.png";
+import problema2 from "@/assets/problema-2.png";
+import problema3 from "@/assets/problema-3.png";
+import problema4 from "@/assets/problema-4.png";
 import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
 import { useState, useEffect } from "react";
 import { useInView } from "@/hooks/use-in-view";
@@ -238,10 +242,20 @@ const problems = [
 ];
 
 // ─── S2 · El Problema ────────────────────────────────────────────────────────
+const problemImages = [problemaIlustracion, problema1, problema2, problema3, problema4];
+
+// Posiciones de las 5 fotos en el círculo (en grados, 0 = arriba)
+const imagePositions = [270, 342, 54, 126, 198]; // top, top-right, bottom-right, bottom-left, top-left
+
 function ProblemSection() {
+  const circleR = 130; // radio del círculo de fotos
+  const cx = 200;      // centro SVG x
+  const cy = 200;      // centro SVG y
+  const svgSize = 400;
+
   return (
     <section id="seccion-2-problema" className="py-6 px-6">
-      <div className="container max-w-5xl mx-auto">
+      <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm p-10">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
@@ -250,10 +264,10 @@ function ProblemSection() {
             <h2 className="text-3xl md:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          <div className="flex flex-col md:flex-row items-stretch">
-            {/* Columna izquierda: 4 cajas apiladas */}
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            {/* Columna izquierda: 2 problemas */}
             <div className="flex-1 flex flex-col gap-3">
-              {problems.map(({ icon: Icon, title, description }) => (
+              {problems.slice(0, 2).map(({ icon: Icon, title, description }) => (
                 <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
                   <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Icon className="h-4 w-4 text-primary" />
@@ -266,52 +280,103 @@ function ProblemSection() {
               ))}
             </div>
 
-            {/* Conector SVG — flechas curvas de cada caja hacia la imagen */}
-            <div className="hidden md:block flex-shrink-0 w-16 self-stretch">
+            {/* Centro: SVG con círculo invisible + 5 fotos + flechas */}
+            <div className="flex-shrink-0 w-full md:w-[400px]">
               <svg
-                viewBox="0 0 64 420"
-                className="w-full h-full"
-                preserveAspectRatio="none"
+                viewBox={`0 0 ${svgSize} ${svgSize}`}
+                className="w-full h-auto"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <defs>
-                  <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5"
-                    markerWidth="5" markerHeight="5" orient="auto">
-                    <path d="M 0 1 L 9 5 L 0 9 z" fill="hsl(var(--primary))" opacity="0.45" />
+                  <marker id="arr-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="hsl(var(--primary))" opacity="0.4" />
                   </marker>
+                  <marker id="arr-r" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 10 1 L 1 5 L 10 9 z" fill="hsl(var(--primary))" opacity="0.4" />
+                  </marker>
+                  {problemImages.map((src, i) => (
+                    <clipPath key={i} id={`clip-img-${i}`}>
+                      <circle cx="0" cy="0" r="38" />
+                    </clipPath>
+                  ))}
                 </defs>
-                {/* 4 curved arrows — one per card, converging toward center-right (image center ≈ y 210) */}
-                {[52, 155, 258, 361].map((startY, i) => (
-                  <path
-                    key={i}
-                    d={`M 2 ${startY} C 20 ${startY} 44 210 62 210`}
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="1.5"
-                    strokeDasharray="5 4"
-                    strokeLinecap="round"
-                    fill="none"
-                    opacity="0.4"
-                    markerEnd="url(#arrowhead)"
-                  />
-                ))}
+
+                {/* Círculo casi invisible */}
+                <circle
+                  cx={cx} cy={cy} r={circleR}
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1"
+                  opacity="0.12"
+                  strokeDasharray="6 5"
+                />
+
+                {/* Flechas izquierda → círculo (2 problemas izq) */}
+                {/* Problema 0: flecha desde izquierda arriba */}
+                <path
+                  d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`}
+                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
+                  strokeLinecap="round" fill="none" opacity="0.4"
+                  markerEnd="url(#arr-l)"
+                />
+                {/* Problema 1: flecha desde izquierda abajo */}
+                <path
+                  d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`}
+                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
+                  strokeLinecap="round" fill="none" opacity="0.4"
+                  markerEnd="url(#arr-l)"
+                />
+
+                {/* Flechas derecha → círculo (2 problemas der) */}
+                {/* Problema 2: flecha desde derecha arriba */}
+                <path
+                  d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`}
+                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
+                  strokeLinecap="round" fill="none" opacity="0.4"
+                  markerEnd="url(#arr-r)"
+                />
+                {/* Problema 3: flecha desde derecha abajo */}
+                <path
+                  d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`}
+                  stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4"
+                  strokeLinecap="round" fill="none" opacity="0.4"
+                  markerEnd="url(#arr-r)"
+                />
+
+                {/* 5 fotos distribuidas en el círculo */}
+                {imagePositions.map((angleDeg, i) => {
+                  const rad = (angleDeg * Math.PI) / 180;
+                  const ix = cx + circleR * Math.cos(rad);
+                  const iy = cy + circleR * Math.sin(rad);
+                  return (
+                    <g key={i} transform={`translate(${ix}, ${iy})`}>
+                      <circle r="40" fill="white" opacity="0.9" />
+                      <image
+                        href={problemImages[i]}
+                        x="-38" y="-38" width="76" height="76"
+                        clipPath={`url(#clip-img-${i})`}
+                        preserveAspectRatio="xMidYMid slice"
+                      />
+                      <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
+                    </g>
+                  );
+                })}
               </svg>
             </div>
 
-            {/* Columna derecha: foto flotante con forma de huevo */}
-            <div className="flex-shrink-0 w-full md:w-96 flex items-center justify-center md:justify-end">
-              <div className="relative">
-                {/* Sombra de fondo desplazada */}
-                <div
-                  className="absolute inset-0 translate-x-4 translate-y-4 bg-primary/10 blur-sm"
-                  style={{ borderRadius: "60% 60% 55% 55% / 65% 65% 50% 50%" }}
-                />
-                <img
-                  src={problemaIlustracion}
-                  alt="Nutricionista agotada frente al ordenador"
-                  className="relative w-full max-w-[320px] md:max-w-full object-contain drop-shadow-xl"
-                  style={{ borderRadius: "60% 60% 55% 55% / 65% 65% 50% 50%", background: "hsl(var(--primary)/0.04)" }}
-                />
-              </div>
+            {/* Columna derecha: 2 problemas */}
+            <div className="flex-1 flex flex-col gap-3">
+              {problems.slice(2).map(({ icon: Icon, title, description }) => (
+                <div key={title} className="flex gap-4 p-5 rounded-2xl bg-background hover:bg-primary/5 transition-colors">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-0.5 text-sm">{title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
