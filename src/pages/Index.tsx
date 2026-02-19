@@ -324,7 +324,6 @@ function ProblemSection() {
 const stats = [
   { value: "10–20 min", label: "Plan completo", desc: "Tiempo promedio para generar un plan personalizado" },
   { value: "1–3 min", label: "Ajuste fino", desc: "Para modificar un alimento sin romper el balance" },
-  { value: "6+ horas", label: "Ahorradas por semana", desc: "Que antes se iban en armar y enviar planes" },
   { value: "1 click", label: "Entrega al paciente", desc: "PDF listo para compartir por WhatsApp o mail" },
 ];
 
@@ -343,16 +342,26 @@ function ResultsSection() {
             </h2>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-10">
-            {/* Imagen izquierda */}
-            <div className="flex-shrink-0 w-full md:w-80">
+            {/* Imagen izquierda + stat relacionado debajo */}
+            <div className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
               <img
                 src={resultadosIlustracion}
                 alt="Nutricionista usando Kleia"
                 className="w-full object-contain"
               />
+              <div className="mt-4 text-center">
+                <p className="text-4xl font-bold font-serif text-primary">6+ horas</p>
+                <p className="text-sm font-semibold mt-1">más a la semana</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Que antes se iban en armar y enviar planes</p>
+              </div>
             </div>
             {/* Stats derecha */}
-            <div className="flex-1 grid grid-cols-2 gap-4">
+            <div className="flex-1 flex flex-col gap-4">
+              {/* Caja especial "detalles que nos importan" */}
+              <div className="p-5 rounded-2xl bg-white border border-border text-center">
+                <p className="font-semibold" style={{ fontSize: "0.7rem" }}>detalles que nos importan</p>
+              </div>
+              {/* Las 3 cajas restantes */}
               {stats.map(({ value, label, desc }) => (
                 <div key={value} className="text-center p-5 rounded-2xl bg-background">
                   <p className="text-3xl font-bold font-serif text-primary mb-1">{value}</p>
