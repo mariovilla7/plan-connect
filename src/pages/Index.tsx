@@ -18,9 +18,7 @@ import { useInView } from "@/hooks/use-in-view";
 // ─── WhatsApp CTA ─────────────────────────────────────────────────────────────
 // 🔧 Reemplazá este número con el tuyo (con código de país, sin + ni espacios)
 const WA_NUMBER = "359896676923";
-const WA_MESSAGE = encodeURIComponent(
-  "Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?"
-);
+const WA_MESSAGE = encodeURIComponent("Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
 function openWhatsApp() {
@@ -69,11 +67,11 @@ import {
 
 // ─── S0 · Navbar ─────────────────────────────────────────────────────────────
 const navLinks = [
-  { label: "El problema",   id: "seccion-2-problema" },
-  { label: "Resultados",    id: "seccion-3-resultados" },
+  { label: "El problema", id: "seccion-2-problema" },
+  { label: "Resultados", id: "seccion-3-resultados" },
   { label: "Cómo funciona", id: "seccion-4-flujo" },
-  { label: "Incluido",      id: "seccion-5-incluido" },
-  { label: "FAQ",           id: "seccion-11-faq" },
+  { label: "Incluido", id: "seccion-5-incluido" },
+  { label: "FAQ", id: "seccion-11-faq" },
 ];
 
 function scrollTo(id: string) {
@@ -84,7 +82,10 @@ function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header id="seccion-0-navbar" className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border shadow-sm">
+    <header
+      id="seccion-0-navbar"
+      className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border shadow-sm"
+    >
       <div className="container max-w-5xl mx-auto flex items-center justify-between h-14 md:h-16 px-4 sm:px-6">
         <div className="flex items-center">
           <img src={kleiaLogo} alt="Kleia" className="h-6 sm:h-7 md:h-8 w-auto" />
@@ -112,9 +113,15 @@ function Navbar() {
             onClick={() => setOpen(!open)}
             aria-label="Menú"
           >
-            <span className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-5 h-0.5 bg-foreground transition-opacity duration-200 ${open ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span
+              className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "rotate-45 translate-y-2" : ""}`}
+            />
+            <span
+              className={`block w-5 h-0.5 bg-foreground transition-opacity duration-200 ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "-rotate-45 -translate-y-2" : ""}`}
+            />
           </button>
         </div>
       </div>
@@ -123,7 +130,10 @@ function Navbar() {
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
-              onClick={() => { scrollTo(id); setOpen(false); }}
+              onClick={() => {
+                scrollTo(id);
+                setOpen(false);
+              }}
               className="text-sm text-muted-foreground hover:text-foreground active:text-foreground text-left transition-colors py-3 border-b border-border/30 last:border-b-0"
             >
               {label}
@@ -147,12 +157,13 @@ function Hero() {
             </span>
           </div>
           <h1 className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2">
-            Dejá de pensar en menús.<br />
+            Dejá de pensar en menús.
+            <br />
             <span className="text-primary">Terminá tu día con todos los planes enviados.</span>
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto px-1 sm:px-2">
-            Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos,
-            respetando las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
+            Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos, respetando
+            las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
           </p>
           <div className="inline-flex flex-col items-center gap-2">
             <Button
@@ -161,7 +172,10 @@ function Hero() {
               className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 text-sm md:text-base font-medium shadow-md relative h-10 sm:h-11 md:h-12"
             >
               Agendar demo →
-              <span className="absolute -top-2.5 -right-2.5 text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none shadow-sm border" style={{ backgroundColor: "hsl(45 95% 60%)", color: "hsl(30 80% 20%)", borderColor: "hsl(45 90% 50%)" }}>
+              <span
+                className="absolute -top-2.5 -right-2.5 text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none shadow-sm border"
+                style={{ backgroundColor: "hsl(45 95% 60%)", color: "hsl(30 80% 20%)", borderColor: "hsl(45 90% 50%)" }}
+              >
                 10 plazas
               </span>
             </Button>
@@ -177,7 +191,6 @@ function Hero() {
     </section>
   );
 }
-
 
 // ─── Problem ─────────────────────────────────────────────────────────────────
 const problems = [
@@ -222,7 +235,10 @@ function ProblemSection() {
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
+            >
               El Problema
             </Badge>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
@@ -239,7 +255,16 @@ function ProblemSection() {
                     </clipPath>
                   ))}
                 </defs>
-                <circle cx={cx} cy={cy} r={circleR} fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.12" strokeDasharray="6 5" />
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={circleR}
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1"
+                  opacity="0.12"
+                  strokeDasharray="6 5"
+                />
                 {imagePositions.map((angleDeg, i) => {
                   const rad = (angleDeg * Math.PI) / 180;
                   const ix = cx + circleR * Math.cos(rad);
@@ -247,7 +272,15 @@ function ProblemSection() {
                   return (
                     <g key={i} transform={`translate(${ix}, ${iy})`}>
                       <circle r="40" fill="white" opacity="0.9" />
-                      <image href={problemImages[i]} x="-38" y="-38" width="76" height="76" clipPath={`url(#clip-img-m-${i})`} preserveAspectRatio="xMidYMid slice" />
+                      <image
+                        href={problemImages[i]}
+                        x="-38"
+                        y="-38"
+                        width="76"
+                        height="76"
+                        clipPath={`url(#clip-img-m-${i})`}
+                        preserveAspectRatio="xMidYMid slice"
+                      />
                       <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
                     </g>
                   );
@@ -255,7 +288,10 @@ function ProblemSection() {
               </svg>
             </div>
             {problems.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="group p-4 rounded-xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+              <div
+                key={title}
+                className="group p-4 rounded-xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm"
+              >
                 <div className="flex items-center gap-2.5 mb-2">
                   <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Icon className="h-3.5 w-3.5 text-primary" />
@@ -271,7 +307,10 @@ function ProblemSection() {
           <div className="hidden lg:flex lg:flex-row items-center gap-6">
             <div className="flex-1 flex flex-col gap-4">
               {problems.slice(0, 2).map(({ icon: Icon, title, description }) => (
-                <div key={title} className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                <div
+                  key={title}
+                  className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm"
+                >
                   <div className="flex items-center gap-2.5 mb-2.5">
                     <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Icon className="h-3.5 w-3.5 text-primary" />
@@ -285,10 +324,26 @@ function ProblemSection() {
             <div className="flex-shrink-0 w-full md:w-[400px]">
               <svg viewBox={`0 0 ${svgSize} ${svgSize}`} className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <marker id="arr-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                  <marker
+                    id="arr-l"
+                    viewBox="0 0 10 10"
+                    refX="9"
+                    refY="5"
+                    markerWidth="5"
+                    markerHeight="5"
+                    orient="auto"
+                  >
                     <path d="M 0 1 L 9 5 L 0 9 z" fill="hsl(var(--primary))" opacity="0.4" />
                   </marker>
-                  <marker id="arr-r" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <marker
+                    id="arr-r"
+                    viewBox="0 0 10 10"
+                    refX="1"
+                    refY="5"
+                    markerWidth="5"
+                    markerHeight="5"
+                    orient="auto-start-reverse"
+                  >
                     <path d="M 10 1 L 1 5 L 10 9 z" fill="hsl(var(--primary))" opacity="0.4" />
                   </marker>
                   {problemImages.map((_, i) => (
@@ -297,11 +352,56 @@ function ProblemSection() {
                     </clipPath>
                   ))}
                 </defs>
-                <circle cx={cx} cy={cy} r={circleR} fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.12" strokeDasharray="6 5" />
-                <path d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-l)" />
-                <path d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-l)" />
-                <path d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-r)" />
-                <path d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`} stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="5 4" strokeLinecap="round" fill="none" opacity="0.4" markerEnd="url(#arr-r)" />
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={circleR}
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1"
+                  opacity="0.12"
+                  strokeDasharray="6 5"
+                />
+                <path
+                  d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1.5"
+                  strokeDasharray="5 4"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.4"
+                  markerEnd="url(#arr-l)"
+                />
+                <path
+                  d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1.5"
+                  strokeDasharray="5 4"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.4"
+                  markerEnd="url(#arr-l)"
+                />
+                <path
+                  d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1.5"
+                  strokeDasharray="5 4"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.4"
+                  markerEnd="url(#arr-r)"
+                />
+                <path
+                  d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1.5"
+                  strokeDasharray="5 4"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.4"
+                  markerEnd="url(#arr-r)"
+                />
                 {imagePositions.map((angleDeg, i) => {
                   const rad = (angleDeg * Math.PI) / 180;
                   const ix = cx + circleR * Math.cos(rad);
@@ -309,7 +409,15 @@ function ProblemSection() {
                   return (
                     <g key={i} transform={`translate(${ix}, ${iy})`}>
                       <circle r="40" fill="white" opacity="0.9" />
-                      <image href={problemImages[i]} x="-38" y="-38" width="76" height="76" clipPath={`url(#clip-img-${i})`} preserveAspectRatio="xMidYMid slice" />
+                      <image
+                        href={problemImages[i]}
+                        x="-38"
+                        y="-38"
+                        width="76"
+                        height="76"
+                        clipPath={`url(#clip-img-${i})`}
+                        preserveAspectRatio="xMidYMid slice"
+                      />
                       <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
                     </g>
                   );
@@ -318,7 +426,10 @@ function ProblemSection() {
             </div>
             <div className="flex-1 flex flex-col gap-4">
               {problems.slice(2).map(({ icon: Icon, title, description }) => (
-                <div key={title} className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                <div
+                  key={title}
+                  className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm"
+                >
                   <div className="flex items-center gap-2.5 mb-2.5">
                     <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Icon className="h-3.5 w-3.5 text-primary" />
@@ -338,21 +449,65 @@ function ProblemSection() {
 
 // ─── S2b · Voces Reales (Evidence Strip) ─────────────────────────────────────
 const evidenceCards = [
-  { profile: "Nutrióloga · Madrid, ES",         pain: "Domingos de planes",   quote: "Se me cuela al finde, y me deja sin vida."                      },
-  { profile: "Nutrióloga · Valencia, ES",        pain: "Variedad agotadora",   quote: "Entre decidir y ejecutar, acabo repitiendo lo de siempre."      },
-  { profile: "Nutrióloga · CDMX, MX",           pain: "Cambios que descuadran",quote: "Cambio una cosa y se descompensa todo."                        },
-  { profile: "Nutrióloga · Lima, PE",            pain: "Edición eterna",       quote: "Siempre hay que retocar algo antes de enviarlo."               },
-  { profile: "Nutrióloga · Tegucigalpa, HN",    pain: "Local vs irreal",       quote: "No quiero recetas raras: quiero algo que se pueda hacer aquí." },
-  { profile: "Nutrióloga · (Ciudad), (País)",   pain: "Entrega lenta",         quote: "Se me junta todo y lo mando días después."                     },
+  {
+    profile: "Nutrióloga · Madrid, ES",
+    pain: "Domingos de planes",
+    quote: "Se me cuela al finde, y me deja sin vida.",
+  },
+  {
+    profile: "Nutrióloga · Valencia, ES",
+    pain: "Variedad agotadora",
+    quote: "Entre decidir y ejecutar, acabo repitiendo lo de siempre.",
+  },
+  { profile: "Nutrióloga · CDMX, MX", pain: "Cambios que descuadran", quote: "Cambio una cosa y se descompensa todo." },
+  {
+    profile: "Nutrióloga · Lima, PE",
+    pain: "Edición eterna",
+    quote: "Siempre hay que retocar algo antes de enviarlo.",
+  },
+  {
+    profile: "Nutrióloga · Tegucigalpa, HN",
+    pain: "Local vs irreal",
+    quote: "No quiero recetas raras: quiero algo que se pueda hacer aquí.",
+  },
+  {
+    profile: "Nutrióloga · (Ciudad), (País)",
+    pain: "Entrega lenta",
+    quote: "Se me junta todo y lo mando días después.",
+  },
 ];
 
 const cityQuotes: Record<string, { quote: string; profile: string; summary: string }> = {
-  "Madrid (ES)":      { quote: "Estoy harta de hacer menús.",              profile: "Nutrióloga · Madrid, ES",       summary: "Carga mental + trabajo que se cuela al finde." },
-  "Valencia (ES)":   { quote: "Si el caso es complejo, el plan me come el día.", profile: "Nutrióloga · Valencia, ES",  summary: "Personalización real = más tiempo."          },
-  "CDMX (MX)":       { quote: "Se mueven las calorías y me da no sé qué.", profile: "Nutrióloga · CDMX, MX",        summary: "Control de calidad manual constante."          },
-  "Lima (PE)":        { quote: "Si cambio algo, me descuadra y tengo que recomponer.", profile: "Nutrióloga · Lima, PE", summary: "Rebalanceo manual tras sustituciones."     },
-  "Tegucigalpa (HN)":{ quote: "La variedad cuesta si tiene que ser aplicable aquí.", profile: "Nutrióloga · Tegucigalpa, HN", summary: "Localización + realismo del menú."   },
-  "(Ciudad)":         { quote: "Siempre hay algo pendiente de mandar.",    profile: "Nutrióloga · (Ciudad), (País)", summary: "Acumulación de pendientes + entrega tardía."  },
+  "Madrid (ES)": {
+    quote: "Estoy harta de hacer menús.",
+    profile: "Nutrióloga · Madrid, ES",
+    summary: "Carga mental + trabajo que se cuela al finde.",
+  },
+  "Valencia (ES)": {
+    quote: "Si el caso es complejo, el plan me come el día.",
+    profile: "Nutrióloga · Valencia, ES",
+    summary: "Personalización real = más tiempo.",
+  },
+  "CDMX (MX)": {
+    quote: "Se mueven las calorías y me da no sé qué.",
+    profile: "Nutrióloga · CDMX, MX",
+    summary: "Control de calidad manual constante.",
+  },
+  "Lima (PE)": {
+    quote: "Si cambio algo, me descuadra y tengo que recomponer.",
+    profile: "Nutrióloga · Lima, PE",
+    summary: "Rebalanceo manual tras sustituciones.",
+  },
+  "Tegucigalpa (HN)": {
+    quote: "La variedad cuesta si tiene que ser aplicable aquí.",
+    profile: "Nutrióloga · Tegucigalpa, HN",
+    summary: "Localización + realismo del menú.",
+  },
+  "(Ciudad)": {
+    quote: "Siempre hay algo pendiente de mandar.",
+    profile: "Nutrióloga · (Ciudad), (País)",
+    summary: "Acumulación de pendientes + entrega tardía.",
+  },
 };
 
 const cityChips = Object.keys(cityQuotes);
@@ -364,7 +519,10 @@ function EvidenceStrip() {
   const handleChip = (chip: string) => {
     if (chip === activeChip) return;
     setVisible(false);
-    setTimeout(() => { setActiveChip(chip); setVisible(true); }, 180);
+    setTimeout(() => {
+      setActiveChip(chip);
+      setVisible(true);
+    }, 180);
   };
 
   const active = cityQuotes[activeChip];
@@ -372,7 +530,6 @@ function EvidenceStrip() {
   return (
     <section className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30">
       <div className="container max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
-
         {/* Chips + Quote block */}
         <div className="space-y-3 sm:space-y-4 md:space-y-5">
           {/* Horizontal scroll on mobile, wrap on desktop */}
@@ -419,33 +576,57 @@ function EvidenceStrip() {
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "Menú que encaja de verdad", label: "realista y clínico", time: "+10''", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
-  { value: "Plan completo", label: "sin hoja en blanco", time: "+20''", desc: 'Pasas de "¿qué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.' },
-  { value: "Ajuste fino", label: "sin descompensar el plan", time: "+15''", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
-  { value: "Entrega al paciente", label: "", time: "+7''", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra." },
+  {
+    value: "Menú que encaja de verdad",
+    label: "realista y clínico",
+    time: "+10''",
+    desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles).",
+  },
+  {
+    value: "Plan completo",
+    label: "sin hoja en blanco",
+    time: "+20''",
+    desc: 'Pasas de "¿qué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.',
+  },
+  {
+    value: "Ajuste fino",
+    label: "sin descompensar el plan",
+    time: "+15''",
+    desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando.",
+  },
+  {
+    value: "Entrega al paciente",
+    label: "",
+    time: "+7''",
+    desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra.",
+  },
 ];
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
 function ResultsSection() {
   const { ref, inView } = useInView(0.25);
-  const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const [phase, setPhase] = useState(0);
   const [metricPulse, setMetricPulse] = useState(false);
 
   useEffect(() => {
     if (!inView) return;
-    if (reducedMotion) { setPhase(5); return; }
+    if (reducedMotion) {
+      setPhase(5);
+      return;
+    }
     const timers: ReturnType<typeof setTimeout>[] = [];
     [0, 1, 2, 3].forEach((i) => {
       timers.push(
-        setTimeout(() => {
-          setPhase(i + 1);
-          setMetricPulse(true);
-          setTimeout(() => setMetricPulse(false), 500);
-        }, 500 + i * 500)
+        setTimeout(
+          () => {
+            setPhase(i + 1);
+            setMetricPulse(true);
+            setTimeout(() => setMetricPulse(false), 500);
+          },
+          500 + i * 500,
+        ),
       );
     });
     timers.push(setTimeout(() => setPhase(5), 500 + 3 * 500 + 600));
@@ -457,20 +638,17 @@ function ResultsSection() {
   const displayHours = hourValues[Math.min(phase, 4)];
 
   return (
-    <section
-      id="seccion-3-resultados"
-      className="py-4 md:py-6 px-4 lg:px-6"
-      ref={ref as React.RefObject<HTMLElement>}
-    >
+    <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6" ref={ref as React.RefObject<HTMLElement>}>
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
+            >
               RESULTADOS CON KLEIA
             </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">
-              Menos carga, más control
-            </h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Menos carga, más control</h2>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
             <div className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
@@ -494,10 +672,16 @@ function ResultsSection() {
                 >
                   {reducedMotion ? "6+" : displayHours} horas
                 </p>
-                <p className="text-sm font-semibold mt-1" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.2s" }}>
+                <p
+                  className="text-sm font-semibold mt-1"
+                  style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.2s" }}
+                >
                   más a la semana
                 </p>
-                <p className="text-xs text-muted-foreground mt-1 leading-relaxed" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.4s" }}>
+                <p
+                  className="text-xs text-muted-foreground mt-1 leading-relaxed"
+                  style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.4s" }}
+                >
                   Que antes se iban en armar y enviar planes
                 </p>
                 <div className="flex gap-1.5 justify-center mt-4">
@@ -527,7 +711,11 @@ function ResultsSection() {
                     className="flex rounded-xl overflow-hidden border shadow-sm transition-all"
                     style={{
                       opacity: visible ? 1 : 0,
-                      transform: visible ? (reducedMotion ? "none" : "translateX(0) scale(1)") : "translateX(32px) scale(0.97)",
+                      transform: visible
+                        ? reducedMotion
+                          ? "none"
+                          : "translateX(0) scale(1)"
+                        : "translateX(32px) scale(0.97)",
                       transitionProperty: "opacity, transform, border-color",
                       transitionDuration: reducedMotion ? "0ms" : "520ms",
                       transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
@@ -536,8 +724,14 @@ function ResultsSection() {
                     }}
                   >
                     <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0 gap-1.5">
-                      <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">{value}</p>
-                      {label && <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">{label}</p>}
+                      <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">
+                        {value}
+                      </p>
+                      {label && (
+                        <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">
+                          {label}
+                        </p>
+                      )}
                       <div className="flex items-center gap-1 mt-0.5 bg-primary/20 rounded-full px-2 py-0.5">
                         <Clock className="h-2.5 w-2.5 text-primary" />
                         <span className="text-[0.6rem] font-bold text-primary">{time}</span>
@@ -559,10 +753,30 @@ function ResultsSection() {
 
 // ─── How It Works ─────────────────────────────────────────────────────────────
 const steps = [
-  { num: "01", title: "Carga lo mínimo",        desc: "Ingresá las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre.", image: null as string | null },
-  { num: "02", title: "Generá el plan",          desc: "Con un click, Kleia crea un plan semanal completo, balanceado y adaptado al perfil del paciente.",            image: null as string | null },
-  { num: "03", title: "Ajustá sin descuadres",   desc: "Cambiá cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real.",           image: null as string | null },
-  { num: "04", title: "Entregá en 1 click",      desc: "Exportá el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar.",                           image: null as string | null },
+  {
+    num: "01",
+    title: "Carga lo mínimo",
+    desc: "Ingresá las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre.",
+    image: null as string | null,
+  },
+  {
+    num: "02",
+    title: "Generá el plan",
+    desc: "Con un click, Kleia crea un plan semanal completo, balanceado y adaptado al perfil del paciente.",
+    image: null as string | null,
+  },
+  {
+    num: "03",
+    title: "Ajustá sin descuadres",
+    desc: "Cambiá cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real.",
+    image: null as string | null,
+  },
+  {
+    num: "04",
+    title: "Entregá en 1 click",
+    desc: "Exportá el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar.",
+    image: null as string | null,
+  },
 ];
 
 // Shah-mat vertical offsets — más suaves para que las cards no se pisen
@@ -576,9 +790,7 @@ function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(-1);
   const [hasPlayed, setHasPlayed] = useState(false);
 
-  const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -591,14 +803,17 @@ function HowItWorksSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.35 },
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [hasPlayed]);
 
   function runAnimation() {
-    if (reducedMotion) { setActiveStep(4); return; }
+    if (reducedMotion) {
+      setActiveStep(4);
+      return;
+    }
     // Highlight cards one by one with a staggered delay
     const delays = [0, 500, 1000, 1500];
     delays.forEach((delay, i) => {
@@ -607,13 +822,22 @@ function HowItWorksSection() {
     setTimeout(() => setActiveStep(4), 2000);
   }
 
-  const isHighlighted = (i: number) => reducedMotion ? true : activeStep >= i;
+  const isHighlighted = (i: number) => (reducedMotion ? true : activeStep >= i);
 
   function StepCard({
-    num, title, desc, image, highlighted, style,
+    num,
+    title,
+    desc,
+    image,
+    highlighted,
+    style,
   }: {
-    num: string; title: string; desc: string; image: string | null;
-    highlighted: boolean; style?: React.CSSProperties;
+    num: string;
+    title: string;
+    desc: string;
+    image: string | null;
+    highlighted: boolean;
+    style?: React.CSSProperties;
   }) {
     return (
       <div
@@ -657,7 +881,10 @@ function HowItWorksSection() {
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-8 md:mb-12">
-            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
+            >
               Flujo
             </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Cómo funciona</h2>
@@ -665,12 +892,12 @@ function HowItWorksSection() {
 
           {/* DESKTOP: Shah-mat 2×2 (sin animación de línea) */}
           <div className="hidden md:block">
-              <div ref={gridRef} className="grid grid-cols-2 gap-10">
-                <StepCard {...steps[0]} highlighted={isHighlighted(0)} style={{ marginTop: STEP_OFFSETS[0] }} />
-                <StepCard {...steps[1]} highlighted={isHighlighted(1)} style={{ marginTop: STEP_OFFSETS[1] }} />
-                <StepCard {...steps[2]} highlighted={isHighlighted(2)} style={{ marginTop: STEP_OFFSETS[2] }} />
-                <StepCard {...steps[3]} highlighted={isHighlighted(3)} style={{ marginTop: STEP_OFFSETS[3] }} />
-              </div>
+            <div ref={gridRef} className="grid grid-cols-2 gap-10">
+              <StepCard {...steps[0]} highlighted={isHighlighted(0)} style={{ marginTop: STEP_OFFSETS[0] }} />
+              <StepCard {...steps[1]} highlighted={isHighlighted(1)} style={{ marginTop: STEP_OFFSETS[1] }} />
+              <StepCard {...steps[2]} highlighted={isHighlighted(2)} style={{ marginTop: STEP_OFFSETS[2] }} />
+              <StepCard {...steps[3]} highlighted={isHighlighted(3)} style={{ marginTop: STEP_OFFSETS[3] }} />
+            </div>
           </div>
 
           {/* MOBILE: single col on tiny screens, 2 cols on sm+ */}
@@ -692,14 +919,11 @@ function HowItWorksSection() {
                   >
                     {s.num}
                   </span>
-                  {i < steps.length - 1 && (
-                    <span className="text-muted-foreground/40 text-[10px] sm:text-xs">→</span>
-                  )}
+                  {i < steps.length - 1 && <span className="text-muted-foreground/40 text-[10px] sm:text-xs">→</span>}
                 </React.Fragment>
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -725,7 +949,10 @@ function FeaturesSection() {
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
+            >
               Incluido
             </Badge>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
@@ -763,14 +990,14 @@ function FeaturesSection() {
 
 // ─── Comparison Table ─────────────────────────────────────────────────────────
 const comparisonRows = [
-  { feature: "Personalizado por paciente",       excel: false,     avena: "Parcial", artesanal: true,  kleia: true },
-  { feature: "Recalculo automático de macros",   excel: false,     avena: true,      artesanal: false, kleia: true },
-  { feature: "Sin horas de trabajo manual",      excel: false,     avena: false,     artesanal: false, kleia: true },
-  { feature: "Exportación PDF profesional",      excel: false,     avena: true,      artesanal: false, kleia: true },
-  { feature: "Historial por paciente",           excel: "Parcial", avena: true,      artesanal: false, kleia: true },
-  { feature: "Ajustes sin descuadres",           excel: false,     avena: "Parcial", artesanal: false, kleia: true },
-  { feature: "Sin curva de aprendizaje larga",   excel: false,     avena: false,     artesanal: true,  kleia: true },
-  { feature: "Toque humano del nutricionista",   excel: true,      avena: false,     artesanal: true,  kleia: true },
+  { feature: "Personalizado por paciente", excel: false, avena: "Parcial", artesanal: true, kleia: true },
+  { feature: "Recalculo automático de macros", excel: false, avena: true, artesanal: false, kleia: true },
+  { feature: "Sin horas de trabajo manual", excel: false, avena: false, artesanal: false, kleia: true },
+  { feature: "Exportación PDF profesional", excel: false, avena: true, artesanal: false, kleia: true },
+  { feature: "Historial por paciente", excel: "Parcial", avena: true, artesanal: false, kleia: true },
+  { feature: "Ajustes sin descuadres", excel: false, avena: "Parcial", artesanal: false, kleia: true },
+  { feature: "Sin curva de aprendizaje larga", excel: false, avena: false, artesanal: true, kleia: true },
+  { feature: "Toque humano del nutricionista", excel: true, avena: false, artesanal: true, kleia: true },
 ];
 
 function CellValue({ val }: { val: boolean | string }) {
@@ -786,7 +1013,10 @@ function ComparisonSection() {
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
+            >
               Comparativa
             </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
@@ -796,10 +1026,18 @@ function ComparisonSection() {
               <table className="text-sm border-collapse min-w-[600px] w-full">
                 <thead className="sticky top-0 z-10 bg-white">
                   <tr>
-                    <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Excel</th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Avena</th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Artesanal</th>
+                    <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">
+                      Funcionalidad
+                    </th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
+                      Excel
+                    </th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
+                      Avena
+                    </th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
+                      Artesanal
+                    </th>
                     <th className="p-2 sm:p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
                       <div className="flex items-center justify-center py-0.5">
                         <img src={kleiaLogo} alt="Kleia" className="h-4 sm:h-5 md:h-7 w-auto" />
@@ -810,11 +1048,21 @@ function ComparisonSection() {
                 <tbody>
                   {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
                     <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">{feature}</td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={excel} /></td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={avena} /></td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={artesanal} /></td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">
+                        {feature}
+                      </td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center">
+                        <CellValue val={excel} />
+                      </td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center">
+                        <CellValue val={avena} />
+                      </td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center">
+                        <CellValue val={artesanal} />
+                      </td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center bg-success/5">
+                        <CellValue val={kleia} />
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -830,32 +1078,73 @@ function ComparisonSection() {
 // ─── Archetype data (kept for FlipCard use) ────────────────────────────────────
 const archetypes = [
   {
-    badge: "⏳ Saturada", badgeColor: "bg-amber-50 text-amber-700 border-amber-200", image: card1Img,
-    title: "La Saturada (pero responsable)", subtitle: "Agenda llena. Planes que se te cuelan al finde.", subtitleNode: null,
-    bullets: ["Estoy hasta arriba de hacer menús.", "Empiezo el plan 'cuando puedo'… y a veces se me va a días.", "Me prometo que este finde no… y al final cae el domingo."],
-    withKleia: "Plan en 10–20 min, ajustes en 1–3 min y entrega en 1 click.", cta: "Soy esta. Quiero demo.",
-    accentBorder: "#d97706", highlight: false, muted: false, microcopy: null,
+    badge: "⏳ Saturada",
+    badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+    image: card1Img,
+    title: "La Saturada (pero responsable)",
+    subtitle: "Agenda llena. Planes que se te cuelan al finde.",
+    subtitleNode: null,
+    bullets: [
+      "Estoy hasta arriba de hacer menús.",
+      "Empiezo el plan 'cuando puedo'… y a veces se me va a días.",
+      "Me prometo que este finde no… y al final cae el domingo.",
+    ],
+    withKleia: "Plan en 10–20 min, ajustes en 1–3 min y entrega en 1 click.",
+    cta: "Soy esta. Quiero demo.",
+    accentBorder: "#d97706",
+    highlight: false,
+    muted: false,
+    microcopy: null,
   },
   {
-    badge: "⚡ 24h", badgeColor: "bg-primary/10 text-primary border-primary/25", image: card2Img,
-    title: "La de '24h o nada'", subtitle: "Te importa que el paciente empiece ya.", subtitleNode: null,
-    bullets: ["Quieres entregar el plan en las primeras 24 horas.", "Si pasan más de 48, ya es 'alerta': hasta en comisaría se preocupan 😅", "Odias que un cambio descompense el plan y te robe tiempo."],
-    withKleia: "Menú que encaja (realista y clínico) + recalculo del plan completo.", cta: "Soy esta. Agendar demo.",
-    accentBorder: "hsl(var(--primary))", highlight: true, muted: false, microcopy: null,
+    badge: "⚡ 24h",
+    badgeColor: "bg-primary/10 text-primary border-primary/25",
+    image: card2Img,
+    title: "La de '24h o nada'",
+    subtitle: "Te importa que el paciente empiece ya.",
+    subtitleNode: null,
+    bullets: [
+      "Quieres entregar el plan en las primeras 24 horas.",
+      "Si pasan más de 48, ya es 'alerta': hasta en comisaría se preocupan 😅",
+      "Odias que un cambio descompense el plan y te robe tiempo.",
+    ],
+    withKleia: "Menú que encaja (realista y clínico) + recalculo del plan completo.",
+    cta: "Soy esta. Agendar demo.",
+    accentBorder: "hsl(var(--primary))",
+    highlight: true,
+    muted: false,
+    microcopy: null,
   },
   {
-    badge: "🙂💧 Estoy bien", badgeColor: "bg-muted text-muted-foreground border-border", image: card3Img,
-    title: "La de 'Estoy bien así (según yo)'", subtitle: "",
-    subtitleNode: (<><em className="not-italic opacity-60 text-xs">todo bajo control</em>{" "}…hasta que te explota la semana.</>),
-    bullets: ["Te va bien seguir sacrificando domingos para ponerte al día con planes.", "Te gusta perderte en mil páginas buscando recetas 'a ver cuál encaja' para cada paciente.", "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo 'porque así lo controlas'.", "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa."],
-    withKleia: null, cta: "Enséñame cómo sería",
-    accentBorder: "hsl(var(--border))", highlight: false, muted: true,
-    microcopy: "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
+    badge: "🙂💧 Estoy bien",
+    badgeColor: "bg-muted text-muted-foreground border-border",
+    image: card3Img,
+    title: "La de 'Estoy bien así (según yo)'",
+    subtitle: "",
+    subtitleNode: (
+      <>
+        <em className="not-italic opacity-60 text-xs">todo bajo control</em> …hasta que te explota la semana.
+      </>
+    ),
+    bullets: [
+      "Te va bien seguir sacrificando domingos para ponerte al día con planes.",
+      "Te gusta perderte en mil páginas buscando recetas 'a ver cuál encaja' para cada paciente.",
+      "Prefieres hacer cada ajuste a mano y recomponer macros/calorías tú mismo 'porque así lo controlas'.",
+      "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
+    ],
+    withKleia: null,
+    cta: "Enséñame cómo sería",
+    accentBorder: "hsl(var(--border))",
+    highlight: false,
+    muted: true,
+    microcopy:
+      "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
   },
 ];
 
-function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenModal: () => void }) {
-  const prefersReduced = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
+function FlipCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOpenModal: () => void }) {
+  const prefersReduced =
+    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
   const isTouchDevice = typeof window !== "undefined" ? window.matchMedia("(hover: none)").matches : false;
   // En tablet (< lg) y móvil: solo modal, sin flip
   const isSmallScreen = typeof window !== "undefined" ? window.matchMedia("(max-width: 1023px)").matches : false;
@@ -871,7 +1160,9 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
       role="button"
       tabIndex={0}
       aria-label={`Ver detalles de ${arch.title}`}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleClick(); }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") handleClick();
+      }}
       style={{ perspective: "1100px", minHeight: isSmallScreen ? undefined : "380px" }}
     >
       <div
@@ -887,10 +1178,17 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
             .flip-card-root:hover .flip-card-inner { transform: rotateY(180deg) !important; }
           }
         `}</style>
-        <div className="lg:absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+        <div
+          className="lg:absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden"
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+        >
           <div className="relative flex-1 bg-muted/30 overflow-hidden">
             <img src={arch.image} alt={arch.title} className="w-full h-full object-contain p-4" />
-            <span className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}>{arch.badge}</span>
+            <span
+              className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}
+            >
+              {arch.badge}
+            </span>
           </div>
           <div className="px-5 py-4 border-t border-border bg-white">
             <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
@@ -905,17 +1203,29 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
         </div>
         <div
           className="hidden lg:flex absolute inset-0 rounded-2xl border bg-white shadow-lg flex-col p-6 overflow-auto"
-          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", borderColor: arch.accentBorder }}
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+            borderColor: arch.accentBorder,
+          }}
         >
-          <span className={`inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-4 ${arch.badgeColor}`}>{arch.badge}</span>
+          <span
+            className={`inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-4 ${arch.badgeColor}`}
+          >
+            {arch.badge}
+          </span>
           <ul className="space-y-2.5 flex-1">
             {arch.bullets.map((b, j) => (
               <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
-                <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />{b}
+                <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                {b}
               </li>
             ))}
           </ul>
-          {arch.microcopy && <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mt-3">{arch.microcopy}</p>}
+          {arch.microcopy && (
+            <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mt-3">{arch.microcopy}</p>
+          )}
           {arch.withKleia && (
             <p className="text-sm border-t border-border pt-3 mt-3">
               <span className="font-semibold text-primary">Con Kleia: </span>
@@ -923,8 +1233,16 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
             </p>
           )}
           <button
-            onClick={(e) => { e.stopPropagation(); openWhatsApp(); }}
-            className={["mt-4 w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1", arch.muted ? "bg-muted text-muted-foreground hover:bg-muted/70" : "bg-primary text-primary-foreground hover:bg-primary/90"].join(" ")}
+            onClick={(e) => {
+              e.stopPropagation();
+              openWhatsApp();
+            }}
+            className={[
+              "mt-4 w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+              arch.muted
+                ? "bg-muted text-muted-foreground hover:bg-muted/70"
+                : "bg-primary text-primary-foreground hover:bg-primary/90",
+            ].join(" ")}
           >
             {arch.cta}
           </button>
@@ -944,9 +1262,16 @@ function FitSection() {
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">Encaje</Badge>
+            <Badge
+              variant="outline"
+              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
+            >
+              Encaje
+            </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">Elige tu perfil</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
+              Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {archetypes.map((arch, i) => (
@@ -963,45 +1288,72 @@ function FitSection() {
           </div>
         </div>
       </div>
-      {modalArch && createPortal(
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
-          onClick={() => setModalIdx(null)}
-          role="dialog" aria-modal="true" aria-label={modalArch.title}
-        >
-          <div className="bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto p-6 shadow-2xl animate-fade-in" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${modalArch.badgeColor}`}>{modalArch.badge}</span>
-              <button onClick={() => setModalIdx(null)} className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Cerrar">
-                <X className="h-5 w-5" />
+      {modalArch &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+            onClick={() => setModalIdx(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={modalArch.title}
+          >
+            <div
+              className="bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto p-6 shadow-2xl animate-fade-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span
+                  className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${modalArch.badgeColor}`}
+                >
+                  {modalArch.badge}
+                </span>
+                <button
+                  onClick={() => setModalIdx(null)}
+                  className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  aria-label="Cerrar"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <h3 className="font-bold text-foreground text-lg mb-1">{modalArch.title}</h3>
+              <p className="text-sm text-muted-foreground mb-4">{modalArch.subtitleNode ?? modalArch.subtitle}</p>
+              <ul className="space-y-2.5 mb-4">
+                {modalArch.bullets.map((b, j) => (
+                  <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
+                    <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              {modalArch.microcopy && (
+                <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mb-4">
+                  {modalArch.microcopy}
+                </p>
+              )}
+              {modalArch.withKleia && (
+                <p className="text-sm border-t border-border pt-3 mb-4">
+                  <span className="font-semibold text-primary">Con Kleia: </span>
+                  <span className="text-muted-foreground">{modalArch.withKleia}</span>
+                </p>
+              )}
+              <button
+                onClick={() => {
+                  setModalIdx(null);
+                  openWhatsApp();
+                }}
+                className={[
+                  "w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+                  modalArch.muted
+                    ? "bg-muted text-muted-foreground hover:bg-muted/70"
+                    : "bg-primary text-primary-foreground hover:bg-primary/90",
+                ].join(" ")}
+              >
+                {modalArch.cta}
               </button>
             </div>
-            <h3 className="font-bold text-foreground text-lg mb-1">{modalArch.title}</h3>
-            <p className="text-sm text-muted-foreground mb-4">{modalArch.subtitleNode ?? modalArch.subtitle}</p>
-            <ul className="space-y-2.5 mb-4">
-              {modalArch.bullets.map((b, j) => (
-                <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
-                  <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />{b}
-                </li>
-              ))}
-            </ul>
-            {modalArch.microcopy && <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mb-4">{modalArch.microcopy}</p>}
-            {modalArch.withKleia && (
-              <p className="text-sm border-t border-border pt-3 mb-4">
-                <span className="font-semibold text-primary">Con Kleia: </span>
-                <span className="text-muted-foreground">{modalArch.withKleia}</span>
-              </p>
-            )}
-            <button
-              onClick={() => { setModalIdx(null); openWhatsApp(); }}
-              className={["w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1", modalArch.muted ? "bg-muted text-muted-foreground hover:bg-muted/70" : "bg-primary text-primary-foreground hover:bg-primary/90"].join(" ")}
-            >
-              {modalArch.cta}
-            </button>
-          </div>
-        </div>,
-        document.body
-      )}
+          </div>,
+          document.body,
+        )}
     </section>
   );
 }
@@ -1043,10 +1395,15 @@ function StorySection() {
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
           {/* Header */}
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
+            >
               Por qué existe
             </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-1.5 sm:mb-2 md:mb-3">La historia detrás de Kleia</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-1.5 sm:mb-2 md:mb-3">
+              La historia detrás de Kleia
+            </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-xs sm:text-sm md:text-base">
               Nació para quitarte trabajo invisible: el que empieza cuando termina la consulta.
             </p>
@@ -1054,7 +1411,6 @@ function StorySection() {
 
           {/* Two-column: fotos izq, texto dcha */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10 lg:gap-14 items-start mb-5 sm:mb-6 md:mb-10">
-
             {/* LEFT: Carousel de fotos */}
             <div className="flex flex-col items-center gap-2.5 sm:gap-3">
               <div className="w-full rounded-lg sm:rounded-xl border border-border/60 overflow-hidden shadow-sm bg-muted/20 relative">
@@ -1151,16 +1507,33 @@ function BonusesSection() {
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
+            >
               Extras
             </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Bonos incluidos en el piloto</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">
+              Bonos incluidos en el piloto
+            </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 mb-5 sm:mb-6 md:mb-10">
             {[
-              { icon: Gift,         title: "Bono 1: Setup asistido",       desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo. Sin perderte en la herramienta." },
-              { icon: MessageSquare,title: "Bono 2: Canal de Expertos",    desc: "Acceso a un canal privado donde podés consultar dudas de nutrición con otros profesionales y con el equipo de Kleia." },
-              { icon: ShieldCheck,  title: "Garantía: Cancelación simple", desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelás sin preguntas. Sin contratos largos ni penalidades." },
+              {
+                icon: Gift,
+                title: "Bono 1: Setup asistido",
+                desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo. Sin perderte en la herramienta.",
+              },
+              {
+                icon: MessageSquare,
+                title: "Bono 2: Canal de Expertos",
+                desc: "Acceso a un canal privado donde podés consultar dudas de nutrición con otros profesionales y con el equipo de Kleia.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Garantía: Cancelación simple",
+                desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelás sin preguntas. Sin contratos largos ni penalidades.",
+              },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2.5 sm:mb-3 md:mb-4">
@@ -1173,11 +1546,14 @@ function BonusesSection() {
           </div>
           <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-4">
             {[
-              { icon: Star,         text: "Construido a partir de 12 entrevistas" },
+              { icon: Star, text: "Construido a partir de 12 entrevistas" },
               { icon: CheckCircle2, text: "Cohorte piloto activa ahora" },
-              { icon: Leaf,         text: "Piloto cerrado: 10 plazas" },
+              { icon: Leaf, text: "Piloto cerrado: 10 plazas" },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-1.5 sm:gap-2 bg-primary/10 rounded-full px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2">
+              <div
+                key={text}
+                className="flex items-center gap-1.5 sm:gap-2 bg-primary/10 rounded-full px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2"
+              >
                 <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
                 <span className="text-[10px] sm:text-[11px] md:text-xs text-primary font-medium">{text}</span>
               </div>
@@ -1196,7 +1572,10 @@ function DemoForm() {
       <div className="container max-w-lg mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-10 text-center">
           <div className="mb-6 md:mb-8">
-            <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
+            >
               Demo
             </Badge>
             <h2 className="text-2xl md:text-3xl font-bold font-serif">Agendá tu demo</h2>
@@ -1212,9 +1591,7 @@ function DemoForm() {
             >
               Escribirnos por WhatsApp →
             </Button>
-            <p className="text-xs text-muted-foreground">
-              Acceso por invitación · Piloto cerrado: 10 plazas
-            </p>
+            <p className="text-xs text-muted-foreground">Acceso por invitación · Piloto cerrado: 10 plazas</p>
           </div>
         </div>
       </div>
@@ -1224,11 +1601,26 @@ function DemoForm() {
 
 // ─── FAQ ─────────────────────────────────────────────────────────────────────
 const faqs = [
-  { q: "¿Necesito saber de tecnología para usar Kleia?", a: "No. Kleia está diseñado para nutricionistas, no para programadores. Si podés usar WhatsApp, podés usar Kleia. Además, te acompañamos en el setup inicial." },
-  { q: "¿Qué pasa con los datos de mis pacientes?",       a: "Los datos de tus pacientes son tuyos. Kleia los usa únicamente para generar los planes y no los comparte con terceros. Cumplimos con las normativas de privacidad aplicables." },
-  { q: "¿Puedo cancelar cuando quiero?",                  a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades. Si sentís que Kleia no te ahorra tiempo en los primeros 30 días, te devolvemos lo que pagaste." },
-  { q: "¿Kleia reemplaza mi criterio profesional?",       a: "No, y no está pensado para hacerlo. Kleia automatiza la parte mecánica (armar el plan, calcular macros, formatear el PDF), pero vos seguís siendo quien decide qué es mejor para cada paciente." },
-  { q: "¿Cuándo estará disponible para todos?",           a: "Estamos en piloto cerrado con 10 plazas. Después del piloto, vamos a iterar el producto y abrir acceso gradualmente. Si querés ser de los primeros, escribinos por WhatsApp ahora." },
+  {
+    q: "¿Necesito saber de tecnología para usar Kleia?",
+    a: "No. Kleia está diseñado para nutricionistas, no para programadores. Si podés usar WhatsApp, podés usar Kleia. Además, te acompañamos en el setup inicial.",
+  },
+  {
+    q: "¿Qué pasa con los datos de mis pacientes?",
+    a: "Los datos de tus pacientes son tuyos. Kleia los usa únicamente para generar los planes y no los comparte con terceros. Cumplimos con las normativas de privacidad aplicables.",
+  },
+  {
+    q: "¿Puedo cancelar cuando quiero?",
+    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades. Si sentís que Kleia no te ahorra tiempo en los primeros 30 días, te devolvemos lo que pagaste.",
+  },
+  {
+    q: "¿Kleia reemplaza mi criterio profesional?",
+    a: "No, y no está pensado para hacerlo. Kleia automatiza la parte mecánica (armar el plan, calcular macros, formatear el PDF), pero vos seguís siendo quien decide qué es mejor para cada paciente.",
+  },
+  {
+    q: "¿Cuándo estará disponible para todos?",
+    a: "Estamos en piloto cerrado con 10 plazas. Después del piloto, vamos a iterar el producto y abrir acceso gradualmente. Si querés ser de los primeros, escribinos por WhatsApp ahora.",
+  },
 ];
 
 // ─── S11 · FAQ ───────────────────────────────────────────────────────────────
@@ -1238,14 +1630,21 @@ function FAQSection() {
       <div className="container max-w-3xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            <Badge
+              variant="outline"
+              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
+            >
               FAQ
             </Badge>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Preguntas frecuentes</h2>
           </div>
           <Accordion type="single" collapsible className="space-y-1.5 sm:space-y-2">
             {faqs.map(({ q, a }, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-lg sm:rounded-xl md:rounded-2xl px-3 sm:px-3.5 md:px-4">
+              <AccordionItem
+                key={i}
+                value={`faq-${i}`}
+                className="bg-background border border-border rounded-lg sm:rounded-xl md:rounded-2xl px-3 sm:px-3.5 md:px-4"
+              >
                 <AccordionTrigger className="font-medium text-[11px] sm:text-xs md:text-sm text-left hover:no-underline py-3 sm:py-3.5 md:py-4">
                   {q}
                 </AccordionTrigger>
@@ -1273,7 +1672,8 @@ function FooterCTA() {
           Recuperá tu tiempo. Entregá planes que te enorgullezcan.
         </h2>
         <p className="text-background/70 mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
-          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escribinos por WhatsApp y descubrí si Kleia es para vos.
+          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escribinos por WhatsApp y descubrí si Kleia es para
+          vos.
         </p>
         <Button
           onClick={openWhatsApp}
@@ -1283,7 +1683,7 @@ function FooterCTA() {
           Agendar demo →
         </Button>
         <p className="mt-6 sm:mt-8 md:mt-10 text-[10px] sm:text-xs text-background/40">
-          © 2025 Kleia · Hecho con amor para nutricionistas
+          © {currentYear} Kleia · Hecho con amor para nutricionistas
         </p>
       </div>
     </footer>
@@ -1296,20 +1696,46 @@ export default function Index() {
     <div className="min-h-screen font-sans bg-white">
       <Navbar />
       <main>
-        <FadeSection><Hero /></FadeSection>
-        <FadeSection><ProblemSection /></FadeSection>
-        <FadeSection><EvidenceStrip /></FadeSection>
-        <FadeSection><ResultsSection /></FadeSection>
-        <FadeSection><HowItWorksSection /></FadeSection>
-        <FadeSection><FeaturesSection /></FadeSection>
-        <FadeSection><ComparisonSection /></FadeSection>
-        <FadeSection><FitSection /></FadeSection>
-        <FadeSection><StorySection /></FadeSection>
-        <FadeSection><BonusesSection /></FadeSection>
-        <FadeSection><DemoForm /></FadeSection>
-        <FadeSection><FAQSection /></FadeSection>
+        <FadeSection>
+          <Hero />
+        </FadeSection>
+        <FadeSection>
+          <ProblemSection />
+        </FadeSection>
+        <FadeSection>
+          <EvidenceStrip />
+        </FadeSection>
+        <FadeSection>
+          <ResultsSection />
+        </FadeSection>
+        <FadeSection>
+          <HowItWorksSection />
+        </FadeSection>
+        <FadeSection>
+          <FeaturesSection />
+        </FadeSection>
+        <FadeSection>
+          <ComparisonSection />
+        </FadeSection>
+        <FadeSection>
+          <FitSection />
+        </FadeSection>
+        <FadeSection>
+          <StorySection />
+        </FadeSection>
+        <FadeSection>
+          <BonusesSection />
+        </FadeSection>
+        <FadeSection>
+          <DemoForm />
+        </FadeSection>
+        <FadeSection>
+          <FAQSection />
+        </FadeSection>
       </main>
-      <FadeSection><FooterCTA /></FadeSection>
+      <FadeSection>
+        <FooterCTA />
+      </FadeSection>
     </div>
   );
 }
