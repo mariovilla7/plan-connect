@@ -900,8 +900,9 @@ function ComparisonSection() {
             </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
           </div>
-          <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0">
-              <table className="w-full text-sm border-collapse min-w-[520px]">
+          <div className="relative">
+            <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0 scrollbar-hide">
+              <table className="text-sm border-collapse min-w-[600px] w-full">
                 <thead className="sticky top-0 z-10 bg-white">
                   <tr>
                     <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
@@ -927,6 +928,9 @@ function ComparisonSection() {
                   ))}
                 </tbody>
               </table>
+            </div>
+            {/* Fade hint on right edge — mobile only */}
+            <div className="md:hidden absolute top-0 right-0 bottom-0 w-8 pointer-events-none bg-gradient-to-l from-white to-transparent rounded-r-2xl" />
           </div>
         </div>
       </div>
