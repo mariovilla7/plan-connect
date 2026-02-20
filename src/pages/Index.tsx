@@ -224,11 +224,11 @@ function ProblemSection() {
             <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
               El Problema
             </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          {/* Mobile */}
-          <div className="flex flex-col md:hidden gap-3">
+          {/* Mobile + Tablet: cards apiladas, SVG solo mobile */}
+          <div className="flex flex-col lg:hidden gap-3">
             <div className="w-full max-w-[240px] mx-auto">
               <svg viewBox="0 0 400 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -266,8 +266,8 @@ function ProblemSection() {
             ))}
           </div>
 
-          {/* Desktop */}
-          <div className="hidden md:flex md:flex-row items-center gap-6">
+          {/* Desktop (lg+) */}
+          <div className="hidden lg:flex lg:flex-row items-center gap-6">
             <div className="flex-1 flex flex-col gap-4">
               {problems.slice(0, 2).map(({ icon: Icon, title, description }) => (
                 <div key={title} className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
@@ -771,30 +771,14 @@ function HowItWorksSection() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Cómo funciona</h2>
           </div>
 
-          {/* DESKTOP: Shah-mat 2×2 + SVG S-curve */}
+          {/* DESKTOP: Shah-mat 2×2 (sin animación de línea) */}
           <div className="hidden md:block">
-            <div className="relative" style={{ paddingBottom: 60 }}>
-              {svgPath && (
-                <svg
-                  className="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"
-                  aria-hidden="true"
-                  style={{ width: svgDims.w, height: svgDims.h }}
-                >
-                  <path ref={basePathRef} d={svgPath} fill="none" stroke="hsl(var(--primary) / 0.20)" strokeWidth="2" strokeDasharray="5 8" strokeLinecap="round" style={{ strokeDashoffset: reducedMotion ? "0" : "99999" }} />
-                  <path ref={progressPathRef} d={svgPath} fill="none" stroke="hsl(var(--primary) / 0.32)" strokeWidth="2.5" strokeDasharray="5 8" strokeLinecap="round" style={{ strokeDashoffset: "99999" }} />
-                  {!reducedMotion && (
-                    <circle ref={dotRef} cx="-200" cy="-200" r="5" fill="hsl(var(--primary))" style={{ opacity: 0, filter: "drop-shadow(0 0 5px hsl(var(--primary) / 0.55))" }} />
-                  )}
-                </svg>
-              )}
-              {/* gap-10 para que los offsets no causen solapamientos */}
               <div ref={gridRef} className="grid grid-cols-2 gap-10">
                 <StepCard {...steps[0]} highlighted={isHighlighted(0)} style={{ marginTop: STEP_OFFSETS[0] }} />
                 <StepCard {...steps[1]} highlighted={isHighlighted(1)} style={{ marginTop: STEP_OFFSETS[1] }} />
                 <StepCard {...steps[2]} highlighted={isHighlighted(2)} style={{ marginTop: STEP_OFFSETS[2] }} />
                 <StepCard {...steps[3]} highlighted={isHighlighted(3)} style={{ marginTop: STEP_OFFSETS[3] }} />
               </div>
-            </div>
           </div>
 
           {/* MOBILE: single col on tiny screens, 2 cols on sm+ */}
@@ -915,18 +899,17 @@ function ComparisonSection() {
             </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
           </div>
-          <div className="-mx-5 md:mx-0 overflow-x-auto">
-            <div className="min-w-[540px] md:min-w-0 px-5 md:px-0">
-              <table className="w-full text-sm border-collapse">
-                <thead>
+          <div className="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
+              <table className="w-full text-sm border-collapse min-w-[480px]">
+                <thead className="sticky top-0 z-10 bg-white">
                   <tr>
-                    <th className="text-left p-2.5 md:p-4 text-muted-foreground font-medium text-xs md:text-sm">Funcionalidad</th>
-                    <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Excel</th>
-                    <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Avena</th>
-                    <th className="p-2.5 md:p-4 text-center text-muted-foreground font-medium text-xs md:text-sm">Artesanal</th>
-                    <th className="p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
+                    <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Excel</th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Avena</th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Artesanal</th>
+                    <th className="p-2 sm:p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
                       <div className="flex items-center justify-center py-0.5">
-                        <img src={kleiaLogo} alt="Kleia" className="h-5 md:h-7 w-auto" />
+                        <img src={kleiaLogo} alt="Kleia" className="h-4 sm:h-5 md:h-7 w-auto" />
                       </div>
                     </th>
                   </tr>
@@ -934,16 +917,15 @@ function ComparisonSection() {
                 <tbody>
                   {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
                     <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
-                      <td className="p-2.5 md:p-4 text-foreground/80 text-xs md:text-sm">{feature}</td>
-                      <td className="p-2.5 md:p-4 text-center"><CellValue val={excel} /></td>
-                      <td className="p-2.5 md:p-4 text-center"><CellValue val={avena} /></td>
-                      <td className="p-2.5 md:p-4 text-center"><CellValue val={artesanal} /></td>
-                      <td className="p-2.5 md:p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">{feature}</td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={excel} /></td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={avena} /></td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={artesanal} /></td>
+                      <td className="p-2 sm:p-2.5 md:p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
           </div>
         </div>
       </div>
@@ -981,20 +963,22 @@ const archetypes = [
 function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenModal: () => void }) {
   const prefersReduced = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
   const isTouchDevice = typeof window !== "undefined" ? window.matchMedia("(hover: none)").matches : false;
+  // En tablet (< lg) y móvil: solo modal, sin flip
+  const isSmallScreen = typeof window !== "undefined" ? window.matchMedia("(max-width: 1023px)").matches : false;
 
   const handleClick = () => {
-    if (isTouchDevice || prefersReduced) onOpenModal();
+    if (isTouchDevice || prefersReduced || isSmallScreen) onOpenModal();
   };
 
   return (
     <div
-      className="flip-card-root group h-auto sm:min-h-[420px] md:min-h-[460px]"
+      className="flip-card-root group h-auto lg:min-h-[460px]"
       onClick={handleClick}
       role="button"
       tabIndex={0}
       aria-label={`Ver detalles de ${arch.title}`}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleClick(); }}
-      style={{ perspective: "1100px", minHeight: "380px" }}
+      style={{ perspective: "1100px", minHeight: isSmallScreen ? undefined : "380px" }}
     >
       <div
         className="flip-card-inner relative w-full h-full"
@@ -1005,11 +989,11 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
         }}
       >
         <style>{`
-          @media (hover: hover) {
+          @media (hover: hover) and (min-width: 1024px) {
             .flip-card-root:hover .flip-card-inner { transform: rotateY(180deg) !important; }
           }
         `}</style>
-        <div className="absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+        <div className="lg:absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
           <div className="relative flex-1 bg-muted/30 overflow-hidden">
             <img src={arch.image} alt={arch.title} className="w-full h-full object-contain p-4" />
             <span className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}>{arch.badge}</span>
@@ -1018,15 +1002,15 @@ function FlipCard({ arch, onOpenModal }: { arch: typeof archetypes[0]; onOpenMod
             <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
             <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
             <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
-              <span className="hidden md:inline text-base">↻</span>
-              <span className="md:hidden text-base">👆</span>
-              <span className="hidden md:inline">Pasa el cursor para ver más</span>
-              <span className="md:hidden">Tocá para ver más</span>
+              <span className="hidden lg:inline text-base">↻</span>
+              <span className="lg:hidden text-base">👆</span>
+              <span className="hidden lg:inline">Pasa el cursor para ver más</span>
+              <span className="lg:hidden">Tocá para ver más</span>
             </p>
           </div>
         </div>
         <div
-          className="absolute inset-0 rounded-2xl border bg-white shadow-lg flex flex-col p-6 overflow-auto"
+          className="hidden lg:flex absolute inset-0 rounded-2xl border bg-white shadow-lg flex-col p-6 overflow-auto"
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", borderColor: arch.accentBorder }}
         >
           <span className={`inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-4 ${arch.badgeColor}`}>{arch.badge}</span>
