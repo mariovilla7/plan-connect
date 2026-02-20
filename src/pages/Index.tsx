@@ -20,6 +20,7 @@ import { useInView } from "@/hooks/use-in-view";
 const WA_NUMBER = "359896676923";
 const WA_MESSAGE = encodeURIComponent("Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
+const currentYear = new Date().getFullYear();
 
 function openWhatsApp() {
   window.open(WA_URL, "_blank", "noopener,noreferrer");
