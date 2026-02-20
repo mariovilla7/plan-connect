@@ -12,6 +12,7 @@ import storyImg1 from "@/assets/story_image_1.png";
 import storyImg2 from "@/assets/story_image_2.png";
 import storyImg3 from "@/assets/story_image_3.png";
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useInView } from "@/hooks/use-in-view";
 
 // ─── WhatsApp CTA ─────────────────────────────────────────────────────────────
@@ -137,7 +138,7 @@ function Navbar() {
 // ─── S1 · Hero ───────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section id="seccion-1-hero" className="bg-white px-4 sm:px-6 pt-8 sm:pt-12 md:pt-20 pb-0 overflow-hidden">
+    <section id="seccion-1-hero" className="bg-white px-4 lg:px-6 pt-8 sm:pt-12 md:pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
         <div className="text-center pb-6 sm:pb-8 md:pb-12">
           <div className="inline-block mb-3 sm:mb-4 md:mb-6 max-w-[92vw]">
@@ -217,7 +218,7 @@ function ProblemSection() {
   const svgSize = 400;
 
   return (
-    <section id="seccion-2-problema" className="py-4 md:py-6 px-4 md:px-6">
+    <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-6 md:mb-10">
@@ -369,7 +370,7 @@ function EvidenceStrip() {
   const active = cityQuotes[activeChip];
 
   return (
-    <section className="py-4 sm:py-6 md:py-10 px-4 sm:px-6 bg-muted/30">
+    <section className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30">
       <div className="container max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
 
         {/* Chips + Quote block */}
@@ -458,7 +459,7 @@ function ResultsSection() {
   return (
     <section
       id="seccion-3-resultados"
-      className="py-4 md:py-6 px-4 md:px-6"
+      className="py-4 md:py-6 px-4 lg:px-6"
       ref={ref as React.RefObject<HTMLElement>}
     >
       <div className="container max-w-5xl mx-auto">
@@ -761,7 +762,7 @@ function HowItWorksSection() {
   }
 
   return (
-    <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 md:px-6" ref={sectionRef}>
+    <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 lg:px-6" ref={sectionRef}>
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-8 md:mb-12">
@@ -829,7 +830,7 @@ const features = [
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
   return (
-    <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 sm:px-6">
+    <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
@@ -890,7 +891,7 @@ function CellValue({ val }: { val: boolean | string }) {
 // ─── S6 · Comparativa ────────────────────────────────────────────────────────
 function ComparisonSection() {
   return (
-    <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 md:px-6">
+    <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-6 md:mb-10">
@@ -899,8 +900,8 @@ function ComparisonSection() {
             </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
           </div>
-          <div className="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
-              <table className="w-full text-sm border-collapse min-w-[480px]">
+          <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0">
+              <table className="w-full text-sm border-collapse min-w-[520px]">
                 <thead className="sticky top-0 z-10 bg-white">
                   <tr>
                     <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
@@ -1046,7 +1047,7 @@ function FitSection() {
   const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
 
   return (
-    <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 sm:px-6">
+    <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
@@ -1069,7 +1070,7 @@ function FitSection() {
           </div>
         </div>
       </div>
-      {modalArch && (
+      {modalArch && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
           onClick={() => setModalIdx(null)}
@@ -1105,7 +1106,8 @@ function FitSection() {
               {modalArch.cta}
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
@@ -1143,7 +1145,7 @@ function StorySection() {
   }, [total]);
 
   return (
-    <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 sm:px-6">
+    <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
           {/* Header */}
@@ -1252,7 +1254,7 @@ function StorySection() {
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
   return (
-    <section id="seccion-8-extras" className="py-4 md:py-6 px-4 sm:px-6">
+    <section id="seccion-8-extras" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
@@ -1297,7 +1299,7 @@ function BonusesSection() {
 // ─── S10 · Formulario demo (ahora redirige a WhatsApp) ───────────────────────
 function DemoForm() {
   return (
-    <section id="agendar-demo" className="py-4 md:py-6 px-4 md:px-6">
+    <section id="agendar-demo" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-lg mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-10 text-center">
           <div className="mb-6 md:mb-8">
@@ -1339,7 +1341,7 @@ const faqs = [
 // ─── S11 · FAQ ───────────────────────────────────────────────────────────────
 function FAQSection() {
   return (
-    <section id="seccion-11-faq" className="py-4 md:py-6 px-4 sm:px-6">
+    <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-3xl mx-auto">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
