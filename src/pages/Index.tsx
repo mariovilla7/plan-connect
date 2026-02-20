@@ -572,68 +572,13 @@ const STEP_OFFSETS = [0, 24, -24, 0];
 function HowItWorksSection() {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const gridRef = React.useRef<HTMLDivElement>(null);
-  const basePathRef = React.useRef<SVGPathElement>(null);
-  const progressPathRef = React.useRef<SVGPathElement>(null);
-  const dotRef = React.useRef<SVGCircleElement>(null);
 
   const [activeStep, setActiveStep] = useState(-1);
   const [hasPlayed, setHasPlayed] = useState(false);
-  const [svgPath, setSvgPath] = useState("");
-  const [svgDims, setSvgDims] = useState({ w: 800, h: 600 });
 
   const reducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function computePath(): string {
-    const grid = gridRef.current;
-    if (!grid) return "";
-    const cards = Array.from(grid.children) as HTMLElement[];
-    if (cards.length < 4) return "";
-    const gridRect = grid.getBoundingClientRect();
-
-    // Anchor point en la esquina inferior-centro de cada card para suavizar la curva
-    const pts = cards.map((card) => {
-      const r = card.getBoundingClientRect();
-      return {
-        x: r.left - gridRect.left + r.width / 2,
-        y: r.top - gridRect.top + r.height * 0.22,
-      };
-    });
-
-    const [p0, p1, p2, p3] = pts;
-
-    // Segmento 01→02: arco horizontal muy suave, tangentes extendidas
-    const cx12 = (p0.x + p1.x) / 2;
-    const vSlack1 = Math.abs(p1.y - p0.y) * 0.5 + 60;
-    const seg1 = `C ${cx12},${p0.y - vSlack1} ${cx12},${p1.y - vSlack1} ${p1.x},${p1.y}`;
-
-    // Segmento 02→03: S diagonal — tangentes muy largas para ángulo casi recto
-    const cy23 = (p1.y + p2.y) / 2;
-    const hSlack23 = Math.abs(p2.x - p1.x) * 0.55 + 60;
-    const seg2 = `C ${p1.x + hSlack23},${cy23} ${p2.x - hSlack23},${cy23} ${p2.x},${p2.y}`;
-
-    // Segmento 03→04: arco horizontal muy suave hacia abajo
-    const cx34 = (p2.x + p3.x) / 2;
-    const vSlack3 = Math.abs(p3.y - p2.y) * 0.5 + 60;
-    const seg3 = `C ${cx34},${p2.y + vSlack3} ${cx34},${p3.y + vSlack3} ${p3.x},${p3.y}`;
-
-    return `M ${p0.x},${p0.y} ${seg1} ${seg2} ${seg3}`;
-  }
-
-  function refreshSvg() {
-    const grid = gridRef.current;
-    if (!grid) return;
-    const r = grid.getBoundingClientRect();
-    setSvgDims({ w: r.width, h: r.height + 100 });
-    setSvgPath(computePath());
-  }
-
-  useEffect(() => {
-    const t = setTimeout(refreshSvg, 120);
-    window.addEventListener("resize", refreshSvg);
-    return () => { clearTimeout(t); window.removeEventListener("resize", refreshSvg); };
-  }, []);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -641,7 +586,6 @@ function HowItWorksSection() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasPlayed) {
-          refreshSvg();
           setTimeout(() => runAnimation(), 200);
           setHasPlayed(true);
           observer.disconnect();
@@ -655,65 +599,12 @@ function HowItWorksSection() {
 
   function runAnimation() {
     if (reducedMotion) { setActiveStep(4); return; }
-
-    const basePath = basePathRef.current;
-    const progressPath = progressPathRef.current;
-    const dot = dotRef.current;
-    if (!basePath || !progressPath || !dot) return;
-
-    const totalLength = basePath.getTotalLength();
-    if (!totalLength) return;
-
-    // A) Line draw — más lenta
-    const dashArray = "5 8";
-    basePath.style.strokeDasharray = dashArray;
-    basePath.style.strokeDashoffset = String(totalLength * 4);
-    basePath.style.transition = "none";
-    void basePath.getBoundingClientRect();
-    basePath.style.transition = "stroke-dashoffset 2.4s cubic-bezier(0.65,0,0.35,1)";
-    basePath.style.strokeDashoffset = "0";
-
-    // B+C) Dot + progress trail — más lento (3200ms vs 2400ms antes)
-    const DOT_DURATION = 3200;
-    const DOT_DELAY = 250;
-    progressPath.style.strokeDasharray = String(totalLength);
-    progressPath.style.strokeDashoffset = String(totalLength);
-
-    const stepFractions = [0.05, 0.38, 0.65, 0.93];
-    let nextStep = 0;
-    const startTime = performance.now() + DOT_DELAY;
-    let rafId: number;
-
-    function frame(now: number) {
-      const elapsed = now - startTime;
-      if (elapsed < 0) { rafId = requestAnimationFrame(frame); return; }
-
-      const t = Math.min(elapsed / DOT_DURATION, 1);
-      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      const dist = eased * totalLength;
-
-      const pt = basePath.getPointAtLength(dist);
-      dot.setAttribute("cx", String(pt.x));
-      dot.setAttribute("cy", String(pt.y));
-      dot.style.opacity = "1";
-
-      progressPath.style.strokeDashoffset = String(totalLength - dist);
-      dot.setAttribute("r", String(5 + Math.sin(elapsed / 220) * 1.2));
-
-      while (nextStep < stepFractions.length && eased >= stepFractions[nextStep]) {
-        setActiveStep(nextStep);
-        nextStep++;
-      }
-
-      if (t < 1) {
-        rafId = requestAnimationFrame(frame);
-      } else {
-        setActiveStep(4);
-        dot.setAttribute("r", "5");
-      }
-    }
-
-    rafId = requestAnimationFrame(frame);
+    // Highlight cards one by one with a staggered delay
+    const delays = [0, 500, 1000, 1500];
+    delays.forEach((delay, i) => {
+      setTimeout(() => setActiveStep(i), delay);
+    });
+    setTimeout(() => setActiveStep(4), 2000);
   }
 
   const isHighlighted = (i: number) => reducedMotion ? true : activeStep >= i;
@@ -929,8 +820,6 @@ function ComparisonSection() {
                 </tbody>
               </table>
             </div>
-            {/* Fade hint on right edge — mobile only */}
-            <div className="md:hidden absolute top-0 right-0 bottom-0 w-8 pointer-events-none bg-gradient-to-l from-white to-transparent rounded-r-2xl" />
           </div>
         </div>
       </div>
