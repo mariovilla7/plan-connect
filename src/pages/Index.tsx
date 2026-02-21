@@ -223,13 +223,8 @@ const problems = [
 
 // ─── S2 · El Problema ────────────────────────────────────────────────────────
 const problemImages = [problemaIlustracion, problema1, problema2, problema3, problema4];
-const imagePositions = [270, 342, 54, 126, 198];
 
 function ProblemSection() {
-  const circleR = 130;
-  const cx = 200;
-  const cy = 200;
-  const svgSize = 400;
 
   return (
     <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6">
@@ -245,202 +240,38 @@ function ProblemSection() {
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          {/* Mobile + Tablet: cards apiladas, SVG solo mobile */}
-          <div className="flex flex-col lg:hidden gap-3">
-            <div className="w-full max-w-[240px] mx-auto">
-              <svg viewBox="0 0 400 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  {problemImages.map((_, i) => (
-                    <clipPath key={i} id={`clip-img-m-${i}`}>
-                      <circle cx="0" cy="0" r="38" />
-                    </clipPath>
-                  ))}
-                </defs>
-                <circle
-                  cx={cx}
-                  cy={cy}
-                  r={circleR}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1"
-                  opacity="0.12"
-                  strokeDasharray="6 5"
-                />
-                {imagePositions.map((angleDeg, i) => {
-                  const rad = (angleDeg * Math.PI) / 180;
-                  const ix = cx + circleR * Math.cos(rad);
-                  const iy = cy + circleR * Math.sin(rad);
-                  return (
-                    <g key={i} transform={`translate(${ix}, ${iy})`}>
-                      <circle r="40" fill="white" opacity="0.9" />
-                      <image
-                        href={problemImages[i]}
-                        x="-38"
-                        y="-38"
-                        width="76"
-                        height="76"
-                        clipPath={`url(#clip-img-m-${i})`}
-                        preserveAspectRatio="xMidYMid slice"
-                      />
-                      <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
-            {problems.map(({ icon: Icon, title, description }) => (
-              <div
-                key={title}
-                className="group p-4 rounded-xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm"
-              >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-3.5 w-3.5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Desktop (lg+) */}
-          <div className="hidden lg:flex lg:flex-row items-center gap-6">
-            <div className="flex-1 flex flex-col gap-4">
-              {problems.slice(0, 2).map(({ icon: Icon, title, description }) => (
+          {/* Alternating rows: card + image */}
+          <div className="flex flex-col gap-4 md:gap-6">
+            {problems.map(({ icon: Icon, title, description }, i) => {
+              const imgSrc = problemImages[i + 1]; // skip index 0 (main illustration)
+              const isEven = i % 2 === 0;
+              return (
                 <div
                   key={title}
-                  className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm"
+                  className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 ${!isEven ? "md:flex-row-reverse" : ""}`}
                 >
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Icon className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
+                  {/* Image */}
+                  <div className="flex-shrink-0 w-full max-w-[180px] sm:max-w-[200px] md:w-52">
+                    <img
+                      src={imgSrc}
+                      alt={title}
+                      className="w-full h-auto rounded-xl object-contain"
+                      loading="lazy"
+                    />
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex-shrink-0 w-full md:w-[400px]">
-              <svg viewBox={`0 0 ${svgSize} ${svgSize}`} className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <marker
-                    id="arr-l"
-                    viewBox="0 0 10 10"
-                    refX="9"
-                    refY="5"
-                    markerWidth="5"
-                    markerHeight="5"
-                    orient="auto"
-                  >
-                    <path d="M 0 1 L 9 5 L 0 9 z" fill="hsl(var(--primary))" opacity="0.4" />
-                  </marker>
-                  <marker
-                    id="arr-r"
-                    viewBox="0 0 10 10"
-                    refX="1"
-                    refY="5"
-                    markerWidth="5"
-                    markerHeight="5"
-                    orient="auto-start-reverse"
-                  >
-                    <path d="M 10 1 L 1 5 L 10 9 z" fill="hsl(var(--primary))" opacity="0.4" />
-                  </marker>
-                  {problemImages.map((_, i) => (
-                    <clipPath key={i} id={`clip-img-${i}`}>
-                      <circle cx="0" cy="0" r="38" />
-                    </clipPath>
-                  ))}
-                </defs>
-                <circle
-                  cx={cx}
-                  cy={cy}
-                  r={circleR}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1"
-                  opacity="0.12"
-                  strokeDasharray="6 5"
-                />
-                <path
-                  d={`M 0 110 C 30 110 60 ${cy - 60} ${cx - circleR + 10} ${cy - 50}`}
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1.5"
-                  strokeDasharray="5 4"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.4"
-                  markerEnd="url(#arr-l)"
-                />
-                <path
-                  d={`M 0 290 C 30 290 60 ${cy + 60} ${cx - circleR + 10} ${cy + 50}`}
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1.5"
-                  strokeDasharray="5 4"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.4"
-                  markerEnd="url(#arr-l)"
-                />
-                <path
-                  d={`M ${svgSize} 110 C ${svgSize - 30} 110 ${svgSize - 60} ${cy - 60} ${cx + circleR - 10} ${cy - 50}`}
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1.5"
-                  strokeDasharray="5 4"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.4"
-                  markerEnd="url(#arr-r)"
-                />
-                <path
-                  d={`M ${svgSize} 290 C ${svgSize - 30} 290 ${svgSize - 60} ${cy + 60} ${cx + circleR - 10} ${cy + 50}`}
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1.5"
-                  strokeDasharray="5 4"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.4"
-                  markerEnd="url(#arr-r)"
-                />
-                {imagePositions.map((angleDeg, i) => {
-                  const rad = (angleDeg * Math.PI) / 180;
-                  const ix = cx + circleR * Math.cos(rad);
-                  const iy = cy + circleR * Math.sin(rad);
-                  return (
-                    <g key={i} transform={`translate(${ix}, ${iy})`}>
-                      <circle r="40" fill="white" opacity="0.9" />
-                      <image
-                        href={problemImages[i]}
-                        x="-38"
-                        y="-38"
-                        width="76"
-                        height="76"
-                        clipPath={`url(#clip-img-${i})`}
-                        preserveAspectRatio="xMidYMid slice"
-                      />
-                      <circle r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.2" />
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
-            <div className="flex-1 flex flex-col gap-4">
-              {problems.slice(2).map(({ icon: Icon, title, description }) => (
-                <div
-                  key={title}
-                  className="group p-5 rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm"
-                >
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Icon className="h-3.5 w-3.5 text-primary" />
+                  {/* Card */}
+                  <div className="flex-1 group p-4 md:p-5 rounded-xl md:rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                    <div className="flex items-center gap-2.5 mb-2 md:mb-2.5">
+                      <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Icon className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
                     </div>
-                    <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -933,18 +764,31 @@ function HowItWorksSection() {
 
 // ─── Features ─────────────────────────────────────────────────────────────────
 const features = [
-  "Generación de planes semanales en minutos",
-  "Adaptación automática a restricciones y alergias",
-  "Recalculo instantáneo de macros al hacer cambios",
-  "Biblioteca de alimentos con valores nutricionales",
-  "Exportación PDF lista para compartir",
-  "Historial por paciente accesible en todo momento",
-  "Acceso desde cualquier dispositivo, sin instalación",
-  "Soporte dedicado durante el piloto",
+  { label: "Generación de planes semanales en minutos", icon: "📋" },
+  { label: "Adaptación automática a restricciones y alergias", icon: "🎯" },
+  { label: "Recalculo instantáneo de macros al hacer cambios", icon: "⚡" },
+  { label: "Biblioteca de alimentos con valores nutricionales", icon: "📚" },
+  { label: "Exportación PDF lista para compartir", icon: "📄" },
+  { label: "Historial por paciente accesible en todo momento", icon: "🗂️" },
+  { label: "Acceso desde cualquier dispositivo, sin instalación", icon: "💻" },
+  { label: "Soporte dedicado durante el piloto", icon: "🤝" },
 ];
+
+const featureImages: Record<number, string> = {
+  0: problema1,
+  1: problema2,
+  2: problema3,
+  3: problema4,
+  4: problemaIlustracion,
+  5: resultadosIlustracion,
+  6: problema1,
+  7: problema2,
+};
 
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
+  const [activeFeature, setActiveFeature] = useState(0);
+
   return (
     <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
@@ -959,18 +803,28 @@ function FeaturesSection() {
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
           <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 items-center">
-            <div className="hidden md:flex flex-shrink-0 w-full md:w-80 h-72 md:h-96 rounded-2xl bg-muted border border-border items-center justify-center">
-              <p className="text-muted-foreground text-sm">[ Product mockup ]</p>
+            <div className="flex-shrink-0 w-full md:w-80 h-56 sm:h-64 md:h-96 rounded-2xl bg-muted border border-border overflow-hidden flex items-center justify-center">
+              <img
+                src={featureImages[activeFeature]}
+                alt={features[activeFeature].label}
+                className="w-full h-full object-contain p-4 transition-opacity duration-300"
+              />
             </div>
             <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
-              {features.map((f) => (
-                <span
-                  key={f}
-                  className="inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 bg-primary/8 hover:bg-primary/15 text-primary border border-primary/20 rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium transition-colors cursor-default"
+              {features.map(({ label, icon }, i) => (
+                <button
+                  key={label}
+                  onClick={() => setActiveFeature(i)}
+                  className={[
+                    "inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium transition-all text-left",
+                    activeFeature === i
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "bg-primary/8 hover:bg-primary/15 text-primary border-primary/20",
+                  ].join(" ")}
                 >
                   <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
-                  {f}
-                </span>
+                  {label}
+                </button>
               ))}
               <div className="mt-3 sm:mt-4">
                 <Button
@@ -1143,111 +997,33 @@ const archetypes = [
   },
 ];
 
-function FlipCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOpenModal: () => void }) {
-  const prefersReduced =
-    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
-  const isTouchDevice = typeof window !== "undefined" ? window.matchMedia("(hover: none)").matches : false;
-  // En tablet (< lg) y móvil: solo modal, sin flip
-  const isSmallScreen = typeof window !== "undefined" ? window.matchMedia("(max-width: 1023px)").matches : false;
-
-  const handleClick = () => {
-    if (isTouchDevice || prefersReduced || isSmallScreen) onOpenModal();
-  };
-
+function ProfileCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOpenModal: () => void }) {
   return (
     <div
-      className="flip-card-root group h-auto lg:min-h-[460px]"
-      onClick={handleClick}
+      className="rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden cursor-pointer hover:shadow-md hover:border-primary/30 transition-all duration-200"
+      onClick={onOpenModal}
       role="button"
       tabIndex={0}
       aria-label={`Ver detalles de ${arch.title}`}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") handleClick();
+        if (e.key === "Enter" || e.key === " ") onOpenModal();
       }}
-      style={{ perspective: "1100px", minHeight: isSmallScreen ? undefined : "380px" }}
     >
-      <div
-        className="flip-card-inner relative w-full h-full"
-        style={{
-          transformStyle: "preserve-3d",
-          transition: prefersReduced ? "opacity 0.2s ease" : "transform 0.55s cubic-bezier(0.45,0.05,0.55,0.95)",
-          minHeight: "inherit",
-        }}
-      >
-        <style>{`
-          @media (hover: hover) and (min-width: 1024px) {
-            .flip-card-root:hover .flip-card-inner { transform: rotateY(180deg) !important; }
-          }
-        `}</style>
-        <div
-          className="lg:absolute inset-0 rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden"
-          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+      <div className="relative flex-1 bg-muted/30 overflow-hidden">
+        <img src={arch.image} alt={arch.title} className="w-full h-full object-contain p-4" />
+        <span
+          className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}
         >
-          <div className="relative flex-1 bg-muted/30 overflow-hidden">
-            <img src={arch.image} alt={arch.title} className="w-full h-full object-contain p-4" />
-            <span
-              className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}
-            >
-              {arch.badge}
-            </span>
-          </div>
-          <div className="px-5 py-4 border-t border-border bg-white">
-            <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
-            <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
-            <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
-              <span className="hidden lg:inline text-base">↻</span>
-              <span className="lg:hidden text-base">👆</span>
-              <span className="hidden lg:inline">Pasa el cursor para ver más</span>
-              <span className="lg:hidden">Tocá para ver más</span>
-            </p>
-          </div>
-        </div>
-        <div
-          className="hidden lg:flex absolute inset-0 rounded-2xl border bg-white shadow-lg flex-col p-6 overflow-auto"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-            borderColor: arch.accentBorder,
-          }}
-        >
-          <span
-            className={`inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-4 ${arch.badgeColor}`}
-          >
-            {arch.badge}
-          </span>
-          <ul className="space-y-2.5 flex-1">
-            {arch.bullets.map((b, j) => (
-              <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
-                <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                {b}
-              </li>
-            ))}
-          </ul>
-          {arch.microcopy && (
-            <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mt-3">{arch.microcopy}</p>
-          )}
-          {arch.withKleia && (
-            <p className="text-sm border-t border-border pt-3 mt-3">
-              <span className="font-semibold text-primary">Con Kleia: </span>
-              <span className="text-muted-foreground">{arch.withKleia}</span>
-            </p>
-          )}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              openWhatsApp();
-            }}
-            className={[
-              "mt-4 w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
-              arch.muted
-                ? "bg-muted text-muted-foreground hover:bg-muted/70"
-                : "bg-primary text-primary-foreground hover:bg-primary/90",
-            ].join(" ")}
-          >
-            {arch.cta}
-          </button>
-        </div>
+          {arch.badge}
+        </span>
+      </div>
+      <div className="px-5 py-4 border-t border-border bg-white">
+        <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
+        <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
+        <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
+          <span className="text-base">👆</span>
+          <span>Tocá para ver más</span>
+        </p>
       </div>
     </div>
   );
@@ -1276,7 +1052,7 @@ function FitSection() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {archetypes.map((arch, i) => (
-              <FlipCard key={i} arch={arch} onOpenModal={() => setModalIdx(i)} />
+              <ProfileCard key={i} arch={arch} onOpenModal={() => setModalIdx(i)} />
             ))}
           </div>
           <div className="text-center mt-6 md:mt-10">
