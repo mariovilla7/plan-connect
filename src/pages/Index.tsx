@@ -158,9 +158,9 @@ function Hero() {
             </span>
           </div>
           <h1 className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2">
-            Dejá de pensar en menús.
+            Deja de pensar en menús.
             <br />
-            <span className="text-primary">Terminá tu día con todos los planes enviados.</span>
+            <span className="text-primary">Termina tu día con todos los planes enviados.</span>
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto px-1 sm:px-2">
             Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos, respetando
