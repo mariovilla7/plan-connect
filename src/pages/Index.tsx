@@ -225,7 +225,6 @@ const problems = [
 const problemImages = [problemaIlustracion, problema1, problema2, problema3, problema4];
 
 function ProblemSection() {
-
   return (
     <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-6xl mx-auto">
@@ -252,12 +251,7 @@ function ProblemSection() {
                 >
                   {/* Image */}
                   <div className="flex-shrink-0 w-full max-w-[180px] sm:max-w-[200px] md:w-52">
-                    <img
-                      src={imgSrc}
-                      alt={title}
-                      className="w-full h-auto rounded-xl object-contain"
-                      loading="lazy"
-                    />
+                    <img src={imgSrc} alt={title} className="w-full h-auto rounded-xl object-contain" loading="lazy" />
                   </div>
                   {/* Card */}
                   <div className="flex-1 group p-4 md:p-5 rounded-xl md:rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
@@ -418,7 +412,7 @@ const stats = [
     value: "Plan completo",
     label: "sin hoja en blanco",
     time: "+20''",
-    desc: 'Pasas de "¿qué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.',
+    desc: 'Pasas de "¿Qué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.',
   },
   {
     value: "Ajuste fino",
@@ -588,25 +582,25 @@ const steps = [
   {
     num: "01",
     title: "Carga lo mínimo",
-    desc: "Ingresá las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre.",
+    desc: "Ingresa las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre.",
     image: null as string | null,
   },
   {
     num: "02",
-    title: "Generá el plan",
+    title: "Genera el plan",
     desc: "Con un click, Kleia crea un plan semanal completo, balanceado y adaptado al perfil del paciente.",
     image: null as string | null,
   },
   {
     num: "03",
-    title: "Ajustá sin descuadres",
-    desc: "Cambiá cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real.",
+    title: "Ajusta sin descuadres",
+    desc: "Cambia cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real.",
     image: null as string | null,
   },
   {
     num: "04",
-    title: "Entregá en 1 click",
-    desc: "Exportá el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar.",
+    title: "Entrega en 1 click",
+    desc: "Exporta el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar.",
     image: null as string | null,
   },
 ];
@@ -1022,7 +1016,7 @@ function ProfileCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOp
         <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
         <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
           <span className="text-base">👆</span>
-          <span>Tocá para ver más</span>
+          <span>Toca para ver más</span>
         </p>
       </div>
     </div>
@@ -1304,12 +1298,12 @@ function BonusesSection() {
               {
                 icon: MessageSquare,
                 title: "Bono 2: Canal de Expertos",
-                desc: "Acceso a un canal privado donde podés consultar dudas de nutrición con otros profesionales y con el equipo de Kleia.",
+                desc: "Acceso a un canal privado donde puedes consultar dudas de nutrición con otros profesionales y con el equipo de Kleia.",
               },
               {
                 icon: ShieldCheck,
                 title: "Garantía: Cancelación simple",
-                desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelás sin preguntas. Sin contratos largos ni penalidades.",
+                desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelas sin preguntas. Sin contratos largos ni penalidades.",
               },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
@@ -1355,9 +1349,9 @@ function DemoForm() {
             >
               Demo
             </Badge>
-            <h2 className="text-2xl md:text-3xl font-bold font-serif">Agendá tu demo</h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-serif">Agenda tu demo</h2>
             <p className="text-muted-foreground mt-2 text-sm">
-              Escribinos por WhatsApp y te contamos cómo funciona sin compromiso.
+              Escribenos por WhatsApp y te contamos cómo funciona sin compromiso.
             </p>
           </div>
           <div className="flex flex-col items-center gap-4">
@@ -1388,15 +1382,15 @@ const faqs = [
   },
   {
     q: "¿Puedo cancelar cuando quiero?",
-    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades. Si sentís que Kleia no te ahorra tiempo en los primeros 30 días, te devolvemos lo que pagaste.",
+    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades. Si sientes que Kleia no te ahorra tiempo en los primeros 30 días",
   },
   {
     q: "¿Kleia reemplaza mi criterio profesional?",
-    a: "No, y no está pensado para hacerlo. Kleia automatiza la parte mecánica (armar el plan, calcular macros, formatear el PDF), pero vos seguís siendo quien decide qué es mejor para cada paciente.",
+    a: "No, y no está pensado para hacerlo. Kleia automatiza la parte mecánica (armar el plan, calcular macros, formatear el PDF), pero tu sigues siendo quien decide qué es mejor para cada paciente.",
   },
   {
     q: "¿Cuándo estará disponible para todos?",
-    a: "Estamos en piloto cerrado con 10 plazas. Después del piloto, vamos a iterar el producto y abrir acceso gradualmente. Si querés ser de los primeros, escribinos por WhatsApp ahora.",
+    a: "Estamos en piloto cerrado con 10 plazas. Después del piloto, vamos a iterar el producto y abrir acceso gradualmente. Si quieres ser de los primeros, escríbenos por WhatsApp ahora.",
   },
 ];
 
@@ -1446,11 +1440,11 @@ function FooterCTA() {
           <img src={kleiaLogo} alt="Kleia" className="h-6 sm:h-7 md:h-8 w-auto brightness-0 invert" />
         </div>
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2.5 sm:mb-3 md:mb-4 leading-tight max-w-2xl mx-auto px-2">
-          Recuperá tu tiempo. Entregá planes que te enorgullezcan.
+          Recupera tu tiempo. Entrega planes que te enorgullezcan.
         </h2>
         <p className="text-background/70 mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
-          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escribinos por WhatsApp y descubrí si Kleia es para
-          vos.
+          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escríbenos por WhatsApp y descubre si Kleia es para
+          ti.
         </p>
         <Button
           onClick={openWhatsApp}
