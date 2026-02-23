@@ -154,7 +154,7 @@ function Hero() {
         <div className="text-center pb-6 sm:pb-8 md:pb-12">
           <div className="inline-block mb-3 sm:mb-4 md:mb-6 max-w-[92vw]">
             <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
-              Para nutricionistas independientes sin miedo a delegar
+              Para nutricionistas independientes sin perder tu criterio profesional
             </span>
           </div>
           <h1 className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2">
@@ -163,8 +163,9 @@ function Hero() {
             <span className="text-primary">Termina tu día con todos los planes enviados.</span>
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto px-1 sm:px-2">
-            Kleia es el asistente de planificación nutricional que genera planes personalizados en minutos, respetando
-            las preferencias de cada paciente, sin que tengas que empezar desde cero cada vez.
+            Kleia es tu asistente de planificación nutricional: genera planes clínicos en minutos, respetando
+            necesidades y preferencias de cada paciente. Envías un PDF listo por WhatsApp/email como siempre — sin
+            copiar y pegar ni empezar desde cero.
           </p>
           <div className="inline-flex flex-col items-center gap-2">
             <Button
@@ -211,13 +212,13 @@ const problems = [
     icon: RefreshCw,
     title: "Tocas una cosa… y se descompensa todo",
     description:
-      "Cambias un ingrediente y se mueven calorías/macros (y el resto del día). Acabas recomponiendo comidas para que el plan vuelva a cuadrar.",
+      "Cambias un ingrediente y se mueven las calorías y los macros (y el resto del día). Acabas recomponiendo comidas para que el plan vuelva a cuadrar.",
   },
   {
     icon: BatteryLow,
     title: "El plan se te mete en la noche y el finde",
     description:
-      'Atiendes todo el día y el plan cae "para después". Se acumula, lo haces a ratos o en domingo… y a veces se te va a varios días.',
+      "Atiendes todo el día y el plan cae “para después”. Se acumula, lo haces a ratos o en domingo… y a veces se te va a varios días.",
   },
 ];
 
