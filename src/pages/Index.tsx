@@ -763,7 +763,7 @@ function HowItWorksSection() {
           </div>
         </div>
       </div>
-      <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
+      <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
         Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
       </p>
     </section>
