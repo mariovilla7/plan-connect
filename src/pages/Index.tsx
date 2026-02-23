@@ -1,13 +1,14 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import problemaIlustracion from "@/assets/problema-ilustracion.png";
-import problema1 from "@/assets/problema-1.png";
-import problema2 from "@/assets/problema-2.png";
-import problema3 from "@/assets/problema-3.png";
-import problema4 from "@/assets/problema-4.png";
+import problema1 from "@/assets/problem-1.png";
+import problema2 from "@/assets/problem-2.png";
+import problema3 from "@/assets/problem-3.png";
+import problema4 from "@/assets/problem-4.png";
 import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
-import card1Img from "@/assets/kleiacard_1.png";
-import card2Img from "@/assets/kleiacard_2.png";
-import card3Img from "@/assets/kleiacard_3.png";
+import card1Img from "@/assets/card-1.png";
+import card2Img from "@/assets/card-2.png";
+import card3Img from "@/assets/card-3.png";
+import heroMockup from "@/assets/seccion1-mockup.png";
 import storyImg1 from "@/assets/story_image_1.png";
 import storyImg2 from "@/assets/story_image_2.png";
 import storyImg3 from "@/assets/story_image_3.png";
@@ -186,8 +187,8 @@ function Hero() {
         </div>
 
         {/* Mockup del producto */}
-        <div className="w-full rounded-t-xl sm:rounded-t-2xl md:rounded-t-3xl bg-muted border border-border border-b-0 min-h-[180px] sm:min-h-[260px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
-          <p className="text-muted-foreground text-xs sm:text-sm">[ Product mockup ]</p>
+        <div className="w-full flex items-center justify-center overflow-hidden">
+          <img src={heroMockup} alt="Kleia app mockup" className="w-full max-w-4xl h-auto object-contain" loading="eager" />
         </div>
       </div>
     </section>
@@ -297,11 +298,6 @@ const evidenceCards = [
     pain: "Local vs irreal",
     quote: "No quiero recetas raras: quiero algo que se pueda hacer aquí.",
   },
-  {
-    profile: "Nutrióloga · (Ciudad), (País)",
-    pain: "Entrega lenta",
-    quote: "Se me junta todo y lo mando días después.",
-  },
 ];
 
 const cityQuotes: Record<string, { quote: string; profile: string; summary: string }> = {
@@ -329,11 +325,6 @@ const cityQuotes: Record<string, { quote: string; profile: string; summary: stri
     quote: "La variedad cuesta si tiene que ser aplicable aquí.",
     profile: "Nutrióloga · Tegucigalpa, HN",
     summary: "Localización + realismo del menú.",
-  },
-  "(Ciudad)": {
-    quote: "Siempre hay algo pendiente de mandar.",
-    profile: "Nutrióloga · (Ciudad), (País)",
-    summary: "Acumulación de pendientes + entrega tardía.",
   },
 };
 
@@ -401,10 +392,20 @@ function EvidenceStrip() {
             <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground font-medium uppercase tracking-widest">
               {active.profile}
             </p>
-            <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">
+           <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">
               <span className="font-semibold text-foreground">Resumen:</span> {active.summary}
             </p>
           </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-4 sm:mt-6">
+          <button
+            onClick={() => scrollTo("seccion-4-flujo")}
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full hover:bg-primary/90 active:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-xs sm:text-sm md:text-base"
+          >
+            Ver cómo lo resolvemos →
+          </button>
         </div>
       </div>
     </section>
@@ -433,7 +434,7 @@ const stats = [
   },
   {
     value: "Entrega al paciente",
-    label: "",
+    label: "sin pasos extra",
     time: "+7''",
     desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace, sin formatear ni copiar y pegar.",
   },
@@ -763,9 +764,12 @@ function HowItWorksSection() {
           </div>
         </div>
       </div>
-      <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
-        Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
-      </p>
+      <div className="max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
+        <p className="text-sm sm:text-base text-foreground/80 text-center leading-relaxed italic">
+          <span className="text-primary font-semibold not-italic">💡</span>{" "}
+          Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
+        </p>
+      </div>
     </section>
   );
 }
@@ -853,7 +857,7 @@ function FeaturesSection() {
 
 // ─── Comparison Table ─────────────────────────────────────────────────────────
 const comparisonRows = [
-  { feature: "Personalizado por paciente", excel: false, avena: "Parcial", artesanal: true, kleia: true },
+  { feature: "Personalización sin trabajo manual", excel: false, avena: "Parcial", artesanal: true, kleia: true },
   { feature: "Recalculo automático de macros", excel: false, avena: true, artesanal: false, kleia: true },
   { feature: "Sin horas de trabajo manual", excel: false, avena: false, artesanal: false, kleia: true },
   { feature: "Exportación PDF profesional", excel: false, avena: true, artesanal: false, kleia: true },
@@ -899,7 +903,7 @@ function ComparisonSection() {
                       Avena
                     </th>
                     <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
-                      Artesanal
+                      Lápiz y hoja
                     </th>
                     <th className="p-2 sm:p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
                       <div className="flex items-center justify-center py-0.5">
@@ -934,10 +938,11 @@ function ComparisonSection() {
           </div>
         </div>
       </div>
-      <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
-        Kleia no es ‘otro software de nutrición’: es un asistente que te quita el trabajo mecánico sin quitarte el
-        criterio. Menús que encajan, cambios sin descuadres y entrega lista por PDF/WhatsApp.
-      </p>
+      <div className="container max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
+        <p className="text-sm sm:text-base text-foreground/80 text-center leading-relaxed italic">
+          {"💡 Kleia no es 'otro software de nutrición': es un asistente que te quita el trabajo mecánico sin quitarte el criterio. Menús que encajan, cambios sin descuadres y entrega lista por PDF/WhatsApp."}
+        </p>
+      </div>
     </section>
   );
 }
@@ -956,7 +961,7 @@ const archetypes = [
       "Empiezo el plan 'cuando puedo'… y a veces se me va a días.",
       "Me prometo que este finde no… y al final cae el domingo.",
     ],
-    withKleia: "Plan en 10–20 min, ajustes en 1–3 min y entrega en 1 click.",
+    withKleia: "Plan en 10–20 min, ajustes en 1–3 min y entrega el PDF listo para WhatsApp/email + sin copiar/pegar.",
     cta: "Soy esta. Quiero demo.",
     accentBorder: "#d97706",
     highlight: false,
@@ -1000,7 +1005,7 @@ const archetypes = [
       "Te da igual que el plan se vaya a 3–4 días porque con tu carga actual te compensa.",
     ],
     withKleia: null,
-    cta: "Enséñame cómo sería",
+    cta: "Ver cómo sería",
     accentBorder: "hsl(var(--border))",
     highlight: false,
     muted: true,
@@ -1057,7 +1062,7 @@ function FitSection() {
             >
               Encaje
             </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">Elige tu perfil</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">Elige tu perfil (en 10 segundos)</h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
               Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.
             </p>
@@ -1130,12 +1135,7 @@ function FitSection() {
                   setModalIdx(null);
                   openWhatsApp();
                 }}
-                className={[
-                  "w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
-                  modalArch.muted
-                    ? "bg-muted text-muted-foreground hover:bg-muted/70"
-                    : "bg-primary text-primary-foreground hover:bg-primary/90",
-                ].join(" ")}
+                className="w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {modalArch.cta}
               </button>
@@ -1472,7 +1472,7 @@ function FooterCTA() {
           size="lg"
           className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 font-medium shadow-md text-xs sm:text-sm md:text-base h-10 sm:h-11"
         >
-          Agendar demo →
+          Escribirnos por WhatsApp →
         </Button>
         <p className="mt-6 sm:mt-8 md:mt-10 text-[10px] sm:text-xs text-background/40">
           © {currentYear} Kleia · Hecho con amor para nutricionistas
