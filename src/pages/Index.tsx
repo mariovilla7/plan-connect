@@ -931,6 +931,10 @@ function ComparisonSection() {
           </div>
         </div>
       </div>
+      <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
+        Kleia no es ‘otro software de nutrición’: es un asistente que te quita el trabajo mecánico sin quitarte el
+        criterio. Menús que encajan, cambios sin descuadres y entrega lista por PDF/WhatsApp.
+      </p>
     </section>
   );
 }
