@@ -356,7 +356,18 @@ function EvidenceStrip() {
 
   return (
     <section className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30">
-      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Frases reales de entrevistas</h2>
+      <div className="text-center mb-6 md:mb-10">
+        <Badge
+          variant="outline"
+          className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
+        >
+          Frases reales de entrevistas
+        </Badge>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">
+          Construido a partir de 12 entrevistas. No de suposiciones.
+        </h2>
+      </div>
+
       <div className="container max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
         {/* Chips + Quote block */}
         <div className="space-y-3 sm:space-y-4 md:space-y-5">
