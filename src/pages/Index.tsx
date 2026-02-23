@@ -1321,7 +1321,7 @@ function BonusesSection() {
               {
                 icon: ShieldCheck,
                 title: "Garantía: Cancelación simple",
-                desc: "Si en los primeros 30 días Kleia no te ahorra tiempo, cancelas sin preguntas. Sin contratos largos ni penalidades.",
+                desc: "Si en los primeros 30 días no ves una mejora clara en tu tiempo de generación/ajustes, cancelas sin penalidades.",
               },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
@@ -1461,7 +1461,7 @@ function FooterCTA() {
           <img src={kleiaLogo} alt="Kleia" className="h-6 sm:h-7 md:h-8 w-auto brightness-0 invert" />
         </div>
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2.5 sm:mb-3 md:mb-4 leading-tight max-w-2xl mx-auto px-2">
-          Recupera tu tiempo. Entrega planes que te enorgullezcan.
+          Recupera tu tiempo, sin perder tu criterio profesional.
         </h2>
         <p className="text-background/70 mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
           Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escríbenos por WhatsApp y descubre si Kleia es para
