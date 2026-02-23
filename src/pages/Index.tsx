@@ -1372,7 +1372,7 @@ function DemoForm() {
               1. Te mostramos el flujo con un caso real en 10 minutos (restricciones → plan → ajustes → PDF)
             </p>
             <p className="text-muted-foreground mt-2 text-sm">
-              2. Si encaja con tu forma de trabajar, **te invitamos al piloto** (plazas limitadas)
+              2. Si encaja con tu forma de trabajar, te invitamos al piloto (plazas limitadas)
             </p>
           </div>
           <div className="flex flex-col items-center gap-4">
