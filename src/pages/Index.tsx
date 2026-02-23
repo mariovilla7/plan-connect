@@ -423,7 +423,7 @@ const stats = [
     value: "Plan completo",
     label: "sin hoja en blanco",
     time: "+20''",
-    desc: 'Pasas de "¿Qué le pongo?" a un plan base listo, generado a partir de restricciones, objetivos y contexto.',
+    desc: "Pasas de “¿qué le pongo?” a un plan base listo, armado a partir de restricciones, objetivos y contexto.",
   },
   {
     value: "Ajuste fino",
@@ -435,7 +435,7 @@ const stats = [
     value: "Entrega al paciente",
     label: "",
     time: "+7''",
-    desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace sin pasos extra.",
+    desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace, sin formatear ni copiar y pegar.",
   },
 ];
 
