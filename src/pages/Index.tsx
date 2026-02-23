@@ -593,25 +593,25 @@ const steps = [
   {
     num: "01",
     title: "Carga lo mínimo",
-    desc: "Ingresa las restricciones, preferencias y objetivos del paciente una sola vez. Kleia los recuerda siempre.",
+    desc: "Ingresas restricciones, preferencias y objetivos del paciente una sola vez. Kleia los guarda para no repetir trabajo.",
     image: null as string | null,
   },
   {
     num: "02",
     title: "Genera el plan",
-    desc: "Con un click, Kleia crea un plan semanal completo, balanceado y adaptado al perfil del paciente.",
+    desc: "Con un click, Kleia crea un plan semanal completo y balanceado, adaptado al perfil del paciente.",
     image: null as string | null,
   },
   {
     num: "03",
     title: "Ajusta sin descuadres",
-    desc: "Cambia cualquier alimento y el sistema recalcula calorías y macros automáticamente en tiempo real.",
+    desc: "Cambias cualquier alimento y el sistema recalcula calorías y macros en tiempo real, para que el plan siga cuadrando.",
     image: null as string | null,
   },
   {
     num: "04",
     title: "Entrega en 1 click",
-    desc: "Exporta el plan como PDF listo para compartir. Sin formatear, sin copiar y pegar.",
+    desc: "Exportas el plan como PDF listo para compartir y lo enviás por WhatsApp/email como siempre — sin formatear, sin copiar y pegar.",
     image: null as string | null,
   },
 ];
@@ -763,6 +763,9 @@ function HowItWorksSection() {
           </div>
         </div>
       </div>
+      <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
+        Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
+      </p>
     </section>
   );
 }
