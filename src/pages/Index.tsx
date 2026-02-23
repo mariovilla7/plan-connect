@@ -8,10 +8,8 @@ import resultadosIlustracion from "@/assets/resultados-ilustracion.png";
 import card1Img from "@/assets/card-1.png";
 import card2Img from "@/assets/card-2.png";
 import card3Img from "@/assets/card-3.png";
-import heroMockup from "@/assets/seccion1-mockup.png";
-import storyImg1 from "@/assets/story_image_1.png";
-import storyImg2 from "@/assets/story_image_2.png";
-import storyImg3 from "@/assets/story_image_3.png";
+import heroMockup from "@/assets/seccion1-mockup1.png";
+import storytellingImg from "@/assets/storytelling.png";
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useInView } from "@/hooks/use-in-view";
@@ -155,7 +153,7 @@ function Hero() {
         <div className="text-center pb-6 sm:pb-8 md:pb-12">
           <div className="inline-block mb-3 sm:mb-4 md:mb-6 max-w-[92vw]">
             <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
-              Para nutricionistas independientes sin perder tu criterio profesional
+              Para nutricionistas independientes sin perder el criterio profesional
             </span>
           </div>
           <h1 className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2">
@@ -174,7 +172,7 @@ function Hero() {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 text-sm md:text-base font-medium shadow-md relative h-10 sm:h-11 md:h-12"
             >
-              Agendar demo →
+              Escribirnos por WhatsApp →
               <span
                 className="absolute -top-2.5 -right-2.5 text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none shadow-sm border"
                 style={{ backgroundColor: "hsl(45 95% 60%)", color: "hsl(30 80% 20%)", borderColor: "hsl(45 90% 50%)" }}
@@ -857,8 +855,8 @@ function FeaturesSection() {
 
 // ─── Comparison Table ─────────────────────────────────────────────────────────
 const comparisonRows = [
-  { feature: "Personalización sin trabajo manual", excel: false, avena: "Parcial", artesanal: true, kleia: true },
-  { feature: "Recalculo automático de macros", excel: false, avena: true, artesanal: false, kleia: true },
+  { feature: "Personalización sin trabajo manual", excel: "Parcial", avena: "Parcial", artesanal: false, kleia: true },
+  { feature: "Recalculo automático de macros", excel: "Parcial", avena: true, artesanal: false, kleia: true },
   { feature: "Sin horas de trabajo manual", excel: false, avena: false, artesanal: false, kleia: true },
   { feature: "Exportación PDF profesional", excel: false, avena: true, artesanal: false, kleia: true },
   { feature: "Historial por paciente", excel: "Parcial", avena: true, artesanal: false, kleia: true },
@@ -1077,7 +1075,7 @@ function FitSection() {
               onClick={openWhatsApp}
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 md:px-8 py-3 md:py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-sm md:text-base"
             >
-              Agendar demo →
+              Escribirnos por WhatsApp →
             </button>
           </div>
         </div>
@@ -1148,11 +1146,7 @@ function FitSection() {
 }
 
 // ─── S7c · Historia detrás de Kleia ──────────────────────────────────────────
-const storyPhotos = [
-  { src: storyImg1, caption: "La obsesión: quitar fricción que te quema." },
-  { src: storyImg2, caption: "El patrón: planes, ajustes, mensajes… siempre." },
-  { src: storyImg3, caption: "La chispa: la lista de la compra a mano." },
-];
+// Story photo replaced by single illustration
 
 const NEW_STORY_TEXT = `Llevo años creando productos digitales con una obsesión: quitar la fricción que te roba vida.
 Primero lo vi como usuaria: con mi entrenador todo era WhatsApp, calendarios y pagos a mano. Pensé: "esto se puede simplificar".
@@ -1165,19 +1159,6 @@ Le escribí a Mario y, cuando dijo "sí", arrancó de verdad: problema real + eq
 Así nació Kleia: un asistente para nutricionistas para crear menús que encajan, editar sin descuadres y entregar rápido — sin que el plan se te coma la semana.`;
 
 function StorySection() {
-  const [current, setCurrent] = useState(0);
-  const total = storyPhotos.length;
-  const prev = () => setCurrent((c) => (c - 1 + total) % total);
-  const next = () => setCurrent((c) => (c + 1) % total);
-
-  // Auto-advance loop
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((c) => (c + 1) % total);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [total]);
-
   return (
     <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
@@ -1198,54 +1179,16 @@ function StorySection() {
             </p>
           </div>
 
-          {/* Two-column: fotos izq, texto dcha */}
+          {/* Two-column: imagen izq, texto dcha */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10 lg:gap-14 items-start mb-5 sm:mb-6 md:mb-10">
-            {/* LEFT: Carousel de fotos */}
-            <div className="flex flex-col items-center gap-2.5 sm:gap-3">
-              <div className="w-full rounded-lg sm:rounded-xl border border-border/60 overflow-hidden shadow-sm bg-muted/20 relative">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={storyPhotos[current].src}
-                    alt={storyPhotos[current].caption}
-                    className="w-full h-full object-cover transition-opacity duration-300"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs text-muted-foreground italic leading-snug">
-                  {storyPhotos[current].caption}
-                </p>
-                {/* Flechas */}
-                <button
-                  onClick={prev}
-                  aria-label="Anterior"
-                  className="absolute left-1.5 sm:left-2 top-[40%] -translate-y-1/2 bg-white/80 hover:bg-white active:bg-white rounded-full p-1 sm:p-1.5 shadow transition-colors"
-                >
-                  <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-foreground" />
-                </button>
-                <button
-                  onClick={next}
-                  aria-label="Siguiente"
-                  className="absolute right-1.5 sm:right-2 top-[40%] -translate-y-1/2 bg-white/80 hover:bg-white active:bg-white rounded-full p-1 sm:p-1.5 shadow transition-colors"
-                >
-                  <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-foreground" />
-                </button>
-              </div>
-
-              {/* Dots */}
-              <div className="flex items-center gap-1.5 sm:gap-2" aria-label="Fotos del carrusel">
-                {storyPhotos.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrent(i)}
-                    aria-label={`Foto ${i + 1}`}
-                    className={`rounded-full transition-all duration-200 ${
-                      i === current
-                        ? "w-4 sm:w-5 h-1.5 sm:h-2 bg-primary"
-                        : "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-primary/25 hover:bg-primary/50"
-                    }`}
-                  />
-                ))}
-              </div>
+            {/* LEFT: Single illustration */}
+            <div className="flex items-center justify-center">
+              <img
+                src={storytellingImg}
+                alt="Equipo detrás de Kleia"
+                className="w-full max-w-xs md:max-w-none rounded-xl object-contain"
+                loading="lazy"
+              />
             </div>
 
             {/* RIGHT: Texto */}
@@ -1501,6 +1444,9 @@ export default function Index() {
           <ResultsSection />
         </FadeSection>
         <FadeSection>
+          <FitSection />
+        </FadeSection>
+        <FadeSection>
           <HowItWorksSection />
         </FadeSection>
         <FadeSection>
@@ -1508,9 +1454,6 @@ export default function Index() {
         </FadeSection>
         <FadeSection>
           <ComparisonSection />
-        </FadeSection>
-        <FadeSection>
-          <FitSection />
         </FadeSection>
         <FadeSection>
           <StorySection />
