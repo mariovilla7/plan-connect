@@ -155,7 +155,7 @@ function Hero() {
   return (
     <section id="seccion-1-hero" className="bg-white px-4 lg:px-6 pt-8 sm:pt-12 md:pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
-        <div className="text-center pb-2 sm:pb-3 md:pb-6">
+        <div className="text-center pb-0 sm:pb-1 md:pb-3">
           <div className="inline-block mb-3 sm:mb-4 md:mb-6 max-w-[92vw]">
             <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
               Para nutricionistas independientes sin perder el criterio profesional
