@@ -10,7 +10,12 @@ import card2Img from "@/assets/card-2.png";
 import card3Img from "@/assets/card-3.png";
 import heroMockup from "@/assets/seccion1-mockup1.png";
 import storytellingImg from "@/assets/storytelling.png";
-import React, { useState, useEffect } from "react";
+import kleiacard1 from "@/assets/kleiacard_1.png";
+import kleiacard2 from "@/assets/kleiacard_2.png";
+import kleiacard3 from "@/assets/kleiacard_3.png";
+import kleiacard4 from "@/assets/kleiacard_4.png";
+import kleiacard5 from "@/assets/kleiacard_5.png";
+import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useInView } from "@/hooks/use-in-view";
 
@@ -784,20 +789,49 @@ const features = [
   { label: "Soporte dedicado durante el piloto", icon: "🤝" },
 ];
 
-const featureImages: Record<number, string> = {
-  0: problema1,
-  1: problema2,
-  2: problema3,
-  3: problema4,
-  4: problemaIlustracion,
-  5: resultadosIlustracion,
-  6: problema1,
-  7: problema2,
-};
+const carouselImages = [kleiacard1, kleiacard2, kleiacard3, kleiacard4, kleiacard5];
+
+function FeaturesCarousel() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % carouselImages.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative w-full overflow-hidden rounded-2xl bg-muted border border-border">
+      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10]">
+        {carouselImages.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`Kleia screenshot ${i + 1}`}
+            className="absolute inset-0 w-full h-full object-contain p-2 sm:p-4 transition-opacity duration-500"
+            style={{ opacity: current === i ? 1 : 0 }}
+            loading="lazy"
+          />
+        ))}
+      </div>
+      {/* Dots */}
+      <div className="flex justify-center gap-1.5 pb-3">
+        {carouselImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-2 h-2 rounded-full transition-all ${current === i ? "bg-primary w-4" : "bg-primary/25"}`}
+            aria-label={`Foto ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
-  const [activeFeature, setActiveFeature] = useState(0);
 
   return (
     <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6">
@@ -812,29 +846,19 @@ function FeaturesSection() {
             </Badge>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 items-center">
-            <div className="flex-shrink-0 w-full md:w-80 h-56 sm:h-64 md:h-96 rounded-2xl bg-muted border border-border overflow-hidden flex items-center justify-center">
-              <img
-                src={featureImages[activeFeature]}
-                alt={features[activeFeature].label}
-                className="w-full h-full object-contain p-4 transition-opacity duration-300"
-              />
-            </div>
+          {/* Auto-playing carousel */}
+          <FeaturesCarousel />
+
+          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 items-center mt-6">
             <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
               {features.map(({ label, icon }, i) => (
-                <button
+                <div
                   key={label}
-                  onClick={() => setActiveFeature(i)}
-                  className={[
-                    "inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium transition-all text-left",
-                    activeFeature === i
-                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                      : "bg-primary/8 hover:bg-primary/15 text-primary border-primary/20",
-                  ].join(" ")}
+                  className="inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium bg-primary/8 text-primary border-primary/20 text-left"
                 >
                   <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
                   {label}
-                </button>
+                </div>
               ))}
               <div className="mt-3 sm:mt-4">
                 <Button
