@@ -155,7 +155,7 @@ function Hero() {
   return (
     <section id="seccion-1-hero" className="bg-white px-4 lg:px-6 pt-8 sm:pt-12 md:pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
-        <div className="text-center pb-6 sm:pb-8 md:pb-12">
+        <div className="text-center pb-2 sm:pb-3 md:pb-6">
           <div className="inline-block mb-3 sm:mb-4 md:mb-6 max-w-[92vw]">
             <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
               Para nutricionistas independientes sin perder el criterio profesional
@@ -802,8 +802,8 @@ function FeaturesCarousel() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-muted border border-border">
-      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10]">
+    <div className="relative overflow-hidden rounded-2xl bg-white border border-border">
+      <div className="relative w-full aspect-[3/4]">
         {carouselImages.map((src, i) => (
           <img
             key={i}
@@ -846,10 +846,12 @@ function FeaturesSection() {
             </Badge>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
           </div>
-          {/* Auto-playing carousel */}
-          <FeaturesCarousel />
-
-          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-10 items-center mt-6">
+          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center">
+            {/* Carousel left */}
+            <div className="flex-shrink-0 w-full md:w-64 lg:w-72">
+              <FeaturesCarousel />
+            </div>
+            {/* Chips right */}
             <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
               {features.map(({ label, icon }, i) => (
                 <div
