@@ -166,7 +166,7 @@ function Hero() {
             <br />
             <span className="text-primary">Termina tu día con todos los planes enviados.</span>
           </h1>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto px-1 sm:px-2">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-3 sm:mb-3 md:mb-4 leading-relaxed max-w-2xl mx-auto px-1 sm:px-2">
             Kleia es tu asistente de planificación nutricional: genera planes clínicos en minutos, respetando
             necesidades y preferencias de cada paciente. Envías un PDF listo por WhatsApp/email como siempre — sin
             copiar y pegar ni empezar desde cero.
