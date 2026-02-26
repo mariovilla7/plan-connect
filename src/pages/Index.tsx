@@ -220,12 +220,7 @@ function Hero() {
       <AnimatedSvgBackground className="opacity-100" />
 
       <div ref={textGroupRef} className="relative z-10 text-center max-w-5xl mx-auto">
-        <div className="inline-block mb-4 sm:mb-5 md:mb-8 max-w-[92vw]">
-          <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
-            Para nutricionistas independientes sin perder el criterio profesional
-          </span>
-        </div>
-        <h1 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-serif sm:leading-[1.1] mb-4 sm:mb-5 md:mb-8 text-foreground px-1 sm:px-2">
+        <h1 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-serif sm:leading-[1.1] mb-4 sm:mb-5 md:mb-6 text-foreground px-1 sm:px-2">
           Deja de pensar
           <br />
           en menús.
@@ -236,6 +231,11 @@ function Hero() {
           <br />
           <span className="text-primary">enviados.</span>
         </h1>
+        <div className="inline-block mb-4 sm:mb-5 md:mb-6 max-w-[92vw]">
+          <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
+            Para nutricionistas independientes · sin perder el criterio profesional
+          </span>
+        </div>
         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-2">
           Genera planes clínicos en minutos. Envía un PDF listo por WhatsApp — sin copiar y pegar.
         </p>
@@ -312,11 +312,24 @@ const problemImages = [problemaIlustracion, problema1, problema2, problema3, pro
 
 function ProblemSection() {
   const altRef = useAlternateSlide();
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 40 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
     <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div className="text-center mb-6 md:mb-10">
+          <div ref={headerRef} className="text-center mb-6 md:mb-10">
             <Badge
               variant="outline"
               className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
@@ -418,6 +431,19 @@ const cityChips = Object.keys(cityQuotes);
 function EvidenceStrip() {
   const [activeChip, setActiveChip] = useState(cityChips[0]);
   const [visible, setVisible] = useState(true);
+  const sectionRefEvidence = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRefEvidence.current;
+    if (!el) return;
+    const children = el.querySelectorAll(".gsap-evidence-child");
+    gsap.set(children, { opacity: 0, y: 50, scale: 0.95 });
+    const tl = gsap.to(children, {
+      opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
 
   const handleChip = (chip: string) => {
     if (chip === activeChip) return;
@@ -431,8 +457,8 @@ function EvidenceStrip() {
   const active = cityQuotes[activeChip];
 
   return (
-    <section className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30">
-      <div className="text-center mb-6 md:mb-10">
+    <section ref={sectionRefEvidence} className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30">
+      <div className="text-center mb-6 md:mb-10 gsap-evidence-child">
         <Badge
           variant="outline"
           className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
@@ -444,7 +470,7 @@ function EvidenceStrip() {
 
       <div className="container max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
         {/* Chips + Quote block */}
-        <div className="space-y-3 sm:space-y-4 md:space-y-5">
+        <div className="space-y-3 sm:space-y-4 md:space-y-5 gsap-evidence-child">
           {/* Horizontal scroll on mobile, wrap on desktop */}
           <div className="flex gap-2 justify-start sm:justify-center overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
             {cityChips.map((chip) => (
@@ -484,7 +510,7 @@ function EvidenceStrip() {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-4 sm:mt-6">
+        <div className="text-center mt-4 sm:mt-6 gsap-evidence-child">
           <button
             onClick={() => scrollTo("seccion-4-flujo")}
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full hover:bg-primary/90 active:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-xs sm:text-sm md:text-base"
@@ -529,6 +555,29 @@ const stats = [
 function ResultsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const headerRefResults = useRef<HTMLDivElement>(null);
+  const imageRefResults = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Animate header
+    const hdr = headerRefResults.current;
+    if (hdr) {
+      gsap.set(hdr, { opacity: 0, y: 40 });
+      gsap.to(hdr, {
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+        scrollTrigger: { trigger: hdr, start: "top 85%", toggleActions: "play none none none" },
+      });
+    }
+    // Animate illustration with scale
+    const img = imageRefResults.current;
+    if (img) {
+      gsap.set(img, { opacity: 0, scale: 0.8, rotate: -3 });
+      gsap.to(img, {
+        opacity: 1, scale: 1, rotate: 0, duration: 1, ease: "power2.out",
+        scrollTrigger: { trigger: img, start: "top 85%", toggleActions: "play none none none" },
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -576,7 +625,7 @@ function ResultsSection() {
     <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6" ref={sectionRef}>
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div className="text-center mb-6 md:mb-10">
+          <div ref={headerRefResults} className="text-center mb-6 md:mb-10">
             <Badge
               variant="outline"
               className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
@@ -586,7 +635,7 @@ function ResultsSection() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Menos carga, más control</h2>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-            <div className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
+            <div ref={imageRefResults} className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
               <img
                 src={resultadosIlustracion}
                 alt="Nutricionista usando Kleia"
@@ -993,11 +1042,34 @@ function CellValue({ val }: { val: boolean | string }) {
 
 // ─── S6 · Comparativa ────────────────────────────────────────────────────────
 function ComparisonSection() {
+  const tableRef = useRef<HTMLDivElement>(null);
+  const headerRefComp = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hdr = headerRefComp.current;
+    if (hdr) {
+      gsap.set(hdr, { opacity: 0, y: 40 });
+      gsap.to(hdr, {
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+        scrollTrigger: { trigger: hdr, start: "top 85%", toggleActions: "play none none none" },
+      });
+    }
+    const tbl = tableRef.current;
+    if (tbl) {
+      const rows = tbl.querySelectorAll("tbody tr");
+      gsap.set(rows, { opacity: 0, x: -30 });
+      gsap.to(rows, {
+        opacity: 1, x: 0, duration: 0.5, stagger: 0.07, ease: "power2.out",
+        scrollTrigger: { trigger: tbl, start: "top 80%", toggleActions: "play none none none" },
+      });
+    }
+  }, []);
+
   return (
     <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div className="text-center mb-6 md:mb-10">
+          <div ref={headerRefComp} className="text-center mb-6 md:mb-10">
             <Badge
               variant="outline"
               className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
@@ -1006,7 +1078,7 @@ function ComparisonSection() {
             </Badge>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
           </div>
-          <div className="relative">
+          <div ref={tableRef} className="relative">
             <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0 scrollbar-hide">
               <table className="text-sm border-collapse min-w-[600px] w-full">
                 <thead className="sticky top-0 z-10 bg-white">
@@ -1168,6 +1240,19 @@ function ProfileCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOp
 function FitSection() {
   const [modalIdx, setModalIdx] = React.useState<number | null>(null);
   const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = cardsRef.current;
+    if (!el) return;
+    const cards = el.querySelectorAll(".gsap-fit-card");
+    gsap.set(cards, { opacity: 0, y: 60, scale: 0.92 });
+    const tl = gsap.to(cards, {
+      opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.15, ease: "back.out(1.2)",
+      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
 
   return (
     <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 lg:px-6">
@@ -1185,9 +1270,11 @@ function FitSection() {
               Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {archetypes.map((arch, i) => (
-              <ProfileCard key={i} arch={arch} onOpenModal={() => setModalIdx(i)} />
+              <div key={i} className="gsap-fit-card">
+                <ProfileCard arch={arch} onOpenModal={() => setModalIdx(i)} />
+              </div>
             ))}
           </div>
           <div className="text-center mt-6 md:mt-10">
@@ -1355,6 +1442,20 @@ function StorySection() {
 
 // ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
 function BonusesSection() {
+  const bonusRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = bonusRef.current;
+    if (!el) return;
+    const cards = el.querySelectorAll(".gsap-bonus-card");
+    gsap.set(cards, { opacity: 0, y: 40, rotateX: 15 });
+    const tl = gsap.to(cards, {
+      opacity: 1, y: 0, rotateX: 0, duration: 0.7, stagger: 0.12, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
     <section id="seccion-8-extras" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-4xl mx-auto">
@@ -1370,7 +1471,7 @@ function BonusesSection() {
               Bonos incluidos en el piloto
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 mb-5 sm:mb-6 md:mb-10">
+          <div ref={bonusRef} className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 mb-5 sm:mb-6 md:mb-10">
             {[
               {
                 icon: Gift,
@@ -1388,7 +1489,7 @@ function BonusesSection() {
                 desc: "Si en los primeros 30 días no ves una mejora clara en tu tiempo de generación/ajustes, cancelas sin penalidades.",
               },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
+              <div key={title} className="gsap-bonus-card text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2.5 sm:mb-3 md:mb-4">
                   <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-primary" />
                 </div>
@@ -1481,6 +1582,20 @@ const faqs = [
 
 // ─── S11 · FAQ ───────────────────────────────────────────────────────────────
 function FAQSection() {
+  const faqRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = faqRef.current;
+    if (!el) return;
+    const items = el.querySelectorAll(".gsap-faq-item");
+    gsap.set(items, { opacity: 0, x: 40 });
+    const tl = gsap.to(items, {
+      opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: "power2.out",
+      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
     <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-3xl mx-auto">
@@ -1494,12 +1609,13 @@ function FAQSection() {
             </Badge>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Preguntas frecuentes</h2>
           </div>
+          <div ref={faqRef}>
           <Accordion type="single" collapsible className="space-y-1.5 sm:space-y-2">
             {faqs.map(({ q, a }, i) => (
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="bg-background border border-border rounded-lg sm:rounded-xl md:rounded-2xl px-3 sm:px-3.5 md:px-4"
+                className="gsap-faq-item bg-background border border-border rounded-lg sm:rounded-xl md:rounded-2xl px-3 sm:px-3.5 md:px-4"
               >
                 <AccordionTrigger className="font-medium text-[11px] sm:text-xs md:text-sm text-left hover:no-underline py-3 sm:py-3.5 md:py-4">
                   {q}
@@ -1510,6 +1626,7 @@ function FAQSection() {
               </AccordionItem>
             ))}
           </Accordion>
+          </div>
         </div>
       </div>
     </section>
@@ -1518,27 +1635,43 @@ function FAQSection() {
 
 // ─── S12 · Footer CTA ────────────────────────────────────────────────────────
 function FooterCTA() {
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+    const children = el.querySelectorAll(".gsap-footer-child");
+    gsap.set(children, { opacity: 0, y: 30 });
+    const tl = gsap.to(children, {
+      opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
     <footer id="seccion-12-footer" className="pt-4 md:pt-6 pb-0">
-      <div className="bg-foreground px-4 sm:px-6 md:px-10 py-8 sm:py-10 md:py-16 text-center text-background">
-        <div className="flex items-center justify-center mb-4 sm:mb-5 md:mb-6">
+      <div ref={footerRef} className="bg-foreground px-4 sm:px-6 md:px-10 py-8 sm:py-10 md:py-16 text-center text-background">
+        <div className="gsap-footer-child flex items-center justify-center mb-4 sm:mb-5 md:mb-6">
           <img src={kleiaLogo} alt="Kleia" className="h-6 sm:h-7 md:h-8 w-auto brightness-0 invert" />
         </div>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2.5 sm:mb-3 md:mb-4 leading-tight max-w-2xl mx-auto px-2">
+        <h2 className="gsap-footer-child text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2.5 sm:mb-3 md:mb-4 leading-tight max-w-2xl mx-auto px-2">
           Recupera tu tiempo, sin perder tu criterio profesional.
         </h2>
-        <p className="text-background/70 mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
+        <p className="gsap-footer-child text-background/70 mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
           Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escríbenos por WhatsApp y descubre si Kleia es para
           ti.
         </p>
-        <Button
-          onClick={openWhatsApp}
-          size="lg"
-          className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 font-medium shadow-md text-xs sm:text-sm md:text-base h-10 sm:h-11"
-        >
-          Escribirnos por WhatsApp →
-        </Button>
-        <p className="mt-6 sm:mt-8 md:mt-10 text-[10px] sm:text-xs text-background/40">
+        <div className="gsap-footer-child">
+          <Button
+            onClick={openWhatsApp}
+            size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 font-medium shadow-md text-xs sm:text-sm md:text-base h-10 sm:h-11"
+          >
+            Escribirnos por WhatsApp →
+          </Button>
+        </div>
+        <p className="gsap-footer-child mt-6 sm:mt-8 md:mt-10 text-[10px] sm:text-xs text-background/40">
           © {currentYear} Kleia · Hecho con amor para nutricionistas
         </p>
       </div>
@@ -1560,43 +1693,21 @@ export default function Index() {
         <Navbar />
         <main>
           <Hero />
-          <GsapSection>
-            <ProblemSection />
-          </GsapSection>
-          <GsapSection>
-            <EvidenceStrip />
-          </GsapSection>
-          <GsapSection>
-            <ResultsSection />
-          </GsapSection>
-          <GsapSection>
-            <FitSection />
-          </GsapSection>
-          <GsapSection>
-            <HowItWorksSection />
-          </GsapSection>
-          <GsapSection>
-            <FeaturesSection />
-          </GsapSection>
-          <GsapSection>
-            <ComparisonSection />
-          </GsapSection>
-          <GsapSection>
-            <StorySection />
-          </GsapSection>
-          <GsapSection>
-            <BonusesSection />
-          </GsapSection>
+          <ProblemSection />
+          <EvidenceStrip />
+          <ResultsSection />
+          <FitSection />
+          <HowItWorksSection />
+          <FeaturesSection />
+          <ComparisonSection />
+          <StorySection />
+          <BonusesSection />
           <GsapSection>
             <DemoForm />
           </GsapSection>
-          <GsapSection>
-            <FAQSection />
-          </GsapSection>
+          <FAQSection />
         </main>
-        <GsapSection>
-          <FooterCTA />
-        </GsapSection>
+        <FooterCTA />
       </div>
     </>
   );
