@@ -1248,57 +1248,57 @@ export default function Index() {
         <main>
           <Hero />
 
-          <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section id="seccion-2-problema" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-30" />
             <ProblemSection />
           </section>
 
-          <section className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30 relative overflow-hidden">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-muted/30 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-20" />
             <EvidenceStrip />
           </section>
 
-          <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section id="seccion-3-resultados" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-20" />
             <ResultsSection />
           </section>
 
-          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-25" />
             <FitSection />
           </section>
 
-          <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section id="seccion-4-flujo" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-25" />
             <HowItWorksSection />
           </section>
 
-          <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section id="seccion-5-incluido" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-15" />
             <FeaturesSection />
           </section>
 
-          <section className="py-4 md:py-6 px-4 lg:px-6 relative">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative">
             <AnimatedSvgBackground className="opacity-15" />
             <ComparisonSection />
           </section>
 
-          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-20" />
             <StorySection />
           </section>
 
-          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-15" />
             <BonusesSection />
           </section>
 
-          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-10" />
             <DemoForm />
           </section>
 
-          <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section id="seccion-11-faq" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
             <AnimatedSvgBackground className="opacity-15" />
             <FAQSection />
           </section>
