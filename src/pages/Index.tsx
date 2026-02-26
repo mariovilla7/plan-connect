@@ -314,20 +314,35 @@ function ProblemSection() {
   const altRef = useAlternateSlide();
   const headerRef = useRef<HTMLDivElement>(null);
 
+  const sectionWrapRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
-    gsap.set(el, { opacity: 0, y: 40 });
+    gsap.set(el, { opacity: 0, y: 60 });
     const tl = gsap.to(el, {
-      opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+      opacity: 1, y: 0, duration: 1, ease: "power3.out",
       scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
+  // Dramatic section reveal
+  useEffect(() => {
+    const el = sectionWrapRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 100, scale: 0.92 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
-    <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-6xl mx-auto">
+    <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+      <AnimatedSvgBackground className="opacity-30" />
+      <div ref={sectionWrapRef} className="container max-w-6xl mx-auto relative z-10">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div ref={headerRef} className="text-center mb-6 md:mb-10">
             <Badge
@@ -456,8 +471,20 @@ function EvidenceStrip() {
 
   const active = cityQuotes[activeChip];
 
+  // Dramatic section scale-in
+  useEffect(() => {
+    const el = sectionRefEvidence.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 80, scale: 0.9 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
-    <section ref={sectionRefEvidence} className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30">
+    <section ref={sectionRefEvidence} className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30 relative overflow-hidden">
       <div className="text-center mb-6 md:mb-10 gsap-evidence-child">
         <Badge
           variant="outline"
@@ -621,9 +648,23 @@ function ResultsSection() {
   const hourValues = ["0", "2", "4", "5", "6+"];
   const displayHours = hourValues[Math.min(phase, 4)];
 
+  // Dramatic reveal for entire results wrapper
+  const resultsWrapRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = resultsWrapRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 100, scale: 0.88 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
-    <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6" ref={sectionRef}>
-      <div className="container max-w-5xl mx-auto">
+    <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden" ref={sectionRef}>
+      <AnimatedSvgBackground className="opacity-20" />
+      <div ref={resultsWrapRef} className="container max-w-5xl mx-auto relative z-10">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div ref={headerRefResults} className="text-center mb-6 md:mb-10">
             <Badge
@@ -861,7 +902,8 @@ function HowItWorksSection() {
   }
 
   return (
-    <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 lg:px-6" ref={sectionRef}>
+    <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden" ref={sectionRef}>
+      <AnimatedSvgBackground className="opacity-25" />
       <div className="container max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-8 md:mb-12">
@@ -976,9 +1018,22 @@ function FeaturesCarousel() {
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
   const chipsRef = useFadeUp(0.08);
+  const featWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = featWrapRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 80, scale: 0.9 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   return (
-    <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-5xl mx-auto">
+    <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+      <div ref={featWrapRef} className="container max-w-5xl mx-auto relative z-10">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
             <Badge
@@ -1066,7 +1121,7 @@ function ComparisonSection() {
   }, []);
 
   return (
-    <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 lg:px-6">
+    <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
       <div className="container max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div ref={headerRefComp} className="text-center mb-6 md:mb-10">
@@ -1242,21 +1297,35 @@ function FitSection() {
   const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
   const cardsRef = useRef<HTMLDivElement>(null);
 
+  const fitWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = fitWrapRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 100, scale: 0.85 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   useEffect(() => {
     const el = cardsRef.current;
     if (!el) return;
     const cards = el.querySelectorAll(".gsap-fit-card");
-    gsap.set(cards, { opacity: 0, y: 60, scale: 0.92 });
+    gsap.set(cards, { opacity: 0, y: 80, scale: 0.85 });
     const tl = gsap.to(cards, {
-      opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.15, ease: "back.out(1.2)",
-      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
+      opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: 0.2, ease: "back.out(1.4)",
+      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-5xl mx-auto">
+    <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+      <AnimatedSvgBackground className="opacity-20" />
+      <div ref={fitWrapRef} className="container max-w-5xl mx-auto relative z-10">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
             <Badge
@@ -1444,21 +1513,34 @@ function StorySection() {
 function BonusesSection() {
   const bonusRef = useRef<HTMLDivElement>(null);
 
+  const bonusWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = bonusWrapRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 100, scale: 0.88 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   useEffect(() => {
     const el = bonusRef.current;
     if (!el) return;
     const cards = el.querySelectorAll(".gsap-bonus-card");
-    gsap.set(cards, { opacity: 0, y: 40, rotateX: 15 });
+    gsap.set(cards, { opacity: 0, y: 60, rotateX: 20, scale: 0.9 });
     const tl = gsap.to(cards, {
-      opacity: 1, y: 0, rotateX: 0, duration: 0.7, stagger: 0.12, ease: "power3.out",
+      opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.9, stagger: 0.15, ease: "power3.out",
       scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-8-extras" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-4xl mx-auto">
+    <section id="seccion-8-extras" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+      <div ref={bonusWrapRef} className="container max-w-4xl mx-auto relative z-10">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
             <Badge
@@ -1584,21 +1666,34 @@ const faqs = [
 function FAQSection() {
   const faqRef = useRef<HTMLDivElement>(null);
 
+  const faqWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = faqWrapRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 80, scale: 0.9 });
+    const tl = gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+  }, []);
+
   useEffect(() => {
     const el = faqRef.current;
     if (!el) return;
     const items = el.querySelectorAll(".gsap-faq-item");
-    gsap.set(items, { opacity: 0, x: 40 });
+    gsap.set(items, { opacity: 0, x: 60, scale: 0.95 });
     const tl = gsap.to(items, {
-      opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: "power2.out",
+      opacity: 1, x: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "power2.out",
       scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-3xl mx-auto">
+    <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+      <div ref={faqWrapRef} className="container max-w-3xl mx-auto relative z-10">
         <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
           <div className="text-center mb-5 sm:mb-6 md:mb-10">
             <Badge
@@ -1640,10 +1735,15 @@ function FooterCTA() {
   useEffect(() => {
     const el = footerRef.current;
     if (!el) return;
+    gsap.set(el, { opacity: 0, y: 100, scale: 0.9 });
+    gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    });
     const children = el.querySelectorAll(".gsap-footer-child");
-    gsap.set(children, { opacity: 0, y: 30 });
+    gsap.set(children, { opacity: 0, y: 50 });
     const tl = gsap.to(children, {
-      opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
+      opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: "power3.out",
       scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
@@ -1695,7 +1795,7 @@ export default function Index() {
     <>
       {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
-        className="min-h-screen font-sans bg-white"
+        className="min-h-screen font-sans bg-white overflow-x-hidden"
         style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease" }}
       >
         <Navbar />
