@@ -15,9 +15,21 @@ import kleiacard2 from "@/assets/kleiacard_2.png";
 import kleiacard3 from "@/assets/kleiacard_3.png";
 import kleiacard4 from "@/assets/kleiacard_4.png";
 import kleiacard5 from "@/assets/kleiacard_5.png";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useInView } from "@/hooks/use-in-view";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import {
+  useFadeUp,
+  useParallax,
+  useScaleReveal,
+  useAlternateSlide,
+  useTextReveal,
+  useCountUp,
+} from "@/hooks/useGsapAnimations";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ─── WhatsApp CTA ─────────────────────────────────────────────────────────────
 // 🔧 Reemplazá este número con el tuyo (con código de país, sin + ni espacios)
@@ -30,15 +42,11 @@ function openWhatsApp() {
   window.open(WA_URL, "_blank", "noopener,noreferrer");
 }
 
-// Wrapper que aplica fade-in al entrar en el viewport
-function FadeSection({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
-  const { ref, inView } = useInView();
+// GSAP-powered section wrapper
+function GsapSection({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
+  const ref = useFadeUp();
   return (
-    <div
-      ref={ref as React.RefObject<HTMLDivElement>}
-      id={id}
-      className={`transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"} ${className}`}
-    >
+    <div ref={ref} id={id} className={className}>
       {children}
     </div>
   );
@@ -152,6 +160,9 @@ function Navbar() {
 
 // ─── S1 · Hero ───────────────────────────────────────────────────────────────
 function Hero() {
+  const mockupRef = useParallax(-0.15);
+  const headingRef = useTextReveal();
+
   return (
     <section id="seccion-1-hero" className="bg-white px-4 lg:px-6 pt-8 sm:pt-12 md:pt-20 pb-0 overflow-hidden">
       <div className="container max-w-5xl mx-auto flex flex-col">
@@ -161,7 +172,10 @@ function Hero() {
               Para nutricionistas independientes sin perder el criterio profesional
             </span>
           </div>
-          <h1 className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2">
+          <h1
+            ref={headingRef as React.RefObject<HTMLHeadingElement>}
+            className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2"
+          >
             Deja de pensar en menús.
             <br />
             <span className="text-primary">Termina tu día con todos los planes enviados.</span>
@@ -189,8 +203,8 @@ function Hero() {
           </div>
         </div>
 
-        {/* Mockup del producto */}
-        <div className="w-full flex items-center justify-center overflow-hidden">
+        {/* Mockup del producto — parallax */}
+        <div ref={mockupRef} className="w-full flex items-center justify-center overflow-hidden">
           <img src={heroMockup} alt="Kleia app mockup" className="w-full max-w-4xl h-auto object-contain" loading="eager" />
         </div>
       </div>
@@ -230,6 +244,7 @@ const problems = [
 const problemImages = [problemaIlustracion, problema1, problema2, problema3, problema4];
 
 function ProblemSection() {
+  const altRef = useAlternateSlide();
   return (
     <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-6xl mx-auto">
@@ -244,15 +259,15 @@ function ProblemSection() {
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
           </div>
 
-          {/* Alternating rows: card + image */}
-          <div className="flex flex-col gap-4 md:gap-6">
+          {/* Alternating rows: card + image — GSAP alternate slide */}
+          <div ref={altRef} className="flex flex-col gap-4 md:gap-6">
             {problems.map(({ icon: Icon, title, description }, i) => {
-              const imgSrc = problemImages[i + 1]; // skip index 0 (main illustration)
+              const imgSrc = problemImages[i + 1];
               const isEven = i % 2 === 0;
               return (
                 <div
                   key={title}
-                  className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 ${!isEven ? "md:flex-row-reverse" : ""}`}
+                  className={`gsap-alt-item flex flex-col md:flex-row items-center gap-4 md:gap-6 ${!isEven ? "md:flex-row-reverse" : ""}`}
                 >
                   {/* Image */}
                   <div className="flex-shrink-0 w-full max-w-[180px] sm:max-w-[200px] md:w-52">
@@ -445,7 +460,19 @@ const stats = [
 
 // ─── S3 · Resultados ─────────────────────────────────────────────────────────
 function ResultsSection() {
-  const { ref, inView } = useInView(0.25);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const [phase, setPhase] = useState(0);
@@ -479,7 +506,7 @@ function ResultsSection() {
   const displayHours = hourValues[Math.min(phase, 4)];
 
   return (
-    <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6" ref={ref as React.RefObject<HTMLElement>}>
+    <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6" ref={sectionRef}>
       <div className="container max-w-5xl mx-auto">
         <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
           <div className="text-center mb-6 md:mb-10">
@@ -832,7 +859,7 @@ function FeaturesCarousel() {
 
 // ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
-
+  const chipsRef = useFadeUp(0.08);
   return (
     <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
@@ -852,11 +879,11 @@ function FeaturesSection() {
               <FeaturesCarousel />
             </div>
             {/* Chips right */}
-            <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
+            <div ref={chipsRef} className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
               {features.map(({ label, icon }, i) => (
                 <div
                   key={label}
-                  className="inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium bg-primary/8 text-primary border-primary/20 text-left"
+                  className="gsap-fade-child inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium bg-primary/8 text-primary border-primary/20 text-left"
                 >
                   <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
                   {label}
@@ -1185,6 +1212,7 @@ Le escribí a Mario y, cuando dijo "sí", arrancó de verdad: problema real + eq
 Así nació Kleia: un asistente para nutricionistas para crear menús que encajan, editar sin descuadres y entregar rápido — sin que el plan se te coma la semana.`;
 
 function StorySection() {
+  const imgRef = useScaleReveal();
   return (
     <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 lg:px-6">
       <div className="container max-w-5xl mx-auto">
@@ -1208,7 +1236,7 @@ function StorySection() {
           {/* Two-column: imagen izq, texto dcha */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10 lg:gap-14 items-start mb-5 sm:mb-6 md:mb-10">
             {/* LEFT: Single illustration */}
-            <div className="flex items-center justify-center">
+            <div ref={imgRef} className="flex items-center justify-center">
               <img
                 src={storytellingImg}
                 alt="Equipo detrás de Kleia"
@@ -1457,46 +1485,46 @@ export default function Index() {
     <div className="min-h-screen font-sans bg-white">
       <Navbar />
       <main>
-        <FadeSection>
+        <GsapSection>
           <Hero />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <ProblemSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <EvidenceStrip />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <ResultsSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <FitSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <HowItWorksSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <FeaturesSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <ComparisonSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <StorySection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <BonusesSection />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <DemoForm />
-        </FadeSection>
-        <FadeSection>
+        </GsapSection>
+        <GsapSection>
           <FAQSection />
-        </FadeSection>
+        </GsapSection>
       </main>
-      <FadeSection>
+      <GsapSection>
         <FooterCTA />
-      </FadeSection>
+      </GsapSection>
     </div>
   );
 }
