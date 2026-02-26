@@ -782,30 +782,30 @@ function ComparisonSection() {
           </Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
         </div>
-        <div ref={tableRef} className="relative">
+        <div ref={tableRef} className="relative bg-white rounded-2xl shadow-sm border border-border/40 overflow-hidden">
           <div className="overflow-x-auto scrollbar-hide">
             <table className="text-sm border-collapse min-w-[600px] w-full">
-              <thead className="sticky top-0 z-10 bg-white">
-                <tr>
-                  <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
-                  <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Excel</th>
-                  <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Avena</th>
-                  <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Lápiz y hoja</th>
-                  <th className="p-2 sm:p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
+              <thead>
+                <tr className="border-b border-border/30">
+                  <th className="text-left p-3 sm:p-4 md:p-5 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
+                  <th className="p-3 sm:p-4 md:p-5 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Excel</th>
+                  <th className="p-3 sm:p-4 md:p-5 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Avena</th>
+                  <th className="p-3 sm:p-4 md:p-5 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Lápiz y hoja</th>
+                  <th className="p-3 sm:p-4 md:p-5 text-center bg-primary/5">
                     <div className="flex items-center justify-center py-0.5">
-                      <img src={kleiaLogo} alt="Kleia" className="h-4 sm:h-5 md:h-7 w-auto" />
+                      <img src={kleiaLogo} alt="Kleia" className="h-5 sm:h-6 md:h-8 w-auto" />
                     </div>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
-                  <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
-                    <td className="p-2 sm:p-2.5 md:p-4 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">{feature}</td>
-                    <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={excel} /></td>
-                    <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={avena} /></td>
-                    <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={artesanal} /></td>
-                    <td className="p-2 sm:p-2.5 md:p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
+                  <tr key={feature} className={`border-b border-border/20 last:border-b-0 ${i % 2 === 0 ? "bg-muted/20" : "bg-white"}`}>
+                    <td className="p-3 sm:p-4 md:p-5 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">{feature}</td>
+                    <td className="p-3 sm:p-4 md:p-5 text-center"><CellValue val={excel} /></td>
+                    <td className="p-3 sm:p-4 md:p-5 text-center"><CellValue val={avena} /></td>
+                    <td className="p-3 sm:p-4 md:p-5 text-center"><CellValue val={artesanal} /></td>
+                    <td className="p-3 sm:p-4 md:p-5 text-center bg-green-50/60"><CellValue val={kleia} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -1248,58 +1248,58 @@ export default function Index() {
         <main>
           <Hero />
 
-          <section id="seccion-2-problema" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-30" />
+          <section id="seccion-2-problema" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-20" />
             <ProblemSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-muted/30 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-20" />
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-15" />
             <EvidenceStrip />
           </section>
 
-          <section id="seccion-3-resultados" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-20" />
+          <section id="seccion-3-resultados" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-15" />
             <ResultsSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-25" />
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-20" />
             <FitSection />
           </section>
 
-          <section id="seccion-4-flujo" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-25" />
+          <section id="seccion-4-flujo" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-20" />
             <HowItWorksSection />
           </section>
 
-          <section id="seccion-5-incluido" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-15" />
+          <section id="seccion-5-incluido" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-10" />
             <FeaturesSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative">
-            <AnimatedSvgBackground className="opacity-15" />
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-10" />
             <ComparisonSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-20" />
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-15" />
             <StorySection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-15" />
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-10" />
             <BonusesSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
             <AnimatedSvgBackground className="opacity-10" />
             <DemoForm />
           </section>
 
-          <section id="seccion-11-faq" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 relative overflow-hidden">
-            <AnimatedSvgBackground className="opacity-15" />
+          <section id="seccion-11-faq" className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+            <AnimatedSvgBackground className="opacity-10" />
             <FAQSection />
           </section>
         </main>
