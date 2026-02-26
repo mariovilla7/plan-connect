@@ -60,67 +60,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-// ─── Pinned Section Wrapper ──────────────────────────────────────────────────
-// Each major section gets pinned at top while its content animates in
-function PinnedSection({
-  children,
-  className = "",
-  id,
-  bgClass = "bg-white",
-  showSvgBg = false,
-  svgOpacity = "opacity-20",
-}: {
-  children: React.ReactNode;
-  className?: string;
-  id?: string;
-  bgClass?: string;
-  showSvgBg?: boolean;
-  svgOpacity?: string;
-}) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    const content = contentRef.current;
-    if (!el || !content) return;
-
-    // Content enters from below with scale
-    gsap.set(content, { opacity: 0, y: 120, scale: 0.88 });
-
-    const tl = gsap.to(content, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 80%",
-        end: "top 20%",
-        scrub: 0.8,
-      },
-    });
-
-    return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
-  }, []);
-
-  return (
-    <section
-      ref={sectionRef}
-      id={id}
-      className={`relative min-h-screen flex items-center overflow-hidden ${bgClass} ${className}`}
-    >
-      {showSvgBg && <AnimatedSvgBackground className={svgOpacity} />}
-      <div ref={contentRef} className="relative z-10 w-full py-12 sm:py-16 md:py-20 px-4 lg:px-6">
-        {children}
-      </div>
-    </section>
-  );
-}
+// Removed PinnedSection — using regular sections with GSAP reveals
 
 // ─── S0 · Navbar ─────────────────────────────────────────────────────────────
 const navLinks = [
@@ -1328,49 +1268,60 @@ export default function Index() {
         <main>
           <Hero />
 
-          <PinnedSection id="seccion-2-problema" bgClass="bg-background" showSvgBg svgOpacity="opacity-30">
+          <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-30" />
             <ProblemSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection bgClass="bg-muted/30" showSvgBg svgOpacity="opacity-20">
+          <section className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-20" />
             <EvidenceStrip />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection id="seccion-3-resultados" bgClass="bg-background" showSvgBg svgOpacity="opacity-20">
+          <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-20" />
             <ResultsSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection bgClass="bg-white" showSvgBg svgOpacity="opacity-25">
+          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-25" />
             <FitSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection id="seccion-4-flujo" bgClass="bg-background" showSvgBg svgOpacity="opacity-25">
+          <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-25" />
             <HowItWorksSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection id="seccion-5-incluido" bgClass="bg-white">
+          <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-15" />
             <FeaturesSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection bgClass="bg-background">
+          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-15" />
             <ComparisonSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection bgClass="bg-white">
+          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-20" />
             <StorySection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection bgClass="bg-background">
+          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-15" />
             <BonusesSection />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection bgClass="bg-white">
+          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-10" />
             <DemoForm />
-          </PinnedSection>
+          </section>
 
-          <PinnedSection id="seccion-11-faq" bgClass="bg-background">
+          <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+            <AnimatedSvgBackground className="opacity-15" />
             <FAQSection />
-          </PinnedSection>
+          </section>
         </main>
         <FooterCTA />
       </div>
