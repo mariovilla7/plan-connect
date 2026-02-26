@@ -637,7 +637,7 @@ function HowItWorksSection() {
 
         {/* MOBILE */}
         <div className="md:hidden">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {steps.map((s, i) => (
               <StepCard key={s.num} num={s.num} title={s.title} desc={s.desc} highlighted={isHighlighted(i)} />
             ))}
