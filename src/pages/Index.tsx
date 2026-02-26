@@ -385,7 +385,7 @@ function EvidenceStrip() {
       </div>
 
       <div className="space-y-3 sm:space-y-4 md:space-y-5">
-        <div className="flex gap-2 justify-start sm:justify-center overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="flex gap-2 justify-start sm:justify-center overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
           {cityChips.map((chip) => (
             <button
               key={chip}
@@ -782,7 +782,7 @@ function ComparisonSection() {
           </Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
         </div>
-        <div ref={tableRef} className="relative bg-white rounded-2xl shadow-sm border border-border/40 overflow-hidden">
+        <div ref={tableRef} className="relative bg-white rounded-2xl shadow-sm border border-border/40">
           <div className="overflow-x-auto scrollbar-hide">
             <table className="text-sm border-collapse min-w-[600px] w-full">
               <thead>
@@ -1241,7 +1241,7 @@ export default function Index() {
     <>
       {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
-        className="min-h-screen font-sans bg-background overflow-x-hidden"
+        className="min-h-screen font-sans bg-background"
         style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease" }}
       >
         <Navbar />
@@ -1253,7 +1253,7 @@ export default function Index() {
             <ProblemSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative overflow-x-clip">
             <AnimatedSvgBackground className="opacity-15" />
             <EvidenceStrip />
           </section>
@@ -1278,7 +1278,7 @@ export default function Index() {
             <FeaturesSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative">
+          <section className="py-12 sm:py-16 md:py-20 bg-white relative">
             <AnimatedSvgBackground className="opacity-10" />
             <ComparisonSection />
           </section>
