@@ -296,7 +296,6 @@ function ProblemSection() {
 
   return (
     <div className="container max-w-6xl mx-auto">
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
         <div className="text-center mb-6 md:mb-10">
           <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
             El Problema
@@ -329,7 +328,6 @@ function ProblemSection() {
             );
           })}
         </div>
-      </div>
     </div>
   );
 }
@@ -483,7 +481,6 @@ function ResultsSection() {
 
   return (
     <div ref={sectionRef} className="container max-w-5xl mx-auto">
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
         <div className="text-center mb-6 md:mb-10">
           <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
             RESULTADOS CON KLEIA
@@ -551,7 +548,6 @@ function ResultsSection() {
             })}
           </div>
         </div>
-      </div>
     </div>
   );
 }
@@ -623,7 +619,6 @@ function HowItWorksSection() {
 
   return (
     <div ref={sectionRef} className="container max-w-6xl mx-auto">
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
         <div className="text-center mb-8 md:mb-12">
           <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
             Flujo
@@ -648,13 +643,12 @@ function HowItWorksSection() {
             ))}
           </div>
         </div>
-      </div>
-      <div className="max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
-        <p className="text-sm sm:text-base text-foreground/80 text-center leading-relaxed italic">
-          <span className="text-primary font-semibold not-italic">💡</span>{" "}
-          Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
-        </p>
-      </div>
+        <div className="max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
+          <p className="text-sm sm:text-base text-foreground/80 text-center leading-relaxed italic">
+            <span className="text-primary font-semibold not-italic">💡</span>{" "}
+            Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
+          </p>
+        </div>
     </div>
   );
 }
@@ -719,7 +713,6 @@ function FeaturesSection() {
 
   return (
     <div className="container max-w-5xl mx-auto">
-      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
         <div className="text-center mb-5 sm:mb-6 md:mb-10">
           <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
             Incluido
@@ -744,7 +737,6 @@ function FeaturesSection() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }
@@ -784,7 +776,6 @@ function ComparisonSection() {
 
   return (
     <div className="container max-w-4xl mx-auto">
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
         <div className="text-center mb-6 md:mb-10">
           <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
             Comparativa
@@ -792,7 +783,7 @@ function ComparisonSection() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
         </div>
         <div ref={tableRef} className="relative">
-          <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0 scrollbar-hide">
+          <div className="overflow-x-auto scrollbar-hide">
             <table className="text-sm border-collapse min-w-[600px] w-full">
               <thead className="sticky top-0 z-10 bg-white">
                 <tr>
@@ -821,7 +812,6 @@ function ComparisonSection() {
             </table>
           </div>
         </div>
-      </div>
       <div className="max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
         <p className="text-sm sm:text-base text-foreground/80 text-center leading-relaxed italic">
           {"💡 Kleia no es 'otro software de nutrición': es un asistente que te quita el trabajo mecánico sin quitarte el criterio."}
@@ -946,7 +936,6 @@ function FitSection() {
 
   return (
     <div className="container max-w-5xl mx-auto">
-      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
         <div className="text-center mb-5 sm:mb-6 md:mb-10">
           <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
             ¿Es para ti?
@@ -964,7 +953,6 @@ function FitSection() {
             </div>
           ))}
         </div>
-      </div>
 
       {/* Modal */}
       {modalArch &&
@@ -1025,7 +1013,6 @@ function StorySection() {
   const imgRef = useScaleReveal();
   return (
     <div className="container max-w-5xl mx-auto">
-      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
         <div className="text-center mb-5 sm:mb-6 md:mb-10">
           <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
             Por qué existe
@@ -1069,7 +1056,6 @@ function StorySection() {
             Enséñame cómo sería
           </button>
         </div>
-      </div>
     </div>
   );
 }
@@ -1092,7 +1078,6 @@ function BonusesSection() {
 
   return (
     <div className="container max-w-4xl mx-auto">
-      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
         <div className="text-center mb-5 sm:mb-6 md:mb-10">
           <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
             Extras
@@ -1126,7 +1111,6 @@ function BonusesSection() {
             </div>
           ))}
         </div>
-      </div>
     </div>
   );
 }
@@ -1134,8 +1118,7 @@ function BonusesSection() {
 // ─── Demo Form ───────────────────────────────────────────────────────────────
 function DemoForm() {
   return (
-    <div className="container max-w-lg mx-auto">
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-10 text-center">
+    <div className="container max-w-lg mx-auto text-center">
         <div className="mb-6 md:mb-8">
           <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
             Demo
@@ -1150,7 +1133,6 @@ function DemoForm() {
           </Button>
           <p className="text-xs text-muted-foreground">Acceso por invitación · Piloto cerrado: 10 plazas</p>
         </div>
-      </div>
     </div>
   );
 }
@@ -1181,7 +1163,6 @@ function FAQSection() {
 
   return (
     <div className="container max-w-3xl mx-auto">
-      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
         <div className="text-center mb-5 sm:mb-6 md:mb-10">
           <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
             FAQ
@@ -1202,7 +1183,6 @@ function FAQSection() {
             ))}
           </Accordion>
         </div>
-      </div>
     </div>
   );
 }
@@ -1298,7 +1278,7 @@ export default function Index() {
             <FeaturesSection />
           </section>
 
-          <section className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
+          <section className="py-4 md:py-6 px-4 lg:px-6 relative">
             <AnimatedSvgBackground className="opacity-15" />
             <ComparisonSection />
           </section>
