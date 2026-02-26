@@ -215,7 +215,7 @@ function Hero() {
     <section
       ref={heroRef}
       id="seccion-1-hero"
-      className="relative min-h-screen flex flex-col items-center justify-center bg-white overflow-hidden px-4 lg:px-6"
+      className="relative min-h-screen flex flex-col items-center justify-center bg-white overflow-hidden px-4 lg:px-6 pt-20 md:pt-24"
     >
       <AnimatedSvgBackground className="opacity-100" />
 
@@ -1683,9 +1683,17 @@ function FooterCTA() {
 export default function Index() {
   const [loaded, setLoaded] = useState(false);
 
+  const handleLoaded = useCallback(() => {
+    setLoaded(true);
+    // Refresh ScrollTrigger after intro loader exits so animations trigger correctly
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+  }, []);
+
   return (
     <>
-      {!loaded && <IntroLoader onComplete={() => setLoaded(true)} />}
+      {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
         className="min-h-screen font-sans bg-white"
         style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease" }}
