@@ -590,7 +590,7 @@ function HowItWorksSection() {
   function StepCard({ num, title, desc, highlighted, style }: { num: string; title: string; desc: string; highlighted: boolean; style?: React.CSSProperties }) {
     return (
       <div
-        className="relative z-10 flex flex-col p-5 md:p-7 rounded-2xl transition-all duration-500"
+        className="relative z-10 flex flex-col p-5 md:p-7 rounded-2xl transition-all duration-500 h-full"
         style={{
           ...style,
           backgroundColor: highlighted ? "hsl(var(--primary) / 0.06)" : "hsl(var(--background))",
@@ -612,7 +612,7 @@ function HowItWorksSection() {
           </span>
           <h3 className="font-semibold text-sm md:text-base">{title}</h3>
         </div>
-        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
+        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed flex-1">{desc}</p>
       </div>
     );
   }
@@ -637,7 +637,7 @@ function HowItWorksSection() {
 
         {/* MOBILE */}
         <div className="md:hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {steps.map((s, i) => (
               <StepCard key={s.num} num={s.num} title={s.title} desc={s.desc} highlighted={isHighlighted(i)} />
             ))}
@@ -890,7 +890,7 @@ const archetypes = [
 function ProfileCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOpenModal: () => void }) {
   return (
     <div
-      className="rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden cursor-pointer hover:shadow-md hover:border-primary/30 transition-all duration-200"
+      className="rounded-2xl border border-border bg-white shadow-sm flex flex-col overflow-hidden cursor-pointer hover:shadow-md hover:border-primary/30 transition-all duration-200 h-full"
       onClick={onOpenModal}
       role="button"
       tabIndex={0}
@@ -1241,7 +1241,7 @@ export default function Index() {
     <>
       {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
-        className="min-h-screen font-sans bg-background"
+        className="min-h-screen font-sans bg-background overflow-x-clip"
         style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease" }}
       >
         <Navbar />
@@ -1278,7 +1278,7 @@ export default function Index() {
             <FeaturesSection />
           </section>
 
-          <section className="py-12 sm:py-16 md:py-20 bg-white relative">
+          <section className="py-12 sm:py-16 md:py-20 px-4 lg:px-6 bg-white relative overflow-x-auto">
             <AnimatedSvgBackground className="opacity-10" />
             <ComparisonSection />
           </section>
