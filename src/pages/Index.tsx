@@ -19,14 +19,8 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import {
-  useFadeUp,
-  useParallax,
   useScaleReveal,
-  useAlternateSlide,
-  useTextReveal,
-  useCountUp,
 } from "@/hooks/useGsapAnimations";
 import IntroLoader from "@/components/IntroLoader";
 import AnimatedSvgBackground from "@/components/AnimatedSvgBackground";
@@ -34,7 +28,6 @@ import AnimatedSvgBackground from "@/components/AnimatedSvgBackground";
 gsap.registerPlugin(ScrollTrigger);
 
 // ─── WhatsApp CTA ─────────────────────────────────────────────────────────────
-// 🔧 Reemplazá este número con el tuyo (con código de país, sin + ni espacios)
 const WA_NUMBER = "359896676923";
 const WA_MESSAGE = encodeURIComponent("Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
@@ -44,22 +37,9 @@ function openWhatsApp() {
   window.open(WA_URL, "_blank", "noopener,noreferrer");
 }
 
-// GSAP-powered section wrapper
-function GsapSection({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
-  const ref = useFadeUp();
-  return (
-    <div ref={ref} id={id} className={className}>
-      {children}
-    </div>
-  );
-}
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   Brain,
@@ -79,6 +59,68 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+
+// ─── Pinned Section Wrapper ──────────────────────────────────────────────────
+// Each major section gets pinned at top while its content animates in
+function PinnedSection({
+  children,
+  className = "",
+  id,
+  bgClass = "bg-white",
+  showSvgBg = false,
+  svgOpacity = "opacity-20",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  id?: string;
+  bgClass?: string;
+  showSvgBg?: boolean;
+  svgOpacity?: string;
+}) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    const content = contentRef.current;
+    if (!el || !content) return;
+
+    // Content enters from below with scale
+    gsap.set(content, { opacity: 0, y: 120, scale: 0.88 });
+
+    const tl = gsap.to(content, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 80%",
+        end: "top 20%",
+        scrub: 0.8,
+      },
+    });
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      id={id}
+      className={`relative min-h-screen flex items-center overflow-hidden ${bgClass} ${className}`}
+    >
+      {showSvgBg && <AnimatedSvgBackground className={svgOpacity} />}
+      <div ref={contentRef} className="relative z-10 w-full py-12 sm:py-16 md:py-20 px-4 lg:px-6">
+        {children}
+      </div>
+    </section>
+  );
+}
 
 // ─── S0 · Navbar ─────────────────────────────────────────────────────────────
 const navLinks = [
@@ -143,15 +185,9 @@ function Navbar() {
             onClick={() => setOpen(!open)}
             aria-label="Menú"
           >
-            <span
-              className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "rotate-45 translate-y-2" : ""}`}
-            />
-            <span
-              className={`block w-5 h-0.5 bg-foreground transition-opacity duration-200 ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "-rotate-45 -translate-y-2" : ""}`}
-            />
+            <span className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-foreground transition-opacity duration-200 ${open ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
       </div>
@@ -160,10 +196,7 @@ function Navbar() {
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
-              onClick={() => {
-                scrollTo(id);
-                setOpen(false);
-              }}
+              onClick={() => { scrollTo(id); setOpen(false); }}
               className="text-sm text-muted-foreground hover:text-foreground text-left transition-colors py-3 border-b border-border/20 last:border-b-0 uppercase tracking-wider"
             >
               {label}
@@ -215,7 +248,7 @@ function Hero() {
     <section
       ref={heroRef}
       id="seccion-1-hero"
-      className="relative min-h-screen flex flex-col items-center justify-center bg-white overflow-hidden px-4 lg:px-6 pt-20 md:pt-24"
+      className="relative min-h-[100svh] flex flex-col items-center justify-center bg-white overflow-hidden px-4 lg:px-6 pt-20 md:pt-24"
     >
       <AnimatedSvgBackground className="opacity-100" />
 
@@ -284,135 +317,84 @@ const problems = [
   {
     icon: Brain,
     title: "Estoy hasta arriba de hacer menús",
-    description:
-      "Se te acaban las ideas y la cabeza no da para más. No es difícil: es un desgaste diario que te deja sin paciencia.",
+    description: "Se te acaban las ideas y la cabeza no da para más. No es difícil: es un desgaste diario que te deja sin paciencia.",
   },
   {
     icon: Sliders,
     title: "No quiero ideas al tuntún: tiene que encajar con MI paciente",
-    description:
-      "Variedad sí, pero con sentido clínico y realista: gustos, patologías, intolerancias, horarios y comida que pueda hacer y encontrar sin complicarse.",
+    description: "Variedad sí, pero con sentido clínico y realista: gustos, patologías, intolerancias, horarios y comida que pueda hacer y encontrar sin complicarse.",
   },
   {
     icon: RefreshCw,
     title: "Tocas una cosa… y se descompensa todo",
-    description:
-      "Cambias un ingrediente y se mueven las calorías y los macros (y el resto del día). Acabas recomponiendo comidas para que el plan vuelva a cuadrar.",
+    description: "Cambias un ingrediente y se mueven las calorías y los macros (y el resto del día). Acabas recomponiendo comidas para que el plan vuelva a cuadrar.",
   },
   {
     icon: BatteryLow,
     title: "El plan se te mete en la noche y el finde",
-    description:
-      "Atiendes todo el día y el plan cae “para después”. Se acumula, lo haces a ratos o en domingo… y a veces se te va a varios días.",
+    description: 'Atiendes todo el día y el plan cae "para después". Se acumula, lo haces a ratos o en domingo… y a veces se te va a varios días.',
   },
 ];
 
-// ─── S2 · El Problema ────────────────────────────────────────────────────────
 const problemImages = [problemaIlustracion, problema1, problema2, problema3, problema4];
 
+// ─── S2 · El Problema ────────────────────────────────────────────────────────
 function ProblemSection() {
-  const altRef = useAlternateSlide();
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  const sectionWrapRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = headerRef.current;
+    const el = cardsRef.current;
     if (!el) return;
-    gsap.set(el, { opacity: 0, y: 60 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, duration: 1, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
-
-  // Dramatic section reveal
-  useEffect(() => {
-    const el = sectionWrapRef.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 100, scale: 0.92 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    const items = el.querySelectorAll(".problem-card");
+    gsap.set(items, { opacity: 0, x: (i: number) => (i % 2 === 0 ? -80 : 80), scale: 0.9 });
+    const tl = gsap.to(items, {
+      opacity: 1, x: 0, scale: 1, duration: 0.8, stagger: 0.15, ease: "back.out(1.2)",
+      scrollTrigger: { trigger: el, start: "top 70%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-2-problema" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
-      <AnimatedSvgBackground className="opacity-30" />
-      <div ref={sectionWrapRef} className="container max-w-6xl mx-auto relative z-10">
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div ref={headerRef} className="text-center mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
-            >
-              El Problema
-            </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Te suena familiar?</h2>
-          </div>
+    <div className="container max-w-6xl mx-auto">
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+        <div className="text-center mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            El Problema
+          </Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">¿Te suena familiar?</h2>
+        </div>
 
-          {/* Alternating rows: card + image — GSAP alternate slide */}
-          <div ref={altRef} className="flex flex-col gap-4 md:gap-6">
-            {problems.map(({ icon: Icon, title, description }, i) => {
-              const imgSrc = problemImages[i + 1];
-              const isEven = i % 2 === 0;
-              return (
-                <div
-                  key={title}
-                  className={`gsap-alt-item flex flex-col md:flex-row items-center gap-4 md:gap-6 ${!isEven ? "md:flex-row-reverse" : ""}`}
-                >
-                  {/* Image */}
-                  <div className="flex-shrink-0 w-full max-w-[180px] sm:max-w-[200px] md:w-52">
-                    <img src={imgSrc} alt={title} className="w-full h-auto rounded-xl object-contain" loading="lazy" />
-                  </div>
-                  {/* Card */}
-                  <div className="flex-1 group p-4 md:p-5 rounded-xl md:rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
-                    <div className="flex items-center gap-2.5 mb-2 md:mb-2.5">
-                      <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon className="h-3.5 w-3.5 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
-                  </div>
+        <div ref={cardsRef} className="flex flex-col gap-4 md:gap-6">
+          {problems.map(({ icon: Icon, title, description }, i) => {
+            const imgSrc = problemImages[i + 1];
+            const isEven = i % 2 === 0;
+            return (
+              <div
+                key={title}
+                className={`problem-card flex flex-col md:flex-row items-center gap-4 md:gap-6 ${!isEven ? "md:flex-row-reverse" : ""}`}
+              >
+                <div className="flex-shrink-0 w-full max-w-[180px] sm:max-w-[200px] md:w-52">
+                  <img src={imgSrc} alt={title} className="w-full h-auto rounded-xl object-contain" loading="lazy" />
                 </div>
-              );
-            })}
-          </div>
+                <div className="flex-1 group p-4 md:p-5 rounded-xl md:rounded-2xl bg-background border border-border/60 hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shadow-sm">
+                  <div className="flex items-center gap-2.5 mb-2 md:mb-2.5">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-sm leading-snug text-foreground">{title}</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed pl-[38px]">{description}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
 // ─── S2b · Voces Reales (Evidence Strip) ─────────────────────────────────────
-const evidenceCards = [
-  {
-    profile: "Nutrióloga · Madrid, ES",
-    pain: "Domingos de planes",
-    quote: "Se me cuela al finde, y me deja sin vida.",
-  },
-  {
-    profile: "Nutrióloga · Valencia, ES",
-    pain: "Variedad agotadora",
-    quote: "Entre decidir y ejecutar, acabo repitiendo lo de siempre.",
-  },
-  { profile: "Nutrióloga · CDMX, MX", pain: "Cambios que descuadran", quote: "Cambio una cosa y se descompensa todo." },
-  {
-    profile: "Nutrióloga · Lima, PE",
-    pain: "Edición eterna",
-    quote: "Siempre hay que retocar algo antes de enviarlo.",
-  },
-  {
-    profile: "Nutrióloga · Tegucigalpa, HN",
-    pain: "Local vs irreal",
-    quote: "No quiero recetas raras: quiero algo que se pueda hacer aquí.",
-  },
-];
-
 const cityQuotes: Record<string, { quote: string; profile: string; summary: string }> = {
   "Madrid (ES)": {
     quote: "Estoy harta de hacer menús.",
@@ -446,165 +428,88 @@ const cityChips = Object.keys(cityQuotes);
 function EvidenceStrip() {
   const [activeChip, setActiveChip] = useState(cityChips[0]);
   const [visible, setVisible] = useState(true);
-  const sectionRefEvidence = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = sectionRefEvidence.current;
-    if (!el) return;
-    const children = el.querySelectorAll(".gsap-evidence-child");
-    gsap.set(children, { opacity: 0, y: 50, scale: 0.95 });
-    const tl = gsap.to(children, {
-      opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
 
   const handleChip = (chip: string) => {
     if (chip === activeChip) return;
     setVisible(false);
-    setTimeout(() => {
-      setActiveChip(chip);
-      setVisible(true);
-    }, 180);
+    setTimeout(() => { setActiveChip(chip); setVisible(true); }, 180);
   };
 
   const active = cityQuotes[activeChip];
 
-  // Dramatic section scale-in
-  useEffect(() => {
-    const el = sectionRefEvidence.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 80, scale: 0.9 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
-
   return (
-    <section ref={sectionRefEvidence} className="py-4 sm:py-6 md:py-10 px-4 lg:px-6 bg-muted/30 relative overflow-hidden">
-      <div className="text-center mb-6 md:mb-10 gsap-evidence-child">
-        <Badge
-          variant="outline"
-          className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
-        >
+    <div className="container max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
+      <div className="text-center mb-6 md:mb-10">
+        <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
           Construido a partir de 12 entrevistas. No de suposiciones.
         </Badge>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Frases reales de entrevistas</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">Frases reales de entrevistas</h2>
       </div>
 
-      <div className="container max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
-        {/* Chips + Quote block */}
-        <div className="space-y-3 sm:space-y-4 md:space-y-5 gsap-evidence-child">
-          {/* Horizontal scroll on mobile, wrap on desktop */}
-          <div className="flex gap-2 justify-start sm:justify-center overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-            {cityChips.map((chip) => (
-              <button
-                key={chip}
-                onClick={() => handleChip(chip)}
-                aria-pressed={activeChip === chip}
-                className={[
-                  "rounded-full px-3 py-1.5 text-[11px] sm:text-xs font-medium border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring whitespace-nowrap flex-shrink-0 active:scale-95",
-                  activeChip === chip
-                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                    : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
-                ].join(" ")}
-              >
-                {chip}
-              </button>
-            ))}
-          </div>
-
-          <div
-            className="bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-8 text-center space-y-1.5 sm:space-y-2 md:space-y-3 shadow-sm transition-opacity duration-200"
-            style={{ opacity: visible ? 1 : 0 }}
-            aria-live="polite"
-          >
-            <p className="text-sm sm:text-base md:text-xl font-serif font-semibold text-foreground leading-snug">
-              <span className="text-primary text-lg sm:text-xl md:text-2xl leading-none">"</span>
-              {active.quote}
-              <span className="text-primary text-lg sm:text-xl md:text-2xl leading-none">"</span>
-            </p>
-            <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground font-medium uppercase tracking-widest">
-              {active.profile}
-            </p>
-           <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">Resumen:</span> {active.summary}
-            </p>
-          </div>
+      <div className="space-y-3 sm:space-y-4 md:space-y-5">
+        <div className="flex gap-2 justify-start sm:justify-center overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+          {cityChips.map((chip) => (
+            <button
+              key={chip}
+              onClick={() => handleChip(chip)}
+              aria-pressed={activeChip === chip}
+              className={[
+                "rounded-full px-3 py-1.5 text-[11px] sm:text-xs font-medium border transition-all duration-200 whitespace-nowrap flex-shrink-0 active:scale-95",
+                activeChip === chip
+                  ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                  : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
+              ].join(" ")}
+            >
+              {chip}
+            </button>
+          ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-4 sm:mt-6 gsap-evidence-child">
-          <button
-            onClick={() => scrollTo("seccion-4-flujo")}
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full hover:bg-primary/90 active:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-xs sm:text-sm md:text-base"
-          >
-            Ver cómo lo resolvemos →
-          </button>
+        <div
+          className="bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-8 text-center space-y-1.5 sm:space-y-2 md:space-y-3 shadow-sm transition-opacity duration-200"
+          style={{ opacity: visible ? 1 : 0 }}
+          aria-live="polite"
+        >
+          <p className="text-sm sm:text-base md:text-xl font-serif font-semibold text-foreground leading-snug">
+            <span className="text-primary text-lg sm:text-xl md:text-2xl leading-none">"</span>
+            {active.quote}
+            <span className="text-primary text-lg sm:text-xl md:text-2xl leading-none">"</span>
+          </p>
+          <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground font-medium uppercase tracking-widest">
+            {active.profile}
+          </p>
+          <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">Resumen:</span> {active.summary}
+          </p>
         </div>
       </div>
-    </section>
+
+      <div className="text-center mt-4 sm:mt-6">
+        <button
+          onClick={() => scrollTo("seccion-4-flujo")}
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full hover:bg-primary/90 active:bg-primary/80 transition-colors shadow-md text-xs sm:text-sm md:text-base"
+        >
+          Ver cómo lo resolvemos →
+        </button>
+      </div>
+    </div>
   );
 }
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 const stats = [
-  {
-    value: "Menú que encaja de verdad",
-    label: "realista y clínico",
-    time: "+10''",
-    desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles).",
-  },
-  {
-    value: "Plan completo",
-    label: "sin hoja en blanco",
-    time: "+20''",
-    desc: "Pasas de “¿qué le pongo?” a un plan base listo, armado a partir de restricciones, objetivos y contexto.",
-  },
-  {
-    value: "Ajuste fino",
-    label: "sin descompensar el plan",
-    time: "+15''",
-    desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando.",
-  },
-  {
-    value: "Entrega al paciente",
-    label: "sin pasos extra",
-    time: "+7''",
-    desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace, sin formatear ni copiar y pegar.",
-  },
+  { value: "Menú que encaja de verdad", label: "realista y clínico", time: "+10''", desc: "Platos que cuadran con el caso y con su día a día (sin ideas al tuntún ni ingredientes imposibles)." },
+  { value: "Plan completo", label: "sin hoja en blanco", time: "+20''", desc: 'Pasas de "¿qué le pongo?" a un plan base listo, armado a partir de restricciones, objetivos y contexto.' },
+  { value: "Ajuste fino", label: "sin descompensar el plan", time: "+15''", desc: "Cambias un ingrediente y Kleia recalcula el plan para que las macros/calorías sigan cuadrando." },
+  { value: "Entrega al paciente", label: "sin pasos extra", time: "+7''", desc: "PDF listo + lista de compra agrupada para enviar por WhatsApp/email/enlace, sin formatear ni copiar y pegar." },
 ];
 
-// ─── S3 · Resultados ─────────────────────────────────────────────────────────
 function ResultsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-  const headerRefResults = useRef<HTMLDivElement>(null);
-  const imageRefResults = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Animate header
-    const hdr = headerRefResults.current;
-    if (hdr) {
-      gsap.set(hdr, { opacity: 0, y: 40 });
-      gsap.to(hdr, {
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: hdr, start: "top 85%", toggleActions: "play none none none" },
-      });
-    }
-    // Animate illustration with scale
-    const img = imageRefResults.current;
-    if (img) {
-      gsap.set(img, { opacity: 0, scale: 0.8, rotate: -3 });
-      gsap.to(img, {
-        opacity: 1, scale: 1, rotate: 0, duration: 1, ease: "power2.out",
-        scrollTrigger: { trigger: img, start: "top 85%", toggleActions: "play none none none" },
-      });
-    }
-  }, []);
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [phase, setPhase] = useState(0);
+  const [metricPulse, setMetricPulse] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -616,29 +521,17 @@ function ResultsSection() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
-  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const [phase, setPhase] = useState(0);
-  const [metricPulse, setMetricPulse] = useState(false);
 
   useEffect(() => {
     if (!inView) return;
-    if (reducedMotion) {
-      setPhase(5);
-      return;
-    }
+    if (reducedMotion) { setPhase(5); return; }
     const timers: ReturnType<typeof setTimeout>[] = [];
     [0, 1, 2, 3].forEach((i) => {
-      timers.push(
-        setTimeout(
-          () => {
-            setPhase(i + 1);
-            setMetricPulse(true);
-            setTimeout(() => setMetricPulse(false), 500);
-          },
-          500 + i * 500,
-        ),
-      );
+      timers.push(setTimeout(() => {
+        setPhase(i + 1);
+        setMetricPulse(true);
+        setTimeout(() => setMetricPulse(false), 500);
+      }, 500 + i * 500));
     });
     timers.push(setTimeout(() => setPhase(5), 500 + 3 * 500 + 600));
     return () => timers.forEach(clearTimeout);
@@ -648,307 +541,171 @@ function ResultsSection() {
   const hourValues = ["0", "2", "4", "5", "6+"];
   const displayHours = hourValues[Math.min(phase, 4)];
 
-  // Dramatic reveal for entire results wrapper
-  const resultsWrapRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = resultsWrapRef.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 100, scale: 0.88 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
-
   return (
-    <section id="seccion-3-resultados" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden" ref={sectionRef}>
-      <AnimatedSvgBackground className="opacity-20" />
-      <div ref={resultsWrapRef} className="container max-w-5xl mx-auto relative z-10">
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div ref={headerRefResults} className="text-center mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
-            >
-              RESULTADOS CON KLEIA
-            </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Menos carga, más control</h2>
-          </div>
-          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-            <div ref={imageRefResults} className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
-              <img
-                src={resultadosIlustracion}
-                alt="Nutricionista usando Kleia"
-                className="w-full max-w-[220px] md:max-w-none object-contain"
-              />
-              <div className="mt-4 text-center">
-                <p
-                  className={[
-                    "text-4xl font-bold font-serif transition-all duration-300",
-                    phase === 5 ? "scale-110" : "",
-                    metricPulse && !reducedMotion ? "scale-110" : "scale-100",
-                  ].join(" ")}
-                  style={{
-                    transition: "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, color 0.25s ease",
-                    opacity: inView ? 1 : 0,
-                    color: metricPulse && !reducedMotion ? "hsl(142 71% 45%)" : "hsl(var(--primary))",
-                  }}
-                >
-                  {reducedMotion ? "6+" : displayHours} horas
-                </p>
-                <p
-                  className="text-sm font-semibold mt-1"
-                  style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.2s" }}
-                >
-                  más a la semana
-                </p>
-                <p
-                  className="text-xs text-muted-foreground mt-1 leading-relaxed"
-                  style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.4s" }}
-                >
-                  Que antes se iban en armar y enviar planes
-                </p>
-                <div className="flex gap-1.5 justify-center mt-4">
-                  {[0, 1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="h-1 rounded-full transition-all duration-500"
-                      style={{
-                        width: phase > i ? "20px" : "6px",
-                        backgroundColor: phase > i ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.2)",
-                      }}
-                    />
-                  ))}
-                </div>
+    <div ref={sectionRef} className="container max-w-5xl mx-auto">
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+        <div className="text-center mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            RESULTADOS CON KLEIA
+          </Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">Menos carga, más control</h2>
+        </div>
+        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+          <div className="flex-shrink-0 w-full md:w-72 flex flex-col items-center">
+            <img src={resultadosIlustracion} alt="Nutricionista usando Kleia" className="w-full max-w-[220px] md:max-w-none object-contain" />
+            <div className="mt-4 text-center">
+              <p
+                className={`text-4xl font-bold font-serif transition-all duration-300 ${phase === 5 ? "scale-110" : ""} ${metricPulse && !reducedMotion ? "scale-110" : "scale-100"}`}
+                style={{
+                  transition: "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, color 0.25s ease",
+                  opacity: inView ? 1 : 0,
+                  color: metricPulse && !reducedMotion ? "hsl(142 71% 45%)" : "hsl(var(--primary))",
+                }}
+              >
+                {reducedMotion ? "6+" : displayHours} horas
+              </p>
+              <p className="text-sm font-semibold mt-1" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.2s" }}>
+                más a la semana
+              </p>
+              <p className="text-xs text-muted-foreground mt-1 leading-relaxed" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease 0.4s" }}>
+                Que antes se iban en armar y enviar planes
+              </p>
+              <div className="flex gap-1.5 justify-center mt-4">
+                {[0, 1, 2, 3].map((i) => (
+                  <div key={i} className="h-1 rounded-full transition-all duration-500"
+                    style={{ width: phase > i ? "20px" : "6px", backgroundColor: phase > i ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.2)" }}
+                  />
+                ))}
               </div>
             </div>
+          </div>
 
-            <div className="flex-1 flex flex-col gap-3">
-              <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
-                detalles que nos importan
-              </p>
-              {stats.map(({ value, label, time, desc }, i) => {
-                const visible = cardVisible(i);
-                return (
-                  <div
-                    key={value}
-                    className="flex rounded-xl overflow-hidden border shadow-sm transition-all"
-                    style={{
-                      opacity: visible ? 1 : 0,
-                      transform: visible
-                        ? reducedMotion
-                          ? "none"
-                          : "translateX(0) scale(1)"
-                        : "translateX(32px) scale(0.97)",
-                      transitionProperty: "opacity, transform, border-color",
-                      transitionDuration: reducedMotion ? "0ms" : "520ms",
-                      transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
-                      transitionDelay: reducedMotion ? "0ms" : `${i * 90}ms`,
-                      borderColor: "hsl(var(--border))",
-                    }}
-                  >
-                    <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0 gap-1.5">
-                      <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">
-                        {value}
-                      </p>
-                      {label && (
-                        <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">
-                          {label}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-1 mt-0.5 bg-primary/20 rounded-full px-2 py-0.5">
-                        <Clock className="h-2.5 w-2.5 text-primary" />
-                        <span className="text-[0.6rem] font-bold text-primary">{time}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center bg-white px-4 py-3 w-2/3">
-                      <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
+          <div className="flex-1 flex flex-col gap-3">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted-foreground mb-1">detalles que nos importan</p>
+            {stats.map(({ value, label, time, desc }, i) => {
+              const vis = cardVisible(i);
+              return (
+                <div key={value} className="flex rounded-xl overflow-hidden border shadow-sm transition-all"
+                  style={{
+                    opacity: vis ? 1 : 0,
+                    transform: vis ? (reducedMotion ? "none" : "translateX(0) scale(1)") : "translateX(32px) scale(0.97)",
+                    transitionProperty: "opacity, transform",
+                    transitionDuration: reducedMotion ? "0ms" : "520ms",
+                    transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+                    transitionDelay: reducedMotion ? "0ms" : `${i * 90}ms`,
+                  }}
+                >
+                  <div className="flex flex-col items-center justify-center bg-primary/10 py-4 px-3 w-1/3 shrink-0 gap-1.5">
+                    <p className="text-[0.75rem] font-bold font-serif text-primary text-center leading-snug">{value}</p>
+                    {label && <p className="text-[0.55rem] font-semibold text-primary/70 text-center leading-tight">{label}</p>}
+                    <div className="flex items-center gap-1 mt-0.5 bg-primary/20 rounded-full px-2 py-0.5">
+                      <Clock className="h-2.5 w-2.5 text-primary" />
+                      <span className="text-[0.6rem] font-bold text-primary">{time}</span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                  <div className="flex items-center bg-white px-4 py-3 w-2/3">
+                    <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
 // ─── How It Works ─────────────────────────────────────────────────────────────
 const steps = [
-  {
-    num: "01",
-    title: "Carga lo mínimo",
-    desc: "Ingresas restricciones, preferencias y objetivos del paciente una sola vez. Kleia los guarda para no repetir trabajo.",
-    image: null as string | null,
-  },
-  {
-    num: "02",
-    title: "Genera el plan",
-    desc: "Con un click, Kleia crea un plan semanal completo y balanceado, adaptado al perfil del paciente.",
-    image: null as string | null,
-  },
-  {
-    num: "03",
-    title: "Ajusta sin descuadres",
-    desc: "Cambias cualquier alimento y el sistema recalcula calorías y macros en tiempo real, para que el plan siga cuadrando.",
-    image: null as string | null,
-  },
-  {
-    num: "04",
-    title: "Entrega en 1 click",
-    desc: "Exportas el plan como PDF listo para compartir y lo enviás por WhatsApp/email como siempre — sin formatear, sin copiar y pegar.",
-    image: null as string | null,
-  },
+  { num: "01", title: "Carga lo mínimo", desc: "Ingresas restricciones, preferencias y objetivos del paciente una sola vez. Kleia los guarda para no repetir trabajo.", image: null as string | null },
+  { num: "02", title: "Genera el plan", desc: "Con un click, Kleia crea un plan semanal completo y balanceado, adaptado al perfil del paciente.", image: null as string | null },
+  { num: "03", title: "Ajusta sin descuadres", desc: "Cambias cualquier alimento y el sistema recalcula calorías y macros en tiempo real, para que el plan siga cuadrando.", image: null as string | null },
+  { num: "04", title: "Entrega en 1 click", desc: "Exportas el plan como PDF listo para compartir y lo enviás por WhatsApp/email como siempre — sin formatear, sin copiar y pegar.", image: null as string | null },
 ];
 
-// Shah-mat vertical offsets — más suaves para que las cards no se pisen
 const STEP_OFFSETS = [0, 24, -24, 0];
 
-// ─── S4 · Cómo funciona ──────────────────────────────────────────────────────
 function HowItWorksSection() {
   const sectionRef = React.useRef<HTMLDivElement>(null);
-  const gridRef = React.useRef<HTMLDivElement>(null);
-
   const [activeStep, setActiveStep] = useState(-1);
   const [hasPlayed, setHasPlayed] = useState(false);
-
   const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasPlayed) {
-          setTimeout(() => runAnimation(), 200);
-          setHasPlayed(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 },
+      ([entry]) => { if (entry.isIntersecting && !hasPlayed) { setTimeout(() => runAnimation(), 200); setHasPlayed(true); observer.disconnect(); } },
+      { threshold: 0.35 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [hasPlayed]);
 
   function runAnimation() {
-    if (reducedMotion) {
-      setActiveStep(4);
-      return;
-    }
-    // Highlight cards one by one with a staggered delay
-    const delays = [0, 500, 1000, 1500];
-    delays.forEach((delay, i) => {
-      setTimeout(() => setActiveStep(i), delay);
-    });
+    if (reducedMotion) { setActiveStep(4); return; }
+    [0, 1, 2, 3].forEach((i) => setTimeout(() => setActiveStep(i), i * 500));
     setTimeout(() => setActiveStep(4), 2000);
   }
 
   const isHighlighted = (i: number) => (reducedMotion ? true : activeStep >= i);
 
-  function StepCard({
-    num,
-    title,
-    desc,
-    image,
-    highlighted,
-    style,
-  }: {
-    num: string;
-    title: string;
-    desc: string;
-    image: string | null;
-    highlighted: boolean;
-    style?: React.CSSProperties;
-  }) {
+  function StepCard({ num, title, desc, highlighted, style }: { num: string; title: string; desc: string; highlighted: boolean; style?: React.CSSProperties }) {
     return (
       <div
         className="relative z-10 flex flex-col p-5 md:p-7 rounded-2xl transition-all duration-500"
         style={{
-          backgroundColor: highlighted ? "hsl(var(--primary) / 0.06)" : "hsl(var(--card))",
-          borderWidth: "1.5px",
-          borderStyle: "solid",
-          borderColor: highlighted ? "hsl(var(--primary) / 0.40)" : "hsl(var(--border))",
-          boxShadow: highlighted
-            ? "0 4px 24px -4px hsl(var(--primary) / 0.14), 0 0 0 3px hsl(var(--primary) / 0.07)"
-            : "0 1px 6px hsl(var(--foreground) / 0.04)",
           ...style,
+          backgroundColor: highlighted ? "hsl(var(--primary) / 0.06)" : "hsl(var(--background))",
+          borderColor: highlighted ? "hsl(var(--primary) / 0.3)" : "hsl(var(--border))",
+          border: "1px solid",
+          transform: highlighted ? "scale(1.02)" : "scale(1)",
+          boxShadow: highlighted ? "0 8px 30px -8px hsl(var(--primary) / 0.15)" : "none",
         }}
       >
-        <div className="flex items-start justify-between mb-4 md:mb-6">
+        <div className="flex items-center gap-3 mb-3">
           <span
-            className="text-4xl md:text-5xl font-bold font-serif leading-none transition-colors duration-500"
-            style={{ color: highlighted ? "hsl(var(--primary) / 0.40)" : "hsl(var(--primary) / 0.15)" }}
+            className="text-xs font-bold rounded-full px-2.5 py-1 transition-all duration-300"
+            style={{
+              backgroundColor: highlighted ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.15)",
+              color: highlighted ? "hsl(var(--primary-foreground))" : "hsl(var(--primary) / 0.5)",
+            }}
           >
             {num}
           </span>
-          <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border flex items-center justify-center">
-            {image ? (
-              <img src={image} alt={title} className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-muted-foreground/30 text-[10px] font-medium">img</span>
-            )}
-          </div>
+          <h3 className="font-semibold text-sm md:text-base">{title}</h3>
         </div>
-        <div className="mt-auto">
-          <h3 className="font-semibold mb-1.5 md:mb-2 text-sm md:text-base text-foreground">{title}</h3>
-          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
-        </div>
+        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
       </div>
     );
   }
 
   return (
-    <section id="seccion-4-flujo" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden" ref={sectionRef}>
-      <AnimatedSvgBackground className="opacity-25" />
-      <div className="container max-w-6xl mx-auto">
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div className="text-center mb-8 md:mb-12">
-            <Badge
-              variant="outline"
-              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
-            >
-              Flujo
-            </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Cómo funciona</h2>
-          </div>
+    <div ref={sectionRef} className="container max-w-6xl mx-auto">
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+        <div className="text-center mb-8 md:mb-12">
+          <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            Flujo
+          </Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">Cómo funciona</h2>
+        </div>
 
-          {/* DESKTOP: Shah-mat 2×2 (sin animación de línea) */}
-          <div className="hidden md:block">
-            <div ref={gridRef} className="grid grid-cols-2 gap-10">
-              <StepCard {...steps[0]} highlighted={isHighlighted(0)} style={{ marginTop: STEP_OFFSETS[0] }} />
-              <StepCard {...steps[1]} highlighted={isHighlighted(1)} style={{ marginTop: STEP_OFFSETS[1] }} />
-              <StepCard {...steps[2]} highlighted={isHighlighted(2)} style={{ marginTop: STEP_OFFSETS[2] }} />
-              <StepCard {...steps[3]} highlighted={isHighlighted(3)} style={{ marginTop: STEP_OFFSETS[3] }} />
-            </div>
+        {/* DESKTOP */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-2 gap-10">
+            {steps.map((s, i) => (
+              <StepCard key={s.num} num={s.num} title={s.title} desc={s.desc} highlighted={isHighlighted(i)} style={{ marginTop: STEP_OFFSETS[i] }} />
+            ))}
           </div>
+        </div>
 
-          {/* MOBILE: single col on tiny screens, 2 cols on sm+ */}
-          <div className="md:hidden">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {steps.map(({ num, title, desc, image }, i) => (
-                <StepCard key={num} num={num} title={title} desc={desc} image={image} highlighted={isHighlighted(i)} />
-              ))}
-            </div>
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-4" aria-hidden="true">
-              {steps.map((s, i) => (
-                <React.Fragment key={s.num}>
-                  <span
-                    className="text-[9px] sm:text-[10px] font-bold rounded-full px-1.5 sm:px-2 py-0.5 transition-all duration-300"
-                    style={{
-                      backgroundColor: isHighlighted(i) ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.15)",
-                      color: isHighlighted(i) ? "hsl(var(--primary-foreground))" : "hsl(var(--primary) / 0.5)",
-                    }}
-                  >
-                    {s.num}
-                  </span>
-                  {i < steps.length - 1 && <span className="text-muted-foreground/40 text-[10px] sm:text-xs">→</span>}
-                </React.Fragment>
-              ))}
-            </div>
+        {/* MOBILE */}
+        <div className="md:hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {steps.map((s, i) => (
+              <StepCard key={s.num} num={s.num} title={s.title} desc={s.desc} highlighted={isHighlighted(i)} />
+            ))}
           </div>
         </div>
       </div>
@@ -958,7 +715,7 @@ function HowItWorksSection() {
           Tú decides el contenido final: Kleia acelera la generación y los ajustes, no reemplaza tu criterio.
         </p>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -978,11 +735,8 @@ const carouselImages = [kleiacard1, kleiacard2, kleiacard3, kleiacard4, kleiacar
 
 function FeaturesCarousel() {
   const [current, setCurrent] = useState(0);
-
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % carouselImages.length);
-    }, 3500);
+    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % carouselImages.length), 3500);
     return () => clearInterval(timer);
   }, []);
 
@@ -990,22 +744,15 @@ function FeaturesCarousel() {
     <div className="relative overflow-hidden rounded-2xl bg-white border border-border">
       <div className="relative w-full aspect-[3/4]">
         {carouselImages.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt={`Kleia screenshot ${i + 1}`}
+          <img key={i} src={src} alt={`Kleia screenshot ${i + 1}`}
             className="absolute inset-0 w-full h-full object-contain p-2 sm:p-4 transition-opacity duration-500"
-            style={{ opacity: current === i ? 1 : 0 }}
-            loading="lazy"
+            style={{ opacity: current === i ? 1 : 0 }} loading="lazy"
           />
         ))}
       </div>
-      {/* Dots */}
       <div className="flex justify-center gap-1.5 pb-3">
         {carouselImages.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
+          <button key={i} onClick={() => setCurrent(i)}
             className={`w-2 h-2 rounded-full transition-all ${current === i ? "bg-primary w-4" : "bg-primary/25"}`}
             aria-label={`Foto ${i + 1}`}
           />
@@ -1015,65 +762,50 @@ function FeaturesCarousel() {
   );
 }
 
-// ─── S5 · Qué incluye ────────────────────────────────────────────────────────
 function FeaturesSection() {
-  const chipsRef = useFadeUp(0.08);
-  const featWrapRef = useRef<HTMLDivElement>(null);
+  const chipsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = featWrapRef.current;
+    const el = chipsRef.current;
     if (!el) return;
-    gsap.set(el, { opacity: 0, y: 80, scale: 0.9 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+    const items = el.querySelectorAll(".feat-chip");
+    gsap.set(items, { opacity: 0, x: 40, scale: 0.9 });
+    const tl = gsap.to(items, {
+      opacity: 1, x: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: "power2.out",
+      scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-5-incluido" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
-      <div ref={featWrapRef} className="container max-w-5xl mx-auto relative z-10">
-        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
-          <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
-            >
-              Incluido
-            </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Qué incluye Kleia</h2>
+    <div className="container max-w-5xl mx-auto">
+      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
+        <div className="text-center mb-5 sm:mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            Incluido
+          </Badge>
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-serif">Qué incluye Kleia</h2>
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center">
+          <div className="flex-shrink-0 w-full md:w-64 lg:w-72">
+            <FeaturesCarousel />
           </div>
-          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center">
-            {/* Carousel left */}
-            <div className="flex-shrink-0 w-full md:w-64 lg:w-72">
-              <FeaturesCarousel />
-            </div>
-            {/* Chips right */}
-            <div ref={chipsRef} className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
-              {features.map(({ label, icon }, i) => (
-                <div
-                  key={label}
-                  className="gsap-fade-child inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium bg-primary/8 text-primary border-primary/20 text-left"
-                >
-                  <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
-                  {label}
-                </div>
-              ))}
-              <div className="mt-3 sm:mt-4">
-                <Button
-                  onClick={openWhatsApp}
-                  size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 text-xs sm:text-sm md:text-base font-medium shadow-md w-full sm:w-auto h-10 sm:h-11"
-                >
-                  Jugar con Kleia →
-                </Button>
+          <div ref={chipsRef} className="flex-1 flex flex-col gap-1.5 sm:gap-2 w-full">
+            {features.map(({ label }) => (
+              <div key={label} className="feat-chip inline-flex items-center gap-2 sm:gap-2.5 md:gap-3 border rounded-full px-3 sm:px-4 md:px-5 py-2 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-medium bg-primary/8 text-primary border-primary/20 text-left">
+                <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
+                {label}
               </div>
+            ))}
+            <div className="mt-3 sm:mt-4">
+              <Button onClick={openWhatsApp} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 text-xs sm:text-sm md:text-base font-medium shadow-md w-full sm:w-auto h-10 sm:h-11">
+                Jugar con Kleia →
+              </Button>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -1090,109 +822,76 @@ const comparisonRows = [
 ];
 
 function CellValue({ val }: { val: boolean | string }) {
-  if (val === true) return <Check className="h-4 w-4 text-teal mx-auto" />;
+  if (val === true) return <Check className="h-4 w-4 text-primary mx-auto" />;
   if (val === false) return <X className="h-4 w-4 text-destructive mx-auto" />;
   return <span className="text-xs text-muted-foreground">{val}</span>;
 }
 
-// ─── S6 · Comparativa ────────────────────────────────────────────────────────
 function ComparisonSection() {
   const tableRef = useRef<HTMLDivElement>(null);
-  const headerRefComp = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const hdr = headerRefComp.current;
-    if (hdr) {
-      gsap.set(hdr, { opacity: 0, y: 40 });
-      gsap.to(hdr, {
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: hdr, start: "top 85%", toggleActions: "play none none none" },
-      });
-    }
     const tbl = tableRef.current;
-    if (tbl) {
-      const rows = tbl.querySelectorAll("tbody tr");
-      gsap.set(rows, { opacity: 0, x: -30 });
-      gsap.to(rows, {
-        opacity: 1, x: 0, duration: 0.5, stagger: 0.07, ease: "power2.out",
-        scrollTrigger: { trigger: tbl, start: "top 80%", toggleActions: "play none none none" },
-      });
-    }
+    if (!tbl) return;
+    const rows = tbl.querySelectorAll("tbody tr");
+    gsap.set(rows, { opacity: 0, x: -30 });
+    const tl = gsap.to(rows, {
+      opacity: 1, x: 0, duration: 0.5, stagger: 0.07, ease: "power2.out",
+      scrollTrigger: { trigger: tbl, start: "top 80%", toggleActions: "play none none none" },
+    });
+    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-6-comparativa" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
-      <div className="container max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
-          <div ref={headerRefComp} className="text-center mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
-            >
-              Comparativa
-            </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
-          </div>
-          <div ref={tableRef} className="relative">
-            <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0 scrollbar-hide">
-              <table className="text-sm border-collapse min-w-[600px] w-full">
-                <thead className="sticky top-0 z-10 bg-white">
-                  <tr>
-                    <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">
-                      Funcionalidad
-                    </th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
-                      Excel
-                    </th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
-                      Avena
-                    </th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">
-                      Lápiz y hoja
-                    </th>
-                    <th className="p-2 sm:p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
-                      <div className="flex items-center justify-center py-0.5">
-                        <img src={kleiaLogo} alt="Kleia" className="h-4 sm:h-5 md:h-7 w-auto" />
-                      </div>
-                    </th>
+    <div className="container max-w-4xl mx-auto">
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-5 md:p-10">
+        <div className="text-center mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            Comparativa
+          </Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">¿Por qué Kleia y no otra cosa?</h2>
+        </div>
+        <div ref={tableRef} className="relative">
+          <div className="overflow-x-auto -mx-5 md:mx-0 md:px-0 scrollbar-hide">
+            <table className="text-sm border-collapse min-w-[600px] w-full">
+              <thead className="sticky top-0 z-10 bg-white">
+                <tr>
+                  <th className="text-left p-2 sm:p-2.5 md:p-4 text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm whitespace-nowrap">Funcionalidad</th>
+                  <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Excel</th>
+                  <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Avena</th>
+                  <th className="p-2 sm:p-2.5 md:p-4 text-center text-muted-foreground font-medium text-[11px] sm:text-xs md:text-sm">Lápiz y hoja</th>
+                  <th className="p-2 sm:p-2.5 md:p-4 text-center bg-primary/8 rounded-t-xl">
+                    <div className="flex items-center justify-center py-0.5">
+                      <img src={kleiaLogo} alt="Kleia" className="h-4 sm:h-5 md:h-7 w-auto" />
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
+                  <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
+                    <td className="p-2 sm:p-2.5 md:p-4 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">{feature}</td>
+                    <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={excel} /></td>
+                    <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={avena} /></td>
+                    <td className="p-2 sm:p-2.5 md:p-4 text-center"><CellValue val={artesanal} /></td>
+                    <td className="p-2 sm:p-2.5 md:p-4 text-center bg-success/5"><CellValue val={kleia} /></td>
                   </tr>
-                </thead>
-                <tbody>
-                  {comparisonRows.map(({ feature, excel, avena, artesanal, kleia }, i) => (
-                    <tr key={feature} className={i % 2 === 0 ? "bg-background/60" : ""}>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-foreground/80 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">
-                        {feature}
-                      </td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center">
-                        <CellValue val={excel} />
-                      </td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center">
-                        <CellValue val={avena} />
-                      </td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center">
-                        <CellValue val={artesanal} />
-                      </td>
-                      <td className="p-2 sm:p-2.5 md:p-4 text-center bg-success/5">
-                        <CellValue val={kleia} />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div className="container max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
+      <div className="max-w-2xl mx-auto mt-6 md:mt-8 bg-primary/5 border border-primary/20 rounded-xl sm:rounded-2xl px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6">
         <p className="text-sm sm:text-base text-foreground/80 text-center leading-relaxed italic">
-          {"💡 Kleia no es 'otro software de nutrición': es un asistente que te quita el trabajo mecánico sin quitarte el criterio. Menús que encajan, cambios sin descuadres y entrega lista por PDF/WhatsApp."}
+          {"💡 Kleia no es 'otro software de nutrición': es un asistente que te quita el trabajo mecánico sin quitarte el criterio."}
         </p>
       </div>
-    </section>
+    </div>
   );
 }
 
-// ─── Archetype data (kept for FlipCard use) ────────────────────────────────────
+// ─── Archetype / Fit ────────────────────────────────────────────────────────
 const archetypes = [
   {
     badge: "⏳ Saturada",
@@ -1254,8 +953,7 @@ const archetypes = [
     accentBorder: "hsl(var(--border))",
     highlight: false,
     muted: true,
-    microcopy:
-      "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
+    microcopy: "Si esto te funciona, genial. Kleia es para quien ya está hasta arriba y quiere recuperar control sin quemarse.",
   },
 ];
 
@@ -1267,136 +965,90 @@ function ProfileCard({ arch, onOpenModal }: { arch: (typeof archetypes)[0]; onOp
       role="button"
       tabIndex={0}
       aria-label={`Ver detalles de ${arch.title}`}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") onOpenModal();
-      }}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onOpenModal(); }}
     >
-      <div className="relative flex-1 bg-muted/30 overflow-hidden">
-        <img src={arch.image} alt={arch.title} className="w-full h-full object-contain p-4" />
-        <span
-          className={`absolute top-3 left-3 inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${arch.badgeColor}`}
-        >
+      <div className="relative w-full aspect-[4/3] bg-muted/30 overflow-hidden">
+        <img src={arch.image} alt={arch.title} className="w-full h-full object-cover" loading="lazy" />
+        <span className={`absolute top-2 left-2 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-full border ${arch.badgeColor}`}>
           {arch.badge}
         </span>
       </div>
-      <div className="px-5 py-4 border-t border-border bg-white">
-        <h3 className="font-bold text-foreground leading-snug text-base mb-1">{arch.title}</h3>
-        <p className="text-sm text-muted-foreground">{arch.subtitleNode ?? arch.subtitle}</p>
-        <p className="text-xs text-muted-foreground/60 mt-3 flex items-center gap-1">
-          <span className="text-base">👆</span>
-          <span>Toca para ver más</span>
+      <div className="p-3 sm:p-4 flex flex-col flex-1">
+        <h3 className="font-semibold text-sm sm:text-base mb-1 leading-snug">{arch.title}</h3>
+        <p className="text-[11px] sm:text-xs text-muted-foreground mb-3 leading-relaxed">
+          {arch.subtitleNode ?? arch.subtitle}
         </p>
+        <button className="mt-auto w-full text-center py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-colors bg-primary/10 text-primary hover:bg-primary/20">
+          Ver más →
+        </button>
       </div>
     </div>
   );
 }
 
-// ─── S7 · Encaje (Flip Cards) ─────────────────────────────────────────────────
 function FitSection() {
-  const [modalIdx, setModalIdx] = React.useState<number | null>(null);
-  const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
+  const [modalIdx, setModalIdx] = useState<number | null>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-
-  const fitWrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = fitWrapRef.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 100, scale: 0.85 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
 
   useEffect(() => {
     const el = cardsRef.current;
     if (!el) return;
-    const cards = el.querySelectorAll(".gsap-fit-card");
+    const cards = el.querySelectorAll(".fit-card");
     gsap.set(cards, { opacity: 0, y: 80, scale: 0.85 });
     const tl = gsap.to(cards, {
-      opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: 0.2, ease: "back.out(1.4)",
-      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+      opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.2, ease: "back.out(1.2)",
+      scrollTrigger: { trigger: el, start: "top 75%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
+  const modalArch = modalIdx !== null ? archetypes[modalIdx] : null;
+
   return (
-    <section id="seccion-7-encaje" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
-      <AnimatedSvgBackground className="opacity-20" />
-      <div ref={fitWrapRef} className="container max-w-5xl mx-auto relative z-10">
-        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
-          <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
-            >
-              Encaje
-            </Badge>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-2 md:mb-3">Elige tu perfil (en 10 segundos)</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
-              Si te suena alguno, Kleia probablemente te va a ahorrar tiempo de verdad.
-            </p>
-          </div>
-          <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {archetypes.map((arch, i) => (
-              <div key={i} className="gsap-fit-card">
-                <ProfileCard arch={arch} onOpenModal={() => setModalIdx(i)} />
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-6 md:mt-10">
-            <button
-              onClick={openWhatsApp}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 md:px-8 py-3 md:py-3.5 rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-sm md:text-base"
-            >
-              Escribirnos por WhatsApp →
-            </button>
-          </div>
+    <div className="container max-w-5xl mx-auto">
+      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
+        <div className="text-center mb-5 sm:mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            ¿Es para ti?
+          </Badge>
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-serif">¿Te reconoces en alguno?</h2>
+          <p className="text-muted-foreground mt-1 sm:mt-2 text-xs sm:text-sm md:text-base max-w-lg mx-auto">
+            Hemos identificado 3 perfiles de nutricionistas. Toca el que más se parezca a ti.
+          </p>
+        </div>
+
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
+          {archetypes.map((arch, i) => (
+            <div key={arch.title} className="fit-card">
+              <ProfileCard arch={arch} onOpenModal={() => setModalIdx(i)} />
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Modal */}
       {modalArch &&
         createPortal(
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
-            onClick={() => setModalIdx(null)}
-            role="dialog"
-            aria-modal="true"
-            aria-label={modalArch.title}
-          >
-            <div
-              className="bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto p-6 shadow-2xl animate-fade-in"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span
-                  className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${modalArch.badgeColor}`}
-                >
-                  {modalArch.badge}
-                </span>
-                <button
-                  onClick={() => setModalIdx(null)}
-                  className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                  aria-label="Cerrar"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-              <h3 className="font-bold text-foreground text-lg mb-1">{modalArch.title}</h3>
+          <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setModalIdx(null)}>
+            <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[85vh] overflow-y-auto p-5 sm:p-6 relative" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setModalIdx(null)} className="absolute top-3 right-3 text-muted-foreground hover:text-foreground" aria-label="Cerrar">
+                <X className="h-5 w-5" />
+              </button>
+              <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border inline-block mb-3 ${modalArch.badgeColor}`}>
+                {modalArch.badge}
+              </span>
+              <h3 className="font-bold text-lg font-serif mb-1">{modalArch.title}</h3>
               <p className="text-sm text-muted-foreground mb-4">{modalArch.subtitleNode ?? modalArch.subtitle}</p>
-              <ul className="space-y-2.5 mb-4">
+              <ul className="space-y-2 mb-4">
                 {modalArch.bullets.map((b, j) => (
                   <li key={j} className="flex items-start gap-2 text-sm text-foreground/80">
-                    <span className="mt-[5px] h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    {b}
+                    <span className="mt-1 text-primary">•</span>
+                    <span>{b}</span>
                   </li>
                 ))}
               </ul>
               {modalArch.microcopy && (
-                <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mb-4">
-                  {modalArch.microcopy}
-                </p>
+                <p className="text-xs text-muted-foreground italic border-t border-border pt-3 mb-4">{modalArch.microcopy}</p>
               )}
               {modalArch.withKleia && (
                 <p className="text-sm border-t border-border pt-3 mb-4">
@@ -1405,11 +1057,8 @@ function FitSection() {
                 </p>
               )}
               <button
-                onClick={() => {
-                  setModalIdx(null);
-                  openWhatsApp();
-                }}
-                className="w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => { setModalIdx(null); openWhatsApp(); }}
+                className="w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {modalArch.cta}
               </button>
@@ -1417,13 +1066,11 @@ function FitSection() {
           </div>,
           document.body,
         )}
-    </section>
+    </div>
   );
 }
 
-// ─── S7c · Historia detrás de Kleia ──────────────────────────────────────────
-// Story photo replaced by single illustration
-
+// ─── Story ───────────────────────────────────────────────────────────────────
 const NEW_STORY_TEXT = `Llevo años creando productos digitales con una obsesión: quitar la fricción que te roba vida.
 Primero lo vi como usuaria: con mi entrenador todo era WhatsApp, calendarios y pagos a mano. Pensé: "esto se puede simplificar".
 
@@ -1437,94 +1084,59 @@ Así nació Kleia: un asistente para nutricionistas para crear menús que encaja
 function StorySection() {
   const imgRef = useScaleReveal();
   return (
-    <section id="seccion-7c-historia" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-5xl mx-auto">
-        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
-          {/* Header */}
-          <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
-            >
-              Por qué existe
-            </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif mb-1.5 sm:mb-2 md:mb-3">
-              La historia detrás de Kleia
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-xs sm:text-sm md:text-base">
-              Nació para quitarte trabajo invisible: el que empieza cuando termina la consulta.
-            </p>
+    <div className="container max-w-5xl mx-auto">
+      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-8 lg:p-12">
+        <div className="text-center mb-5 sm:mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            Por qué existe
+          </Badge>
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-serif mb-1.5 sm:mb-2 md:mb-3">
+            La historia detrás de Kleia
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto text-xs sm:text-sm md:text-base">
+            Nació para quitarte trabajo invisible: el que empieza cuando termina la consulta.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10 lg:gap-14 items-start mb-5 sm:mb-6 md:mb-10">
+          <div ref={imgRef} className="flex items-center justify-center">
+            <img src={storytellingImg} alt="Equipo detrás de Kleia" className="w-full max-w-xs md:max-w-none rounded-xl object-contain" loading="lazy" />
           </div>
-
-          {/* Two-column: imagen izq, texto dcha */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10 lg:gap-14 items-start mb-5 sm:mb-6 md:mb-10">
-            {/* LEFT: Single illustration */}
-            <div ref={imgRef} className="flex items-center justify-center">
-              <img
-                src={storytellingImg}
-                alt="Equipo detrás de Kleia"
-                className="w-full max-w-xs md:max-w-none rounded-xl object-contain"
-                loading="lazy"
-              />
-            </div>
-
-            {/* RIGHT: Texto */}
-            <div className="space-y-2.5 sm:space-y-3 md:space-y-4">
-              {NEW_STORY_TEXT.split("\n\n").map((para, i) => (
-                <p key={i} className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
-                  {para}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          {/* Mini-cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 mb-5 sm:mb-6 md:mb-10">
-            <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-border/60 bg-primary/5 p-3.5 sm:p-4 md:p-5">
-              <h3 className="font-semibold text-foreground mb-1 sm:mb-1.5 text-xs sm:text-sm">✨ La chispa</h3>
-              <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">
-                Ver a gente haciendo la lista de la compra a mano para poder cumplir el plan.
-              </p>
-            </div>
-            <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-border/60 bg-muted/30 p-3.5 sm:p-4 md:p-5">
-              <h3 className="font-semibold text-foreground mb-1 sm:mb-1.5 text-xs sm:text-sm">🧠 Nuestro enfoque</h3>
-              <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">
-                No queríamos "otro software". Queríamos un asistente que te quite lo pesado sin quitarte el criterio.
-              </p>
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="text-center">
-            <button
-              onClick={openWhatsApp}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 rounded-full hover:bg-primary/90 active:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md text-xs sm:text-sm md:text-base"
-            >
-              Enséñame cómo sería
-            </button>
+          <div className="space-y-2.5 sm:space-y-3 md:space-y-4">
+            {NEW_STORY_TEXT.split("\n\n").map((para, i) => (
+              <p key={i} className="text-xs sm:text-sm text-foreground/80 leading-relaxed">{para}</p>
+            ))}
           </div>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 mb-5 sm:mb-6 md:mb-10">
+          <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-border/60 bg-primary/5 p-3.5 sm:p-4 md:p-5">
+            <h3 className="font-semibold text-foreground mb-1 sm:mb-1.5 text-xs sm:text-sm">✨ La chispa</h3>
+            <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">
+              Ver a gente haciendo la lista de la compra a mano para poder cumplir el plan.
+            </p>
+          </div>
+          <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-border/60 bg-muted/30 p-3.5 sm:p-4 md:p-5">
+            <h3 className="font-semibold text-foreground mb-1 sm:mb-1.5 text-xs sm:text-sm">🧠 Nuestro enfoque</h3>
+            <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">
+              No queríamos "otro software". Queríamos un asistente que te quite lo pesado sin quitarte el criterio.
+            </p>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <button onClick={openWhatsApp} className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 rounded-full hover:bg-primary/90 active:bg-primary/80 transition-colors shadow-md text-xs sm:text-sm md:text-base">
+            Enséñame cómo sería
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
 
-// ─── S8 · Bonos y Garantía ───────────────────────────────────────────────────
+// ─── Bonuses ─────────────────────────────────────────────────────────────────
 function BonusesSection() {
   const bonusRef = useRef<HTMLDivElement>(null);
-
-  const bonusWrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = bonusWrapRef.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 100, scale: 0.88 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
 
   useEffect(() => {
     const el = bonusRef.current;
@@ -1539,179 +1151,107 @@ function BonusesSection() {
   }, []);
 
   return (
-    <section id="seccion-8-extras" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
-      <div ref={bonusWrapRef} className="container max-w-4xl mx-auto relative z-10">
-        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
-          <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
-            >
-              Extras
-            </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">
-              Bonos incluidos en el piloto
-            </h2>
-          </div>
-          <div ref={bonusRef} className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 mb-5 sm:mb-6 md:mb-10">
-            {[
-              {
-                icon: Gift,
-                title: "Bono 1: Setup asistido",
-                desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo. Sin perderte en la herramienta.",
-              },
-              {
-                icon: MessageSquare,
-                title: "Bono 2: Canal de Expertos",
-                desc: "Acceso a un canal privado donde puedes consultar dudas de nutrición con otros profesionales y con el equipo de Kleia.",
-              },
-              {
-                icon: ShieldCheck,
-                title: "Garantía: Cancelación simple",
-                desc: "Si en los primeros 30 días no ves una mejora clara en tu tiempo de generación/ajustes, cancelas sin penalidades.",
-              },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="gsap-bonus-card text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2.5 sm:mb-3 md:mb-4">
-                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-1 sm:mb-1.5 md:mb-2 text-xs sm:text-sm md:text-base">{title}</h3>
-                <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
+    <div className="container max-w-4xl mx-auto">
+      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
+        <div className="text-center mb-5 sm:mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            Extras
+          </Badge>
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-serif">Bonos incluidos en el piloto</h2>
+        </div>
+        <div ref={bonusRef} className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 mb-5 sm:mb-6 md:mb-10">
+          {[
+            { icon: Gift, title: "Bono 1: Setup asistido", desc: "Te acompañamos a cargar tus primeros pacientes y configurar Kleia a tu flujo de trabajo." },
+            { icon: MessageSquare, title: "Bono 2: Canal de Expertos", desc: "Acceso a un canal privado donde puedes consultar dudas de nutrición con otros profesionales." },
+            { icon: ShieldCheck, title: "Garantía: Cancelación simple", desc: "Si en los primeros 30 días no ves mejora clara, cancelas sin penalidades." },
+          ].map(({ icon: Icon, title, desc }) => (
+            <div key={title} className="gsap-bonus-card text-center p-3.5 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-background">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2.5 sm:mb-3 md:mb-4">
+                <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-primary" />
               </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-4">
-            {[
-              { icon: Star, text: "Construido a partir de 12 entrevistas" },
-              { icon: CheckCircle2, text: "Cohorte piloto activa ahora" },
-              { icon: Leaf, text: "Piloto cerrado: 10 plazas" },
-            ].map(({ icon: Icon, text }) => (
-              <div
-                key={text}
-                className="flex items-center gap-1.5 sm:gap-2 bg-primary/10 rounded-full px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2"
-              >
-                <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
-                <span className="text-[10px] sm:text-[11px] md:text-xs text-primary font-medium">{text}</span>
-              </div>
-            ))}
-          </div>
+              <h3 className="font-semibold mb-1 sm:mb-1.5 md:mb-2 text-xs sm:text-sm md:text-base">{title}</h3>
+              <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-4">
+          {[
+            { icon: Star, text: "Construido a partir de 12 entrevistas" },
+            { icon: CheckCircle2, text: "Cohorte piloto activa ahora" },
+            { icon: Leaf, text: "Piloto cerrado: 10 plazas" },
+          ].map(({ icon: Icon, text }) => (
+            <div key={text} className="flex items-center gap-1.5 sm:gap-2 bg-primary/10 rounded-full px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2">
+              <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
+              <span className="text-[10px] sm:text-[11px] md:text-xs text-primary font-medium">{text}</span>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
-// ─── S10 · Formulario demo (ahora redirige a WhatsApp) ───────────────────────
+// ─── Demo Form ───────────────────────────────────────────────────────────────
 function DemoForm() {
   return (
-    <section id="agendar-demo" className="py-4 md:py-6 px-4 lg:px-6">
-      <div className="container max-w-lg mx-auto">
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-10 text-center">
-          <div className="mb-6 md:mb-8">
-            <Badge
-              variant="outline"
-              className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest"
-            >
-              Demo
-            </Badge>
-            <h2 className="text-2xl md:text-3xl font-bold font-serif">Agenda tu demo</h2>
-            <p className="text-muted-foreground mt-2 text-sm">
-              1. Te mostramos el flujo con un caso real en 10 minutos (restricciones → plan → ajustes → PDF)
-            </p>
-            <p className="text-muted-foreground mt-2 text-sm">
-              2. Si encaja con tu forma de trabajar, te invitamos al piloto (plazas limitadas)
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-4">
-            <Button
-              onClick={openWhatsApp}
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md w-full sm:w-auto text-base"
-            >
-              Escribirnos por WhatsApp →
-            </Button>
-            <p className="text-xs text-muted-foreground">Acceso por invitación · Piloto cerrado: 10 plazas</p>
-          </div>
+    <div className="container max-w-lg mx-auto">
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-10 text-center">
+        <div className="mb-6 md:mb-8">
+          <Badge variant="outline" className="mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-xs uppercase tracking-widest">
+            Demo
+          </Badge>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Agenda tu demo</h2>
+          <p className="text-muted-foreground mt-2 text-sm">1. Te mostramos el flujo con un caso real en 10 minutos</p>
+          <p className="text-muted-foreground mt-2 text-sm">2. Si encaja, te invitamos al piloto (plazas limitadas)</p>
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <Button onClick={openWhatsApp} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 font-medium shadow-md w-full sm:w-auto text-base">
+            Escribirnos por WhatsApp →
+          </Button>
+          <p className="text-xs text-muted-foreground">Acceso por invitación · Piloto cerrado: 10 plazas</p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
 // ─── FAQ ─────────────────────────────────────────────────────────────────────
 const faqs = [
-  {
-    q: "¿Necesito saber de tecnología para usar Kleia?",
-    a: "No. Kleia está diseñado para nutricionistas, no para programadores. Si podés usar WhatsApp, podés usar Kleia. Además, te acompañamos en el setup inicial.",
-  },
-  {
-    q: "¿Qué pasa con los datos de mis pacientes?",
-    a: "Los datos de tus pacientes son tuyos. Kleia los usa únicamente para generar los planes y no los comparte con terceros. Cumplimos con las normativas de privacidad aplicables.",
-  },
-  {
-    q: "¿Puedo cancelar cuando quiero?",
-    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades. Si sientes que Kleia no te ahorra tiempo en los primeros 30 días",
-  },
-  {
-    q: "¿Kleia reemplaza mi criterio profesional?",
-    a: "No, y no está pensado para hacerlo. Kleia automatiza la parte mecánica (armar el plan, calcular macros, formatear el PDF), pero tu sigues siendo quien decide qué es mejor para cada paciente.",
-  },
-  {
-    q: "¿Cuándo estará disponible para todos?",
-    a: "Estamos en piloto cerrado con 10 plazas. Después del piloto, vamos a iterar el producto y abrir acceso gradualmente. Si quieres ser de los primeros, escríbenos por WhatsApp ahora.",
-  },
+  { q: "¿Necesito saber de tecnología para usar Kleia?", a: "No. Si podés usar WhatsApp, podés usar Kleia. Te acompañamos en el setup inicial." },
+  { q: "¿Qué pasa con los datos de mis pacientes?", a: "Los datos son tuyos. Kleia los usa solo para generar los planes y no los comparte con terceros." },
+  { q: "¿Puedo cancelar cuando quiero?", a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades." },
+  { q: "¿Kleia reemplaza mi criterio profesional?", a: "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente." },
+  { q: "¿Cuándo estará disponible para todos?", a: "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp." },
 ];
 
-// ─── S11 · FAQ ───────────────────────────────────────────────────────────────
 function FAQSection() {
   const faqRef = useRef<HTMLDivElement>(null);
-
-  const faqWrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = faqWrapRef.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 80, scale: 0.9 });
-    const tl = gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-    });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
-  }, []);
 
   useEffect(() => {
     const el = faqRef.current;
     if (!el) return;
     const items = el.querySelectorAll(".gsap-faq-item");
-    gsap.set(items, { opacity: 0, x: 60, scale: 0.95 });
+    gsap.set(items, { opacity: 0, y: 40 });
     const tl = gsap.to(items, {
-      opacity: 1, x: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "power2.out",
+      opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out",
       scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" },
     });
     return () => { tl.scrollTrigger?.kill(); tl.kill(); };
   }, []);
 
   return (
-    <section id="seccion-11-faq" className="py-4 md:py-6 px-4 lg:px-6 relative overflow-hidden">
-      <div ref={faqWrapRef} className="container max-w-3xl mx-auto relative z-10">
-        <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
-          <div className="text-center mb-5 sm:mb-6 md:mb-10">
-            <Badge
-              variant="outline"
-              className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest"
-            >
-              FAQ
-            </Badge>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif">Preguntas frecuentes</h2>
-          </div>
-          <div ref={faqRef}>
+    <div className="container max-w-3xl mx-auto">
+      <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-sm p-4 sm:p-5 md:p-10">
+        <div className="text-center mb-5 sm:mb-6 md:mb-10">
+          <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-primary border-primary/30 bg-primary/5 text-[10px] sm:text-xs uppercase tracking-widest">
+            FAQ
+          </Badge>
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-serif">Preguntas frecuentes</h2>
+        </div>
+        <div ref={faqRef}>
           <Accordion type="single" collapsible className="space-y-1.5 sm:space-y-2">
             {faqs.map(({ q, a }, i) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="gsap-faq-item bg-background border border-border rounded-lg sm:rounded-xl md:rounded-2xl px-3 sm:px-3.5 md:px-4"
-              >
+              <AccordionItem key={i} value={`faq-${i}`} className="gsap-faq-item bg-background border border-border rounded-lg sm:rounded-xl md:rounded-2xl px-3 sm:px-3.5 md:px-4">
                 <AccordionTrigger className="font-medium text-[11px] sm:text-xs md:text-sm text-left hover:no-underline py-3 sm:py-3.5 md:py-4">
                   {q}
                 </AccordionTrigger>
@@ -1721,25 +1261,19 @@ function FAQSection() {
               </AccordionItem>
             ))}
           </Accordion>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
-// ─── S12 · Footer CTA ────────────────────────────────────────────────────────
+// ─── Footer CTA ──────────────────────────────────────────────────────────────
 function FooterCTA() {
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = footerRef.current;
     if (!el) return;
-    gsap.set(el, { opacity: 0, y: 100, scale: 0.9 });
-    gsap.to(el, {
-      opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-    });
     const children = el.querySelectorAll(".gsap-footer-child");
     gsap.set(children, { opacity: 0, y: 50 });
     const tl = gsap.to(children, {
@@ -1759,15 +1293,10 @@ function FooterCTA() {
           Recupera tu tiempo, sin perder tu criterio profesional.
         </h2>
         <p className="gsap-footer-child text-background/70 mb-5 sm:mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto text-xs sm:text-sm md:text-base px-2">
-          Kleia está en piloto cerrado. Solo 10 plazas disponibles. Escríbenos por WhatsApp y descubre si Kleia es para
-          ti.
+          Kleia está en piloto cerrado. Solo 10 plazas disponibles.
         </p>
         <div className="gsap-footer-child">
-          <Button
-            onClick={openWhatsApp}
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 font-medium shadow-md text-xs sm:text-sm md:text-base h-10 sm:h-11"
-          >
+          <Button onClick={openWhatsApp} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 font-medium shadow-md text-xs sm:text-sm md:text-base h-10 sm:h-11">
             Escribirnos por WhatsApp →
           </Button>
         </div>
@@ -1785,35 +1314,63 @@ export default function Index() {
 
   const handleLoaded = useCallback(() => {
     setLoaded(true);
-    // Refresh ScrollTrigger after intro loader exits so animations trigger correctly
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+    setTimeout(() => { ScrollTrigger.refresh(); }, 150);
   }, []);
 
   return (
     <>
       {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
-        className="min-h-screen font-sans bg-white overflow-x-hidden"
+        className="min-h-screen font-sans bg-background overflow-x-hidden"
         style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease" }}
       >
         <Navbar />
         <main>
           <Hero />
-          <ProblemSection />
-          <EvidenceStrip />
-          <ResultsSection />
-          <FitSection />
-          <HowItWorksSection />
-          <FeaturesSection />
-          <ComparisonSection />
-          <StorySection />
-          <BonusesSection />
-          <GsapSection>
+
+          <PinnedSection id="seccion-2-problema" bgClass="bg-background" showSvgBg svgOpacity="opacity-30">
+            <ProblemSection />
+          </PinnedSection>
+
+          <PinnedSection bgClass="bg-muted/30" showSvgBg svgOpacity="opacity-20">
+            <EvidenceStrip />
+          </PinnedSection>
+
+          <PinnedSection id="seccion-3-resultados" bgClass="bg-background" showSvgBg svgOpacity="opacity-20">
+            <ResultsSection />
+          </PinnedSection>
+
+          <PinnedSection bgClass="bg-white" showSvgBg svgOpacity="opacity-25">
+            <FitSection />
+          </PinnedSection>
+
+          <PinnedSection id="seccion-4-flujo" bgClass="bg-background" showSvgBg svgOpacity="opacity-25">
+            <HowItWorksSection />
+          </PinnedSection>
+
+          <PinnedSection id="seccion-5-incluido" bgClass="bg-white">
+            <FeaturesSection />
+          </PinnedSection>
+
+          <PinnedSection bgClass="bg-background">
+            <ComparisonSection />
+          </PinnedSection>
+
+          <PinnedSection bgClass="bg-white">
+            <StorySection />
+          </PinnedSection>
+
+          <PinnedSection bgClass="bg-background">
+            <BonusesSection />
+          </PinnedSection>
+
+          <PinnedSection bgClass="bg-white">
             <DemoForm />
-          </GsapSection>
-          <FAQSection />
+          </PinnedSection>
+
+          <PinnedSection id="seccion-11-faq" bgClass="bg-background">
+            <FAQSection />
+          </PinnedSection>
         </main>
         <FooterCTA />
       </div>
