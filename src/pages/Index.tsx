@@ -28,6 +28,8 @@ import {
   useTextReveal,
   useCountUp,
 } from "@/hooks/useGsapAnimations";
+import IntroLoader from "@/components/IntroLoader";
+import AnimatedSvgBackground from "@/components/AnimatedSvgBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,36 +95,51 @@ function scrollTo(id: string) {
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header
       id="seccion-0-navbar"
-      className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border shadow-sm"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-lg border-b border-border/50 shadow-sm"
+          : "bg-transparent border-b border-transparent"
+      }`}
     >
-      <div className="container max-w-5xl mx-auto flex items-center justify-between h-14 md:h-16 px-4 sm:px-6">
+      <div className="container max-w-6xl mx-auto flex items-center justify-between h-14 md:h-16 lg:h-20 px-4 sm:px-6">
         <div className="flex items-center">
           <img src={kleiaLogo} alt="Kleia" className="h-6 sm:h-7 md:h-8 w-auto" />
         </div>
-        <nav className="hidden lg:flex items-center gap-1 bg-muted rounded-full px-2 py-1.5">
+        <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-card rounded-full px-3 py-1.5 transition-all"
+              className={`text-xs font-medium rounded-full px-4 py-2 transition-all uppercase tracking-wider ${
+                scrolled
+                  ? "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  : "text-foreground/60 hover:text-foreground"
+              }`}
             >
               {label}
             </button>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
             onClick={openWhatsApp}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-3 sm:px-4 md:px-5 text-[11px] sm:text-xs md:text-sm font-medium shadow-sm h-8 md:h-9"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-4 sm:px-5 md:px-6 text-[11px] sm:text-xs md:text-sm font-semibold shadow-sm h-9 md:h-10 uppercase tracking-wider"
           >
             Agendar demo
           </Button>
           <button
-            className="lg:hidden flex flex-col gap-1.5 p-1.5 rounded-lg hover:bg-muted transition-colors active:bg-muted/80"
+            className="lg:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/50 transition-colors"
             onClick={() => setOpen(!open)}
             aria-label="Menú"
           >
@@ -139,7 +156,7 @@ function Navbar() {
         </div>
       </div>
       {open && (
-        <nav className="lg:hidden border-t border-border bg-white/95 backdrop-blur px-4 sm:px-6 py-2 flex flex-col">
+        <nav className="lg:hidden bg-white/95 backdrop-blur-lg px-4 sm:px-6 py-2 flex flex-col border-t border-border/30">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
@@ -147,7 +164,7 @@ function Navbar() {
                 scrollTo(id);
                 setOpen(false);
               }}
-              className="text-sm text-muted-foreground hover:text-foreground active:text-foreground text-left transition-colors py-3 border-b border-border/30 last:border-b-0"
+              className="text-sm text-muted-foreground hover:text-foreground text-left transition-colors py-3 border-b border-border/20 last:border-b-0 uppercase tracking-wider"
             >
               {label}
             </button>
@@ -158,55 +175,105 @@ function Navbar() {
   );
 }
 
-// ─── S1 · Hero ───────────────────────────────────────────────────────────────
+// ─── S1 · Hero (Fullscreen Inmersivo) ─────────────────────────────────────────
 function Hero() {
-  const mockupRef = useParallax(-0.15);
-  const headingRef = useTextReveal();
+  const heroRef = useRef<HTMLElement>(null);
+  const mockupRef = useRef<HTMLDivElement>(null);
+  const textGroupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Parallax mockup on scroll
+      gsap.to(mockupRef.current, {
+        yPercent: 30,
+        scale: 0.9,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      // Text fades out on scroll
+      gsap.to(textGroupRef.current, {
+        opacity: 0,
+        y: -60,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "30% top",
+          end: "80% top",
+          scrub: true,
+        },
+      });
+    }, heroRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="seccion-1-hero" className="bg-white px-4 lg:px-6 pt-8 sm:pt-12 md:pt-20 pb-0 overflow-hidden">
-      <div className="container max-w-5xl mx-auto flex flex-col">
-        <div className="text-center pb-0 sm:pb-1 md:pb-3">
-          <div className="inline-block mb-3 sm:mb-4 md:mb-6 max-w-[92vw]">
-            <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
-              Para nutricionistas independientes sin perder el criterio profesional
-            </span>
-          </div>
-          <h1
-            ref={headingRef as React.RefObject<HTMLHeadingElement>}
-            className="text-[1.65rem] leading-[1.2] sm:text-3xl md:text-5xl lg:text-6xl font-bold font-serif sm:leading-tight mb-3 sm:mb-4 md:mb-6 text-foreground px-1 sm:px-2"
-          >
-            Deja de pensar en menús.
-            <br />
-            <span className="text-primary">Termina tu día con todos los planes enviados.</span>
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-3 sm:mb-3 md:mb-4 leading-relaxed max-w-2xl mx-auto px-1 sm:px-2">
-            Kleia es tu asistente de planificación nutricional: genera planes clínicos en minutos, respetando
-            necesidades y preferencias de cada paciente. Envías un PDF listo por WhatsApp/email como siempre — sin
-            copiar y pegar ni empezar desde cero.
-          </p>
-          <div className="inline-flex flex-col items-center gap-2">
-            <Button
-              onClick={openWhatsApp}
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-5 sm:px-6 md:px-8 text-sm md:text-base font-medium shadow-md relative h-10 sm:h-11 md:h-12"
-            >
-              Escribirnos por WhatsApp →
-              <span
-                className="absolute -top-2.5 -right-2.5 text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none shadow-sm border"
-                style={{ backgroundColor: "hsl(45 95% 60%)", color: "hsl(30 80% 20%)", borderColor: "hsl(45 90% 50%)" }}
-              >
-                10 plazas
-              </span>
-            </Button>
-            <p className="text-[11px] sm:text-xs text-muted-foreground">Piloto cerrado · Acceso por invitación.</p>
-          </div>
-        </div>
+    <section
+      ref={heroRef}
+      id="seccion-1-hero"
+      className="relative min-h-screen flex flex-col items-center justify-center bg-white overflow-hidden px-4 lg:px-6"
+    >
+      <AnimatedSvgBackground className="opacity-100" />
 
-        {/* Mockup del producto — parallax */}
-        <div ref={mockupRef} className="w-full flex items-center justify-center overflow-hidden">
-          <img src={heroMockup} alt="Kleia app mockup" className="w-full max-w-4xl h-auto object-contain" loading="eager" />
+      <div ref={textGroupRef} className="relative z-10 text-center max-w-5xl mx-auto">
+        <div className="inline-block mb-4 sm:mb-5 md:mb-8 max-w-[92vw]">
+          <span className="bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs font-medium px-3 sm:px-4 py-1.5 md:py-2 rounded-full leading-snug inline-block">
+            Para nutricionistas independientes sin perder el criterio profesional
+          </span>
         </div>
+        <h1 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-serif sm:leading-[1.1] mb-4 sm:mb-5 md:mb-8 text-foreground px-1 sm:px-2">
+          Deja de pensar
+          <br />
+          en menús.
+          <br />
+          <span className="text-primary">Termina tu día</span>
+          <br />
+          <span className="text-primary">con todos los planes</span>
+          <br />
+          <span className="text-primary">enviados.</span>
+        </h1>
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-2">
+          Genera planes clínicos en minutos. Envía un PDF listo por WhatsApp — sin copiar y pegar.
+        </p>
+        <div className="inline-flex flex-col items-center gap-3">
+          <Button
+            onClick={openWhatsApp}
+            size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 rounded-full px-8 sm:px-10 md:px-14 text-sm md:text-lg font-semibold shadow-lg relative h-12 sm:h-14 md:h-16 tracking-wide uppercase"
+          >
+            Escribirnos por WhatsApp →
+            <span
+              className="absolute -top-3 -right-3 text-[10px] sm:text-[11px] font-bold rounded-full px-2 py-1 leading-none shadow-sm border"
+              style={{ backgroundColor: "hsl(45 95% 60%)", color: "hsl(30 80% 20%)", borderColor: "hsl(45 90% 50%)" }}
+            >
+              10 plazas
+            </span>
+          </Button>
+          <p className="text-xs sm:text-sm text-muted-foreground/60 uppercase tracking-widest">Piloto cerrado · Acceso por invitación</p>
+        </div>
+      </div>
+
+      {/* Mockup — pinned parallax */}
+      <div
+        ref={mockupRef}
+        className="relative z-10 w-full flex items-center justify-center mt-8 sm:mt-12 md:mt-16"
+      >
+        <img
+          src={heroMockup}
+          alt="Kleia app mockup"
+          className="w-full max-w-5xl h-auto object-contain drop-shadow-2xl"
+          loading="eager"
+        />
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
+        <span className="text-[10px] sm:text-xs text-muted-foreground/50 uppercase tracking-widest">Scroll</span>
+        <div className="w-px h-6 sm:h-8 bg-muted-foreground/20" />
       </div>
     </section>
   );
@@ -1481,50 +1548,56 @@ function FooterCTA() {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Index() {
+  const [loaded, setLoaded] = useState(false);
+
   return (
-    <div className="min-h-screen font-sans bg-white">
-      <Navbar />
-      <main>
-        <GsapSection>
+    <>
+      {!loaded && <IntroLoader onComplete={() => setLoaded(true)} />}
+      <div
+        className="min-h-screen font-sans bg-white"
+        style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease" }}
+      >
+        <Navbar />
+        <main>
           <Hero />
-        </GsapSection>
+          <GsapSection>
+            <ProblemSection />
+          </GsapSection>
+          <GsapSection>
+            <EvidenceStrip />
+          </GsapSection>
+          <GsapSection>
+            <ResultsSection />
+          </GsapSection>
+          <GsapSection>
+            <FitSection />
+          </GsapSection>
+          <GsapSection>
+            <HowItWorksSection />
+          </GsapSection>
+          <GsapSection>
+            <FeaturesSection />
+          </GsapSection>
+          <GsapSection>
+            <ComparisonSection />
+          </GsapSection>
+          <GsapSection>
+            <StorySection />
+          </GsapSection>
+          <GsapSection>
+            <BonusesSection />
+          </GsapSection>
+          <GsapSection>
+            <DemoForm />
+          </GsapSection>
+          <GsapSection>
+            <FAQSection />
+          </GsapSection>
+        </main>
         <GsapSection>
-          <ProblemSection />
+          <FooterCTA />
         </GsapSection>
-        <GsapSection>
-          <EvidenceStrip />
-        </GsapSection>
-        <GsapSection>
-          <ResultsSection />
-        </GsapSection>
-        <GsapSection>
-          <FitSection />
-        </GsapSection>
-        <GsapSection>
-          <HowItWorksSection />
-        </GsapSection>
-        <GsapSection>
-          <FeaturesSection />
-        </GsapSection>
-        <GsapSection>
-          <ComparisonSection />
-        </GsapSection>
-        <GsapSection>
-          <StorySection />
-        </GsapSection>
-        <GsapSection>
-          <BonusesSection />
-        </GsapSection>
-        <GsapSection>
-          <DemoForm />
-        </GsapSection>
-        <GsapSection>
-          <FAQSection />
-        </GsapSection>
-      </main>
-      <GsapSection>
-        <FooterCTA />
-      </GsapSection>
-    </div>
+      </div>
+    </>
   );
 }
