@@ -16,6 +16,9 @@ export function useSupportChat() {
     setIsLoading(true);
 
     try {
+      if (!supabase) {
+        throw new Error("Supabase no está configurado");
+      }
       const history = [...messages, userMsg];
 
       const { data, error } = await supabase.functions.invoke("gemini-proxy", {
