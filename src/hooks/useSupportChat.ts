@@ -1,10 +1,11 @@
 import { useState, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
 
 export type ChatMessage = {
   role: "user" | "assistant";
   content: string;
 };
+
+const SUPPORT_BOT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/support-bot`;
 
 export function useSupportChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -16,34 +17,26 @@ export function useSupportChat() {
     setIsLoading(true);
 
     try {
-      if (!supabase) {
-        throw new Error("Supabase no está configurado");
-      }
+      // Build context from conversation history
       const history = [...messages, userMsg];
+      const fullPrompt = history
+        .map((m) => `${m.role === "user" ? "Usuario" : "Asistente"}: ${m.content}`)
+        .join("\n");
 
-      const { data, error } = await supabase.functions.invoke("gemini-proxy", {
-        body: {
-          mode: "text",
-          messages: [
-            {
-              role: "system",
-              content:
-                "Eres el asistente experto de Kleia. Ayuda a los nutricionistas a entender cómo el software les ahorra +6h semanales generando planes clínicos en minutos. Usa la información de esta web: envío de PDFs por WhatsApp, recálculo automático de macros y personalización profesional. Si preguntan por precios o demos, invítales a agendar una por WhatsApp.",
-            },
-            ...history,
-          ],
-        },
+      const res = await fetch(SUPPORT_BOT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: fullPrompt }),
       });
 
-      if (error) throw error;
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Error del servidor");
+      }
 
+      const data = await res.json();
       const assistantContent =
-        typeof data === "string"
-          ? data
-          : data?.choices?.[0]?.message?.content ??
-            data?.text ??
-            data?.response ??
-            "Lo siento, no pude generar una respuesta.";
+        data?.text ?? "Lo siento, no pude generar una respuesta.";
 
       setMessages((prev) => [
         ...prev,
