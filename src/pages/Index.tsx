@@ -24,6 +24,7 @@ import {
 } from "@/hooks/useGsapAnimations";
 import IntroLoader from "@/components/IntroLoader";
 import AnimatedSvgBackground from "@/components/AnimatedSvgBackground";
+import SupportBot from "@/components/SupportBot";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1305,6 +1306,7 @@ export default function Index() {
         </main>
         <FooterCTA />
       </div>
+      <SupportBot />
     </>
   );
 }
