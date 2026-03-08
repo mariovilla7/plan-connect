@@ -17,7 +17,9 @@ export type Database = {
       clients: {
         Row: {
           activity_level: string | null
+          additional_notes: string | null
           age: number | null
+          birth_date: string | null
           budget: string | null
           client_name: string
           cooking_time: string | null
@@ -25,6 +27,7 @@ export type Database = {
           created_at: string
           diet_preferences: string[] | null
           email: string | null
+          food_log: Json | null
           hated_foods: string | null
           height: number | null
           id: string
@@ -35,13 +38,18 @@ export type Database = {
           phone: string | null
           restrictions: string[] | null
           sex: string | null
+          sleep_hours: number | null
           updated_at: string
           user_id: string
+          water_unit: string | null
+          water_value: number | null
           weight: number | null
         }
         Insert: {
           activity_level?: string | null
+          additional_notes?: string | null
           age?: number | null
+          birth_date?: string | null
           budget?: string | null
           client_name: string
           cooking_time?: string | null
@@ -49,6 +57,7 @@ export type Database = {
           created_at?: string
           diet_preferences?: string[] | null
           email?: string | null
+          food_log?: Json | null
           hated_foods?: string | null
           height?: number | null
           id?: string
@@ -59,13 +68,18 @@ export type Database = {
           phone?: string | null
           restrictions?: string[] | null
           sex?: string | null
+          sleep_hours?: number | null
           updated_at?: string
           user_id: string
+          water_unit?: string | null
+          water_value?: number | null
           weight?: number | null
         }
         Update: {
           activity_level?: string | null
+          additional_notes?: string | null
           age?: number | null
+          birth_date?: string | null
           budget?: string | null
           client_name?: string
           cooking_time?: string | null
@@ -73,6 +87,7 @@ export type Database = {
           created_at?: string
           diet_preferences?: string[] | null
           email?: string | null
+          food_log?: Json | null
           hated_foods?: string | null
           height?: number | null
           id?: string
@@ -83,11 +98,70 @@ export type Database = {
           phone?: string | null
           restrictions?: string[] | null
           sex?: string | null
+          sleep_hours?: number | null
+          updated_at?: string
+          user_id?: string
+          water_unit?: string | null
+          water_value?: number | null
+          weight?: number | null
+        }
+        Relationships: []
+      }
+      follow_up_sessions: {
+        Row: {
+          adherence_score: number | null
+          bmi: number | null
+          client_id: string
+          created_at: string
+          date: string
+          fat_percentage: number | null
+          id: string
+          muscle_percentage: number | null
+          observations: string | null
+          subjective_progress: string | null
+          updated_at: string
+          user_id: string
+          weight: number | null
+        }
+        Insert: {
+          adherence_score?: number | null
+          bmi?: number | null
+          client_id: string
+          created_at?: string
+          date?: string
+          fat_percentage?: number | null
+          id?: string
+          muscle_percentage?: number | null
+          observations?: string | null
+          subjective_progress?: string | null
+          updated_at?: string
+          user_id: string
+          weight?: number | null
+        }
+        Update: {
+          adherence_score?: number | null
+          bmi?: number | null
+          client_id?: string
+          created_at?: string
+          date?: string
+          fat_percentage?: number | null
+          id?: string
+          muscle_percentage?: number | null
+          observations?: string | null
+          subjective_progress?: string | null
           updated_at?: string
           user_id?: string
           weight?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "follow_up_sessions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       ingredient_equivalences: {
         Row: {
@@ -223,6 +297,7 @@ export type Database = {
           firebase_uid: string
           id: string
           last_credit_reset: string
+          onboarding_status: Json
           updated_at: string
         }
         Insert: {
@@ -233,6 +308,7 @@ export type Database = {
           firebase_uid: string
           id?: string
           last_credit_reset?: string
+          onboarding_status?: Json
           updated_at?: string
         }
         Update: {
@@ -243,6 +319,7 @@ export type Database = {
           firebase_uid?: string
           id?: string
           last_credit_reset?: string
+          onboarding_status?: Json
           updated_at?: string
         }
         Relationships: []
@@ -257,6 +334,15 @@ export type Database = {
         Returns: undefined
       }
       get_firebase_uid: { Args: never; Returns: string }
+      update_profile_fields: {
+        Args: {
+          p_country?: string
+          p_display_name?: string
+          p_firebase_uid: string
+          p_onboarding_status?: Json
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
