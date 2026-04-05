@@ -562,8 +562,8 @@ function FeaturesSection() {
         ))}
       </div>
 
-      {/* Secondary 2-col */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+      {/* Secondary - single centered card */}
+      <div className="max-w-md mx-auto">
         {featureCardsSecondary.map((f) => (
           <div key={f.title} className="feature-card bg-card rounded-2xl border border-border overflow-hidden group hover:shadow-lg transition-shadow">
             <div className="aspect-[16/10] bg-muted/30 overflow-hidden">
