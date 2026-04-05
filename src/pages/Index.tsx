@@ -1,11 +1,11 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import heroMockup from "@/assets/seccion1-mockup1.png";
-import kleiacard1 from "@/assets/kleiacard_1.png";
-import kleiacard2 from "@/assets/kleiacard_2.png";
-import kleiacard3 from "@/assets/kleiacard_3.png";
-import kleiacard4 from "@/assets/kleiacard_4.png";
-import kleiacard5 from "@/assets/kleiacard_5.png";
 import storytellingImg from "@/assets/storytelling.png";
+import gifPrecision from "@/assets/Precisión clínica en segundos.gif";
+import gifSustituciones from "@/assets/Sustituciones inteligentes.gif";
+import gifListas from "@/assets/Listas de compra automáticas.gif";
+import gifEducacion from "@/assets/Educación sin esfuerzo.gif";
+import gifEntrega from "@/assets/Entrega ágil WhatsApp:PDF.gif";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -495,35 +495,30 @@ const featureCards = [
   {
     title: "Precisión clínica en segundos",
     desc: "Calcula kcal, macros y micros en segundos con total precisión clínica.",
-    image: kleiacard1,
-  },
-  {
-    title: "Planes con contexto local",
-    desc: "Crea planes asiáticos que respondan a las gustos y al contexto local del paciente.",
-    image: kleiacard2,
+    image: gifPrecision,
   },
   {
     title: "Sustituciones inteligentes",
-    desc: "Edita sobre con sustituciones inteligentes que recalculan calorías en tiempo real.",
-    image: kleiacard3,
+    desc: "Edita con sustituciones inteligentes que recalculan calorías en tiempo real.",
+    image: gifSustituciones,
   },
   {
     title: "Listas de compra automáticas",
-    desc: "Genera listas de compra a ese plan con sustituciones automáticamente: cada ingrediente del plan.",
-    image: kleiacard4,
+    desc: "Genera listas de compra automáticamente con cada ingrediente del plan.",
+    image: gifListas,
+  },
+  {
+    title: "Educación sin esfuerzo",
+    desc: "Integra módulos educativos en el plan para que tus pacientes aprendan desde casa.",
+    image: gifEducacion,
   },
 ];
 
 const featureCardsSecondary = [
   {
-    title: "Educación sin esfuerzo",
-    desc: "Integra módulos educativos en el plan con líneas que estudios materiales desde luego.",
-    image: kleiacard5,
-  },
-  {
-    title: "Entrega vía WhatsApp/PDF",
-    desc: "Exporta a pdf o envía por WhatsApp y PDF de forma profesional en un click.",
-    image: kleiacard1,
+    title: "Entrega ágil WhatsApp/PDF",
+    desc: "Exporta a PDF o envía por WhatsApp de forma profesional en un click.",
+    image: gifEntrega,
   },
 ];
 
@@ -567,8 +562,8 @@ function FeaturesSection() {
         ))}
       </div>
 
-      {/* Secondary 2-col */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+      {/* Secondary - single centered card */}
+      <div className="max-w-md mx-auto">
         {featureCardsSecondary.map((f) => (
           <div key={f.title} className="feature-card bg-card rounded-2xl border border-border overflow-hidden group hover:shadow-lg transition-shadow">
             <div className="aspect-[16/10] bg-muted/30 overflow-hidden">
