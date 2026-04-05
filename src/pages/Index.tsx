@@ -495,35 +495,30 @@ const featureCards = [
   {
     title: "Precisión clínica en segundos",
     desc: "Calcula kcal, macros y micros en segundos con total precisión clínica.",
-    image: kleiacard1,
-  },
-  {
-    title: "Planes con contexto local",
-    desc: "Crea planes asiáticos que respondan a las gustos y al contexto local del paciente.",
-    image: kleiacard2,
+    image: gifPrecision,
   },
   {
     title: "Sustituciones inteligentes",
-    desc: "Edita sobre con sustituciones inteligentes que recalculan calorías en tiempo real.",
-    image: kleiacard3,
+    desc: "Edita con sustituciones inteligentes que recalculan calorías en tiempo real.",
+    image: gifSustituciones,
   },
   {
     title: "Listas de compra automáticas",
-    desc: "Genera listas de compra a ese plan con sustituciones automáticamente: cada ingrediente del plan.",
-    image: kleiacard4,
+    desc: "Genera listas de compra automáticamente con cada ingrediente del plan.",
+    image: gifListas,
+  },
+  {
+    title: "Educación sin esfuerzo",
+    desc: "Integra módulos educativos en el plan para que tus pacientes aprendan desde casa.",
+    image: gifEducacion,
   },
 ];
 
 const featureCardsSecondary = [
   {
-    title: "Educación sin esfuerzo",
-    desc: "Integra módulos educativos en el plan con líneas que estudios materiales desde luego.",
-    image: kleiacard5,
-  },
-  {
-    title: "Entrega vía WhatsApp/PDF",
-    desc: "Exporta a pdf o envía por WhatsApp y PDF de forma profesional en un click.",
-    image: kleiacard1,
+    title: "Entrega ágil WhatsApp/PDF",
+    desc: "Exporta a PDF o envía por WhatsApp de forma profesional en un click.",
+    image: gifEntrega,
   },
 ];
 
