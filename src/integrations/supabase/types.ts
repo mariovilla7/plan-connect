@@ -27,6 +27,7 @@ export type Database = {
           created_at: string
           diet_preferences: string[] | null
           email: string | null
+          family_history: string | null
           food_log: Json | null
           hated_foods: string | null
           height: number | null
@@ -57,6 +58,7 @@ export type Database = {
           created_at?: string
           diet_preferences?: string[] | null
           email?: string | null
+          family_history?: string | null
           food_log?: Json | null
           hated_foods?: string | null
           height?: number | null
@@ -87,6 +89,7 @@ export type Database = {
           created_at?: string
           diet_preferences?: string[] | null
           email?: string | null
+          family_history?: string | null
           food_log?: Json | null
           hated_foods?: string | null
           height?: number | null
@@ -110,47 +113,62 @@ export type Database = {
       follow_up_sessions: {
         Row: {
           adherence_score: number | null
+          arm: number | null
           bmi: number | null
+          chest: number | null
           client_id: string
           created_at: string
           date: string
           fat_percentage: number | null
+          hip: number | null
           id: string
           muscle_percentage: number | null
           observations: string | null
           subjective_progress: string | null
+          thigh: number | null
           updated_at: string
           user_id: string
+          waist: number | null
           weight: number | null
         }
         Insert: {
           adherence_score?: number | null
+          arm?: number | null
           bmi?: number | null
+          chest?: number | null
           client_id: string
           created_at?: string
           date?: string
           fat_percentage?: number | null
+          hip?: number | null
           id?: string
           muscle_percentage?: number | null
           observations?: string | null
           subjective_progress?: string | null
+          thigh?: number | null
           updated_at?: string
           user_id: string
+          waist?: number | null
           weight?: number | null
         }
         Update: {
           adherence_score?: number | null
+          arm?: number | null
           bmi?: number | null
+          chest?: number | null
           client_id?: string
           created_at?: string
           date?: string
           fat_percentage?: number | null
+          hip?: number | null
           id?: string
           muscle_percentage?: number | null
           observations?: string | null
           subjective_progress?: string | null
+          thigh?: number | null
           updated_at?: string
           user_id?: string
+          waist?: number | null
           weight?: number | null
         }
         Relationships: [
@@ -169,18 +187,21 @@ export type Database = {
           equivalences: string[]
           id: string
           ingredient_name: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           equivalences?: string[]
           id?: string
           ingredient_name: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           equivalences?: string[]
           id?: string
           ingredient_name?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -190,18 +211,21 @@ export type Database = {
           id: string
           image_url: string
           meal_name: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           id?: string
           image_url: string
           meal_name: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           image_url?: string
           meal_name?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -324,6 +348,81 @@ export type Database = {
         }
         Relationships: []
       }
+      recipes: {
+        Row: {
+          calories: number | null
+          category: string | null
+          cook_time: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          ingredients: string[] | null
+          instructions: string[] | null
+          name: string
+          nutrition: Json | null
+          tags: string[] | null
+          user_id: string
+        }
+        Insert: {
+          calories?: number | null
+          category?: string | null
+          cook_time?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          ingredients?: string[] | null
+          instructions?: string[] | null
+          name: string
+          nutrition?: Json | null
+          tags?: string[] | null
+          user_id: string
+        }
+        Update: {
+          calories?: number | null
+          category?: string | null
+          cook_time?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          ingredients?: string[] | null
+          instructions?: string[] | null
+          name?: string
+          nutrition?: Json | null
+          tags?: string[] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_feedback: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          type: string
+          user_id: string
+          user_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          type: string
+          user_id: string
+          user_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          type?: string
+          user_id?: string
+          user_name?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -334,6 +433,10 @@ export type Database = {
         Returns: undefined
       }
       get_firebase_uid: { Args: never; Returns: string }
+      is_valid_nutritionist: {
+        Args: { _firebase_uid: string }
+        Returns: boolean
+      }
       update_profile_fields: {
         Args: {
           p_country?: string
