@@ -1,11 +1,11 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import heroMockup from "@/assets/seccion1-mockup1.png";
 import storytellingImg from "@/assets/storytelling.png";
-import gifPrecision from "@/assets/Precisión clínica en segundos.gif";
-import gifSustituciones from "@/assets/Sustituciones inteligentes.gif";
-import gifListas from "@/assets/Listas de compra automáticas.gif";
-import gifEducacion from "@/assets/Educación sin esfuerzo.gif";
-import gifEntrega from "@/assets/Entrega ágil WhatsApp:PDF.gif";
+import gifPrecision from "@/assets/precision-clinica.gif";
+import gifSustituciones from "@/assets/sustituciones-inteligentes.gif";
+import gifListas from "@/assets/listas-compra.gif";
+import gifEducacion from "@/assets/educacion-sin-esfuerzo.gif";
+import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
