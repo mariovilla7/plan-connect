@@ -79,7 +79,7 @@ export default {
         },
       },
       fontFamily: {
-        serif: ["'Playfair Display'", "serif"],
+        heading: ["'Manrope'", "sans-serif"],
         sans: ["'Inter'", "sans-serif"],
       },
       borderRadius: {

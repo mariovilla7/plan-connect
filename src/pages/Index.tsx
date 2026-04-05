@@ -157,7 +157,7 @@ function Hero() {
               PARA NUTRICIONISTAS INDEPENDIENTES · SIN PERDER EL CRITERIO PROFESIONAL
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-serif leading-[1.1]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading leading-[1.1]">
             Deja de pensar
             <br />en menús.
             <br /><span className="text-primary">Termina tu día</span>
@@ -349,7 +349,7 @@ function ExpertsSection() {
   return (
     <div ref={sectionRef} className="container max-w-7xl mx-auto">
       <div className="text-center mb-8 md:mb-12">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading">
           Lo que dicen los expertos
         </h2>
       </div>
@@ -365,7 +365,7 @@ function ExpertsSection() {
               key={i}
               className="testimonial-card snap-start flex-shrink-0 w-[300px] sm:w-[340px] bg-card rounded-2xl border border-border p-6 flex flex-col gap-4 shadow-sm"
             >
-              <div className="text-primary text-4xl font-serif leading-none">"</div>
+              <div className="text-primary text-4xl font-heading leading-none">"</div>
               <p className="text-sm md:text-base text-foreground leading-relaxed flex-1 italic">
                 {t.quote}
               </p>
@@ -403,7 +403,7 @@ function ExpertsSection() {
 function VideoSection() {
   return (
     <div className="container max-w-6xl mx-auto text-center">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif mb-3 md:mb-4">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-3 md:mb-4">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
       <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto mb-8 md:mb-12">
@@ -464,7 +464,7 @@ function JourneySection() {
   return (
     <div ref={ref} className="container max-w-6xl mx-auto">
       <div className="text-center mb-8 md:mb-14">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif mb-2">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-2">
           Tu jornada con Kleia
         </h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
@@ -539,7 +539,7 @@ function FeaturesSection() {
   return (
     <div ref={ref} className="container max-w-6xl mx-auto">
       <div className="text-center mb-8 md:mb-14">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif mb-2">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-2">
           Potencia tu Consulta
         </h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
@@ -609,7 +609,7 @@ function PricingSection() {
   return (
     <div ref={ref} className="container max-w-3xl mx-auto">
       <div className="text-center mb-8 md:mb-14">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif mb-2">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-2">
           Crecimiento sin Límites
         </h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
@@ -622,7 +622,7 @@ function PricingSection() {
           <Badge className="bg-primary/10 text-primary border-primary/20 mb-3">Plan Fundador</Badge>
           <div className="flex items-baseline justify-center gap-1">
             <span className="text-muted-foreground line-through text-lg">35€</span>
-            <span className="text-5xl md:text-6xl font-bold font-serif text-primary">20€</span>
+            <span className="text-5xl md:text-6xl font-bold font-heading text-primary">20€</span>
             <span className="text-muted-foreground text-sm">/mes</span>
           </div>
         </div>
@@ -673,7 +673,7 @@ function FAQSection() {
   return (
     <div ref={ref} className="container max-w-3xl mx-auto">
       <div className="text-center mb-8 md:mb-12">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading">
           Preguntas Frecuentes
         </h2>
       </div>
