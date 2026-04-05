@@ -35,7 +35,7 @@ const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 const currentYear = new Date().getFullYear();
 
 function openWhatsApp() {
-  window.open(WA_URL, "_blank", "noopener,noreferrer");
+  window.location.href = WA_URL;
 }
 
 // ─── Nav ──────────────────────────────────────────────────────────────────────
