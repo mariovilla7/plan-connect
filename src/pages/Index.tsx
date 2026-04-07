@@ -720,11 +720,12 @@ function FAQSection() {
           >
             <button
               onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="text-left w-full"
+              className="text-left w-full flex items-center justify-between gap-4"
             >
               <h3 className="font-bold font-heading text-base md:text-lg text-primary leading-relaxed">
                 {q}
               </h3>
+              <ChevronRight className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-300 ${openIdx === i ? "rotate-90" : ""}`} />
             </button>
             <p className={`text-sm md:text-base text-muted-foreground mt-3 leading-relaxed transition-all ${openIdx === i ? "block" : "hidden"}`}>
               {a}
