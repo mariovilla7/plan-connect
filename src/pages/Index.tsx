@@ -12,7 +12,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Star } from "lucide-react";
+// Se añade Quote a la importación
+import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -147,11 +148,9 @@ function Hero() {
       className="relative overflow-hidden px-4 sm:px-8"
       style={{ backgroundColor: "hsl(220, 33%, 97%)", paddingTop: 160, paddingBottom: 128 }}
     >
-      {/* Decorative blur */}
       <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-        {/* Text */}
         <div ref={textRef} className="space-y-6">
           <div>
             <span className="inline-block bg-primary/10 text-primary text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wide">
@@ -193,7 +192,6 @@ function Hero() {
             </Button>
           </div>
         </div>
-        {/* Mockup */}
         <div ref={mockupRef} className="flex items-center justify-center relative">
           <img
             src={heroMockup}
@@ -346,7 +344,6 @@ function ExpertsSection() {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    // Scroll by one card width + gap
     const card = el.querySelector(".testimonial-card") as HTMLElement;
     const scrollAmount = card ? card.offsetWidth + 24 : 320;
     el.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
@@ -411,7 +408,10 @@ function ExpertsSection() {
               style={{ backgroundColor: "hsl(252, 100%, 98%)" }}
             >
               <div className="flex justify-between items-center">
-                <Star className="h-5 w-5 text-yellow-400" />
+                {/* Sustitución de Star por Quote. 
+                  Se aplica el color primary y el estilo del SVG solicitado.
+                */}
+                <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
                 <span className="text-xl">{t.flag}</span>
               </div>
               <p className="text-base md:text-lg text-foreground leading-relaxed italic flex-1">"{t.quote}"</p>
@@ -429,7 +429,6 @@ function ExpertsSection() {
             </div>
           ))}
         </div>
-        {/* Arrows */}
         <div className="flex justify-center gap-4 mt-8">
           <button
             onClick={() => scroll("left")}
@@ -678,7 +677,6 @@ function PricingSection() {
             boxShadow: "0 25px 50px -12px rgba(45,49,231,0.3)",
           }}
         >
-          {/* Badge */}
           <div className="absolute top-0 right-0 bg-primary px-4 py-2 rounded-bl-lg">
             <span className="text-[10px] font-semibold text-white uppercase tracking-wider">
               Oferta de Lanzamiento, 10 plazas
@@ -845,7 +843,6 @@ export default function Index() {
         <main>
           <Hero />
 
-          {/* Expertos - dark bg */}
           <section
             id="seccion-expertos"
             className="py-8 md:py-12 px-4 sm:px-6"
@@ -854,12 +851,10 @@ export default function Index() {
             <ExpertsSection />
           </section>
 
-          {/* Video - primary bg */}
           <section id="seccion-video" className="py-8 md:py-12 px-4 sm:px-6 lg:px-32 bg-primary">
             <VideoSection />
           </section>
 
-          {/* Jornada */}
           <section
             id="seccion-jornada"
             className="py-16 md:py-24 px-4 sm:px-6"
@@ -868,7 +863,6 @@ export default function Index() {
             <JourneySection />
           </section>
 
-          {/* Features */}
           <section
             id="seccion-features"
             className="py-8 md:py-24 px-4 sm:px-6"
@@ -877,7 +871,6 @@ export default function Index() {
             <FeaturesSection />
           </section>
 
-          {/* Pricing */}
           <section
             id="seccion-precio"
             className="py-8 md:py-20 px-4 sm:px-6"
@@ -886,7 +879,6 @@ export default function Index() {
             <PricingSection />
           </section>
 
-          {/* FAQ */}
           <section id="seccion-faq" className="py-16 md:py-20 px-4 sm:px-6 lg:px-48 bg-white">
             <FAQSection />
           </section>
