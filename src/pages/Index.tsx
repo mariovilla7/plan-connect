@@ -648,18 +648,22 @@ function PricingSection() {
 
   useEffect(() => {
     if (!ref.current) return;
-    gsap.from(ref.current.querySelector(".pricing-card")!, {
+    gsap.from(ref.current.querySelector(".pricing-container")!, {
       opacity: 0,
       y: 80,
       scale: 0.9,
       duration: 0.9,
       ease: "back.out(1.5)",
-      scrollTrigger: { trigger: ref.current, start: "top 75%", toggleActions: "play none none none" },
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top 75%",
+        toggleActions: "play none none none",
+      },
     });
   }, []);
 
   return (
-    <div ref={ref} className="max-w-[1280px] mx-auto">
+    <div ref={ref} className="max-w-[1280px] mx-auto px-4">
       <div className="text-center mb-10 md:mb-16">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">Crecimiento sin Límites</h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto leading-relaxed">
@@ -669,9 +673,11 @@ function PricingSection() {
         </p>
       </div>
 
-      <div className="flex justify-center">
+      {/* Contenedor principal centrado */}
+      <div className="pricing-container flex flex-col items-center">
+        {/* Tarjeta de precio */}
         <div
-          className="pricing-card relative overflow-hidden w-full max-w-md rounded-2xl p-8 md:p-10"
+          className="pricing-card relative overflow-hidden w-full max-w-md rounded-[40px] p-8 md:p-10"
           style={{
             backgroundColor: "hsl(238, 78%, 54%)",
             boxShadow: "0 25px 50px -12px rgba(45,49,231,0.3)",
@@ -710,12 +716,13 @@ function PricingSection() {
             Elegir Plan Fundador
           </button>
         </div>
-      </div>
 
-      <div className="bg-primary rounded-full px-4 py-2 mb-4 flex items-center">
-        <span className="text-xs font-semibold text-white uppercase">
-          Prueba gratis de 14 días · Cancelación simple e inmediata
-        </span>
+        {/* La Pill fuera de la tarjeta */}
+        <div className="mt-8 inline-flex items-center bg-primary/10 border border-primary/20 rounded-full px-6 py-2 shadow-sm">
+          <span className="text-[11px] md:text-xs font-bold text-primary uppercase tracking-wider">
+            ✨ Prueba gratis de 14 días · Sin compromiso de permanencia
+          </span>
+        </div>
       </div>
     </div>
   );
