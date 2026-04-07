@@ -555,22 +555,22 @@ const featureCards = [
   {
     title: "Sustituciones inteligentes",
     desc: "Edita platos con sustituciones inteligentes que recalculan objetivos en tiempo real.",
-    image: gifListas,
+    image: gifSustituciones,
   },
   {
     title: "Listas de compra automáticas",
     desc: "Genera listas de compra exactas sumando automáticamente cada ingrediente del menú.",
-    image: gifEducacion,
+    image: gifListas,
   },
   {
     title: "Educación sin esfuerzo",
     desc: "Integra pautas educativas en el plan sin tener que redactar mensajes desde cero.",
-    image: gifEntrega,
+    image: gifEducacion,
   },
   {
     title: "Entrega ágil WhatsApp/PDF",
     desc: "Comparte el plan clínico por WhatsApp o PDF de forma profesional en un clic.",
-    image: gifPrecision,
+    image: gifEntrega,
   },
 ];
 
