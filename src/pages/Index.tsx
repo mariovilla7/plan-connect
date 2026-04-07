@@ -12,16 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ClipboardList,
-  Layers,
-  Download,
-  Play,
-  Check,
-  Star,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Star } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,14 +78,14 @@ function Navbar() {
           >
             Iniciar sesión
           </Button>
-          <button
-            className="lg:hidden flex flex-col gap-1.5 p-2"
-            onClick={() => setOpen(!open)}
-            aria-label="Menú"
-          >
-            <span className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`} />
+          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label="Menú">
+            <span
+              className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`}
+            />
             <span className={`block w-5 h-0.5 bg-foreground transition-opacity ${open ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span
+              className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "-rotate-45 -translate-y-2" : ""}`}
+            />
           </button>
         </div>
       </div>
@@ -103,7 +94,10 @@ function Navbar() {
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
-              onClick={() => { scrollTo(id); setOpen(false); }}
+              onClick={() => {
+                scrollTo(id);
+                setOpen(false);
+              }}
               className="text-sm text-muted-foreground hover:text-foreground text-left py-3 border-b border-border/20 last:border-b-0"
             >
               {label}
@@ -124,13 +118,23 @@ function Hero() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(textRef.current!.children, {
-        opacity: 0, y: 40, stagger: 0.12, duration: 0.8, ease: "power3.out", delay: 0.2,
+        opacity: 0,
+        y: 40,
+        stagger: 0.12,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.2,
       });
       gsap.from(mockupRef.current, {
-        opacity: 0, x: 60, duration: 1, ease: "power3.out", delay: 0.5,
+        opacity: 0,
+        x: 60,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.5,
       });
       gsap.to(mockupRef.current, {
-        yPercent: 15, ease: "none",
+        yPercent: 15,
+        ease: "none",
         scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
       });
     }, heroRef);
@@ -157,12 +161,15 @@ function Hero() {
           <div>
             <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-3.6px]">
               Deja de pensar
-              <br />en menús.
+              <br />
+              en menús.
             </h1>
             <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-3.6px] text-primary">
               Termina tu día
-              <br />con todos los planes
-              <br />enviados.
+              <br />
+              con todos los planes
+              <br />
+              enviados.
             </h1>
           </div>
           <p className="text-lg md:text-xl text-muted-foreground max-w-[512px] leading-relaxed">
@@ -358,13 +365,32 @@ function ExpertsSection() {
     const cards = sectionRef.current.querySelectorAll(".testimonial-card");
     gsap.set(cards, { opacity: 0, y: 50, scale: 0.95 });
     const tl = gsap.to(cards, {
-      opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: "power2.out",
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: "power2.out",
       scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none none" },
     });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, []);
 
-  const featured = [testimonials[0], testimonials[2], testimonials[5], testimonials[7], testimonials[9], testimonials[10], testimonials[13], testimonials[14], testimonials[15], testimonials[16]];
+  const featured = [
+    testimonials[0],
+    testimonials[2],
+    testimonials[5],
+    testimonials[7],
+    testimonials[9],
+    testimonials[10],
+    testimonials[13],
+    testimonials[14],
+    testimonials[15],
+    testimonials[16],
+  ];
 
   return (
     <div ref={sectionRef} className="max-w-[1280px] mx-auto">
@@ -385,19 +411,19 @@ function ExpertsSection() {
               style={{ backgroundColor: "hsl(252, 100%, 98%)" }}
             >
               <div className="flex justify-between items-center">
-                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                <Quote className="h-5 w-5 text-yellow-400 primary" />
                 <span className="text-xl">{t.flag}</span>
               </div>
-              <p className="text-base md:text-lg text-foreground leading-relaxed italic flex-1">
-                "{t.quote}"
-              </p>
+              <p className="text-base md:text-lg text-foreground leading-relaxed italic flex-1">"{t.quote}"</p>
               <div className="flex items-center gap-4 pt-2">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
                   {t.name.charAt(0)}
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.specialty}, {t.country}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {t.specialty}, {t.country}
+                  </p>
                 </div>
               </div>
             </div>
@@ -431,11 +457,7 @@ function VideoSection() {
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
       <div className="relative rounded-[40px] overflow-hidden bg-[hsl(222,47%,11%)] border border-white/10 shadow-2xl group cursor-pointer">
-        <img
-          src={storytellingImg}
-          alt="Demo de Kleia"
-          className="w-full aspect-video object-cover opacity-60"
-        />
+        <img src={storytellingImg} alt="Demo de Kleia" className="w-full aspect-video object-cover opacity-60" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
             <Play className="h-8 w-8 text-primary fill-primary ml-1" />
@@ -476,10 +498,17 @@ function JourneySection() {
     const cards = ref.current.querySelectorAll(".journey-card");
     gsap.set(cards, { opacity: 0, y: 60 });
     const tl = gsap.to(cards, {
-      opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: "power2.out",
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.2,
+      ease: "power2.out",
       scrollTrigger: { trigger: ref.current, start: "top 75%", toggleActions: "play none none none" },
     });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, []);
 
   return (
@@ -504,9 +533,7 @@ function JourneySection() {
             <h3 className="font-bold font-heading text-lg md:text-xl text-center">
               {step.num}. {step.title}
             </h3>
-            <p className="text-sm md:text-base text-muted-foreground text-center leading-relaxed">
-              {step.desc}
-            </p>
+            <p className="text-sm md:text-base text-muted-foreground text-center leading-relaxed">{step.desc}</p>
           </div>
         ))}
       </div>
@@ -556,10 +583,18 @@ function FeaturesSection() {
     const cards = ref.current.querySelectorAll(".feature-card");
     gsap.set(cards, { opacity: 0, y: 80, scale: 0.95 });
     const tl = gsap.to(cards, {
-      opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.12, ease: "back.out(1.2)",
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: "back.out(1.2)",
       scrollTrigger: { trigger: ref.current, start: "top 75%", toggleActions: "play none none none" },
     });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, []);
 
   return (
@@ -569,7 +604,8 @@ function FeaturesSection() {
           Potencia tu Consulta
         </h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          Software diseñado para el nutricionista de alto rendimiento. Rigor científico impulsado por inteligencia artificial.
+          Software diseñado para el nutricionista de alto rendimiento. Rigor científico impulsado por inteligencia
+          artificial.
         </p>
       </div>
 
@@ -614,7 +650,11 @@ function PricingSection() {
   useEffect(() => {
     if (!ref.current) return;
     gsap.from(ref.current.querySelector(".pricing-card")!, {
-      opacity: 0, y: 80, scale: 0.9, duration: 0.9, ease: "back.out(1.5)",
+      opacity: 0,
+      y: 80,
+      scale: 0.9,
+      duration: 0.9,
+      ease: "back.out(1.5)",
       scrollTrigger: { trigger: ref.current, start: "top 75%", toggleActions: "play none none none" },
     });
   }, []);
@@ -622,11 +662,11 @@ function PricingSection() {
   return (
     <div ref={ref} className="max-w-[1280px] mx-auto">
       <div className="text-center mb-10 md:mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">
-          Crecimiento sin Límites
-        </h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">Crecimiento sin Límites</h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto leading-relaxed">
-          Escoge el plan actual antes de que se acabe nuestra oferta de lanzamiento.<br />Transparencia total, sin costes ocultos.
+          Escoge el plan actual antes de que se acabe nuestra oferta de lanzamiento.
+          <br />
+          Transparencia total, sin costes ocultos.
         </p>
       </div>
 
@@ -685,11 +725,26 @@ function PricingSection() {
 
 // ─── S7 · FAQ ────────────────────────────────────────────────────────────────
 const faqs = [
-  { q: "¿Necesito saber de tecnología para usar Kleia?", a: "No. Si podés usar WhatsApp, podés usar Kleia. Te acompañamos en el setup inicial." },
-  { q: "¿Qué pasa con los datos de mis pacientes?", a: "Los datos son tuyos. Kleia los usa solo para generar los planes y no los comparte con terceros." },
-  { q: "¿Puedo cancelar cuando quiero?", a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades." },
-  { q: "¿Kleia reemplaza mi criterio profesional?", a: "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente." },
-  { q: "¿Cuándo estará disponible para todos?", a: "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp." },
+  {
+    q: "¿Necesito saber de tecnología para usar Kleia?",
+    a: "No. Si podés usar WhatsApp, podés usar Kleia. Te acompañamos en el setup inicial.",
+  },
+  {
+    q: "¿Qué pasa con los datos de mis pacientes?",
+    a: "Los datos son tuyos. Kleia los usa solo para generar los planes y no los comparte con terceros.",
+  },
+  {
+    q: "¿Puedo cancelar cuando quiero?",
+    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades.",
+  },
+  {
+    q: "¿Kleia reemplaza mi criterio profesional?",
+    a: "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente.",
+  },
+  {
+    q: "¿Cuándo estará disponible para todos?",
+    a: "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp.",
+  },
 ];
 
 function FAQSection() {
@@ -701,33 +756,37 @@ function FAQSection() {
     const items = ref.current.querySelectorAll(".faq-item");
     gsap.set(items, { opacity: 0, y: 30 });
     const tl = gsap.to(items, {
-      opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out",
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.08,
+      ease: "power2.out",
       scrollTrigger: { trigger: ref.current, start: "top 80%", toggleActions: "play none none none" },
     });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, []);
 
   return (
     <div ref={ref} className="max-w-[896px] mx-auto">
-      <h2 className="text-3xl sm:text-4xl font-bold font-heading text-center mb-10 md:mb-12">
-        Preguntas Frecuentes
-      </h2>
+      <h2 className="text-3xl sm:text-4xl font-bold font-heading text-center mb-10 md:mb-12">Preguntas Frecuentes</h2>
       <div className="flex flex-col gap-6">
         {faqs.map(({ q, a }, i) => (
-          <div
-            key={i}
-            className={`faq-item ${i < faqs.length - 1 ? "border-b border-border/30 pb-6" : ""}`}
-          >
+          <div key={i} className={`faq-item ${i < faqs.length - 1 ? "border-b border-border/30 pb-6" : ""}`}>
             <button
               onClick={() => setOpenIdx(openIdx === i ? null : i)}
               className="text-left w-full flex items-center justify-between gap-4"
             >
-              <h3 className="font-bold font-heading text-base md:text-lg text-primary leading-relaxed">
-                {q}
-              </h3>
-              <ChevronRight className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-300 ${openIdx === i ? "rotate-90" : ""}`} />
+              <h3 className="font-bold font-heading text-base md:text-lg text-primary leading-relaxed">{q}</h3>
+              <ChevronRight
+                className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-300 ${openIdx === i ? "rotate-90" : ""}`}
+              />
             </button>
-            <p className={`text-sm md:text-base text-muted-foreground mt-3 leading-relaxed transition-all ${openIdx === i ? "block" : "hidden"}`}>
+            <p
+              className={`text-sm md:text-base text-muted-foreground mt-3 leading-relaxed transition-all ${openIdx === i ? "block" : "hidden"}`}
+            >
               {a}
             </p>
           </div>
@@ -770,7 +829,9 @@ export default function Index() {
 
   const handleLoaded = useCallback(() => {
     setLoaded(true);
-    setTimeout(() => { ScrollTrigger.refresh(); }, 150);
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
   }, []);
 
   return (
@@ -785,7 +846,11 @@ export default function Index() {
           <Hero />
 
           {/* Expertos - dark bg */}
-          <section id="seccion-expertos" className="py-8 md:py-12 px-4 sm:px-6" style={{ backgroundColor: "hsl(240, 50%, 8%)" }}>
+          <section
+            id="seccion-expertos"
+            className="py-8 md:py-12 px-4 sm:px-6"
+            style={{ backgroundColor: "hsl(240, 50%, 8%)" }}
+          >
             <ExpertsSection />
           </section>
 
@@ -795,17 +860,29 @@ export default function Index() {
           </section>
 
           {/* Jornada */}
-          <section id="seccion-jornada" className="py-16 md:py-24 px-4 sm:px-6" style={{ backgroundColor: "hsl(252, 100%, 98%)" }}>
+          <section
+            id="seccion-jornada"
+            className="py-16 md:py-24 px-4 sm:px-6"
+            style={{ backgroundColor: "hsl(252, 100%, 98%)" }}
+          >
             <JourneySection />
           </section>
 
           {/* Features */}
-          <section id="seccion-features" className="py-8 md:py-24 px-4 sm:px-6" style={{ backgroundColor: "hsl(220, 33%, 97%)" }}>
+          <section
+            id="seccion-features"
+            className="py-8 md:py-24 px-4 sm:px-6"
+            style={{ backgroundColor: "hsl(220, 33%, 97%)" }}
+          >
             <FeaturesSection />
           </section>
 
           {/* Pricing */}
-          <section id="seccion-precio" className="py-8 md:py-20 px-4 sm:px-6" style={{ backgroundColor: "hsl(220, 33%, 97%)" }}>
+          <section
+            id="seccion-precio"
+            className="py-8 md:py-20 px-4 sm:px-6"
+            style={{ backgroundColor: "hsl(220, 33%, 97%)" }}
+          >
             <PricingSection />
           </section>
 
