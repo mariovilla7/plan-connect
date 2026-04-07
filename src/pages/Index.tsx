@@ -375,7 +375,7 @@ function ExpertsSection() {
       <div className="relative">
         <div
           ref={scrollRef}
-          className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
+          className="flex gap-5 md:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {featured.map((t, i) => (
