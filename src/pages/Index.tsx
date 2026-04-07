@@ -381,7 +381,7 @@ function ExpertsSection() {
           {featured.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card snap-start flex-shrink-0 w-[300px] sm:w-[360px] rounded-2xl p-8 md:p-10 flex flex-col justify-between gap-4"
+              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col justify-between gap-4"
               style={{ backgroundColor: "hsl(252, 100%, 98%)" }}
             >
               <div className="flex justify-between items-center">
