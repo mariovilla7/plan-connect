@@ -339,7 +339,10 @@ function ExpertsSection() {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -380 : 380, behavior: "smooth" });
+    // Scroll by one card width + gap
+    const card = el.querySelector(".testimonial-card") as HTMLElement;
+    const scrollAmount = card ? card.offsetWidth + 24 : 320;
+    el.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
   };
 
   useEffect(() => {
