@@ -411,7 +411,7 @@ function ExpertsSection() {
               style={{ backgroundColor: "hsl(252, 100%, 98%)" }}
             >
               <div className="flex justify-between items-center">
-                <Quote className="h-5 w-5 text-yellow-400 primary" />
+                <Star className="h-5 w-5 text-yellow-400" />
                 <span className="text-xl">{t.flag}</span>
               </div>
               <p className="text-base md:text-lg text-foreground leading-relaxed italic flex-1">"{t.quote}"</p>
