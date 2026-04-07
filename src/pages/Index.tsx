@@ -9,10 +9,21 @@ import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+// Importaciones de Framer Motion añadidas para corregir el error TS2304
+import { motion, AnimatePresence } from "framer-motion";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ClipboardList,
+  Layers,
+  Download,
+  Play,
+  Check,
+  Quote, // Icono de comillas importado
+} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -186,7 +197,7 @@ function Hero() {
   );
 }
 
-// ─── SECCIÓN 2: EXPERTOS (ICONO QUOTE) ────────────────────────────────────────
+// ─── SECCIÓN 2: EXPERTOS ──────────────────────────────────────────────────────
 function ExpertsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -216,7 +227,6 @@ function ExpertsSection() {
               className="testimonial-card snap-center flex-shrink-0 w-[300px] sm:w-[380px] rounded-3xl p-8 flex flex-col justify-between gap-6 bg-[hsl(252,100%,99%)] shadow-xl"
             >
               <div className="flex justify-between items-center">
-                {/* ICONO DE COMILLAS (QUOTE) EN LUGAR DE ESTRELLAS */}
                 <Quote className="h-6 w-6 text-primary fill-primary opacity-20" />
                 <span className="text-2xl">{t.flag}</span>
               </div>
@@ -412,15 +422,12 @@ function FAQSection() {
   );
 }
 
-// ─── FOOTER (ALINEACIÓN IZQUIERDA Y BOT SAFE) ─────────────────────────────────
+// ─── FOOTER ──────────────────────────────────────────────────────────────────
 function Footer() {
   return (
     <footer className="border-t border-border/50 py-16 bg-[hsl(210,40%,98%)]">
-      {/* Alineación: Cambiamos de centrado a "items-start" y alineamos a la izquierda 
-        para que coincida con el margen del resto de la página.
-      */}
+      {/* Alineado a la izquierda quitando el centrado del contenedor */}
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        {/* Lado Izquierdo: Branding */}
         <div className="flex flex-col gap-5 items-start text-left">
           <img src={kleiaLogo} alt="Kleia" className="h-8 w-auto opacity-90" />
           <div className="space-y-1">
@@ -433,11 +440,8 @@ function Footer() {
           </div>
         </div>
 
-        {/* Lado Derecho: Enlaces de navegación legal 
-          Alineado a la IZQUIERDA (md:justify-start) y con un padding-right (md:pr-32) 
-          para que el icono flotante del bot NO tape el enlace de Contacto.
-        */}
-        <div className="flex flex-wrap gap-x-10 gap-y-4 md:justify-start md:pr-40">
+        {/* Zona de enlaces con padding a la derecha para no chocar con el bot */}
+        <div className="flex flex-wrap gap-x-10 gap-y-4 md:justify-start lg:pr-48">
           {["Política de privacidad", "Términos de servicio", "Contacto"].map((link) => (
             <a
               key={link}
@@ -505,7 +509,7 @@ export default function Index() {
   );
 }
 
-// ─── DATA ───────────────────────────────────────────────────────────────────
+// ─── DATOS ────────────────────────────────────────────────────────────────────
 const testimonialsData = [
   {
     quote: "Una herramienta con IA pensada para agilizar el trabajo del nutricionista sin sustituir su criterio.",
