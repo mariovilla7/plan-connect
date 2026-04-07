@@ -339,7 +339,10 @@ function ExpertsSection() {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -380 : 380, behavior: "smooth" });
+    // Scroll by one card width + gap
+    const card = el.querySelector(".testimonial-card") as HTMLElement;
+    const scrollAmount = card ? card.offsetWidth + 24 : 320;
+    el.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -372,13 +375,13 @@ function ExpertsSection() {
       <div className="relative">
         <div
           ref={scrollRef}
-          className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
+          className="flex gap-5 md:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {featured.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card snap-start flex-shrink-0 w-[300px] sm:w-[360px] rounded-2xl p-8 md:p-10 flex flex-col justify-between gap-4"
+              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col justify-between gap-4"
               style={{ backgroundColor: "hsl(252, 100%, 98%)" }}
             >
               <div className="flex justify-between items-center">
@@ -717,11 +720,12 @@ function FAQSection() {
           >
             <button
               onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="text-left w-full"
+              className="text-left w-full flex items-center justify-between gap-4"
             >
               <h3 className="font-bold font-heading text-base md:text-lg text-primary leading-relaxed">
                 {q}
               </h3>
+              <ChevronRight className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-300 ${openIdx === i ? "rotate-90" : ""}`} />
             </button>
             <p className={`text-sm md:text-base text-muted-foreground mt-3 leading-relaxed transition-all ${openIdx === i ? "block" : "hidden"}`}>
               {a}
