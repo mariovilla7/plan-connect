@@ -6,6 +6,7 @@ import gifSustituciones from "@/assets/sustituciones-inteligentes.gif";
 import gifListas from "@/assets/listas-compra.gif";
 import gifEducacion from "@/assets/educacion-sin-esfuerzo.gif";
 import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
+import gifContexto from "@/assets/Planes con contexto local (1).gif";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -550,7 +551,7 @@ const featureCards = [
   {
     title: "Planes con contexto local",
     desc: "Crea planes asistidos que respetan los gustos y el contexto local del paciente.",
-    image: gifSustituciones,
+    image: gifContexto,
   },
   {
     title: "Sustituciones inteligentes",
