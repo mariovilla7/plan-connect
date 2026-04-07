@@ -703,12 +703,6 @@ function PricingSection() {
             ))}
           </ul>
 
-          <div className="bg-primary rounded-full px-4 py-2 mb-4 flex items-center">
-            <span className="text-xs font-semibold text-white uppercase">
-              Prueba gratis de 14 días · Cancelación simple e inmediata
-            </span>
-          </div>
-
           <button
             onClick={openWhatsApp}
             className="w-full bg-white text-[hsl(238,78%,54%)] font-semibold text-base rounded-xl py-4 hover:bg-white/90 transition-colors cursor-pointer"
@@ -716,6 +710,12 @@ function PricingSection() {
             Elegir Plan Fundador
           </button>
         </div>
+      </div>
+
+      <div className="bg-primary rounded-full px-4 py-2 mb-4 flex items-center">
+        <span className="text-xs font-semibold text-white uppercase">
+          Prueba gratis de 14 días · Cancelación simple e inmediata
+        </span>
       </div>
     </div>
   );
