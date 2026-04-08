@@ -648,19 +648,7 @@ function FeaturesSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {featureCards.map((f) => (
-          <div
-            key={f.title}
-            className="feature-card bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
-            style={{ height: "auto" }}
-          >
-            <div className="aspect-[16/10] bg-[hsl(213,27%,95%)] rounded-2xl mx-6 mt-6 md:mx-8 md:mt-8 overflow-hidden">
-              <img src={f.image} alt={f.title} className="w-full h-full object-cover" loading="lazy" />
-            </div>
-            <div className="px-6 md:px-8 py-5 md:py-6">
-              <h3 className="font-bold font-heading text-lg md:text-2xl mb-2">{f.title}</h3>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{f.desc}</p>
-            </div>
-          </div>
+          <FeatureCard key={f.title} title={f.title} desc={f.desc} image={f.image} />
         ))}
       </div>
     </div>
