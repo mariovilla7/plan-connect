@@ -597,15 +597,30 @@ function Footer() {
           </p>
         </div>
         <div className="flex gap-8 md:justify-end">
-          {["Privacidad", "Términos", "Contacto"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
-            >
-              {link}
-            </a>
-          ))}
+          {/* Enlaces Legales */}
+          <a
+            href="https://mariovilla7-kleia-771e0ab2.vercel.app/legal"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
+          >
+            Política de Privacidad
+          </a>
+          <a
+            href="https://mariovilla7-kleia-771e0ab2.vercel.app/legal"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
+          >
+            Términos de servicio
+          </a>
+          {/* Enlace de Contacto */}
+          <a
+            href="mailto:healthytoolinfo@gmail.com"
+            className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
+          >
+            Contacto
+          </a>
         </div>
       </div>
     </footer>
