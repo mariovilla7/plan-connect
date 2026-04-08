@@ -12,8 +12,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
+import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
-// Se añade Quote a la importación
 import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
