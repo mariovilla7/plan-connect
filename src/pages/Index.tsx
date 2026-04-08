@@ -534,15 +534,25 @@ function PricingSection() {
 
 // ─── S7 · FAQ ─────────────────────────────────────────────────────────────────
 const faqs = [
-  { q: "¿Necesito saber de tecnología?", a: "No. Si podés usar WhatsApp, podés usar Kleia. Te acompañamos en todo." },
+  {
+    q: "¿Necesito saber de tecnología?",
+    a: "No. Si puedes usar WhatsApp, puedes usar Kleia. Te acompañamos en todo.",
+  },
   {
     q: "¿Qué pasa con los datos de mis pacientes?",
     a: "Los datos son tuyos. Se usan bajo encriptación clínica y no se comparten.",
   },
-  { q: "¿Puedo cancelar cuando quiera?", a: "Sí, sin compromisos ni penalidades. Cancelas en un clic." },
   {
-    q: "¿Kleia reemplaza mi criterio?",
-    a: "Jamás. Es tu asistente de alto rendimiento, pero tú tomas las decisiones.",
+    q: "¿Puedo cancelar cuando quiera?",
+    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades.",
+  },
+  {
+    q: "¿Kleia reemplaza mi criterio profesional?",
+    a: "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente.",
+  },
+  {
+    q: "¿Cuándo estará disponible para todos?",
+    a: "JEstamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp.",
   },
 ];
 
