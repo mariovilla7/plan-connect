@@ -1,6 +1,6 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
 import heroMockup from "@/assets/seccion1-mockup1.png";
-import storytellingImg from "@/assets/storytelling.png";
+// storytellingImg removed - YouTube autoplay used directly
 import gifPrecision from "@/assets/precision-clinica.gif";
 import gifSustituciones from "@/assets/sustituciones-inteligentes.gif";
 import gifListas from "@/assets/listas-compra.gif";
@@ -12,8 +12,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
+import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
-// Se añade Quote a la importación
 import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -44,11 +44,30 @@ function scrollTo(id: string) {
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Track active section with IntersectionObserver
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    navLinks.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
@@ -67,7 +86,11 @@ function Navbar() {
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="text-[13px] font-bold font-heading text-muted-foreground hover:text-foreground px-3 py-2 rounded-full transition-colors whitespace-nowrap tracking-tight"
+              className={`text-[13px] font-bold font-heading px-3 py-2 rounded-full transition-colors whitespace-nowrap tracking-tight ${
+                activeSection === id
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {label}
             </button>
@@ -100,7 +123,9 @@ function Navbar() {
                 scrollTo(id);
                 setOpen(false);
               }}
-              className="text-sm text-muted-foreground hover:text-foreground text-left py-3 border-b border-border/20 last:border-b-0"
+              className={`text-sm text-left py-3 border-b border-border/20 last:border-b-0 ${
+                activeSection === id ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {label}
             </button>
@@ -346,8 +371,15 @@ function ExpertsSection() {
     const el = scrollRef.current;
     if (!el) return;
     const card = el.querySelector(".testimonial-card") as HTMLElement;
-    const scrollAmount = card ? card.offsetWidth + 24 : 320;
-    el.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+    if (!card) return;
+    const cardWidth = card.offsetWidth;
+    const gap = 20; // gap-5 = 20px
+    const scrollAmount = cardWidth + gap;
+    // Snap to nearest card boundary
+    const currentScroll = el.scrollLeft;
+    const cardIndex = Math.round(currentScroll / scrollAmount);
+    const nextIndex = dir === "left" ? Math.max(0, cardIndex - 1) : cardIndex + 1;
+    el.scrollTo({ left: nextIndex * scrollAmount, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -451,9 +483,6 @@ function ExpertsSection() {
 
 // ─── S3 · Video Section (primary bg) ─────────────────────────────────────────
 function VideoSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  // Reemplaza esto con el ID de tu video de YouTube
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
 
   return (
@@ -462,35 +491,15 @@ function VideoSection() {
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
 
-      <div
-        className="relative rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl group cursor-pointer aspect-video"
-        onClick={() => !isPlaying && setIsPlaying(true)}
-      >
-        {!isPlaying ? (
-          <>
-            {/* Vista previa (Imagen + Botón Play) */}
-            <img
-              src={storytellingImg}
-              alt="Demo de Kleia"
-              className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                <Play className="h-8 w-8 text-primary fill-primary ml-1" />
-              </div>
-            </div>
-          </>
-        ) : (
-          /* Embed de YouTube con Autoplay */
-          <iframe
-            className="w-full h-full"
-            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0`}
-            title="Kleia Demo"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        )}
+      <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
+        <iframe
+          className="w-full h-full"
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&rel=0&modestbranding=1&playsinline=1`}
+          title="Kleia Demo"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
       </div>
     </div>
   );
@@ -639,19 +648,7 @@ function FeaturesSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {featureCards.map((f) => (
-          <div
-            key={f.title}
-            className="feature-card bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
-            style={{ height: "auto" }}
-          >
-            <div className="aspect-[16/10] bg-[hsl(213,27%,95%)] rounded-2xl mx-6 mt-6 md:mx-8 md:mt-8 overflow-hidden">
-              <img src={f.image} alt={f.title} className="w-full h-full object-cover" loading="lazy" />
-            </div>
-            <div className="px-6 md:px-8 py-5 md:py-6">
-              <h3 className="font-bold font-heading text-lg md:text-2xl mb-2">{f.title}</h3>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{f.desc}</p>
-            </div>
-          </div>
+          <FeatureCard key={f.title} title={f.title} desc={f.desc} image={f.image} />
         ))}
       </div>
     </div>

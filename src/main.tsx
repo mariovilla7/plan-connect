@@ -1,3 +1,4 @@
+import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -9,10 +10,12 @@ const posthogOptions = {
 } as const;
 
 createRoot(document.getElementById("root")!).render(
-  <PostHogProvider
-    apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN}
-    options={posthogOptions}
-  >
-    <App />
-  </PostHogProvider>
+  <React.StrictMode>
+    <PostHogProvider
+      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN}
+      options={posthogOptions}
+    >
+      <App />
+    </PostHogProvider>
+  </React.StrictMode>
 );

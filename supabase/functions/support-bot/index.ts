@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 const SYSTEM_PROMPT =
-  "Eres el asistente experto de Kleia. Ayuda a los nutricionistas a entender cómo el software les ahorra +6h semanales generando planes clínicos en minutos. Usa la información de esta web: envío de PDFs por WhatsApp, recálculo automático de macros y personalización profesional. Si preguntan por precios o demos, invítales a agendar una por WhatsApp.";
+  "Eres el asistente experto de Kleia. Ayuda a los nutricionistas a entender cómo el software les ahorra +6h semanales generando planes clínicos en minutos. Usa la información de esta web: envío de PDFs por WhatsApp, recálculo automático de macros y personalización profesional. Si preguntan por precios o demos, invítales a agendar una por WhatsApp al +359896676923. Responde siempre en español, de forma breve y profesional.";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -24,27 +24,46 @@ serve(async (req) => {
       );
     }
 
-    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
-    if (!GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY no está configurada");
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) {
+      throw new Error("LOVABLE_API_KEY no está configurada");
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          contents: [
-            { role: "user", parts: [{ text: `${SYSTEM_PROMPT}\n\nUsuario: ${prompt}` }] },
+          model: "google/gemini-2.5-flash-lite",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: prompt },
           ],
         }),
       }
     );
 
+    if (response.status === 429) {
+      return new Response(
+        JSON.stringify({ error: "Demasiadas solicitudes. Intenta de nuevo en unos segundos." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (response.status === 402) {
+      return new Response(
+        JSON.stringify({ error: "Créditos agotados." }),
+        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     if (!response.ok) {
       const errText = await response.text();
-      console.error("Gemini API error:", response.status, errText);
+      console.error("AI Gateway error:", response.status, errText);
       return new Response(
         JSON.stringify({ error: "Error al consultar la IA" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -53,7 +72,7 @@ serve(async (req) => {
 
     const data = await response.json();
     const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+      data?.choices?.[0]?.message?.content ??
       "Lo siento, no pude generar una respuesta.";
 
     return new Response(JSON.stringify({ text }), {
