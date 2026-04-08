@@ -44,11 +44,30 @@ function scrollTo(id: string) {
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Track active section with IntersectionObserver
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    navLinks.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
@@ -67,7 +86,11 @@ function Navbar() {
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="text-[13px] font-bold font-heading text-muted-foreground hover:text-foreground px-3 py-2 rounded-full transition-colors whitespace-nowrap tracking-tight"
+              className={`text-[13px] font-bold font-heading px-3 py-2 rounded-full transition-colors whitespace-nowrap tracking-tight ${
+                activeSection === id
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {label}
             </button>
@@ -100,7 +123,9 @@ function Navbar() {
                 scrollTo(id);
                 setOpen(false);
               }}
-              className="text-sm text-muted-foreground hover:text-foreground text-left py-3 border-b border-border/20 last:border-b-0"
+              className={`text-sm text-left py-3 border-b border-border/20 last:border-b-0 ${
+                activeSection === id ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {label}
             </button>
