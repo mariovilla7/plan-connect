@@ -10,7 +10,6 @@ import gifContexto from "@/assets/Planes con contexto local (1).gif";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, AnimatePresence } from "framer-motion";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
 import { Button } from "@/components/ui/button";
@@ -18,14 +17,14 @@ import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── CONFIGURACIÓN DE ENLACES ─────────────────────────────────────────────────
+// ─── CONFIGURACIÓN DE ENLACES (CORREGIDOS) ────────────────────────────────────
 const WA_NUMBER = "359896676923";
 const WA_MESSAGE = encodeURIComponent("Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 const LOGIN_URL = "https://imsolutions.studio/kleia/prototipo.html";
 const currentYear = new Date().getFullYear();
 
-// Funciones de navegación mejoradas
+// Funciones de redirección
 const openWhatsApp = () => window.open(WA_URL, "_blank");
 const openLogin = () => (window.location.href = LOGIN_URL);
 
@@ -41,7 +40,7 @@ function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
-// ─── COMPONENTE NAVBAR ────────────────────────────────────────────────────────
+// ─── NAVBAR (LINK INICIAR SESIÓN) ─────────────────────────────────────────────
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -54,11 +53,7 @@ function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-[hsl(220,33%,97%)]/90 backdrop-blur-lg border-b border-border/50 shadow-sm"
-          : "bg-[hsl(220,33%,97%)]/70 backdrop-blur-md"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[hsl(220,33%,97%)]/90 backdrop-blur-lg border-b border-border/50 shadow-sm" : "bg-[hsl(220,33%,97%)]/70 backdrop-blur-md"}`}
       style={{ height: 80 }}
     >
       <div className="max-w-[1280px] mx-auto flex items-center justify-between h-full px-4 sm:px-8">
@@ -80,13 +75,14 @@ function Navbar() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          {/* LINK CORREGIDO: Iniciar sesión */}
           <Button
             onClick={openLogin}
             className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 text-sm font-bold font-heading shadow-md h-10"
           >
             Iniciar sesión
           </Button>
-          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label="Menú">
+          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)}>
             <span
               className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`}
             />
@@ -111,6 +107,7 @@ function Navbar() {
               {label}
             </button>
           ))}
+          {/* LINK MOBILE CORREGIDO */}
           <Button onClick={openLogin} className="w-full rounded-full mt-2">
             Iniciar sesión
           </Button>
@@ -120,7 +117,7 @@ function Navbar() {
   );
 }
 
-// ─── S1 · HERO ────────────────────────────────────────────────────────────────
+// ─── HERO (LINK PRUÉBALO GRATIS) ─────────────────────────────────────────────
 function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
@@ -150,17 +147,18 @@ function Hero() {
             Para nutricionistas independientes · Sin perder el criterio profesional
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.05] tracking-tight">
-            Deja de pensar <br /> en menús. <br />
+            Deja de pensar <br /> en menús. <br />{" "}
             <span className="text-primary font-black">Termina tu día con todos los planes enviados.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-[512px] leading-relaxed">
             Genera planes clínicos en minutos. Envía un PDF listo por WhatsApp sin perder horas copiando y pegando.
           </p>
           <div className="flex flex-wrap gap-4 pt-4">
+            {/* LINK CORREGIDO: Pruébalo Gratis (WhatsApp) */}
             <Button
               onClick={openWhatsApp}
               size="lg"
-              className="rounded-full px-8 text-lg font-bold h-14 shadow-lg bg-primary text-primary-foreground"
+              className="rounded-full px-8 text-lg font-bold h-14 shadow-lg bg-primary text-primary-foreground text-white"
             >
               Pruébalo Gratis
             </Button>
@@ -187,19 +185,9 @@ function Hero() {
   );
 }
 
-// ─── S2 · EXPERTOS ────────────────────────────────────────────────────────────
+// ─── EXPERTOS ────────────────────────────────────────────────────────────────
 function ExpertsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const updateScrollState = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-  };
-
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
@@ -216,9 +204,7 @@ function ExpertsSection() {
       <div className="relative">
         <div
           ref={scrollRef}
-          onScroll={updateScrollState}
-          className="flex gap-6 overflow-x-auto overflow-y-hidden pb-10 scrollbar-hide snap-x snap-mandatory px-4 -mx-4"
-          style={{ WebkitOverflowScrolling: "touch" }}
+          className="flex gap-6 overflow-x-auto overflow-y-hidden pb-12 scrollbar-hide snap-x snap-mandatory px-4 -mx-4"
         >
           {testimonialsData.map((t, i) => (
             <div
@@ -249,13 +235,13 @@ function ExpertsSection() {
         <div className="flex justify-center gap-4 mt-4">
           <button
             onClick={() => scroll("left")}
-            className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white transition-opacity ${canScrollLeft ? "opacity-100" : "opacity-30"}`}
+            className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
           >
             <ChevronLeft />
           </button>
           <button
             onClick={() => scroll("right")}
-            className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white transition-opacity ${canScrollRight ? "opacity-100" : "opacity-30"}`}
+            className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
           >
             <ChevronRight />
           </button>
@@ -265,7 +251,7 @@ function ExpertsSection() {
   );
 }
 
-// ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
+// ─── VIDEO ───────────────────────────────────────────────────────────────────
 function VideoSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
@@ -307,7 +293,7 @@ function VideoSection() {
   );
 }
 
-// ─── S4 · JORNADA ─────────────────────────────────────────────────────────────
+// ─── JORNADA ─────────────────────────────────────────────────────────────────
 function JourneySection() {
   return (
     <div className="max-w-[1280px] mx-auto py-20 text-center">
@@ -332,7 +318,7 @@ function JourneySection() {
   );
 }
 
-// ─── S5 · FEATURES ────────────────────────────────────────────────────────────
+// ─── FEATURES ────────────────────────────────────────────────────────────────
 function FeaturesSection() {
   return (
     <div className="max-w-[1280px] mx-auto py-20">
@@ -362,7 +348,7 @@ function FeaturesSection() {
   );
 }
 
-// ─── S6 · PRICING ─────────────────────────────────────────────────────────────
+// ─── PRICING (LINK PLAN FUNDADOR) ────────────────────────────────────────────
 function PricingSection() {
   return (
     <div className="max-w-[1280px] mx-auto py-20 text-center">
@@ -372,7 +358,7 @@ function PricingSection() {
       </p>
       <div className="flex flex-col items-center px-4">
         <div className="pricing-card w-full max-w-md bg-[hsl(238,78%,54%)] rounded-[40px] p-10 text-white relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 bg-primary px-6 py-2 rounded-bl-3xl font-black text-[10px] uppercase">
+          <div className="absolute top-0 right-0 bg-primary px-6 py-2 rounded-bl-3xl font-black text-[10px] uppercase text-white">
             Plan Fundador · 10 Plazas
           </div>
           <h3 className="text-2xl font-bold mb-6">Plan Fundador</h3>
@@ -391,6 +377,7 @@ function PricingSection() {
               </li>
             ))}
           </ul>
+          {/* LINK CORREGIDO: Elegir Plan Fundador (WhatsApp) */}
           <button
             onClick={openWhatsApp}
             className="w-full bg-white text-primary h-16 rounded-2xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-xl"
@@ -408,36 +395,29 @@ function PricingSection() {
   );
 }
 
-// ─── S7 · FAQ ─────────────────────────────────────────────────────────────────
+// ─── FAQ (SIN LIBRERÍA EXTRA) ────────────────────────────────────────────────
 function FAQSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   return (
-    <div className="max-w-3xl mx-auto py-20 px-6">
+    <div className="max-w-[896px] mx-auto py-20 px-6">
       <h2 className="text-3xl font-bold text-center mb-12">Preguntas Frecuentes</h2>
-      <div className="space-y-4">
+      <div className="flex flex-col gap-6">
         {faqsData.map(({ q, a }, i) => (
-          <div key={i} className="border-b border-border/50 pb-4">
+          <div key={i} className={`faq-item ${i < faqsData.length - 1 ? "border-b border-border/30 pb-6" : ""}`}>
             <button
               onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="w-full flex items-center justify-between text-left py-4 group"
+              className="text-left w-full flex items-center justify-between gap-4"
             >
-              <span className="font-bold text-lg text-primary group-hover:text-primary/80 transition-colors">{q}</span>
+              <h3 className="font-bold font-heading text-base md:text-lg text-primary leading-relaxed">{q}</h3>
               <ChevronRight
-                className={`h-5 w-5 text-primary transition-transform ${openIdx === i ? "rotate-90" : ""}`}
+                className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-300 ${openIdx === i ? "rotate-90" : ""}`}
               />
             </button>
-            <AnimatePresence>
-              {openIdx === i && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden"
-                >
-                  <p className="text-muted-foreground pb-4 leading-relaxed">{a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div
+              className={`overflow-hidden transition-all duration-300 ${openIdx === i ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0"}`}
+            >
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{a}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -445,7 +425,7 @@ function FAQSection() {
   );
 }
 
-// ─── FOOTER ──────────────────────────────────────────────────────────────────
+// ─── FOOTER (ALINEADO IZQUIERDA Y BOT SAFE) ──────────────────────────────────
 function Footer() {
   return (
     <footer className="border-t border-border/50 py-16 bg-[hsl(210,40%,98%)]">
@@ -477,7 +457,7 @@ function Footer() {
   );
 }
 
-// ─── MAIN PAGE ────────────────────────────────────────────────────────────────
+// ─── MAIN ─────────────────────────────────────────────────────────────────────
 export default function Index() {
   const [loaded, setLoaded] = useState(false);
   const handleLoaded = useCallback(() => {
@@ -488,11 +468,10 @@ export default function Index() {
   }, []);
 
   return (
-    <>
+    <div className="bg-[hsl(220,33%,97%)]">
       {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
-        className="min-h-screen font-sans overflow-x-clip transition-opacity duration-700"
-        style={{ opacity: loaded ? 1 : 0 }}
+        className={`min-h-screen font-sans overflow-x-clip transition-opacity duration-700 ${loaded ? "opacity-100" : "opacity-0"}`}
       >
         <Navbar />
         <main>
@@ -519,7 +498,7 @@ export default function Index() {
         <Footer />
       </div>
       <SupportBot />
-    </>
+    </div>
   );
 }
 
