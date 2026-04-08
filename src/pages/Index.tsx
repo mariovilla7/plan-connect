@@ -84,18 +84,22 @@ function Navbar() {
           className="h-8 md:h-10 w-auto cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         />
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className={`text-[13px] font-bold font-heading px-3 py-2 rounded-full transition-colors whitespace-nowrap tracking-tight ${
-                activeSection === id
-                  ? "text-primary border-b-2 border-primary"
-                  : "text-muted-foreground hover:text-foreground"
+              className={`relative text-[13px] font-bold font-heading py-2 transition-colors whitespace-nowrap tracking-tight group ${
+                activeSection === id ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {label}
+              {/* Línea de subrayado */}
+              <span
+                className={`absolute left-0 bottom-0 h-[2px] bg-primary transition-all duration-300 ${
+                  activeSection === id ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
             </button>
           ))}
         </nav>
@@ -117,6 +121,7 @@ function Navbar() {
           </button>
         </div>
       </div>
+      {/* Menú Móvil */}
       {open && (
         <nav className="lg:hidden bg-white/95 backdrop-blur-lg px-4 py-2 flex flex-col border-t border-border/30">
           {navLinks.map(({ label, id }) => (
@@ -127,7 +132,7 @@ function Navbar() {
                 setOpen(false);
               }}
               className={`text-sm text-left py-3 border-b border-border/20 last:border-b-0 ${
-                activeSection === id ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
+                activeSection === id ? "text-primary font-semibold" : "text-muted-foreground"
               }`}
             >
               {label}
@@ -267,7 +272,6 @@ function ExpertsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const sectionRef = useRef<HTMLDivElement>(null);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -298,7 +302,7 @@ function ExpertsSection() {
   }, []);
 
   return (
-    <div ref={sectionRef} className="max-w-[1280px] mx-auto">
+    <div className="max-w-[1280px] mx-auto">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading text-white text-center mb-10 md:mb-16">
         Lo que dicen los expertos
       </h2>
