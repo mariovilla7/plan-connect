@@ -483,9 +483,6 @@ function ExpertsSection() {
 
 // ─── S3 · Video Section (primary bg) ─────────────────────────────────────────
 function VideoSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  // Reemplaza esto con el ID de tu video de YouTube
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
 
   return (
@@ -494,35 +491,15 @@ function VideoSection() {
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
 
-      <div
-        className="relative rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl group cursor-pointer aspect-video"
-        onClick={() => !isPlaying && setIsPlaying(true)}
-      >
-        {!isPlaying ? (
-          <>
-            {/* Vista previa (Imagen + Botón Play) */}
-            <img
-              src={storytellingImg}
-              alt="Demo de Kleia"
-              className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                <Play className="h-8 w-8 text-primary fill-primary ml-1" />
-              </div>
-            </div>
-          </>
-        ) : (
-          /* Embed de YouTube con Autoplay */
-          <iframe
-            className="w-full h-full"
-            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0`}
-            title="Kleia Demo"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        )}
+      <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
+        <iframe
+          className="w-full h-full"
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&rel=0&modestbranding=1&playsinline=1`}
+          title="Kleia Demo"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
       </div>
     </div>
   );
