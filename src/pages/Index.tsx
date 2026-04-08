@@ -552,7 +552,7 @@ const faqs = [
   },
   {
     q: "¿Cuándo estará disponible para todos?",
-    a: "JEstamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp.",
+    a: "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp.",
   },
 ];
 
