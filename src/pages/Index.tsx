@@ -371,8 +371,15 @@ function ExpertsSection() {
     const el = scrollRef.current;
     if (!el) return;
     const card = el.querySelector(".testimonial-card") as HTMLElement;
-    const scrollAmount = card ? card.offsetWidth + 24 : 320;
-    el.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+    if (!card) return;
+    const cardWidth = card.offsetWidth;
+    const gap = 20; // gap-5 = 20px
+    const scrollAmount = cardWidth + gap;
+    // Snap to nearest card boundary
+    const currentScroll = el.scrollLeft;
+    const cardIndex = Math.round(currentScroll / scrollAmount);
+    const nextIndex = dir === "left" ? Math.max(0, cardIndex - 1) : cardIndex + 1;
+    el.scrollTo({ left: nextIndex * scrollAmount, behavior: "smooth" });
   };
 
   useEffect(() => {
