@@ -1,5 +1,5 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
-import heroMockup from "@/assets/seccion1-mockup1.png";
+import heroMockup from "@/assets/hero image.png";
 import gifPrecision from "@/assets/precision-clinica.gif";
 import gifSustituciones from "@/assets/sustituciones-inteligentes.gif";
 import gifListas from "@/assets/listas-compra.gif";
