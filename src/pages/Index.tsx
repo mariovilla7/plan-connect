@@ -314,7 +314,7 @@ function ExpertsSection() {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl"
+              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl h-auto"
             >
               <div className="flex justify-between items-center mb-4">
                 <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
