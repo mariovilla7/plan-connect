@@ -14,6 +14,19 @@ export default function SupportBot() {
   const { messages, isLoading, sendMessage } = useSupportChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [hideButton, setHideButton] = useState(false);
+
+  // Hide floating button when footer is visible
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setHideButton(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    obs.observe(footer);
+    return () => obs.disconnect();
+  }, []);
 
   // Auto-scroll on new message
   useEffect(() => {
@@ -40,7 +53,10 @@ export default function SupportBot() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform"
+          className={cn(
+            "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-all duration-300",
+            hideButton && "opacity-0 pointer-events-none"
+          )}
           aria-label="Abrir chat de soporte"
         >
           <MessageCircle className="h-6 w-6" />

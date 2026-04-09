@@ -60,7 +60,7 @@ function Navbar() {
         ([entry]) => {
           if (entry.isIntersecting) setActiveSection(id);
         },
-        { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+        { rootMargin: "-30% 0px -30% 0px", threshold: 0 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -309,12 +309,12 @@ function ExpertsSection() {
       <div className="relative">
         <div
           ref={scrollRef}
-          className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
+          className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4 items-stretch"
         >
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl"
+              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl h-auto"
             >
               <div className="flex justify-between items-center mb-4">
                 <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
@@ -357,20 +357,38 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
+  const [started, setStarted] = useState(false);
+
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
-        <iframe
-          className="w-full h-full"
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&rel=0&modestbranding=1&playsinline=1`}
-          title="Kleia Demo"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+        {!started ? (
+          <button
+            onClick={() => setStarted(true)}
+            className="absolute inset-0 z-10 flex items-center justify-center bg-black group cursor-pointer"
+          >
+            <img
+              src={`https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg`}
+              alt="Kleia Demo thumbnail"
+              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity"
+            />
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+              <Play className="h-7 w-7 sm:h-9 sm:w-9 text-primary fill-primary ml-1" />
+            </div>
+          </button>
+        ) : (
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            title="Kleia Demo"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        )}
       </div>
     </div>
   );
