@@ -309,7 +309,7 @@ function ExpertsSection() {
       <div className="relative">
         <div
           ref={scrollRef}
-          className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4"
+          className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4 items-stretch"
         >
           {testimonials.map((t, i) => (
             <div
