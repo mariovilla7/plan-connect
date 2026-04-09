@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useInView } from "react-intersection-observer";
+import React, { useState, useRef, useEffect } from "react";
 import { Play } from "lucide-react";
 
 interface FeatureCardProps {
@@ -10,9 +9,36 @@ interface FeatureCardProps {
 
 export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { ref, inView } = useInView({ threshold: 0.6, triggerOnce: false });
+  const [inView, setInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const isActive = isHovered || inView;
+  // Detect mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // IntersectionObserver for mobile only
+  useEffect(() => {
+    if (!isMobile) {
+      setInView(false);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.6 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [isMobile]);
+
+  // Desktop: hover only. Mobile: inView only.
+  const isActive = isMobile ? inView : isHovered;
 
   return (
     <div

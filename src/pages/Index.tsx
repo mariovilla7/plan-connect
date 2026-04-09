@@ -357,20 +357,38 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
+  const [started, setStarted] = useState(false);
+
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
-        <iframe
-          className="w-full h-full"
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&rel=0&modestbranding=1&playsinline=1`}
-          title="Kleia Demo"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+        {!started ? (
+          <button
+            onClick={() => setStarted(true)}
+            className="absolute inset-0 z-10 flex items-center justify-center bg-black group cursor-pointer"
+          >
+            <img
+              src={`https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg`}
+              alt="Kleia Demo thumbnail"
+              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity"
+            />
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+              <Play className="h-7 w-7 sm:h-9 sm:w-9 text-primary fill-primary ml-1" />
+            </div>
+          </button>
+        ) : (
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            title="Kleia Demo"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        )}
       </div>
     </div>
   );
