@@ -60,7 +60,7 @@ function Navbar() {
         ([entry]) => {
           if (entry.isIntersecting) setActiveSection(id);
         },
-        { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+        { rootMargin: "-30% 0px -30% 0px", threshold: 0 },
       );
       obs.observe(el);
       observers.push(obs);
