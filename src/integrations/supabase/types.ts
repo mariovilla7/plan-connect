@@ -322,6 +322,7 @@ export type Database = {
           id: string
           last_credit_reset: string
           onboarding_status: Json
+          share_token: string
           updated_at: string
         }
         Insert: {
@@ -333,6 +334,7 @@ export type Database = {
           id?: string
           last_credit_reset?: string
           onboarding_status?: Json
+          share_token?: string
           updated_at?: string
         }
         Update: {
@@ -344,6 +346,7 @@ export type Database = {
           id?: string
           last_credit_reset?: string
           onboarding_status?: Json
+          share_token?: string
           updated_at?: string
         }
         Relationships: []
@@ -433,8 +436,16 @@ export type Database = {
         Returns: undefined
       }
       get_firebase_uid: { Args: never; Returns: string }
+      get_nutritionist_uid_by_token: {
+        Args: { _token: string }
+        Returns: string
+      }
       is_valid_nutritionist: {
         Args: { _firebase_uid: string }
+        Returns: boolean
+      }
+      is_valid_share_token: {
+        Args: { _firebase_uid: string; _share_token: string }
         Returns: boolean
       }
       update_profile_fields: {
