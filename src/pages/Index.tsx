@@ -11,6 +11,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
 import SupportBot from "@/components/SupportBot";
+import CookieBanner from "@/components/CookieBanner";
 import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote } from "lucide-react";
@@ -687,6 +688,7 @@ export default function Index() {
         <Footer />
       </div>
       <SupportBot />
+      <CookieBanner />
     </>
   );
 }
