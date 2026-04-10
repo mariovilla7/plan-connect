@@ -382,7 +382,7 @@ function VideoSection() {
         ) : (
           <iframe
             className="w-full h-full"
-            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
             title="Kleia Demo"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -617,7 +617,7 @@ function Footer() {
         <div className="flex gap-8 md:justify-end">
           {/* Enlaces Legales */}
           <a
-            href="https://mariovilla7-kleia-771e0ab2.vercel.app/legal"
+            href="https://imsolutions.studio/kleia/legal.html"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
@@ -625,7 +625,7 @@ function Footer() {
             Política de Privacidad
           </a>
           <a
-            href="https://mariovilla7-kleia-771e0ab2.vercel.app/legal"
+            href="https://imsolutions.studio/kleia/legal.html"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
