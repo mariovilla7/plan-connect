@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Play } from "lucide-react";
 
 interface FeatureCardProps {
@@ -11,6 +11,7 @@ export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [inView, setInView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [staticFrame, setStaticFrame] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   // Detect mobile
@@ -20,6 +21,27 @@ export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // Capture first frame of GIF as static image
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          setStaticFrame(canvas.toDataURL("image/png"));
+        }
+      } catch {
+        // fallback: no static frame available
+      }
+    };
+    img.src = image;
+  }, [image]);
 
   // IntersectionObserver for mobile only
   useEffect(() => {
@@ -53,17 +75,18 @@ export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
             src={image}
             alt={title}
             className="w-full h-full object-cover transition-opacity duration-500 opacity-100"
-            loading="lazy"
           />
         ) : (
           <div className="w-full h-full bg-[hsl(213,27%,95%)] flex items-center justify-center relative">
-            <img
-              src={image}
-              alt={title}
-              className="w-full h-full object-cover opacity-70"
-              loading="lazy"
-              style={{ filter: "blur(0px)" }}
-            />
+            {staticFrame ? (
+              <img
+                src={staticFrame}
+                alt={title}
+                className="w-full h-full object-cover opacity-70"
+              />
+            ) : (
+              <div className="w-full h-full bg-[hsl(213,27%,95%)]" />
+            )}
             <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 flex items-center justify-center shadow-sm transition-opacity duration-300">
               <Play className="h-3.5 w-3.5 text-primary fill-primary ml-0.5" />
             </div>
