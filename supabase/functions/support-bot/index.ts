@@ -10,10 +10,35 @@ const SYSTEM_PROMPT =
   "Eres el asistente experto de Kleia. Ayuda a los nutricionistas a entender cómo el software les ahorra +6h semanales generando planes clínicos en minutos. Usa la información de esta web: envío de PDFs por WhatsApp, recálculo automático de macros y personalización profesional. Si preguntan por precios o demos, invítales a agendar una por WhatsApp al +359896676923. Responde siempre en español, de forma breve y profesional.";
 
 const MAX_PROMPT_LENGTH = 2000;
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX = 10; // max requests per IP per window
+
+// In-memory rate limiter (resets on cold start, good enough for edge)
+const ipRequests = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = ipRequests.get(ip);
+  if (!entry || now > entry.resetAt) {
+    ipRequests.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting by IP
+  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(clientIP)) {
+    return new Response(
+      JSON.stringify({ error: "Demasiadas solicitudes. Intenta de nuevo en un minuto." }),
+      { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 
   try {
