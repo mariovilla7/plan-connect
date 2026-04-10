@@ -406,7 +406,6 @@ function VideoSection() {
     </div>
   );
 }
-}
 
 // ─── S4 · JORNADA ─────────────────────────────────────────────────────────────
 const journeySteps = [
