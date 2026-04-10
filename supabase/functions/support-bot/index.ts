@@ -9,13 +9,16 @@ const corsHeaders = {
 const SYSTEM_PROMPT =
   "Eres el asistente experto de Kleia. Ayuda a los nutricionistas a entender cómo el software les ahorra +6h semanales generando planes clínicos en minutos. Usa la información de esta web: envío de PDFs por WhatsApp, recálculo automático de macros y personalización profesional. Si preguntan por precios o demos, invítales a agendar una por WhatsApp al +359896676923. Responde siempre en español, de forma breve y profesional.";
 
+const MAX_PROMPT_LENGTH = 2000;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { prompt } = await req.json();
+    const body = await req.json();
+    const prompt = body?.prompt;
 
     if (!prompt || typeof prompt !== "string") {
       return new Response(
@@ -24,9 +27,34 @@ serve(async (req) => {
       );
     }
 
+    // Input length validation
+    if (prompt.length > MAX_PROMPT_LENGTH) {
+      return new Response(
+        JSON.stringify({ error: "El mensaje es demasiado largo. Máximo 2000 caracteres." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Sanitize suspicious prompt injection patterns
+    const sanitizedPrompt = prompt
+      .replace(/ignore\s*(all\s*)?(previous|above|prior|system)\s*(instructions?|prompts?|rules?)/gi, "")
+      .replace(/\[SYSTEM\]|\[INST\]|<\/?system>|<\/?instructions?>/gi, "")
+      .trim();
+
+    if (!sanitizedPrompt) {
+      return new Response(
+        JSON.stringify({ error: "Mensaje no válido." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
     if (!GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY no está configurada");
+      console.error("GEMINI_API_KEY not configured");
+      return new Response(
+        JSON.stringify({ error: "Servicio temporalmente no disponible." }),
+        { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     const response = await fetch(
@@ -35,8 +63,9 @@ serve(async (req) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
           contents: [
-            { role: "user", parts: [{ text: `${SYSTEM_PROMPT}\n\n${prompt}` }] },
+            { role: "user", parts: [{ text: sanitizedPrompt }] },
           ],
         }),
       }
@@ -50,10 +79,9 @@ serve(async (req) => {
     }
 
     if (!response.ok) {
-      const errText = await response.text();
-      console.error("Gemini API error:", response.status, errText);
+      console.error("Gemini API error:", { status: response.status });
       return new Response(
-        JSON.stringify({ error: "Error al consultar la IA" }),
+        JSON.stringify({ error: "Lo sentimos, ocurrió un error. Intenta nuevamente o contáctanos por WhatsApp." }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -67,9 +95,12 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
-    console.error("support-bot error:", e);
+    console.error("support-bot error:", {
+      message: e instanceof Error ? e.message : "Unknown",
+      timestamp: new Date().toISOString(),
+    });
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Error desconocido" }),
+      JSON.stringify({ error: "Lo sentimos, ocurrió un error. Intenta nuevamente o contáctanos por WhatsApp." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
