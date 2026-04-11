@@ -185,7 +185,7 @@ function Hero() {
           <span className="inline-block bg-primary/10 text-primary text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wide">
             Para nutricionistas independientes · sin perder el criterio profesional
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-3.6px]">
+          <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-1px] sm:tracking-[-2px] md:tracking-[-3px]">
             Deja de pensar <br /> en menús. <br />
             <span className="text-primary">Termina tu día con todos los planes enviados.</span>
           </h1>
