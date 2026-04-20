@@ -358,48 +358,46 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [started, setStarted] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [muted, setMuted] = useState(true);
 
-  const handlePlay = useCallback(() => {
-    if (started || !containerRef.current) return;
-    setStarted(true);
-
-    // Create iframe synchronously inside the click handler to preserve
-    // the user-gesture chain so Chrome allows autoplay with sound.
-    const iframe = document.createElement("iframe");
-    iframe.className = "w-full h-full absolute inset-0";
-    iframe.src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
-    iframe.title = "Kleia Demo";
-    iframe.frameBorder = "0";
-    iframe.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    iframe.allowFullscreen = true;
-    containerRef.current.appendChild(iframe);
-  }, [started]);
+  const handleUnmute = useCallback(() => {
+    if (!iframeRef.current) return;
+    // Use YouTube IFrame API postMessage to unmute & play with sound
+    iframeRef.current.contentWindow?.postMessage(
+      '{"event":"command","func":"unMute","args":""}',
+      "*"
+    );
+    iframeRef.current.contentWindow?.postMessage(
+      '{"event":"command","func":"playVideo","args":""}',
+      "*"
+    );
+    setMuted(false);
+  }, []);
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
-      <div
-        ref={containerRef}
-        className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video"
-      >
-        {!started && (
+      <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
+        <iframe
+          ref={iframeRef}
+          className="w-full h-full absolute inset-0"
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+          title="Kleia Demo"
+          frameBorder={0}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+        {muted && (
           <button
-            onClick={handlePlay}
-            className="absolute inset-0 z-10 flex items-center justify-center bg-black group cursor-pointer"
+            onClick={handleUnmute}
+            aria-label="Activar sonido"
+            className="absolute bottom-4 right-4 z-10 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-primary text-sm font-semibold shadow-xl flex items-center gap-2 transition-transform hover:scale-105"
           >
-            <img
-              src={`https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg`}
-              alt="Kleia Demo thumbnail"
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity"
-            />
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-              <Play className="h-7 w-7 sm:h-9 sm:w-9 text-primary fill-primary ml-1" />
-            </div>
+            <Play className="h-4 w-4 fill-primary" />
+            Activar sonido
           </button>
         )}
       </div>
