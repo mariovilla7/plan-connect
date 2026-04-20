@@ -226,11 +226,11 @@ function Hero() {
 // ─── S2 · EXPERTOS ────────────────────────────────────────────────────────────
 const testimonials = [
   {
-    quote: "Una herramienta con IA pensada para agilizar el trabajo del nutricionista sin sustituir su criterio.",
-    name: "Dra. Elena Rossi",
-    specialty: "Salud hormonal",
-    country: "España",
-    flag: "🇪🇸",
+    quote: "Me encantó, reúne en un solo lugar expediente, plan alimenticio y seguimiento del paciente.",
+    name: "Vicky Ojeda",
+    specialty: "Nutricionista ocupacional,",
+    country: "México",
+    flag: "🇲🇽",
   },
   {
     quote: "Cálculos claros, personalizables y siempre bajo control del nutricionista.",
