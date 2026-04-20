@@ -358,26 +358,28 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
-  // Eliminamos useRef, useState y handleUnmute porque ya no se usan
 
   return (
-    <div className="max-w-[1024px] mx-auto text-center py-12">
+    <div className="max-w-[1024px] mx-auto text-center py-12 px-4">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
+
+      {/* Contenedor con overflow-hidden para recortar */}
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
         <iframe
-          // Ya no necesitamos ref
-          className="w-full h-full absolute inset-0"
-          // Mantenemos controls=1 (nativo) y mute=1 (para autoplay)
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+          // 1. EL TRUCO VISUAL: h-[140%] y -top-[20%] entierra la barra superior
+          className="absolute w-full h-[140%] -top-[20%] left-0 scale-105"
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
           title="Kleia Demo"
           frameBorder={0}
+          // 2. LA SOLUCIÓN AL ERROR: Añadimos clipboard-write aquí
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
 
-        {/* El botón condicional ha sido eliminado por completo */}
+        {/* 3. CAPA DE SEGURIDAD: Bloquea clics accidentales en la zona del botón */}
+        <div className="absolute top-0 right-0 w-1/4 h-1/4 z-20 bg-transparent pointer-events-auto" />
       </div>
     </div>
   );
