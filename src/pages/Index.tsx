@@ -358,28 +358,16 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [muted, setMuted] = useState(true);
 
-  const getYoutubeSrc = useCallback(() => {
-    const params = new URLSearchParams({
-      autoplay: "1",
-      mute: "1",
-      rel: "0",
-      modestbranding: "1",
-      playsinline: "1",
-      loop: "1",
-      playlist: YOUTUBE_VIDEO_ID,
-      controls: "0",
-      fs: "0",
-      disablekb: "1",
-      iv_load_policy: "3",
-    });
+  const handleUnmute = useCallback(() => {
+    if (!iframeRef.current) return;
 
-    if (typeof window !== "undefined") {
-      params.set("origin", window.location.origin);
-    }
-
-    return `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?${params.toString()}`;
-  }, [YOUTUBE_VIDEO_ID]);
+    // Al recargar con mute=0 y controls=1, YouTube mostrará la barra completa
+    iframeRef.current.src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`;
+    setMuted(false);
+  }, []);
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12">
@@ -388,13 +376,27 @@ function VideoSection() {
       </h2>
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
         <iframe
+          ref={iframeRef}
           className="w-full h-full absolute inset-0"
-          src={getYoutubeSrc()}
+          // Añadimos controls=1 explícitamente y modestbranding=0 para asegurar que se vea la barra
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
           title="Kleia Demo"
           frameBorder={0}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
+
+        {/* Botón flotante opcional: puedes quitarlo si prefieres que solo usen el de YouTube */}
+        {muted && (
+          <button
+            onClick={handleUnmute}
+            aria-label="Activar sonido"
+            className="absolute bottom-16 right-4 z-10 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-primary text-sm font-semibold shadow-xl flex items-center gap-2 transition-transform hover:scale-105"
+          >
+            <Play className="h-4 w-4 fill-primary" />
+            Activar sonido
+          </button>
+        )}
       </div>
     </div>
   );
