@@ -226,9 +226,9 @@ function Hero() {
 // ─── S2 · EXPERTOS ────────────────────────────────────────────────────────────
 const testimonials = [
   {
-    quote: "Me encantó, reúne en un solo lugar expediente, plan alimenticio y seguimiento del paciente.",
+    quote: "Me encantó, reúne en un solo lugar expediente, plan alimenticio y seguimiento del paciente",
     name: "Vicky Ojeda",
-    specialty: "Nutricionista ocupacional,",
+    specialty: "Nutricionista ocupacional",
     country: "México",
     flag: "🇲🇽",
   },
