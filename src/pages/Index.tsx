@@ -363,15 +363,8 @@ function VideoSection() {
 
   const handleUnmute = useCallback(() => {
     if (!iframeRef.current) return;
-    // Use YouTube IFrame API postMessage to unmute & play with sound
-    iframeRef.current.contentWindow?.postMessage(
-      '{"event":"command","func":"unMute","args":""}',
-      "*"
-    );
-    iframeRef.current.contentWindow?.postMessage(
-      '{"event":"command","func":"playVideo","args":""}',
-      "*"
-    );
+    // Reload iframe with sound enabled inside the user gesture so Chrome allows audio
+    iframeRef.current.src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`;
     setMuted(false);
   }, []);
 
