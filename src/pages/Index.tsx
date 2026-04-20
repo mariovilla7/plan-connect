@@ -365,21 +365,20 @@ function VideoSection() {
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
 
-      {/* Contenedor con overflow-hidden para recortar */}
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
         <iframe
-          // 1. EL TRUCO VISUAL: h-[140%] y -top-[20%] entierra la barra superior
-          className="absolute w-full h-[140%] -top-[20%] left-0 scale-105"
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+          className="w-full h-full absolute inset-0"
+          // Mantenemos controls=1 para que veas tus controles de sonido y link
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
           title="Kleia Demo"
           frameBorder={0}
-          // 2. LA SOLUCIÓN AL ERROR: Añadimos clipboard-write aquí
+          /* SOLUCIÓN AL ERROR: 
+             Añadimos "clipboard-write" para que el botón de enlace funcione 
+             y el navegador no lance la violación de política.
+          */
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
-
-        {/* 3. CAPA DE SEGURIDAD: Bloquea clics accidentales en la zona del botón */}
-        <div className="absolute top-0 right-0 w-1/4 h-1/4 z-20 bg-transparent pointer-events-auto" />
       </div>
     </div>
   );
