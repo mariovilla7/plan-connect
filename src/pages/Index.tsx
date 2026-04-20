@@ -358,12 +358,11 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
-  const [playerActive, setPlayerActive] = useState(false);
 
   const getYoutubeSrc = useCallback(() => {
     const params = new URLSearchParams({
       autoplay: "1",
-      mute: "0",
+      mute: "1",
       rel: "0",
       modestbranding: "1",
       playsinline: "1",
@@ -382,47 +381,20 @@ function VideoSection() {
     return `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?${params.toString()}`;
   }, [YOUTUBE_VIDEO_ID]);
 
-  const handleStartVideo = useCallback(() => {
-    setPlayerActive(true);
-  }, []);
-
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
-        {playerActive ? (
-          <iframe
-            className="w-full h-full absolute inset-0"
-            src={getYoutubeSrc()}
-            title="Kleia Demo"
-            frameBorder={0}
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        ) : (
-          <button
-            type="button"
-            onClick={handleStartVideo}
-            aria-label="Reproducir demo con sonido"
-            className="group absolute inset-0 z-10 flex h-full w-full flex-col items-center justify-center gap-5 bg-black/50 text-primary-foreground transition-colors hover:bg-black/45"
-          >
-            <img
-              src={heroMockup}
-              alt="Vista previa del vídeo demo de Kleia"
-              className="absolute inset-0 h-full w-full object-cover opacity-70"
-              loading="lazy"
-            />
-            <span className="absolute inset-0 bg-black/35" aria-hidden="true" />
-            <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-background/95 text-primary shadow-2xl transition-transform group-hover:scale-105">
-              <Play className="h-8 w-8 fill-current" />
-            </span>
-            <span className="relative rounded-full bg-background/95 px-5 py-2.5 text-sm font-semibold text-foreground shadow-xl sm:text-base">
-              Ver demo con sonido
-            </span>
-          </button>
-        )}
+        <iframe
+          className="w-full h-full absolute inset-0"
+          src={getYoutubeSrc()}
+          title="Kleia Demo"
+          frameBorder={0}
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
       </div>
     </div>
   );
