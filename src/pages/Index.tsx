@@ -358,26 +358,73 @@ function ExpertsSection() {
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [muted, setMuted] = useState(true);
 
+  const getYoutubeSrc = useCallback(
+    (isMuted: boolean) => {
+      const params = new URLSearchParams({
+        autoplay: "1",
+        mute: isMuted ? "1" : "0",
+        rel: "0",
+        modestbranding: "1",
+        playsinline: "1",
+        enablejsapi: "1",
+        loop: "1",
+        playlist: YOUTUBE_VIDEO_ID,
+        controls: "0",
+        fs: "0",
+        disablekb: "1",
+        iv_load_policy: "3",
+      });
+
+      if (typeof window !== "undefined") {
+        params.set("origin", window.location.origin);
+      }
+
+      return `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?${params.toString()}`;
+    },
+    [YOUTUBE_VIDEO_ID],
+  );
+
   const handleUnmute = useCallback(() => {
-    if (!iframeRef.current) return;
-    // Reload iframe with sound enabled inside the user gesture so Chrome allows audio
-    iframeRef.current.src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`;
+    const container = videoContainerRef.current;
+    if (!container) return;
+
+    const nextIframe = document.createElement("iframe");
+    nextIframe.className = "w-full h-full absolute inset-0";
+    nextIframe.src = getYoutubeSrc(false);
+    nextIframe.title = "Kleia Demo";
+    nextIframe.frameBorder = "0";
+    nextIframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    nextIframe.allowFullscreen = true;
+
+    if (iframeRef.current) {
+      container.replaceChild(nextIframe, iframeRef.current);
+    } else {
+      container.prepend(nextIframe);
+    }
+
+    iframeRef.current = nextIframe;
     setMuted(false);
-  }, []);
+  }, [getYoutubeSrc]);
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
         Transforma datos clínicos en experiencias visuales únicas
       </h2>
-      <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
+      <div
+        ref={videoContainerRef}
+        className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video"
+      >
         <iframe
-          ref={iframeRef}
+          ref={(node) => {
+            iframeRef.current = node;
+          }}
           className="w-full h-full absolute inset-0"
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+          src={getYoutubeSrc(true)}
           title="Kleia Demo"
           frameBorder={0}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
