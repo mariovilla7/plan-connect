@@ -14,7 +14,17 @@ import SupportBot from "@/components/SupportBot";
 import CookieBanner from "@/components/CookieBanner";
 import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote, Instagram } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ClipboardList,
+  Layers,
+  Download,
+  Play,
+  Check,
+  Quote,
+  Instagram,
+} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
