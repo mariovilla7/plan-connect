@@ -14,7 +14,7 @@ import SupportBot from "@/components/SupportBot";
 import CookieBanner from "@/components/CookieBanner";
 import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, ClipboardList, Layers, Download, Play, Check, Quote, Instagram } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -231,6 +231,10 @@ const testimonials = [
     specialty: "Nutricionista ocupacional",
     country: "México",
     flag: "🇲🇽",
+    instagram: {
+      handle: "@nutri_victoria.ojeda",
+      url: "https://www.instagram.com/nutri_victoria.ojeda/",
+    },
   },
   {
     quote: "Cálculos claros, personalizables y siempre bajo control del nutricionista.",
@@ -331,6 +335,17 @@ function ExpertsSection() {
                   <p className="text-xs text-muted-foreground">
                     {t.specialty}, {t.country}
                   </p>
+                  {t.instagram && (
+                    <a
+                      href={t.instagram.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-1 font-medium"
+                    >
+                      <Instagram className="h-3.5 w-3.5" />
+                      {t.instagram.handle}
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
