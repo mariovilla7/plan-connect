@@ -358,25 +358,21 @@ function ExpertsSection() {
 
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
+  const { t } = useTranslation();
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12 px-4">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
-        Transforma datos clínicos en experiencias visuales únicas
+        {t("kleia.video.title")}
       </h2>
 
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
         <iframe
           className="w-full h-full absolute inset-0"
-          // Mantenemos controls=1 para que veas tus controles de sonido y link
           src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
           title="Kleia Demo"
           frameBorder={0}
-          /* SOLUCIÓN AL ERROR: 
-             Añadimos "clipboard-write" para que el botón de enlace funcione 
-             y el navegador no lance la violación de política.
-          */
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
@@ -386,97 +382,58 @@ function VideoSection() {
 }
 
 // ─── S4 · JORNADA ─────────────────────────────────────────────────────────────
-const journeySteps = [
-  {
-    icon: ClipboardList,
-    num: "1",
-    title: "Ingresa los Datos",
-    desc: "Registra restricciones y objetivos una sola vez. Kleia los guarda para no repetir trabajo.",
-  },
-  {
-    icon: Layers,
-    num: "2",
-    title: "Asigna y reajusta",
-    desc: "Genera menús completos al instante con recálculo automático de macros en tiempo real.",
-  },
-  {
-    icon: Download,
-    num: "3",
-    title: "Entrega en 1 click",
-    desc: "Exporta el plan como PDF listo para compartir y envíalo por WhatsApp directamente.",
-  },
-];
+const journeyIcons = [ClipboardList, Layers, Download];
+
+type JourneyStep = { title: string; desc: string };
 
 function JourneySection() {
+  const { t } = useTranslation();
+  const steps = (t("kleia.journey.steps", { returnObjects: true }) as JourneyStep[]) || [];
   return (
     <div className="max-w-[1280px] mx-auto text-center">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading mb-3">Tu jornada con Kleia</h2>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading mb-3">{t("kleia.journey.title")}</h2>
       <p className="text-muted-foreground text-base md:text-lg max-w-lg mx-auto mb-16">
-        De la clínica al diseño editorial en tres simples pasos.
+        {t("kleia.journey.subtitle")}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {journeySteps.map((step) => (
-          <div key={step.num} className="journey-card flex flex-col items-center gap-4">
-            <div className="w-24 h-24 rounded-xl bg-white flex items-center justify-center border shadow-lg">
-              <step.icon className="h-6 w-6 text-primary" />
+        {steps.map((step, idx) => {
+          const Icon = journeyIcons[idx] || ClipboardList;
+          return (
+            <div key={idx} className="journey-card flex flex-col items-center gap-4">
+              <div className="w-24 h-24 rounded-xl bg-white flex items-center justify-center border shadow-lg">
+                <Icon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-bold font-heading text-lg md:text-xl">
+                {idx + 1}. {step.title}
+              </h3>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{step.desc}</p>
             </div>
-            <h3 className="font-bold font-heading text-lg md:text-xl">
-              {step.num}. {step.title}
-            </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{step.desc}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 }
 
 // ─── S5 · FEATURES ────────────────────────────────────────────────────────────
-const featureCards = [
-  {
-    title: "Precisión clínica en segundos",
-    desc: "Calcula kcal, macros y micros en segundos con total precisión clínica.",
-    image: gifPrecision,
-  },
-  {
-    title: "Planes con contexto local",
-    desc: "Crea planes asistidos que respetan los gustos y el contexto local del paciente.",
-    image: gifContexto,
-  },
-  {
-    title: "Sustituciones inteligentes",
-    desc: "Edita platos con sustituciones inteligentes que recalculan objetivos en tiempo real.",
-    image: gifSustituciones,
-  },
-  {
-    title: "Listas de compra automáticas",
-    desc: "Genera listas de compra exactas sumando cada ingrediente automáticamente.",
-    image: gifListas,
-  },
-  {
-    title: "Educación sin esfuerzo",
-    desc: "Integra pautas educativas en el plan sin tener que redactar mensajes desde cero.",
-    image: gifEducacion,
-  },
-  {
-    title: "Entrega ágil WhatsApp/PDF",
-    desc: "Comparte el plan clínico por WhatsApp o PDF de forma profesional en un clic.",
-    image: gifEntrega,
-  },
-];
+const featureImages = [gifPrecision, gifContexto, gifSustituciones, gifListas, gifEducacion, gifEntrega];
+
+type FeatureItem = { title: string; desc: string };
 
 function FeaturesSection() {
+  const { t } = useTranslation();
+  const items = (t("kleia.features.items", { returnObjects: true }) as FeatureItem[]) || [];
   return (
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">Potencia tu Consulta</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">{t("kleia.features.title")}</h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-          Software diseñado para el nutricionista de alto rendimiento. Rigor científico impulsado por IA.
+          {t("kleia.features.subtitle")}
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {featureCards.map((f) => (
-          <FeatureCard key={f.title} title={f.title} desc={f.desc} image={f.image} />
+        {items.map((f, i) => (
+          <FeatureCard key={i} title={f.title} desc={f.desc} image={featureImages[i] || featureImages[0]} />
         ))}
       </div>
     </div>
@@ -484,24 +441,16 @@ function FeaturesSection() {
 }
 
 // ─── S6 · PRICING ─────────────────────────────────────────────────────────────
-const pricingFeatures = [
-  "Acceso a Kleia (web, sin instalación)",
-  "Generación de planes clínicos en minutos",
-  "Ajustes sin descuadres (recalculo automático)",
-  "Exportación PDF + lista de compra",
-  "Envío por WhatsApp/correo",
-  "Historial ilimitado de pacientes",
-  "Recetario inteligente",
-  "Soporte dedicado durante el piloto",
-];
-
 function PricingSection() {
+  const { t } = useTranslation();
+  const features = (t("kleia.pricing.features", { returnObjects: true }) as string[]) || [];
+  const openWhatsApp = () => window.open(buildWaUrl(t("kleia.wa.message")), "_blank");
   return (
     <div className="max-w-[1280px] mx-auto px-4">
       <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">Crecimiento sin Límites</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">{t("kleia.pricing.title")}</h2>
         <p className="text-muted-foreground max-w-lg mx-auto">
-          Transparencia total, sin costes ocultos. Oferta limitada de lanzamiento.
+          {t("kleia.pricing.subtitle")}
         </p>
       </div>
       <div className="flex flex-col items-center">
@@ -510,18 +459,18 @@ function PricingSection() {
           style={{ backgroundColor: "hsl(238, 78%, 54%)", boxShadow: "0 25px 50px -12px rgba(45,49,231,0.3)" }}
         >
           <div className="absolute top-0 right-0 bg-primary px-4 py-2 rounded-bl-lg font-bold text-[10px] uppercase">
-            Plan Fundador · 10 Plazas
+            {t("kleia.pricing.badge")}
           </div>
-          <h3 className="text-xl font-bold font-heading mb-1">Plan Fundador</h3>
-          <p className="text-sm text-white/60 mb-8">La potencia total para expertos.</p>
+          <h3 className="text-xl font-bold font-heading mb-1">{t("kleia.pricing.planName")}</h3>
+          <p className="text-sm text-white/60 mb-8">{t("kleia.pricing.planTagline")}</p>
           <div className="flex items-end gap-2 mb-8">
             <span className="text-2xl text-white/50 line-through">70€</span>
             <span className="text-5xl font-bold">20€</span>
-            <span className="text-base text-white/60 pb-2">/mes</span>
+            <span className="text-base text-white/60 pb-2">{t("kleia.pricing.perMonth")}</span>
           </div>
           <ul className="space-y-4 mb-10">
-            {pricingFeatures.map((f) => (
-              <li key={f} className="flex items-center gap-3 text-sm">
+            {features.map((f, i) => (
+              <li key={i} className="flex items-center gap-3 text-sm">
                 <Check className="h-4 w-4 text-white" /> {f}
               </li>
             ))}
@@ -530,11 +479,11 @@ function PricingSection() {
             onClick={openWhatsApp}
             className="w-full bg-white text-[hsl(238,78%,54%)] font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform"
           >
-            Elegir Plan Fundador
+            {t("kleia.pricing.cta")}
           </button>
         </div>
         <div className="mt-8 bg-primary/10 border border-primary/20 rounded-full px-6 py-2 text-primary font-bold text-[11px] uppercase tracking-wider">
-          ✨ Prueba gratis de 14 días · Sin permanencia
+          {t("kleia.pricing.trialBadge")}
         </div>
       </div>
     </div>
@@ -542,34 +491,15 @@ function PricingSection() {
 }
 
 // ─── S7 · FAQ ─────────────────────────────────────────────────────────────────
-const faqs = [
-  {
-    q: "¿Necesito saber de tecnología?",
-    a: "No. Si puedes usar WhatsApp, puedes usar Kleia. Te acompañamos en todo.",
-  },
-  {
-    q: "¿Qué pasa con los datos de mis pacientes?",
-    a: "Los datos son tuyos. Se usan bajo encriptación clínica y no se comparten.",
-  },
-  {
-    q: "¿Puedo cancelar cuando quiera?",
-    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades.",
-  },
-  {
-    q: "¿Kleia reemplaza mi criterio profesional?",
-    a: "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente.",
-  },
-  {
-    q: "¿Cuándo estará disponible para todos?",
-    a: "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp.",
-  },
-];
+type FaqItem = { q: string; a: string };
 
 function FAQSection() {
+  const { t } = useTranslation();
+  const faqs = (t("kleia.faq.items", { returnObjects: true }) as FaqItem[]) || [];
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   return (
     <div className="max-w-[896px] mx-auto">
-      <h2 className="text-3xl font-bold font-heading text-center mb-12">Preguntas Frecuentes</h2>
+      <h2 className="text-3xl font-bold font-heading text-center mb-12">{t("kleia.faq.title")}</h2>
       <div className="flex flex-col gap-6">
         {faqs.map(({ q, a }, i) => (
           <div key={i} className="faq-item border-b border-border/30 pb-6">
@@ -596,24 +526,24 @@ function FAQSection() {
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="border-t border-border/50 py-12 bg-[hsl(210,40%,98%)]">
       <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="flex flex-col gap-4">
           <img src={kleiaLogo} alt="Kleia" className="h-7 w-auto" />
           <p className="text-xs text-muted-foreground uppercase tracking-wider">
-            © {currentYear} Kleia. precisión clínica en Nutrición.
+            {t("kleia.footer.copyright", { year: currentYear })}
           </p>
         </div>
         <div className="flex gap-8 md:justify-end">
-          {/* Enlaces Legales */}
           <a
             href="https://imsolutions.studio/kleia/legal.html"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
-            Política de Privacidad
+            {t("kleia.footer.privacy")}
           </a>
           <a
             href="https://imsolutions.studio/kleia/legal.html"
@@ -621,14 +551,13 @@ function Footer() {
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
-            Términos de servicio
+            {t("kleia.footer.terms")}
           </a>
-          {/* Enlace de Contacto */}
           <a
             href="mailto:healthytoolinfo@gmail.com"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
-            Contacto
+            {t("kleia.footer.contact")}
           </a>
         </div>
       </div>
