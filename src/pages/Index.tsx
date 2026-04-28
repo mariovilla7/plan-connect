@@ -33,7 +33,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── CONFIGURACIÓN DE ENLACES ─────────────────────────────────────────────────
 const WA_NUMBER = "359896676923";
-const LOGIN_URL = "https://imsolutions.studio/kleia/prototipo.html";
+const LOGIN_URL = "https://mariovilla7-kleia-771e0ab2.vercel.app/demo";
 const currentYear = new Date().getFullYear();
 
 function buildWaUrl(message: string) {
