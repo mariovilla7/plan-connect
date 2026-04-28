@@ -240,56 +240,23 @@ function Hero() {
 }
 
 // ─── S2 · EXPERTOS ────────────────────────────────────────────────────────────
-const testimonials = [
+const expertExtras: Array<{ flag: string; instagram?: { handle: string; url: string } }> = [
   {
-    quote: "Me encantó, reúne en un solo lugar expediente, plan alimenticio y seguimiento del paciente",
-    name: "Vicky Ojeda",
-    specialty: "Nutricionista ocupacional",
-    country: "México",
     flag: "🇲🇽",
-    instagram: {
-      handle: "@nutri_victoria.ojeda",
-      url: "https://www.instagram.com/nutri_victoria.ojeda/",
-    },
+    instagram: { handle: "@nutri_victoria.ojeda", url: "https://www.instagram.com/nutri_victoria.ojeda/" },
   },
-  {
-    quote: "Cálculos claros, personalizables y siempre bajo control del nutricionista.",
-    name: "Marc Galván",
-    specialty: "Nutrición clínica",
-    country: "Perú",
-    flag: "🇵🇪",
-  },
-  {
-    quote: "Te ahorra muchísimo tiempo sin quitarte el control clínico.",
-    name: "Sofía Müller",
-    specialty: "Nutrición clínica",
-    country: "México",
-    flag: "🇲🇽",
-  },
-  {
-    quote: "Lo que más me llamó la atención fue que se adapta al país y a sus guías nutricionales.",
-    name: "Laura Méndez",
-    specialty: "SOP",
-    country: "México",
-    flag: "🇲🇽",
-  },
-  {
-    quote: "Crear planes nutricionales se siente mucho más rápido y sencillo.",
-    name: "Carla Vélez",
-    specialty: "Nutrióloga clínica",
-    country: "México",
-    flag: "🇲🇽",
-  },
-  {
-    quote: "Ahorra tiempo antes y durante la consulta con perfiles de paciente completos.",
-    name: "Ricardo Flores",
-    specialty: "Nutricionista deportivo",
-    country: "Honduras",
-    flag: "🇭🇳",
-  },
+  { flag: "🇵🇪" },
+  { flag: "🇲🇽" },
+  { flag: "🇲🇽" },
+  { flag: "🇲🇽" },
+  { flag: "🇭🇳" },
 ];
 
+type ExpertItem = { quote: string; name: string; specialty: string; country: string };
+
 function ExpertsSection() {
+  const { t } = useTranslation();
+  const items = (t("kleia.experts.items", { returnObjects: true }) as ExpertItem[]) || [];
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -325,47 +292,50 @@ function ExpertsSection() {
   return (
     <div className="max-w-[1280px] mx-auto">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading text-white text-center mb-10 md:mb-16">
-        Lo que dicen los expertos
+        {t("kleia.experts.title")}
       </h2>
       <div className="relative">
         <div
           ref={scrollRef}
           className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4 items-stretch"
         >
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl h-auto"
-            >
-              <div className="flex justify-between items-center mb-4">
-                <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
-                <span className="text-xl">{t.flag}</span>
-              </div>
-              <p className="text-base md:text-lg text-foreground italic flex-1">"{t.quote}"</p>
-              <div className="flex items-center gap-4 pt-6 border-t border-primary/5">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
-                  {t.name.charAt(0)}
+          {items.map((item, i) => {
+            const extra = expertExtras[i] || { flag: "" };
+            return (
+              <div
+                key={i}
+                className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl h-auto"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
+                  <span className="text-xl">{extra.flag}</span>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {t.specialty}, {t.country}
-                  </p>
-                  {t.instagram && (
-                    <a
-                      href={t.instagram.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-1 font-medium"
-                    >
-                      <Instagram className="h-3.5 w-3.5" />
-                      {t.instagram.handle}
-                    </a>
-                  )}
+                <p className="text-base md:text-lg text-foreground italic flex-1">"{item.quote}"</p>
+                <div className="flex items-center gap-4 pt-6 border-t border-primary/5">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
+                    {item.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{item.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.specialty}, {item.country}
+                    </p>
+                    {extra.instagram && (
+                      <a
+                        href={extra.instagram.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-1 font-medium"
+                      >
+                        <Instagram className="h-3.5 w-3.5" />
+                        {extra.instagram.handle}
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="flex justify-center gap-4 mt-8">
           <button
