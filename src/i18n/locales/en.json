@@ -156,5 +156,113 @@
     "wa": {
       "message": "Hi! I'm interested in learning more about Kleia and scheduling a demo. Can we talk?"
     }
+  },
+  "legal": {
+    "meta": {
+      "title": "Terms and Conditions — Kleia",
+      "description": "Kleia Terms and Conditions of use, the digital platform for nutrition professionals."
+    },
+    "back": "← Back",
+    "backAria": "Back to Kleia",
+    "title": "Terms and Conditions",
+    "subtitle": "Kleia Terms and Conditions",
+    "sections": [
+      {
+        "title": "Introduction",
+        "body": [
+          "Welcome to Kleia. These Terms and Conditions govern access, registration and use of the Kleia platform by nutrition professionals and other authorized users. By registering or using Kleia, you agree to be bound by these Terms."
+        ]
+      },
+      {
+        "title": "Purpose of the service",
+        "body": [
+          "Kleia is a digital platform designed to help nutrition professionals manage, build, organize and follow up nutritional plans and content related to their professional practice."
+        ]
+      },
+      {
+        "title": "Usage Requirements and Professional Profile",
+        "body": [
+          "Kleia is software intended exclusively for nutrition, dietetics and health professionals who are duly qualified and legally authorized to practice their profession in their respective jurisdiction.",
+          "By registering and using the Service, the User represents and warrants that:",
+          "• They hold the academic qualifications and professional licenses required to prescribe nutritional guidelines.",
+          "• They comply with local rules on professional registration and ethics.",
+          "• They use the platform as a tool to support their clinical judgment and not as a sole source of diagnosis or treatment."
+        ]
+      },
+      {
+        "title": "Disclaimer for Misuse",
+        "body": [
+          "Kleia does not verify the accuracy of the credentials provided by Users at registration. Use of the platform by unqualified persons or for self-diagnosis is strictly prohibited. Kleia disclaims all liability for any damage, harm or claim arising from:",
+          "• Use of the tool by persons without the necessary technical or legal training (professional misconduct).",
+          "• The application of AI-generated plans without prior review, correction and validation by a qualified professional.",
+          "• Health decisions made by individual users who access the platform without professional supervision."
+        ]
+      },
+      {
+        "title": "Professional use",
+        "body": [
+          "The user acknowledges that Kleia is a support tool. Content generated, suggested, organized or adapted by the platform, including AI-based features, must be reviewed and validated by the professional before being used with clients or patients."
+        ]
+      },
+      {
+        "title": "User responsibility",
+        "body": [
+          "The user agrees to:",
+          "• provide truthful and up-to-date information;",
+          "• keep their access credentials confidential;",
+          "• use the platform in accordance with the law, professional ethics and these Terms;",
+          "• not enter data unless they have a valid legal basis to do so;",
+          "• always review and supervise the final content delivered to their clients."
+        ]
+      },
+      {
+        "title": "Third-party data",
+        "body": [
+          "If the user enters personal data of third parties, including health data, they declare that they are entitled to do so and that they have complied with information duties and any other applicable legal requirements."
+        ]
+      },
+      {
+        "title": "Artificial intelligence",
+        "body": [
+          "Kleia may incorporate AI-based features to assist in organizing, structuring or proposing content. These features do not replace professional judgment, diagnosis, clinical assessment or the user's responsibility."
+        ]
+      },
+      {
+        "title": "Availability",
+        "body": [
+          "Kleia will use reasonable efforts to keep the platform available, without guaranteeing uninterrupted or error-free operation."
+        ]
+      },
+      {
+        "title": "Intellectual property",
+        "body": [
+          "All rights to the platform, its design, technology, brand, base content and distinctive elements belong to Kleia or its licensors. The user retains ownership of their own content entered into the platform, to the extent permitted by law."
+        ]
+      },
+      {
+        "title": "Suspension or cancellation",
+        "body": [
+          "Kleia may suspend or cancel accounts in case of misuse, legal breach, security risk or non-compliance with these Terms."
+        ]
+      },
+      {
+        "title": "Limitation of liability",
+        "body": [
+          "Kleia acts as a support tool. Liability for the final professional decision, as well as for the clinical or nutritional use of the content, lies with the professional user."
+        ]
+      },
+      {
+        "title": "Modifications",
+        "body": [
+          "Kleia may update these Terms. When changes are material, the user will be informed by reasonable means."
+        ]
+      },
+      {
+        "title": "Applicable law and contact",
+        "body": [
+          "These Terms shall be governed by the applicable law indicated by Kleia in the version in force. For any legal or contractual inquiry, you can contact: legal@kleia.com."
+        ]
+      }
+    ]
   }
 }
