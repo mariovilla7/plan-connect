@@ -14,6 +14,7 @@ import SupportBot from "@/components/SupportBot";
 import CookieBanner from "@/components/CookieBanner";
 import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
+import LanguageSelector from "@/components/LanguageSelector";
 import {
   ChevronLeft,
   ChevronRight,
@@ -114,7 +115,8 @@ function Navbar() {
             </button>
           ))}
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <LanguageSelector />
           <Button
             onClick={openLogin}
             className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 text-sm font-bold font-heading shadow-md h-10"
