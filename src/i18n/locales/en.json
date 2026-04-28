@@ -11,10 +11,11 @@
   },
   "projects": {
     "title": "Projects",
-    "nutrition": {
-      "title": "Digital platform for nutritionists (under development)",
-      "description1": "We are developing a tool designed to facilitate the daily life of nutrition professionals. An app focused on the organization, personalization and experience of both the nutritionist and the end customer.",
-      "description2": "Project in progress. More details coming soon."
+    "kleia": {
+      "title": "Kleia — Digital platform for nutritionists",
+      "description1": "We are developing a tool designed to facilitate the daily life of nutrition professionals. An app focused on organization, personalization and the experience of both the nutritionist and the patient.",
+      "description2": "Project under active development. Discover Kleia ↓",
+      "cta": "View Kleia"
     }
   },
   "about": {
@@ -35,14 +36,15 @@
       "name": "Name",
       "namePlaceholder": "Rachel Joe",
       "email": "Email",
-      "emailPlaceholder": "Rachel@domain.com",
+      "emailPlaceholder": "rachel@domain.com",
       "message": "Message",
       "messagePlaceholder": "Type your query here.....",
       "button": "Send the message",
       "sending": "Sending...",
       "success": {
         "title": "Message sent successfully! 🎉",
-        "description": "Thanks for reaching out! We'll get back to you soon."
+        "description": "Thanks for reaching out! We'll get back to you soon.",
+        "error": "There was an error sending your message. Please try again."
       }
     }
   },
@@ -50,14 +52,10 @@
     "description": "Because everything starts with believing you are ready to build",
     "navigation": "Navigation",
     "contactInfo": "Contact",
-    "location": "Based in bulgaria and spain",
+    "location": "Based in Bulgaria and Spain",
     "copyright": "© {{year}} i'm solutions. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
-  },
-  "notFound": {
-    "message": "\"Oops! You've hit a dead end… but hey, even legends get lost sometimes!\"",
-    "button": "Back to Home"
   },
   "language": {
     "select": "Language",
