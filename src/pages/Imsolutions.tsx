@@ -234,7 +234,7 @@ export default function Imsolutions() {
                 aria-label={t("projects.kleia.cta")}
               >
                 <motion.img
-                  src={projectsImg}
+                  src={kleiaLogo}
                   alt="Kleia — Plataforma para nutricionistas"
                   loading="lazy"
                   className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto block transition-transform duration-300 group-hover:scale-[1.03]"
@@ -252,7 +252,7 @@ export default function Imsolutions() {
                 viewport={{ once: true, margin: "-100px" }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <img src={kleiaLogo} alt="Kleia" className="h-10 w-auto" loading="lazy" />
+                  <img src={projectsImg} alt="Kleia preview" className="h-12 w-auto" loading="lazy" />
                 </div>
                 <h3 className="font-gill-sans font-bold text-xl lg:text-2xl text-black mb-4">
                   {t("projects.kleia.title")}
