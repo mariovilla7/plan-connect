@@ -32,22 +32,23 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── CONFIGURACIÓN DE ENLACES ─────────────────────────────────────────────────
 const WA_NUMBER = "359896676923";
-const WA_MESSAGE = encodeURIComponent("Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?");
-const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 const LOGIN_URL = "https://imsolutions.studio/kleia/prototipo.html";
 const currentYear = new Date().getFullYear();
 
-const openWhatsApp = () => window.open(WA_URL, "_blank");
+function buildWaUrl(message: string) {
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 const openLogin = () => (window.location.href = LOGIN_URL);
 
-// ─── NAV ──────────────────────────────────────────────────────────────────────
-const navLinks = [
-  { label: "Lo que dicen los expertos", id: "seccion-expertos" },
-  { label: "Tu jornada con Kleia", id: "seccion-jornada" },
-  { label: "Potencia tu Consulta", id: "seccion-features" },
-  { label: "Precio", id: "seccion-precio" },
-  { label: "Preguntas Frecuentes", id: "seccion-faq" },
-];
+// ─── NAV (claves i18n) ───────────────────────────────────────────────────────
+const navLinkIds = [
+  { key: "experts", id: "seccion-expertos" },
+  { key: "journey", id: "seccion-jornada" },
+  { key: "features", id: "seccion-features" },
+  { key: "pricing", id: "seccion-precio" },
+  { key: "faq", id: "seccion-faq" },
+] as const;
+
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
