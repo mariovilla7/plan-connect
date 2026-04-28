@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "projects": "Proyectos",
+    "about": "Sobre nosotros",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "title": "Porque todo empieza con creer que eres",
+    "tagline": "Listo para construir",
+    "button": "Contáctanos"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "nutrition": {
+      "title": "Plataforma digital para nutricionistas (en desarrollo)",
+      "description1": "Estamos desarrollando una herramienta diseñada para facilitar la vida diaria de los profesionales de la nutrición. Una app enfocada en la organización, personalización y experiencia tanto del nutricionista como del cliente final.",
+      "description2": "Proyecto en progreso. Más detalles próximamente."
+    }
+  },
+  "about": {
+    "title": "Sobre nosotros",
+    "content": {
+      "intro": "En i'm Solutions, diseñamos y desarrollamos productos y servicios digitales que resuelven problemas del mundo real con simplicidad, propósito y un toque humano.",
+      "founding": "Nacido de una pasión compartida por la tecnología, la innovación y la resolución de problemas, i'm Solutions fue fundado por Ivelina y Mario, dos profesionales con fortalezas complementarias y una visión unificada: construir soluciones digitales significativas que mejoren la vida cotidiana.",
+      "ivelina": "Ivelina, una experimentada Product Manager, pasó años explorando cómo convertir desafíos complejos en experiencias simples e intuitivas. Frustrada por las limitaciones de esperar el \"momento perfecto\", dio un paso audaz: convertirse en la primera cliente de su propia startup. Ese cambio de mentalidad encendió los cimientos de i'm Solutions: empezar pequeño, resolver claramente, construir con corazón.",
+      "mario": "Mario aportó la columna vertebral técnica y la mentalidad operacional para dar vida a esta visión. Juntos, crearon un equipo de startup arraigado en la confianza, creatividad y valores compartidos. Su colaboración demostró que el producto real no es solo el software, es la sinergia entre personas que creen en el valor a largo plazo.",
+      "mission": "Nuestra misión es crear experiencias digitales escalables, inteligentes e impactantes que empoderen tanto a los creadores como a los usuarios finales.",
+      "philosophy": "No solo construimos productos.\\nConstruimos soluciones que fluyen.",
+      "cta": "i'm está listo para construir, ¿y tú?"
+    }
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "María García",
+      "email": "Email",
+      "emailPlaceholder": "maria@dominio.com",
+      "message": "Mensaje",
+      "messagePlaceholder": "Escribe tu consulta aquí.....",
+      "button": "Enviar el mensaje",
+      "sending": "Enviando...",
+      "success": {
+        "title": "¡Mensaje enviado correctamente! 🎉",
+        "description": "¡Gracias por contactarnos! Te responderemos pronto."
+      }
+    }
+  },
+  "footer": {
+    "description": "Porque todo empieza con creer que eres listo para construir",
+    "navigation": "Navegación",
+    "contactInfo": "Contacto",
+    "location": "Based in bulgaria and spain",
+    "copyright": "© {{year}} i'm solutions. Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
+  },
+  "notFound": {
+    "message": "\"¡Ups! Has llegado a un callejón sin salida... ¡pero bueno, hasta las leyendas se pierden a veces!\"",
+    "button": "Volver al Inicio"
+  },
+  "language": {
+    "select": "Idioma",
+    "english": "English",
+    "spanish": "Español",
+    "bulgarian": "Български"
+  }
+}

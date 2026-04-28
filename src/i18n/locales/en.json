@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "projects": "Projects",
+    "about": "About us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Because everything starts with believing you are",
+    "tagline": "Ready to build",
+    "button": "Contact us"
+  },
+  "projects": {
+    "title": "Projects",
+    "nutrition": {
+      "title": "Digital platform for nutritionists (under development)",
+      "description1": "We are developing a tool designed to facilitate the daily life of nutrition professionals. An app focused on the organization, personalization and experience of both the nutritionist and the end customer.",
+      "description2": "Project in progress. More details coming soon."
+    }
+  },
+  "about": {
+    "title": "About us",
+    "content": {
+      "intro": "At i'm Solutions, we design and develop digital products and services that solve real-world problems with simplicity, purpose, and a human touch.",
+      "founding": "Born from a shared passion for technology, innovation, and problem-solving, i'm Solutions was founded by Ivelina and Mario—two professionals with complementary strengths and a unified vision: to build meaningful digital solutions that improve everyday life.",
+      "ivelina": "Ivelina, a seasoned Product Manager, spent years exploring how to turn complex challenges into simple, intuitive experiences. Frustrated by the limitations of waiting for the \"perfect moment,\" she made a bold move—becoming the first client of her own startup. That mindset shift sparked the foundation of i'm Solutions: start small, solve clearly, build with heart.",
+      "mario": "Mario brought the technical backbone and operational mindset to bring this vision to life. Together, they created a startup team rooted in trust, creativity, and shared values. Their collaboration proved that the real product is not just the software—it's the synergy between people who believe in long-term value.",
+      "mission": "Our mission is to create scalable, smart, and impactful digital experiences that empower both the creators and the end users.",
+      "philosophy": "We don't just build products.\\nWe build solutions that flow.",
+      "cta": "i'm is ready to build, are you?"
+    }
+  },
+  "contact": {
+    "title": "Contact us",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Rachel Joe",
+      "email": "Email",
+      "emailPlaceholder": "Rachel@domain.com",
+      "message": "Message",
+      "messagePlaceholder": "Type your query here.....",
+      "button": "Send the message",
+      "sending": "Sending...",
+      "success": {
+        "title": "Message sent successfully! 🎉",
+        "description": "Thanks for reaching out! We'll get back to you soon."
+      }
+    }
+  },
+  "footer": {
+    "description": "Because everything starts with believing you are ready to build",
+    "navigation": "Navigation",
+    "contactInfo": "Contact",
+    "location": "Based in bulgaria and spain",
+    "copyright": "© {{year}} i'm solutions. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "notFound": {
+    "message": "\"Oops! You've hit a dead end… but hey, even legends get lost sometimes!\"",
+    "button": "Back to Home"
+  },
+  "language": {
+    "select": "Language",
+    "english": "English",
+    "spanish": "Español",
+    "bulgarian": "Български"
+  }
+}
