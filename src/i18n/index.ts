@@ -58,7 +58,9 @@ if (!i18n.isInitialized) {
       interpolation: { escapeValue: false },
       detection: {
         // Si el usuario ya escogió idioma manualmente, respetarlo siempre.
-        order: ["localStorage", "navigator", "htmlTag"],
+        // No usamos 'navigator' para evitar que un navegador en inglés
+        // sobrescriba la detección por geolocalización (más fiable).
+        order: ["localStorage"],
         caches: ["localStorage"],
         lookupLocalStorage: "i18nextLng",
       },

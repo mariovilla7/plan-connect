@@ -469,6 +469,24 @@ export default function Imsolutions() {
               <p className="font-gill-sans text-gray-400 text-sm">
                 {t("footer.copyright", { year: new Date().getFullYear() })}
               </p>
+              <div className="flex gap-6">
+                <a
+                  href="https://imsolutions.studio/kleia/legal.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm"
+                >
+                  {t("footer.privacy")}
+                </a>
+                <a
+                  href="https://imsolutions.studio/kleia/legal.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm"
+                >
+                  {t("footer.terms")}
+                </a>
+              </div>
             </div>
           </div>
         </footer>
