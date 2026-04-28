@@ -8,6 +8,7 @@ import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
 import gifContexto from "@/assets/Planes con contexto local (1).gif";
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
@@ -537,22 +538,18 @@ function Footer() {
           </p>
         </div>
         <div className="flex gap-8 md:justify-end">
-          <a
-            href="https://imsolutions.studio/kleia/legal.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/legal"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
             {t("kleia.footer.privacy")}
-          </a>
-          <a
-            href="https://imsolutions.studio/kleia/legal.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          </Link>
+          <Link
+            to="/legal"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
             {t("kleia.footer.terms")}
-          </a>
+          </Link>
           <a
             href="mailto:healthytoolinfo@gmail.com"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
