@@ -55,6 +55,7 @@ function scrollTo(id: string) {
 }
 
 function Navbar() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -67,7 +68,7 @@ function Navbar() {
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
-    navLinks.forEach(({ id }) => {
+    navLinkIds.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -99,7 +100,7 @@ function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         />
         <nav className="hidden lg:flex items-center gap-6">
-          {navLinks.map(({ label, id }) => (
+          {navLinkIds.map(({ key, id }) => (
             <button
               key={id}
               onClick={() => scrollTo(id)}
@@ -107,8 +108,7 @@ function Navbar() {
                 activeSection === id ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {label}
-              {/* Línea de subrayado */}
+              {t(`kleia.nav.${key}`)}
               <span
                 className={`absolute left-0 bottom-0 h-[2px] bg-primary transition-all duration-300 ${
                   activeSection === id ? "w-full" : "w-0 group-hover:w-full"
@@ -123,9 +123,9 @@ function Navbar() {
             onClick={openLogin}
             className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 text-sm font-bold font-heading shadow-md h-10"
           >
-            Iniciar sesión
+            {t("kleia.nav.login")}
           </Button>
-          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label="Menú">
+          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label={t("kleia.nav.menu")}>
             <span
               className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`}
             />
@@ -136,10 +136,9 @@ function Navbar() {
           </button>
         </div>
       </div>
-      {/* Menú Móvil */}
       {open && (
         <nav className="lg:hidden bg-white/95 backdrop-blur-lg px-4 py-2 flex flex-col border-t border-border/30">
-          {navLinks.map(({ label, id }) => (
+          {navLinkIds.map(({ key, id }) => (
             <button
               key={id}
               onClick={() => {
@@ -150,11 +149,11 @@ function Navbar() {
                 activeSection === id ? "text-primary font-semibold" : "text-muted-foreground"
               }`}
             >
-              {label}
+              {t(`kleia.nav.${key}`)}
             </button>
           ))}
           <Button onClick={openLogin} className="w-full rounded-full mt-4 mb-2">
-            Iniciar sesión
+            {t("kleia.nav.login")}
           </Button>
         </nav>
       )}
