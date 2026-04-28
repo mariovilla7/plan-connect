@@ -62,5 +62,99 @@
     "english": "English",
     "spanish": "Español",
     "bulgarian": "Български"
+  },
+  "kleia": {
+    "nav": {
+      "experts": "What experts say",
+      "journey": "Your journey with Kleia",
+      "features": "Boost your practice",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "login": "Sign in",
+      "menu": "Menu"
+    },
+    "hero": {
+      "badge": "For independent nutritionists · without losing professional judgment",
+      "title1": "Stop thinking",
+      "title2": "about menus.",
+      "title3": "End your day with every plan sent.",
+      "subtitle": "Generate clinical plans in minutes. Send a ready-to-use PDF via WhatsApp — no copy & paste.",
+      "ctaPrimary": "Try it Free",
+      "ctaSecondary": "Watch Demo"
+    },
+    "experts": {
+      "title": "What experts say",
+      "items": [
+        { "quote": "I loved it, it brings together patient records, meal plans and follow-up in one place.", "name": "Vicky Ojeda", "specialty": "Occupational nutritionist", "country": "Mexico" },
+        { "quote": "Clear, customizable calculations, always under the nutritionist's control.", "name": "Marc Galván", "specialty": "Clinical nutrition", "country": "Peru" },
+        { "quote": "It saves you so much time without taking away clinical control.", "name": "Sofía Müller", "specialty": "Clinical nutrition", "country": "Mexico" },
+        { "quote": "What caught my eye most is that it adapts to the country and its nutritional guidelines.", "name": "Laura Méndez", "specialty": "PCOS", "country": "Mexico" },
+        { "quote": "Building nutrition plans feels much faster and easier.", "name": "Carla Vélez", "specialty": "Clinical nutritionist", "country": "Mexico" },
+        { "quote": "Saves time before and during the consultation with complete patient profiles.", "name": "Ricardo Flores", "specialty": "Sports nutritionist", "country": "Honduras" }
+      ]
+    },
+    "video": {
+      "title": "Turn clinical data into unique visual experiences"
+    },
+    "journey": {
+      "title": "Your journey with Kleia",
+      "subtitle": "From the clinic to editorial design in three simple steps.",
+      "steps": [
+        { "title": "Enter the Data", "desc": "Record restrictions and goals once. Kleia stores them so you never repeat work." },
+        { "title": "Assign and adjust", "desc": "Generate full menus instantly with automatic real-time macro recalculation." },
+        { "title": "Deliver in 1 click", "desc": "Export the plan as a ready-to-share PDF and send it via WhatsApp directly." }
+      ]
+    },
+    "features": {
+      "title": "Boost your practice",
+      "subtitle": "Software designed for the high-performance nutritionist. Scientific rigor powered by AI.",
+      "items": [
+        { "title": "Clinical precision in seconds", "desc": "Calculate kcal, macros and micros in seconds with full clinical precision." },
+        { "title": "Plans with local context", "desc": "Create assisted plans that respect the patient's tastes and local context." },
+        { "title": "Smart substitutions", "desc": "Edit dishes with smart substitutions that recalculate goals in real time." },
+        { "title": "Automatic shopping lists", "desc": "Generate exact shopping lists, automatically adding up every ingredient." },
+        { "title": "Effortless education", "desc": "Embed educational guidance into the plan without writing messages from scratch." },
+        { "title": "Fast WhatsApp/PDF delivery", "desc": "Share the clinical plan via WhatsApp or PDF professionally in one click." }
+      ]
+    },
+    "pricing": {
+      "title": "Growth without Limits",
+      "subtitle": "Full transparency, no hidden costs. Limited launch offer.",
+      "badge": "Founder Plan · 10 Spots",
+      "planName": "Founder Plan",
+      "planTagline": "Full power for experts.",
+      "perMonth": "/month",
+      "features": [
+        "Access to Kleia (web, no install)",
+        "Clinical plan generation in minutes",
+        "Adjustments without mismatches (auto recalculation)",
+        "PDF export + shopping list",
+        "Send via WhatsApp/email",
+        "Unlimited patient history",
+        "Smart recipe book",
+        "Dedicated support during the pilot"
+      ],
+      "cta": "Choose Founder Plan",
+      "trialBadge": "✨ 14-day free trial · No commitment"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        { "q": "Do I need to be tech-savvy?", "a": "No. If you can use WhatsApp, you can use Kleia. We support you all the way." },
+        { "q": "What about my patients' data?", "a": "The data is yours. It is used under clinical encryption and never shared." },
+        { "q": "Can I cancel anytime?", "a": "Yes. During the pilot you can cancel anytime with no penalty." },
+        { "q": "Does Kleia replace my professional judgment?", "a": "No. Kleia automates the mechanical part, but you decide what is best for each patient." },
+        { "q": "When will it be available for everyone?", "a": "We are in a closed pilot with 10 spots. If you want to be among the first, message us on WhatsApp." }
+      ]
+    },
+    "footer": {
+      "copyright": "© {{year}} Kleia. clinical precision in Nutrition.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact"
+    },
+    "wa": {
+      "message": "Hi! I'm interested in learning more about Kleia and scheduling a demo. Can we talk?"
+    }
   }
 }
