@@ -237,7 +237,7 @@ export default function Imsolutions() {
                   src={kleiaLogo}
                   alt="Kleia — Plataforma para nutricionistas"
                   loading="lazy"
-                  className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto block transition-transform duration-300 group-hover:scale-[1.03]"
+                  className="w-full max-w-[260px] md:max-w-xs lg:max-w-sm h-auto mx-auto block transition-transform duration-300 group-hover:scale-[1.03]"
                   initial={{ opacity: 0, x: -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -251,9 +251,6 @@ export default function Imsolutions() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <img src={projectsImg} alt="Kleia preview" className="h-12 w-auto" loading="lazy" />
-                </div>
                 <h3 className="font-gill-sans font-bold text-xl lg:text-2xl text-black mb-4">
                   {t("projects.kleia.title")}
                 </h3>
@@ -273,6 +270,19 @@ export default function Imsolutions() {
                   </svg>
                 </button>
               </motion.div>
+            </div>
+
+            <div className="w-full flex justify-center mt-8 lg:mt-16">
+              <motion.img
+                src={projectsImg}
+                alt="Ilustración Kleia — colaboración nutricionista y paciente"
+                loading="lazy"
+                className="w-full max-w-md md:max-w-xl lg:max-w-3xl h-auto mx-auto block"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true, margin: "-100px" }}
+              />
             </div>
           </div>
         </section>
