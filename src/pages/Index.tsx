@@ -537,22 +537,18 @@ function Footer() {
           </p>
         </div>
         <div className="flex gap-8 md:justify-end">
-          <a
-            href="https://imsolutions.studio/kleia/legal.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/legal"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
             {t("kleia.footer.privacy")}
-          </a>
-          <a
-            href="https://imsolutions.studio/kleia/legal.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          </Link>
+          <Link
+            to="/legal"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
             {t("kleia.footer.terms")}
-          </a>
+          </Link>
           <a
             href="mailto:healthytoolinfo@gmail.com"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"

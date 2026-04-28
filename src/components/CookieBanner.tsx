@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export default function CookieBanner() {
@@ -26,14 +27,12 @@ export default function CookieBanner() {
       <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <p className="text-sm flex-1 leading-relaxed">
           Usamos cookies para mejorar tu experiencia y analizar el tráfico.{" "}
-          <a
-            href="https://imsolutions.studio/kleia/legal.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/legal"
             className="underline hover:text-primary transition-colors"
           >
             Más información
-          </a>
+          </Link>
         </p>
         <div className="flex gap-3 shrink-0">
           <Button
