@@ -6,7 +6,8 @@ import gifListas from "@/assets/listas-compra.gif";
 import gifEducacion from "@/assets/educacion-sin-esfuerzo.gif";
 import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
 import gifContexto from "@/assets/Planes con contexto local (1).gif";
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
@@ -31,28 +32,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── CONFIGURACIÓN DE ENLACES ─────────────────────────────────────────────────
 const WA_NUMBER = "359896676923";
-const WA_MESSAGE = encodeURIComponent("Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?");
-const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 const LOGIN_URL = "https://imsolutions.studio/kleia/prototipo.html";
 const currentYear = new Date().getFullYear();
 
-const openWhatsApp = () => window.open(WA_URL, "_blank");
+function buildWaUrl(message: string) {
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 const openLogin = () => (window.location.href = LOGIN_URL);
 
-// ─── NAV ──────────────────────────────────────────────────────────────────────
-const navLinks = [
-  { label: "Lo que dicen los expertos", id: "seccion-expertos" },
-  { label: "Tu jornada con Kleia", id: "seccion-jornada" },
-  { label: "Potencia tu Consulta", id: "seccion-features" },
-  { label: "Precio", id: "seccion-precio" },
-  { label: "Preguntas Frecuentes", id: "seccion-faq" },
-];
+// ─── NAV (claves i18n) ───────────────────────────────────────────────────────
+const navLinkIds = [
+  { key: "experts", id: "seccion-expertos" },
+  { key: "journey", id: "seccion-jornada" },
+  { key: "features", id: "seccion-features" },
+  { key: "pricing", id: "seccion-precio" },
+  { key: "faq", id: "seccion-faq" },
+] as const;
+
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
 function Navbar() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -65,7 +68,7 @@ function Navbar() {
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
-    navLinks.forEach(({ id }) => {
+    navLinkIds.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -97,7 +100,7 @@ function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         />
         <nav className="hidden lg:flex items-center gap-6">
-          {navLinks.map(({ label, id }) => (
+          {navLinkIds.map(({ key, id }) => (
             <button
               key={id}
               onClick={() => scrollTo(id)}
@@ -105,8 +108,7 @@ function Navbar() {
                 activeSection === id ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {label}
-              {/* Línea de subrayado */}
+              {t(`kleia.nav.${key}`)}
               <span
                 className={`absolute left-0 bottom-0 h-[2px] bg-primary transition-all duration-300 ${
                   activeSection === id ? "w-full" : "w-0 group-hover:w-full"
@@ -121,9 +123,9 @@ function Navbar() {
             onClick={openLogin}
             className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 text-sm font-bold font-heading shadow-md h-10"
           >
-            Iniciar sesión
+            {t("kleia.nav.login")}
           </Button>
-          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label="Menú">
+          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label={t("kleia.nav.menu")}>
             <span
               className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`}
             />
@@ -134,10 +136,9 @@ function Navbar() {
           </button>
         </div>
       </div>
-      {/* Menú Móvil */}
       {open && (
         <nav className="lg:hidden bg-white/95 backdrop-blur-lg px-4 py-2 flex flex-col border-t border-border/30">
-          {navLinks.map(({ label, id }) => (
+          {navLinkIds.map(({ key, id }) => (
             <button
               key={id}
               onClick={() => {
@@ -148,11 +149,11 @@ function Navbar() {
                 activeSection === id ? "text-primary font-semibold" : "text-muted-foreground"
               }`}
             >
-              {label}
+              {t(`kleia.nav.${key}`)}
             </button>
           ))}
           <Button onClick={openLogin} className="w-full rounded-full mt-4 mb-2">
-            Iniciar sesión
+            {t("kleia.nav.login")}
           </Button>
         </nav>
       )}
@@ -162,9 +163,12 @@ function Navbar() {
 
 // ─── S1 · HERO ───────────────────────────────────────────────────────────────
 function Hero() {
+  const { t } = useTranslation();
   const heroRef = useRef<HTMLElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+
+  const openWhatsApp = () => window.open(buildWaUrl(t("kleia.wa.message")), "_blank");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -195,14 +199,14 @@ function Hero() {
       <div className="max-w-[1280px] mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div ref={textRef} className="space-y-6">
           <span className="inline-block bg-primary/10 text-primary text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wide">
-            Para nutricionistas independientes · sin perder el criterio profesional
+            {t("kleia.hero.badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-1px] sm:tracking-[-2px] md:tracking-[-3px]">
-            Deja de pensar <br /> en menús. <br />
-            <span className="text-primary">Termina tu día con todos los planes enviados.</span>
+            {t("kleia.hero.title1")} <br /> {t("kleia.hero.title2")} <br />
+            <span className="text-primary">{t("kleia.hero.title3")}</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-[512px] leading-relaxed">
-            Genera planes clínicos en minutos. Envía un PDF listo por WhatsApp — sin copiar y pegar.
+            {t("kleia.hero.subtitle")}
           </p>
           <div className="flex flex-wrap gap-4">
             <Button
@@ -210,7 +214,7 @@ function Hero() {
               size="lg"
               className="rounded-full px-8 text-lg font-bold font-heading h-14 shadow-lg bg-gradient-to-br from-[hsl(235,100%,65%)] to-primary text-white"
             >
-              Pruébalo Gratis
+              {t("kleia.hero.ctaPrimary")}
             </Button>
             <Button
               onClick={() => scrollTo("seccion-video")}
@@ -218,7 +222,7 @@ function Hero() {
               size="lg"
               className="rounded-full px-8 text-lg font-bold font-heading h-14 bg-[hsl(220,20%,95%)] text-foreground"
             >
-              <Play className="h-4 w-4 mr-2 text-primary fill-primary" /> Ver Demo
+              <Play className="h-4 w-4 mr-2 text-primary fill-primary" /> {t("kleia.hero.ctaSecondary")}
             </Button>
           </div>
         </div>
@@ -236,56 +240,23 @@ function Hero() {
 }
 
 // ─── S2 · EXPERTOS ────────────────────────────────────────────────────────────
-const testimonials = [
+const expertExtras: Array<{ flag: string; instagram?: { handle: string; url: string } }> = [
   {
-    quote: "Me encantó, reúne en un solo lugar expediente, plan alimenticio y seguimiento del paciente",
-    name: "Vicky Ojeda",
-    specialty: "Nutricionista ocupacional",
-    country: "México",
     flag: "🇲🇽",
-    instagram: {
-      handle: "@nutri_victoria.ojeda",
-      url: "https://www.instagram.com/nutri_victoria.ojeda/",
-    },
+    instagram: { handle: "@nutri_victoria.ojeda", url: "https://www.instagram.com/nutri_victoria.ojeda/" },
   },
-  {
-    quote: "Cálculos claros, personalizables y siempre bajo control del nutricionista.",
-    name: "Marc Galván",
-    specialty: "Nutrición clínica",
-    country: "Perú",
-    flag: "🇵🇪",
-  },
-  {
-    quote: "Te ahorra muchísimo tiempo sin quitarte el control clínico.",
-    name: "Sofía Müller",
-    specialty: "Nutrición clínica",
-    country: "México",
-    flag: "🇲🇽",
-  },
-  {
-    quote: "Lo que más me llamó la atención fue que se adapta al país y a sus guías nutricionales.",
-    name: "Laura Méndez",
-    specialty: "SOP",
-    country: "México",
-    flag: "🇲🇽",
-  },
-  {
-    quote: "Crear planes nutricionales se siente mucho más rápido y sencillo.",
-    name: "Carla Vélez",
-    specialty: "Nutrióloga clínica",
-    country: "México",
-    flag: "🇲🇽",
-  },
-  {
-    quote: "Ahorra tiempo antes y durante la consulta con perfiles de paciente completos.",
-    name: "Ricardo Flores",
-    specialty: "Nutricionista deportivo",
-    country: "Honduras",
-    flag: "🇭🇳",
-  },
+  { flag: "🇵🇪" },
+  { flag: "🇲🇽" },
+  { flag: "🇲🇽" },
+  { flag: "🇲🇽" },
+  { flag: "🇭🇳" },
 ];
 
+type ExpertItem = { quote: string; name: string; specialty: string; country: string };
+
 function ExpertsSection() {
+  const { t } = useTranslation();
+  const items = (t("kleia.experts.items", { returnObjects: true }) as ExpertItem[]) || [];
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -321,47 +292,50 @@ function ExpertsSection() {
   return (
     <div className="max-w-[1280px] mx-auto">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading text-white text-center mb-10 md:mb-16">
-        Lo que dicen los expertos
+        {t("kleia.experts.title")}
       </h2>
       <div className="relative">
         <div
           ref={scrollRef}
           className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-4 px-4 items-stretch"
         >
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl h-auto"
-            >
-              <div className="flex justify-between items-center mb-4">
-                <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
-                <span className="text-xl">{t.flag}</span>
-              </div>
-              <p className="text-base md:text-lg text-foreground italic flex-1">"{t.quote}"</p>
-              <div className="flex items-center gap-4 pt-6 border-t border-primary/5">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
-                  {t.name.charAt(0)}
+          {items.map((item, i) => {
+            const extra = expertExtras[i] || { flag: "" };
+            return (
+              <div
+                key={i}
+                className="testimonial-card snap-center flex-shrink-0 w-[280px] sm:w-[360px] rounded-2xl p-6 md:p-10 flex flex-col justify-between bg-[hsl(252,100%,98%)] shadow-xl h-auto"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <Quote className="h-5 w-5 text-primary fill-primary opacity-20" />
+                  <span className="text-xl">{extra.flag}</span>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {t.specialty}, {t.country}
-                  </p>
-                  {t.instagram && (
-                    <a
-                      href={t.instagram.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-1 font-medium"
-                    >
-                      <Instagram className="h-3.5 w-3.5" />
-                      {t.instagram.handle}
-                    </a>
-                  )}
+                <p className="text-base md:text-lg text-foreground italic flex-1">"{item.quote}"</p>
+                <div className="flex items-center gap-4 pt-6 border-t border-primary/5">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
+                    {item.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{item.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.specialty}, {item.country}
+                    </p>
+                    {extra.instagram && (
+                      <a
+                        href={extra.instagram.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-1 font-medium"
+                      >
+                        <Instagram className="h-3.5 w-3.5" />
+                        {extra.instagram.handle}
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="flex justify-center gap-4 mt-8">
           <button
@@ -384,25 +358,21 @@ function ExpertsSection() {
 
 // ─── S3 · VIDEO ───────────────────────────────────────────────────────────────
 function VideoSection() {
+  const { t } = useTranslation();
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12 px-4">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-white mb-8 leading-tight">
-        Transforma datos clínicos en experiencias visuales únicas
+        {t("kleia.video.title")}
       </h2>
 
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
         <iframe
           className="w-full h-full absolute inset-0"
-          // Mantenemos controls=1 para que veas tus controles de sonido y link
           src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
           title="Kleia Demo"
           frameBorder={0}
-          /* SOLUCIÓN AL ERROR: 
-             Añadimos "clipboard-write" para que el botón de enlace funcione 
-             y el navegador no lance la violación de política.
-          */
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
@@ -412,97 +382,58 @@ function VideoSection() {
 }
 
 // ─── S4 · JORNADA ─────────────────────────────────────────────────────────────
-const journeySteps = [
-  {
-    icon: ClipboardList,
-    num: "1",
-    title: "Ingresa los Datos",
-    desc: "Registra restricciones y objetivos una sola vez. Kleia los guarda para no repetir trabajo.",
-  },
-  {
-    icon: Layers,
-    num: "2",
-    title: "Asigna y reajusta",
-    desc: "Genera menús completos al instante con recálculo automático de macros en tiempo real.",
-  },
-  {
-    icon: Download,
-    num: "3",
-    title: "Entrega en 1 click",
-    desc: "Exporta el plan como PDF listo para compartir y envíalo por WhatsApp directamente.",
-  },
-];
+const journeyIcons = [ClipboardList, Layers, Download];
+
+type JourneyStep = { title: string; desc: string };
 
 function JourneySection() {
+  const { t } = useTranslation();
+  const steps = (t("kleia.journey.steps", { returnObjects: true }) as JourneyStep[]) || [];
   return (
     <div className="max-w-[1280px] mx-auto text-center">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading mb-3">Tu jornada con Kleia</h2>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading mb-3">{t("kleia.journey.title")}</h2>
       <p className="text-muted-foreground text-base md:text-lg max-w-lg mx-auto mb-16">
-        De la clínica al diseño editorial en tres simples pasos.
+        {t("kleia.journey.subtitle")}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {journeySteps.map((step) => (
-          <div key={step.num} className="journey-card flex flex-col items-center gap-4">
-            <div className="w-24 h-24 rounded-xl bg-white flex items-center justify-center border shadow-lg">
-              <step.icon className="h-6 w-6 text-primary" />
+        {steps.map((step, idx) => {
+          const Icon = journeyIcons[idx] || ClipboardList;
+          return (
+            <div key={idx} className="journey-card flex flex-col items-center gap-4">
+              <div className="w-24 h-24 rounded-xl bg-white flex items-center justify-center border shadow-lg">
+                <Icon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-bold font-heading text-lg md:text-xl">
+                {idx + 1}. {step.title}
+              </h3>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{step.desc}</p>
             </div>
-            <h3 className="font-bold font-heading text-lg md:text-xl">
-              {step.num}. {step.title}
-            </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{step.desc}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 }
 
 // ─── S5 · FEATURES ────────────────────────────────────────────────────────────
-const featureCards = [
-  {
-    title: "Precisión clínica en segundos",
-    desc: "Calcula kcal, macros y micros en segundos con total precisión clínica.",
-    image: gifPrecision,
-  },
-  {
-    title: "Planes con contexto local",
-    desc: "Crea planes asistidos que respetan los gustos y el contexto local del paciente.",
-    image: gifContexto,
-  },
-  {
-    title: "Sustituciones inteligentes",
-    desc: "Edita platos con sustituciones inteligentes que recalculan objetivos en tiempo real.",
-    image: gifSustituciones,
-  },
-  {
-    title: "Listas de compra automáticas",
-    desc: "Genera listas de compra exactas sumando cada ingrediente automáticamente.",
-    image: gifListas,
-  },
-  {
-    title: "Educación sin esfuerzo",
-    desc: "Integra pautas educativas en el plan sin tener que redactar mensajes desde cero.",
-    image: gifEducacion,
-  },
-  {
-    title: "Entrega ágil WhatsApp/PDF",
-    desc: "Comparte el plan clínico por WhatsApp o PDF de forma profesional en un clic.",
-    image: gifEntrega,
-  },
-];
+const featureImages = [gifPrecision, gifContexto, gifSustituciones, gifListas, gifEducacion, gifEntrega];
+
+type FeatureItem = { title: string; desc: string };
 
 function FeaturesSection() {
+  const { t } = useTranslation();
+  const items = (t("kleia.features.items", { returnObjects: true }) as FeatureItem[]) || [];
   return (
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">Potencia tu Consulta</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">{t("kleia.features.title")}</h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-          Software diseñado para el nutricionista de alto rendimiento. Rigor científico impulsado por IA.
+          {t("kleia.features.subtitle")}
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {featureCards.map((f) => (
-          <FeatureCard key={f.title} title={f.title} desc={f.desc} image={f.image} />
+        {items.map((f, i) => (
+          <FeatureCard key={i} title={f.title} desc={f.desc} image={featureImages[i] || featureImages[0]} />
         ))}
       </div>
     </div>
@@ -510,24 +441,16 @@ function FeaturesSection() {
 }
 
 // ─── S6 · PRICING ─────────────────────────────────────────────────────────────
-const pricingFeatures = [
-  "Acceso a Kleia (web, sin instalación)",
-  "Generación de planes clínicos en minutos",
-  "Ajustes sin descuadres (recalculo automático)",
-  "Exportación PDF + lista de compra",
-  "Envío por WhatsApp/correo",
-  "Historial ilimitado de pacientes",
-  "Recetario inteligente",
-  "Soporte dedicado durante el piloto",
-];
-
 function PricingSection() {
+  const { t } = useTranslation();
+  const features = (t("kleia.pricing.features", { returnObjects: true }) as string[]) || [];
+  const openWhatsApp = () => window.open(buildWaUrl(t("kleia.wa.message")), "_blank");
   return (
     <div className="max-w-[1280px] mx-auto px-4">
       <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">Crecimiento sin Límites</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">{t("kleia.pricing.title")}</h2>
         <p className="text-muted-foreground max-w-lg mx-auto">
-          Transparencia total, sin costes ocultos. Oferta limitada de lanzamiento.
+          {t("kleia.pricing.subtitle")}
         </p>
       </div>
       <div className="flex flex-col items-center">
@@ -536,18 +459,18 @@ function PricingSection() {
           style={{ backgroundColor: "hsl(238, 78%, 54%)", boxShadow: "0 25px 50px -12px rgba(45,49,231,0.3)" }}
         >
           <div className="absolute top-0 right-0 bg-primary px-4 py-2 rounded-bl-lg font-bold text-[10px] uppercase">
-            Plan Fundador · 10 Plazas
+            {t("kleia.pricing.badge")}
           </div>
-          <h3 className="text-xl font-bold font-heading mb-1">Plan Fundador</h3>
-          <p className="text-sm text-white/60 mb-8">La potencia total para expertos.</p>
+          <h3 className="text-xl font-bold font-heading mb-1">{t("kleia.pricing.planName")}</h3>
+          <p className="text-sm text-white/60 mb-8">{t("kleia.pricing.planTagline")}</p>
           <div className="flex items-end gap-2 mb-8">
             <span className="text-2xl text-white/50 line-through">70€</span>
             <span className="text-5xl font-bold">20€</span>
-            <span className="text-base text-white/60 pb-2">/mes</span>
+            <span className="text-base text-white/60 pb-2">{t("kleia.pricing.perMonth")}</span>
           </div>
           <ul className="space-y-4 mb-10">
-            {pricingFeatures.map((f) => (
-              <li key={f} className="flex items-center gap-3 text-sm">
+            {features.map((f, i) => (
+              <li key={i} className="flex items-center gap-3 text-sm">
                 <Check className="h-4 w-4 text-white" /> {f}
               </li>
             ))}
@@ -556,11 +479,11 @@ function PricingSection() {
             onClick={openWhatsApp}
             className="w-full bg-white text-[hsl(238,78%,54%)] font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform"
           >
-            Elegir Plan Fundador
+            {t("kleia.pricing.cta")}
           </button>
         </div>
         <div className="mt-8 bg-primary/10 border border-primary/20 rounded-full px-6 py-2 text-primary font-bold text-[11px] uppercase tracking-wider">
-          ✨ Prueba gratis de 14 días · Sin permanencia
+          {t("kleia.pricing.trialBadge")}
         </div>
       </div>
     </div>
@@ -568,34 +491,15 @@ function PricingSection() {
 }
 
 // ─── S7 · FAQ ─────────────────────────────────────────────────────────────────
-const faqs = [
-  {
-    q: "¿Necesito saber de tecnología?",
-    a: "No. Si puedes usar WhatsApp, puedes usar Kleia. Te acompañamos en todo.",
-  },
-  {
-    q: "¿Qué pasa con los datos de mis pacientes?",
-    a: "Los datos son tuyos. Se usan bajo encriptación clínica y no se comparten.",
-  },
-  {
-    q: "¿Puedo cancelar cuando quiera?",
-    a: "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades.",
-  },
-  {
-    q: "¿Kleia reemplaza mi criterio profesional?",
-    a: "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente.",
-  },
-  {
-    q: "¿Cuándo estará disponible para todos?",
-    a: "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp.",
-  },
-];
+type FaqItem = { q: string; a: string };
 
 function FAQSection() {
+  const { t } = useTranslation();
+  const faqs = (t("kleia.faq.items", { returnObjects: true }) as FaqItem[]) || [];
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   return (
     <div className="max-w-[896px] mx-auto">
-      <h2 className="text-3xl font-bold font-heading text-center mb-12">Preguntas Frecuentes</h2>
+      <h2 className="text-3xl font-bold font-heading text-center mb-12">{t("kleia.faq.title")}</h2>
       <div className="flex flex-col gap-6">
         {faqs.map(({ q, a }, i) => (
           <div key={i} className="faq-item border-b border-border/30 pb-6">
@@ -622,24 +526,24 @@ function FAQSection() {
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="border-t border-border/50 py-12 bg-[hsl(210,40%,98%)]">
       <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="flex flex-col gap-4">
           <img src={kleiaLogo} alt="Kleia" className="h-7 w-auto" />
           <p className="text-xs text-muted-foreground uppercase tracking-wider">
-            © {currentYear} Kleia. precisión clínica en Nutrición.
+            {t("kleia.footer.copyright", { year: currentYear })}
           </p>
         </div>
         <div className="flex gap-8 md:justify-end">
-          {/* Enlaces Legales */}
           <a
             href="https://imsolutions.studio/kleia/legal.html"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
-            Política de Privacidad
+            {t("kleia.footer.privacy")}
           </a>
           <a
             href="https://imsolutions.studio/kleia/legal.html"
@@ -647,14 +551,13 @@ function Footer() {
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
-            Términos de servicio
+            {t("kleia.footer.terms")}
           </a>
-          {/* Enlace de Contacto */}
           <a
             href="mailto:healthytoolinfo@gmail.com"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
           >
-            Contacto
+            {t("kleia.footer.contact")}
           </a>
         </div>
       </div>

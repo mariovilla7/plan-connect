@@ -277,7 +277,7 @@ export default function Imsolutions() {
                 src={projectsImg}
                 alt="Ilustración Kleia — colaboración nutricionista y paciente"
                 loading="lazy"
-                className="w-full max-w-md md:max-w-xl lg:max-w-3xl h-auto mx-auto block"
+                className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-auto mx-auto block"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
