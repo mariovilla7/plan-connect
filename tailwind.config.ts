@@ -81,6 +81,8 @@ export default {
       fontFamily: {
         heading: ["'Manrope'", "sans-serif"],
         sans: ["'Inter'", "sans-serif"],
+        "gill-sans": ["'Gill Sans'", "'Gill Sans MT'", "Calibri", "'Trebuchet MS'", "sans-serif"],
+        inter: ["'Inter'", "-apple-system", "Roboto", "Helvetica", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
