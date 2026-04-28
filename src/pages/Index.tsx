@@ -163,9 +163,12 @@ function Navbar() {
 
 // ─── S1 · HERO ───────────────────────────────────────────────────────────────
 function Hero() {
+  const { t } = useTranslation();
   const heroRef = useRef<HTMLElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+
+  const openWhatsApp = () => window.open(buildWaUrl(t("kleia.wa.message")), "_blank");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -196,14 +199,14 @@ function Hero() {
       <div className="max-w-[1280px] mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div ref={textRef} className="space-y-6">
           <span className="inline-block bg-primary/10 text-primary text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wide">
-            Para nutricionistas independientes · sin perder el criterio profesional
+            {t("kleia.hero.badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-1px] sm:tracking-[-2px] md:tracking-[-3px]">
-            Deja de pensar <br /> en menús. <br />
-            <span className="text-primary">Termina tu día con todos los planes enviados.</span>
+            {t("kleia.hero.title1")} <br /> {t("kleia.hero.title2")} <br />
+            <span className="text-primary">{t("kleia.hero.title3")}</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-[512px] leading-relaxed">
-            Genera planes clínicos en minutos. Envía un PDF listo por WhatsApp — sin copiar y pegar.
+            {t("kleia.hero.subtitle")}
           </p>
           <div className="flex flex-wrap gap-4">
             <Button
@@ -211,7 +214,7 @@ function Hero() {
               size="lg"
               className="rounded-full px-8 text-lg font-bold font-heading h-14 shadow-lg bg-gradient-to-br from-[hsl(235,100%,65%)] to-primary text-white"
             >
-              Pruébalo Gratis
+              {t("kleia.hero.ctaPrimary")}
             </Button>
             <Button
               onClick={() => scrollTo("seccion-video")}
@@ -219,7 +222,7 @@ function Hero() {
               size="lg"
               className="rounded-full px-8 text-lg font-bold font-heading h-14 bg-[hsl(220,20%,95%)] text-foreground"
             >
-              <Play className="h-4 w-4 mr-2 text-primary fill-primary" /> Ver Demo
+              <Play className="h-4 w-4 mr-2 text-primary fill-primary" /> {t("kleia.hero.ctaSecondary")}
             </Button>
           </div>
         </div>
