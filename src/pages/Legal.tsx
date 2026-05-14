@@ -15,7 +15,15 @@ export default function Legal() {
       <Helmet>
         <title>{t("legal.meta.title")}</title>
         <meta name="description" content={t("legal.meta.description")} />
-        <link rel="canonical" href="/legal" />
+        <link rel="canonical" href="https://www.imsolutions.studio/legal" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={t("legal.meta.title")} />
+        <meta property="og:description" content={t("legal.meta.description")} />
+        <meta property="og:url" content="https://www.imsolutions.studio/legal" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={t("legal.meta.title")} />
+        <meta name="twitter:description" content={t("legal.meta.description")} />
+        <meta name="robots" content="index, follow" />
       </Helmet>
 
       <main className="min-h-screen bg-background text-foreground">
