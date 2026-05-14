@@ -9,6 +9,7 @@ import gifContexto from "@/assets/Planes con contexto local (1).gif";
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
@@ -563,6 +564,110 @@ function Footer() {
 }
 
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
+function KleiaSeo() {
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || "es").slice(0, 2) as "es" | "en" | "bg";
+  const seo = {
+    es: {
+      title: "Kleia | Planes de nutrición clínica en minutos para nutricionistas",
+      desc: "Kleia genera planes clínicos personalizados en minutos, recalcula macros en tiempo real y entrega un PDF listo por WhatsApp. Para nutricionistas independientes. Piloto cerrado.",
+    },
+    en: {
+      title: "Kleia | Clinical nutrition plans in minutes for nutritionists",
+      desc: "Kleia generates personalized clinical plans in minutes, recalculates macros in real time, and delivers a ready-to-share PDF via WhatsApp. For independent nutritionists. Closed pilot.",
+    },
+    bg: {
+      title: "Kleia | Клинични хранителни планове за минути",
+      desc: "Kleia създава персонализирани клинични планове за минути, преизчислява макросите в реално време и изпраща готов PDF по WhatsApp. За независими нутриционисти.",
+    },
+  }[lang] ?? {
+    title: "Kleia | Clinical nutrition platform",
+    desc: "Clinical nutrition plans in minutes for nutritionists.",
+  };
+  const ogLocale = lang === "en" ? "en_US" : lang === "bg" ? "bg_BG" : "es_ES";
+  const url = "https://imsolutions.studio/kleia";
+  const faqItems = (t("kleia.faq.items", { returnObjects: true }) as Array<{ q: string; a: string }>) || [];
+
+  return (
+    <Helmet>
+      <html lang={lang} />
+      <title>{seo.title}</title>
+      <meta name="description" content={seo.desc} />
+      <meta name="keywords" content="Kleia, software para nutricionistas, planes nutricionales, nutrition software, meal planning, dietitian software, AI nutrition, plan clínico, WhatsApp nutricionista, i'm solutions" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+      <link rel="canonical" href={url} />
+      <link rel="alternate" hrefLang="es" href={url} />
+      <link rel="alternate" hrefLang="en" href={url} />
+      <link rel="alternate" hrefLang="bg" href={url} />
+      <link rel="alternate" hrefLang="x-default" href={url} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Kleia" />
+      <meta property="og:title" content={seo.title} />
+      <meta property="og:description" content={seo.desc} />
+      <meta property="og:url" content={url} />
+      <meta property="og:locale" content={ogLocale} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={seo.title} />
+      <meta name="twitter:description" content={seo.desc} />
+      <meta name="theme-color" content="#4956F3" />
+      <meta name="apple-mobile-web-app-title" content="Kleia" />
+      <script type="application/ld+json">{JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "@id": url + "#software",
+            name: "Kleia",
+            description: seo.desc,
+            url,
+            applicationCategory: "HealthApplication",
+            applicationSubCategory: "Clinical nutrition planning",
+            operatingSystem: "Web",
+            inLanguage: ["es", "en", "bg"],
+            audience: { "@type": "Audience", audienceType: "Nutritionists, dietitians, health professionals" },
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "EUR",
+              availability: "https://schema.org/LimitedAvailability",
+              description: "14-day free trial · Founder Plan, limited spots",
+            },
+            creator: {
+              "@type": "Organization",
+              name: "i'm solutions",
+              url: "https://imsolutions.studio/",
+            },
+            featureList: [
+              "Clinical plan generation in minutes",
+              "Automatic kcal/macro/micro recalculation",
+              "Smart food substitutions",
+              "Automatic shopping lists",
+              "PDF export and WhatsApp delivery",
+              "Unlimited patient history",
+              "Smart recipe book",
+            ],
+          },
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://imsolutions.studio/" },
+              { "@type": "ListItem", position: 2, name: "Kleia", item: url },
+            ],
+          },
+          {
+            "@type": "FAQPage",
+            mainEntity: faqItems.map((it) => ({
+              "@type": "Question",
+              name: it.q,
+              acceptedAnswer: { "@type": "Answer", text: it.a },
+            })),
+          },
+        ],
+      })}</script>
+    </Helmet>
+  );
+}
+
 export default function Index() {
   const [loaded, setLoaded] = useState(false);
   const handleLoaded = useCallback(() => {
@@ -574,6 +679,7 @@ export default function Index() {
 
   return (
     <>
+      <KleiaSeo />
       {!loaded && <IntroLoader onComplete={handleLoaded} />}
       <div
         className="min-h-screen font-sans overflow-x-clip transition-opacity duration-300"

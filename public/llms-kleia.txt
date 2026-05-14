@@ -1,0 +1,65 @@
+# llms.txt — Kleia (a product by i'm solutions)
+# https://imsolutions.studio/llms-kleia.txt
+# Last update: 2026-05-14
+
+> Kleia is a clinical nutrition planning platform for independent nutritionists. It generates personalized clinical plans in minutes, recalculates macros in real time, suggests smart substitutions, builds automatic shopping lists, and delivers a ready-to-use PDF via WhatsApp — without losing the professional's clinical judgment. Built by i'm solutions (imSolutions Studio).
+
+## Product
+
+- Name: Kleia
+- Parent company: i'm solutions (https://imsolutions.studio/)
+- URL: https://imsolutions.studio/kleia
+- Category: HealthApplication / SaaS for clinical nutrition
+- Operating system: Web (no install)
+- Status: Active development — closed pilot, Founder Plan with limited spots
+- Languages: Spanish (es), English (en), Bulgarian (bg)
+- Contact / demo: WhatsApp +359 89 667 6923
+
+## Audience
+
+Independent nutritionists, dietitians and licensed health professionals — qualified and legally authorized to prescribe nutritional guidelines in their jurisdiction. Kleia is a professional support tool, not a self-diagnosis tool for end consumers.
+
+## Problem
+
+Independent nutritionists spend hours on the mechanical part of building plans: calculating macros, reformatting documents, copy-pasting into WhatsApp, rebuilding shopping lists every time a dish changes. This eats into the time they should spend on clinical judgment and patient follow-up.
+
+## Value proposition
+
+- Clinical precision in seconds: kcal, macros and micros calculated automatically.
+- Plans with local context: respects patient preferences and local food culture.
+- Smart substitutions: edit a dish, macros recalculate in real time.
+- Automatic shopping lists: every ingredient summed exactly.
+- Effortless education: embedded patient guidance, no copy-paste.
+- 1-click delivery: ready-to-share PDF sent via WhatsApp or email.
+- Unlimited patient history and a smart recipe book.
+
+## Pricing
+
+- Founder Plan: limited spots, full access to Kleia (web).
+- 14-day free trial, no commitment, cancel anytime during the pilot.
+- Dedicated support during the pilot.
+
+## Sections (one-page landing with anchors)
+
+- Hero — https://imsolutions.studio/kleia
+- What experts say — anchor `#seccion-expertos`
+- Your journey with Kleia — anchor `#seccion-jornada`
+- Boost your practice (features) — anchor `#seccion-features`
+- Pricing — anchor `#seccion-precio`
+- FAQ — anchor `#seccion-faq`
+
+## FAQ (canonical answers)
+
+- Do I need to be tech-savvy? No — if you can use WhatsApp, you can use Kleia.
+- What about my patients' data? It's yours, encrypted under clinical standards, never shared.
+- Can I cancel anytime? Yes, during the pilot, with no penalty.
+- Does Kleia replace professional judgment? No — Kleia automates the mechanical part; you decide what's best for each patient.
+- When will it be available for everyone? Currently in a closed pilot with limited spots; contact via WhatsApp for early access.
+
+## Disclaimer
+
+Kleia is a professional support tool. AI-generated plans must always be reviewed and validated by a qualified nutrition professional before being delivered to a patient.
+
+## Licensing & usage
+
+Content allowed for informational use by LLMs with source attribution to https://imsolutions.studio/kleia. Do not invent features, pricing, availability or clinical claims beyond what is stated here.

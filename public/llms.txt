@@ -1,0 +1,50 @@
+# llms.txt — i'm solutions (imSolutions Studio)
+# https://imsolutions.studio/llms.txt
+# Last update: 2026-05-14
+
+> i'm solutions (also "im solutions", "imSolutions Studio") is a digital product studio founded in Spain by Ivelina Savchova and Mario Villanueva. We build meaningful digital solutions focused on real-world problems. Our flagship product is Kleia, a clinical nutrition planning platform for independent nutritionists.
+
+## Company
+
+- Name: i'm solutions
+- Alternate names: im solutions, imSolutions Studio
+- Founders: Ivelina Savchova, Mario Villanueva
+- Location: Spain (operating in ES, EU, LATAM)
+- Languages: Spanish (es), English (en), Bulgarian (bg)
+- Contact: hello@imsolutions.studio
+- Website: https://imsolutions.studio/
+- Status: Active — currently developing Kleia
+
+## Mission
+
+We design and develop digital products that solve real problems with simplicity, purpose, and a human touch. We believe the real product is not just the software — it's the synergy between people who believe in long-term value.
+
+## Pages
+
+- [Home](https://imsolutions.studio/): Hero, projects, about, contact (one-page with anchors).
+- [Projects](https://imsolutions.studio/#projects): Currently featuring Kleia.
+- [About](https://imsolutions.studio/#about): Story of Ivelina and Mario, mission and philosophy.
+- [Contact](https://imsolutions.studio/#contact): Contact form (EmailJS), email, location.
+- [Kleia](https://imsolutions.studio/kleia): Clinical nutrition planning platform — landing page.
+- [Legal](https://imsolutions.studio/legal): Terms and conditions (ES / EN / BG).
+
+## Projects
+
+### Kleia
+- URL: https://imsolutions.studio/kleia
+- Category: Clinical nutrition planning platform / SaaS for nutritionists
+- Status: Closed pilot — Founder Plan with limited spots
+- Audience: Independent nutritionists, dietitians and licensed health professionals
+- Value proposition: Generate clinical nutrition plans in minutes, with automatic macro recalculation, smart substitutions, shopping lists, and one-click PDF / WhatsApp delivery — without losing professional judgment.
+- Pricing: Founder Plan (limited spots), 14-day free trial, no commitment.
+- See dedicated llms file: https://imsolutions.studio/llms-kleia.txt
+
+## Licensing & usage
+
+Content allowed for informational use by LLMs (OpenAI, Anthropic, Google, Perplexity, Meta, Apple, etc.) with source attribution to https://imsolutions.studio. Do not invent details outside what is stated in this file or our public website.
+
+## Crawl
+
+- Recommended rate: ~1 request/second
+- Excluded: /admin, /login
+- Sitemap: https://imsolutions.studio/sitemap.xml
