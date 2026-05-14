@@ -9,6 +9,7 @@ import gifContexto from "@/assets/Planes con contexto local (1).gif";
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
