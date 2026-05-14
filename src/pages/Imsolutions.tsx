@@ -103,14 +103,77 @@ export default function Imsolutions() {
 
   return (
     <>
-      <Helmet>
-        <title>i'm solutions | Digital Solutions with Attitude, Resilience &amp; Vision</title>
-        <meta
-          name="description"
-          content="Construimos soluciones digitales con sentido. Actualmente desarrollamos Kleia, una plataforma para nutricionistas. Fundada por Ivelina y Mario."
-        />
-        <link rel="canonical" href="https://imsolutions.studio/" />
-      </Helmet>
+      {(() => {
+        const lang = (i18n.language || "es").slice(0, 2);
+        const seo = {
+          es: {
+            title: "i'm solutions | Soluciones digitales con actitud, resiliencia y visión",
+            desc: "Estudio digital fundado por Ivelina y Mario en España. Construimos productos con sentido. Actualmente desarrollamos Kleia, plataforma clínica para nutricionistas.",
+          },
+          en: {
+            title: "i'm solutions | Digital solutions with attitude, resilience & vision",
+            desc: "Digital studio founded by Ivelina and Mario in Spain. We build meaningful products. Currently developing Kleia, a clinical platform for nutritionists.",
+          },
+          bg: {
+            title: "i'm solutions | Дигитални решения с нагласа, устойчивост и визия",
+            desc: "Дигитално студио, основано от Ивелина и Марио в Испания. Изграждаме смислени продукти. В момента разработваме Kleia — клинична платформа за нутриционисти.",
+          },
+        }[lang as "es" | "en" | "bg"] ?? {
+          title: "i'm solutions | Digital solutions with attitude",
+          desc: "We build meaningful digital products. Currently developing Kleia.",
+        };
+        const ogLocale = lang === "en" ? "en_US" : lang === "bg" ? "bg_BG" : "es_ES";
+        return (
+          <Helmet>
+            <html lang={lang} />
+            <title>{seo.title}</title>
+            <meta name="description" content={seo.desc} />
+            <meta name="keywords" content="i'm solutions, im solutions, imSolutions Studio, Ivelina, Mario, digital studio, nutrition software, Kleia, Spain, startup, product design, MVP" />
+            <link rel="canonical" href="https://imsolutions.studio/" />
+            <link rel="alternate" hrefLang="es" href="https://imsolutions.studio/" />
+            <link rel="alternate" hrefLang="en" href="https://imsolutions.studio/" />
+            <link rel="alternate" hrefLang="bg" href="https://imsolutions.studio/" />
+            <link rel="alternate" hrefLang="x-default" href="https://imsolutions.studio/" />
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="i'm solutions" />
+            <meta property="og:title" content={seo.title} />
+            <meta property="og:description" content={seo.desc} />
+            <meta property="og:url" content="https://imsolutions.studio/" />
+            <meta property="og:locale" content={ogLocale} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={seo.title} />
+            <meta name="twitter:description" content={seo.desc} />
+            <script type="application/ld+json">{JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://imsolutions.studio/#organization",
+                  name: "i'm solutions",
+                  alternateName: ["imSolutions Studio", "im solutions"],
+                  url: "https://imsolutions.studio/",
+                  logo: "https://imsolutions.studio/img/logoKleia.png",
+                  email: "hello@imsolutions.studio",
+                  founder: [
+                    { "@type": "Person", name: "Ivelina Savchova" },
+                    { "@type": "Person", name: "Mario Villanueva" },
+                  ],
+                  foundingLocation: { "@type": "Place", name: "Spain" },
+                  areaServed: ["ES", "EU", "LATAM"],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://imsolutions.studio/#website",
+                  url: "https://imsolutions.studio/",
+                  name: "i'm solutions",
+                  publisher: { "@id": "https://imsolutions.studio/#organization" },
+                  inLanguage: ["es", "en", "bg"],
+                },
+              ],
+            })}</script>
+          </Helmet>
+        );
+      })()}
 
       <div className="min-h-screen bg-[#FFFFFC]">
         {/* Header */}
