@@ -1,5 +1,5 @@
 # robots.txt — i'm solutions / Kleia
-# https://imsolutions.studio
+# https://www.imsolutions.studio
 
 User-agent: Googlebot
 Allow: /
@@ -67,4 +67,4 @@ Allow: /
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://imsolutions.studio/sitemap.xml
+Sitemap: https://www.imsolutions.studio/sitemap.xml
