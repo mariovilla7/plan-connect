@@ -342,12 +342,14 @@ function ExpertsSection() {
         <div className="flex justify-center gap-4 mt-8">
           <button
             onClick={() => scroll("left")}
+            aria-label="Anterior testimonio"
             className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center transition-opacity ${canScrollLeft ? "opacity-100" : "opacity-30 pointer-events-none"}`}
           >
             <ChevronLeft className="h-5 w-5 text-white" />
           </button>
           <button
             onClick={() => scroll("right")}
+            aria-label="Siguiente testimonio"
             className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center transition-opacity ${canScrollRight ? "opacity-100" : "opacity-30 pointer-events-none"}`}
           >
             <ChevronRight className="h-5 w-5 text-white" />
@@ -569,16 +571,16 @@ function KleiaSeo() {
   const lang = (i18n.language || "es").slice(0, 2) as "es" | "en" | "bg";
   const seo = {
     es: {
-      title: "Kleia | Planes de nutrición clínica en minutos para nutricionistas",
-      desc: "Kleia genera planes clínicos personalizados en minutos, recalcula macros en tiempo real y entrega un PDF listo por WhatsApp. Para nutricionistas independientes. Piloto cerrado.",
+      title: "Kleia | Planes de nutrición clínica en minutos",
+      desc: "Kleia genera planes clínicos personalizados en minutos, recalcula macros y entrega el PDF por WhatsApp. Para nutricionistas independientes. Piloto cerrado.",
     },
     en: {
-      title: "Kleia | Clinical nutrition plans in minutes for nutritionists",
-      desc: "Kleia generates personalized clinical plans in minutes, recalculates macros in real time, and delivers a ready-to-share PDF via WhatsApp. For independent nutritionists. Closed pilot.",
+      title: "Kleia | Clinical nutrition plans in minutes",
+      desc: "Kleia generates personalized clinical plans in minutes, recalculates macros in real time, and delivers a ready-to-share PDF via WhatsApp. Closed pilot.",
     },
     bg: {
       title: "Kleia | Клинични хранителни планове за минути",
-      desc: "Kleia създава персонализирани клинични планове за минути, преизчислява макросите в реално време и изпраща готов PDF по WhatsApp. За независими нутриционисти.",
+      desc: "Kleia създава персонализирани клинични планове за минути, преизчислява макросите в реално време и изпраща готов PDF по WhatsApp.",
     },
   }[lang] ?? {
     title: "Kleia | Clinical nutrition platform",
