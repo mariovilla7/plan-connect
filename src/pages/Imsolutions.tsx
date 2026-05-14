@@ -107,19 +107,19 @@ export default function Imsolutions() {
         const lang = (i18n.language || "es").slice(0, 2);
         const seo = {
           es: {
-            title: "i'm solutions | Soluciones digitales con actitud, resiliencia y visión",
+            title: "i'm solutions | Soluciones digitales con actitud y visión",
             desc: "Estudio digital fundado por Ivelina y Mario en España. Construimos productos con sentido. Actualmente desarrollamos Kleia, plataforma clínica para nutricionistas.",
           },
           en: {
-            title: "i'm solutions | Digital solutions with attitude, resilience & vision",
+            title: "i'm solutions | Digital products with attitude & vision",
             desc: "Digital studio founded by Ivelina and Mario in Spain. We build meaningful products. Currently developing Kleia, a clinical platform for nutritionists.",
           },
           bg: {
-            title: "i'm solutions | Дигитални решения с нагласа, устойчивост и визия",
+            title: "i'm solutions | Дигитални продукти с нагласа и визия",
             desc: "Дигитално студио, основано от Ивелина и Марио в Испания. Изграждаме смислени продукти. В момента разработваме Kleia — клинична платформа за нутриционисти.",
           },
         }[lang as "es" | "en" | "bg"] ?? {
-          title: "i'm solutions | Digital solutions with attitude",
+          title: "i'm solutions | Digital products with attitude",
           desc: "We build meaningful digital products. Currently developing Kleia.",
         };
         const ogLocale = lang === "en" ? "en_US" : lang === "bg" ? "bg_BG" : "es_ES";
@@ -250,10 +250,9 @@ export default function Imsolutions() {
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-32">
             <div className="flex flex-col justify-center items-start gap-6 lg:w-1/2">
               <h1 className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black">
-                {t("hero.title")}
-              </h1>
-              <h1 className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black -mt-4">
-                {t("hero.tagline")}
+                <span className="sr-only">i'm solutions — </span>
+                <span className="block">{t("hero.title")}</span>
+                <span className="block -mt-4">{t("hero.tagline")}</span>
               </h1>
               <button
                 onClick={() => scrollToSection("contact")}
