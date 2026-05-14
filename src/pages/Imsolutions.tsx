@@ -129,16 +129,16 @@ export default function Imsolutions() {
             <title>{seo.title}</title>
             <meta name="description" content={seo.desc} />
             <meta name="keywords" content="i'm solutions, im solutions, imSolutions Studio, Ivelina, Mario, digital studio, nutrition software, Kleia, Spain, startup, product design, MVP" />
-            <link rel="canonical" href="https://imsolutions.studio/" />
-            <link rel="alternate" hrefLang="es" href="https://imsolutions.studio/" />
-            <link rel="alternate" hrefLang="en" href="https://imsolutions.studio/" />
-            <link rel="alternate" hrefLang="bg" href="https://imsolutions.studio/" />
-            <link rel="alternate" hrefLang="x-default" href="https://imsolutions.studio/" />
+            <link rel="canonical" href="https://www.imsolutions.studio/" />
+            <link rel="alternate" hrefLang="es" href="https://www.imsolutions.studio/" />
+            <link rel="alternate" hrefLang="en" href="https://www.imsolutions.studio/" />
+            <link rel="alternate" hrefLang="bg" href="https://www.imsolutions.studio/" />
+            <link rel="alternate" hrefLang="x-default" href="https://www.imsolutions.studio/" />
             <meta property="og:type" content="website" />
             <meta property="og:site_name" content="i'm solutions" />
             <meta property="og:title" content={seo.title} />
             <meta property="og:description" content={seo.desc} />
-            <meta property="og:url" content="https://imsolutions.studio/" />
+            <meta property="og:url" content="https://www.imsolutions.studio/" />
             <meta property="og:locale" content={ogLocale} />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={seo.title} />
@@ -148,11 +148,11 @@ export default function Imsolutions() {
               "@graph": [
                 {
                   "@type": "Organization",
-                  "@id": "https://imsolutions.studio/#organization",
+                  "@id": "https://www.imsolutions.studio/#organization",
                   name: "i'm solutions",
                   alternateName: ["imSolutions Studio", "im solutions"],
-                  url: "https://imsolutions.studio/",
-                  logo: "https://imsolutions.studio/img/logoKleia.png",
+                  url: "https://www.imsolutions.studio/",
+                  logo: "https://www.imsolutions.studio/img/logoKleia.png",
                   email: "hello@imsolutions.studio",
                   founder: [
                     { "@type": "Person", name: "Ivelina Savchova" },
@@ -163,10 +163,10 @@ export default function Imsolutions() {
                 },
                 {
                   "@type": "WebSite",
-                  "@id": "https://imsolutions.studio/#website",
-                  url: "https://imsolutions.studio/",
+                  "@id": "https://www.imsolutions.studio/#website",
+                  url: "https://www.imsolutions.studio/",
                   name: "i'm solutions",
-                  publisher: { "@id": "https://imsolutions.studio/#organization" },
+                  publisher: { "@id": "https://www.imsolutions.studio/#organization" },
                   inLanguage: ["es", "en", "bg"],
                 },
               ],

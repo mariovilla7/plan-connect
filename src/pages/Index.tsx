@@ -585,7 +585,7 @@ function KleiaSeo() {
     desc: "Clinical nutrition plans in minutes for nutritionists.",
   };
   const ogLocale = lang === "en" ? "en_US" : lang === "bg" ? "bg_BG" : "es_ES";
-  const url = "https://imsolutions.studio/kleia";
+  const url = "https://www.imsolutions.studio/kleia";
   const faqItems = (t("kleia.faq.items", { returnObjects: true }) as Array<{ q: string; a: string }>) || [];
 
   return (
@@ -635,7 +635,7 @@ function KleiaSeo() {
             creator: {
               "@type": "Organization",
               name: "i'm solutions",
-              url: "https://imsolutions.studio/",
+              url: "https://www.imsolutions.studio/",
             },
             featureList: [
               "Clinical plan generation in minutes",
@@ -650,7 +650,7 @@ function KleiaSeo() {
           {
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://imsolutions.studio/" },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.imsolutions.studio/" },
               { "@type": "ListItem", position: 2, name: "Kleia", item: url },
             ],
           },

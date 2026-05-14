@@ -1,5 +1,5 @@
 # llms.txt — Kleia (a product by i'm solutions)
-# https://imsolutions.studio/llms-kleia.txt
+# https://www.imsolutions.studio/llms-kleia.txt
 # Last update: 2026-05-14
 
 > Kleia is a clinical nutrition planning platform for independent nutritionists. It generates personalized clinical plans in minutes, recalculates macros in real time, suggests smart substitutions, builds automatic shopping lists, and delivers a ready-to-use PDF via WhatsApp — without losing the professional's clinical judgment. Built by i'm solutions (imSolutions Studio).
@@ -7,8 +7,8 @@
 ## Product
 
 - Name: Kleia
-- Parent company: i'm solutions (https://imsolutions.studio/)
-- URL: https://imsolutions.studio/kleia
+- Parent company: i'm solutions (https://www.imsolutions.studio/)
+- URL: https://www.imsolutions.studio/kleia
 - Category: HealthApplication / SaaS for clinical nutrition
 - Operating system: Web (no install)
 - Status: Active development — closed pilot, Founder Plan with limited spots
@@ -41,7 +41,7 @@ Independent nutritionists spend hours on the mechanical part of building plans: 
 
 ## Sections (one-page landing with anchors)
 
-- Hero — https://imsolutions.studio/kleia
+- Hero — https://www.imsolutions.studio/kleia
 - What experts say — anchor `#seccion-expertos`
 - Your journey with Kleia — anchor `#seccion-jornada`
 - Boost your practice (features) — anchor `#seccion-features`
@@ -62,4 +62,4 @@ Kleia is a professional support tool. AI-generated plans must always be reviewed
 
 ## Licensing & usage
 
-Content allowed for informational use by LLMs with source attribution to https://imsolutions.studio/kleia. Do not invent features, pricing, availability or clinical claims beyond what is stated here.
+Content allowed for informational use by LLMs with source attribution to https://www.imsolutions.studio/kleia. Do not invent features, pricing, availability or clinical claims beyond what is stated here.
