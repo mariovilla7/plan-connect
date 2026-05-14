@@ -205,6 +205,60 @@ export type Database = {
         }
         Relationships: []
       }
+      master_templates: {
+        Row: {
+          base_calories: number
+          base_macros: Json
+          category: string | null
+          config: Json | null
+          created_at: string
+          days: number
+          description: string | null
+          id: string
+          is_global: boolean
+          meals: number
+          name: string
+          plan_data: Json
+          tags: string[] | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          base_calories?: number
+          base_macros?: Json
+          category?: string | null
+          config?: Json | null
+          created_at?: string
+          days?: number
+          description?: string | null
+          id?: string
+          is_global?: boolean
+          meals?: number
+          name: string
+          plan_data: Json
+          tags?: string[] | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          base_calories?: number
+          base_macros?: Json
+          category?: string | null
+          config?: Json | null
+          created_at?: string
+          days?: number
+          description?: string | null
+          id?: string
+          is_global?: boolean
+          meals?: number
+          name?: string
+          plan_data?: Json
+          tags?: string[] | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       meal_images: {
         Row: {
           created_at: string
