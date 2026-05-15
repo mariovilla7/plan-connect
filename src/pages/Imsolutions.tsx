@@ -289,7 +289,7 @@ export default function Imsolutions() {
               {t("projects.title")}
             </motion.h2>
 
-            <div className="w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-32">
+            <div className="w-full bg-[#F4F2EC] rounded-3xl p-6 sm:p-10 lg:p-16 flex flex-col lg:flex-row items-center gap-8 lg:gap-20 shadow-sm border border-black/5">
               <button
                 onClick={() => navigate("/kleia")}
                 className="w-full lg:w-1/2 flex justify-center items-center group focus:outline-none"
