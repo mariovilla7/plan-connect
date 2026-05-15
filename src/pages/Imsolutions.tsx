@@ -180,7 +180,7 @@ export default function Imsolutions() {
         <header className="w-full bg-[#FFFFFC] py-4 lg:py-6 px-4 lg:px-16 xl:px-0 sticky top-0 z-50 border-b border-transparent">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <button onClick={scrollToTop} className="flex items-center hover:opacity-70 transition-opacity" aria-label="Inicio">
-              <ImsLogo className="w-32 h-auto lg:w-40" />
+              <ImsLogo className="w-24 h-auto lg:w-40" />
             </button>
 
             {/* Desktop nav */}
@@ -249,10 +249,10 @@ export default function Imsolutions() {
         <section className="w-full px-4 lg:px-16 xl:px-0 pb-16 lg:pb-32 pt-8 lg:pt-16">
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-32">
             <div className="flex flex-col justify-center items-start gap-6 lg:w-1/2">
-              <h1 className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black">
+              <h1 className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[1.15] lg:leading-[120%] tracking-[-0.5px] lg:tracking-[-2.16px] text-black">
                 <span className="sr-only">i'm solutions — </span>
                 <span className="block">{t("hero.title")}</span>
-                <span className="block -mt-4">{t("hero.tagline")}</span>
+                <span className="block lg:-mt-4">{t("hero.tagline")}</span>
               </h1>
               <button
                 onClick={() => scrollToSection("contact")}
