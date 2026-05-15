@@ -195,7 +195,7 @@ function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative overflow-hidden px-4 sm:px-8 bg-[hsl(220,33%,97%)] pt-[160px] pb-[128px]"
+      className="relative overflow-hidden px-5 sm:px-8 bg-[hsl(220,33%,97%)] pt-[140px] sm:pt-[160px] pb-[96px] sm:pb-[128px]"
     >
       <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
       <div className="max-w-[1280px] mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -203,7 +203,7 @@ function Hero() {
           <span className="inline-block bg-primary/10 text-primary text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wide">
             {t("kleia.hero.badge")}
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] font-bold font-heading leading-[1.08] tracking-[-1px] sm:tracking-[-2px] md:tracking-[-3px]">
+          <h1 className="text-[34px] sm:text-5xl md:text-[52px] lg:text-[60px] font-bold font-heading leading-[1.1] tracking-tight sm:tracking-[-1.5px] md:tracking-[-2.5px] break-words [text-wrap:balance]">
             {t("kleia.hero.title1")} <br /> {t("kleia.hero.title2")} <br />
             <span className="text-primary">{t("kleia.hero.title3")}</span>
           </h1>
@@ -533,14 +533,14 @@ function Footer() {
   const { t } = useTranslation();
   return (
     <footer className="border-t border-border/50 py-12 bg-[hsl(210,40%,98%)]">
-      <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div className="flex flex-col gap-4">
-          <img src={kleiaLogo} alt="Kleia" className="h-7 w-auto" />
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:items-center">
+        <div className="flex flex-col gap-4 items-start">
+          <img src={kleiaLogo} alt="Kleia" className="h-7 w-auto block" />
           <p className="text-xs text-muted-foreground uppercase tracking-wider">
             {t("kleia.footer.copyright", { year: currentYear })}
           </p>
         </div>
-        <div className="flex gap-8 md:justify-end">
+        <div className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
           <Link
             to="/legal"
             className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
