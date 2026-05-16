@@ -440,87 +440,17 @@ export default function Imsolutions() {
 
             <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-32">
               <div className="lg:w-1/2 w-full">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="block font-inter font-bold text-base text-black mb-2">
-                      {t("contact.form.name")}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder={t("contact.form.namePlaceholder")}
-                      required
-                      className="w-full px-6 py-4 border border-black rounded-lg bg-white font-inter text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-inter font-bold text-base text-black mb-2">
-                      {t("contact.form.email")}
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder={t("contact.form.emailPlaceholder")}
-                      required
-                      className="w-full px-6 py-4 border border-black rounded-lg bg-white font-inter text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-inter font-bold text-base text-black mb-2">
-                      {t("contact.form.message")}
-                    </label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder={t("contact.form.messagePlaceholder")}
-                      rows={4}
-                      required
-                      className="w-full px-6 py-4 border border-black rounded-lg bg-white font-inter text-base text-gray-700 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-black"
-                    />
-                  </div>
-                  <motion.button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full lg:w-auto px-6 py-3 bg-black text-white font-inter font-bold text-base rounded-lg hover:bg-gray-700 hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <motion.div
-                          className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        />
-                        {t("contact.form.sending")}
-                      </span>
-                    ) : (
-                      t("contact.form.button")
-                    )}
-                  </motion.button>
-
-                  <AnimatePresence>
-                    {showConfirmation && (
-                      <motion.div
-                        className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                      >
-                        <h4 className="font-gill-sans font-bold text-green-800 text-lg">
-                          {t("contact.form.success.title")}
-                        </h4>
-                        <p className="font-gill-sans text-green-700 text-sm mt-1">
-                          {t("contact.form.success.description")}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </form>
+                <iframe
+                  src="https://tally.so/embed/mBvvde?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                  loading="lazy"
+                  width="100%"
+                  height="500"
+                  frameBorder={0}
+                  marginHeight={0}
+                  marginWidth={0}
+                  title="Contact form"
+                  className="w-full"
+                />
               </div>
               <div className="lg:w-1/2 flex justify-center items-center">
                 <motion.img
