@@ -15,44 +15,27 @@ import kleiaLogo from "@/assets/imsolutions/logokleia.png";
 export default function Imsolutions() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      emailjs.init("Li-IsF_Rv_SW6GEY0");
-      const templateParams = {
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
-        time: new Date().toLocaleString(i18n.language === "es" ? "es-ES" : i18n.language, {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-      await emailjs.send("service_9yatyia", "template_ta16eku", templateParams);
-      setShowConfirmation(true);
-      setFormData({ name: "", email: "", message: "" });
-      setTimeout(() => setShowConfirmation(false), 5000);
-    } catch (error) {
-      console.error("Error sending email:", error);
-      alert(t("contact.form.success.error"));
-    } finally {
-      setIsSubmitting(false);
+  // Load Tally embed script so the iframe auto-resizes (dynamicHeight=1)
+  useEffect(() => {
+    const SRC = "https://tally.so/widgets/embed.js";
+    const load = () => {
+      const w = window as any;
+      if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+    };
+    if (document.querySelector(`script[src="${SRC}"]`)) {
+      load();
+      return;
     }
-  };
+    const script = document.createElement("script");
+    script.src = SRC;
+    script.onload = load;
+    script.onerror = load;
+    document.body.appendChild(script);
+  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
