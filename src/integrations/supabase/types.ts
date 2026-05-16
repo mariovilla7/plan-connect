@@ -485,6 +485,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      apply_standard_grants: {
+        Args: { _include_anon?: boolean; _table: unknown }
+        Returns: undefined
+      }
       decrement_ai_credits: {
         Args: { p_firebase_uid: string }
         Returns: undefined
