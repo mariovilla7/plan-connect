@@ -31,7 +31,11 @@ export default function Imsolutions() {
         email: formData.email,
         message: formData.message,
         time: new Date().toLocaleString(i18n.language === "es" ? "es-ES" : i18n.language, {
-          year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
         }),
       };
       await emailjs.send("service_9yatyia", "template_ta16eku", templateParams);
@@ -92,7 +96,10 @@ export default function Imsolutions() {
     let ticking = false;
     const throttled = () => {
       if (!ticking) {
-        requestAnimationFrame(() => { handleScroll(); ticking = false; });
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
         ticking = true;
       }
     };
@@ -128,7 +135,10 @@ export default function Imsolutions() {
             <html lang={lang} />
             <title>{seo.title}</title>
             <meta name="description" content={seo.desc} />
-            <meta name="keywords" content="i'm solutions, im solutions, imSolutions Studio, Ivelina, Mario, digital studio, nutrition software, Kleia, Spain, startup, product design, MVP" />
+            <meta
+              name="keywords"
+              content="i'm solutions, im solutions, imSolutions Studio, Ivelina, Mario, digital studio, nutrition software, Kleia, Spain, startup, product design, MVP"
+            />
             <link rel="canonical" href="https://www.imsolutions.studio/" />
             <link rel="alternate" hrefLang="es" href="https://www.imsolutions.studio/" />
             <link rel="alternate" hrefLang="en" href="https://www.imsolutions.studio/" />
@@ -143,34 +153,36 @@ export default function Imsolutions() {
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={seo.title} />
             <meta name="twitter:description" content={seo.desc} />
-            <script type="application/ld+json">{JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "Organization",
-                  "@id": "https://www.imsolutions.studio/#organization",
-                  name: "i'm solutions",
-                  alternateName: ["imSolutions Studio", "im solutions"],
-                  url: "https://www.imsolutions.studio/",
-                  logo: "https://www.imsolutions.studio/img/logoKleia.png",
-                  email: "hello@imsolutions.studio",
-                  founder: [
-                    { "@type": "Person", name: "Ivelina Savchova" },
-                    { "@type": "Person", name: "Mario Villanueva" },
-                  ],
-                  foundingLocation: { "@type": "Place", name: "Spain" },
-                  areaServed: ["ES", "EU", "LATAM"],
-                },
-                {
-                  "@type": "WebSite",
-                  "@id": "https://www.imsolutions.studio/#website",
-                  url: "https://www.imsolutions.studio/",
-                  name: "i'm solutions",
-                  publisher: { "@id": "https://www.imsolutions.studio/#organization" },
-                  inLanguage: ["es", "en", "bg"],
-                },
-              ],
-            })}</script>
+            <script type="application/ld+json">
+              {JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "Organization",
+                    "@id": "https://www.imsolutions.studio/#organization",
+                    name: "i'm solutions",
+                    alternateName: ["imSolutions Studio", "im solutions"],
+                    url: "https://www.imsolutions.studio/",
+                    logo: "https://www.imsolutions.studio/img/logoKleia.png",
+                    email: "hello@imsolutions.studio",
+                    founder: [
+                      { "@type": "Person", name: "Ivelina Savchova" },
+                      { "@type": "Person", name: "Mario Villanueva" },
+                    ],
+                    foundingLocation: { "@type": "Place", name: "Spain" },
+                    areaServed: ["ES", "EU", "LATAM"],
+                  },
+                  {
+                    "@type": "WebSite",
+                    "@id": "https://www.imsolutions.studio/#website",
+                    url: "https://www.imsolutions.studio/",
+                    name: "i'm solutions",
+                    publisher: { "@id": "https://www.imsolutions.studio/#organization" },
+                    inLanguage: ["es", "en", "bg"],
+                  },
+                ],
+              })}
+            </script>
           </Helmet>
         );
       })()}
@@ -179,7 +191,11 @@ export default function Imsolutions() {
         {/* Header */}
         <header className="w-full bg-[#FFFFFC] py-4 lg:py-6 px-4 lg:px-16 xl:px-0 sticky top-0 z-50 border-b border-transparent">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <button onClick={scrollToTop} className="flex items-center hover:opacity-70 transition-opacity" aria-label="Inicio">
+            <button
+              onClick={scrollToTop}
+              className="flex items-center hover:opacity-70 transition-opacity"
+              aria-label="Inicio"
+            >
               <ImsLogo className="w-24 h-auto lg:w-40" />
             </button>
 
@@ -212,9 +228,15 @@ export default function Imsolutions() {
                 aria-label="Menu"
               >
                 <div className="relative w-6 h-6 flex flex-col justify-center items-center">
-                  <span className={`absolute w-6 h-0.5 bg-black transition-all duration-300 ${mobileMenuOpen ? "rotate-45" : "-translate-y-2"}`} />
-                  <span className={`absolute w-6 h-0.5 bg-black transition-all duration-200 ${mobileMenuOpen ? "opacity-0" : "opacity-100"}`} />
-                  <span className={`absolute w-6 h-0.5 bg-black transition-all duration-300 ${mobileMenuOpen ? "-rotate-45" : "translate-y-2"}`} />
+                  <span
+                    className={`absolute w-6 h-0.5 bg-black transition-all duration-300 ${mobileMenuOpen ? "rotate-45" : "-translate-y-2"}`}
+                  />
+                  <span
+                    className={`absolute w-6 h-0.5 bg-black transition-all duration-200 ${mobileMenuOpen ? "opacity-0" : "opacity-100"}`}
+                  />
+                  <span
+                    className={`absolute w-6 h-0.5 bg-black transition-all duration-300 ${mobileMenuOpen ? "-rotate-45" : "translate-y-2"}`}
+                  />
                 </div>
               </button>
             </div>
@@ -327,7 +349,16 @@ export default function Imsolutions() {
                   className="mt-6 inline-flex items-center gap-2 px-5 py-3 bg-black text-white font-inter font-bold text-base rounded-lg hover:bg-gray-700 hover:scale-105 transition-all duration-300"
                 >
                   {t("projects.kleia.cta")}
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -387,9 +418,7 @@ export default function Imsolutions() {
                 <p>{t("about.content.ivelina")}</p>
                 <p>{t("about.content.mario")}</p>
                 <p className="font-bold">{t("about.content.mission")}</p>
-                <p className="font-bold whitespace-pre-line">
-                  {t("about.content.philosophy").split("\\n").join("\n")}
-                </p>
+                <p className="font-bold whitespace-pre-line">{t("about.content.philosophy").split("\\n").join("\n")}</p>
                 <p className="font-bold text-lg">{t("about.content.cta")}</p>
               </motion.div>
             </div>
@@ -413,31 +442,50 @@ export default function Imsolutions() {
               <div className="lg:w-1/2 w-full">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className="block font-inter font-bold text-base text-black mb-2">{t("contact.form.name")}</label>
+                    <label className="block font-inter font-bold text-base text-black mb-2">
+                      {t("contact.form.name")}
+                    </label>
                     <input
-                      type="text" name="name" value={formData.name} onChange={handleInputChange}
-                      placeholder={t("contact.form.namePlaceholder")} required
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder={t("contact.form.namePlaceholder")}
+                      required
                       className="w-full px-6 py-4 border border-black rounded-lg bg-white font-inter text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
                     />
                   </div>
                   <div>
-                    <label className="block font-inter font-bold text-base text-black mb-2">{t("contact.form.email")}</label>
+                    <label className="block font-inter font-bold text-base text-black mb-2">
+                      {t("contact.form.email")}
+                    </label>
                     <input
-                      type="email" name="email" value={formData.email} onChange={handleInputChange}
-                      placeholder={t("contact.form.emailPlaceholder")} required
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder={t("contact.form.emailPlaceholder")}
+                      required
                       className="w-full px-6 py-4 border border-black rounded-lg bg-white font-inter text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
                     />
                   </div>
                   <div>
-                    <label className="block font-inter font-bold text-base text-black mb-2">{t("contact.form.message")}</label>
+                    <label className="block font-inter font-bold text-base text-black mb-2">
+                      {t("contact.form.message")}
+                    </label>
                     <textarea
-                      name="message" value={formData.message} onChange={handleInputChange}
-                      placeholder={t("contact.form.messagePlaceholder")} rows={4} required
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder={t("contact.form.messagePlaceholder")}
+                      rows={4}
+                      required
                       className="w-full px-6 py-4 border border-black rounded-lg bg-white font-inter text-base text-gray-700 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-black"
                     />
                   </div>
                   <motion.button
-                    type="submit" disabled={isSubmitting}
+                    type="submit"
+                    disabled={isSubmitting}
                     className="w-full lg:w-auto px-6 py-3 bg-black text-white font-inter font-bold text-base rounded-lg hover:bg-gray-700 hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
                     whileTap={{ scale: 0.95 }}
                   >
@@ -450,7 +498,9 @@ export default function Imsolutions() {
                         />
                         {t("contact.form.sending")}
                       </span>
-                    ) : t("contact.form.button")}
+                    ) : (
+                      t("contact.form.button")
+                    )}
                   </motion.button>
 
                   <AnimatePresence>
@@ -493,7 +543,11 @@ export default function Imsolutions() {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
               <div className="flex flex-col gap-4">
-                <button onClick={scrollToTop} className="flex items-center hover:opacity-70 transition-opacity" aria-label="Inicio">
+                <button
+                  onClick={scrollToTop}
+                  className="flex items-center hover:opacity-70 transition-opacity"
+                  aria-label="Inicio"
+                >
                   <ImsLogo className="w-24 h-auto" fill="#FFFFFF" />
                 </button>
                 <p className="font-gill-sans text-sm text-gray-300 max-w-xs">{t("footer.description")}</p>
@@ -511,7 +565,10 @@ export default function Imsolutions() {
                         {t(`nav.${id}`)}
                       </button>
                     ))}
-                    <Link to="/kleia" className="font-gill-sans text-gray-300 hover:text-white transition-colors text-left">
+                    <Link
+                      to="/kleia"
+                      className="font-gill-sans text-gray-300 hover:text-white transition-colors text-left"
+                    >
                       Kleia →
                     </Link>
                   </nav>
@@ -519,8 +576,11 @@ export default function Imsolutions() {
                 <div className="flex flex-col gap-4">
                   <h4 className="font-gill-sans font-bold text-white text-lg">{t("footer.contactInfo")}</h4>
                   <div className="flex flex-col gap-3">
-                    <a href="mailto:hello@imsolutions.studio" className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm underline">
-                      hello@imsolutions.studio
+                    <a
+                      href="mailto:healthytoolinfo@gmail.com"
+                      className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm underline"
+                    >
+                      healthytoolinfo@gmail.com
                     </a>
                     <p className="font-gill-sans text-gray-300 text-sm">{t("footer.location")}</p>
                   </div>
@@ -532,16 +592,10 @@ export default function Imsolutions() {
                 {t("footer.copyright", { year: new Date().getFullYear() })}
               </p>
               <div className="flex gap-6">
-                <Link
-                  to="/legal"
-                  className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm"
-                >
+                <Link to="/legal" className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm">
                   {t("footer.privacy")}
                 </Link>
-                <Link
-                  to="/legal"
-                  className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm"
-                >
+                <Link to="/legal" className="font-gill-sans text-gray-300 hover:text-white transition-colors text-sm">
                   {t("footer.terms")}
                 </Link>
               </div>
