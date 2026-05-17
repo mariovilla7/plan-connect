@@ -363,6 +363,7 @@ function ExpertsSection() {
 function VideoSection() {
   const { t } = useTranslation();
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
+  const [activated, setActivated] = useState(false);
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12 px-4">
@@ -371,14 +372,37 @@ function VideoSection() {
       </h2>
 
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
-        <iframe
-          className="w-full h-full absolute inset-0"
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
-          title="Kleia Demo"
-          frameBorder={0}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+        {activated ? (
+          <iframe
+            className="w-full h-full absolute inset-0"
+            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+            title="Kleia Demo"
+            frameBorder={0}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setActivated(true)}
+            aria-label="Reproducir vídeo de Kleia"
+            className="absolute inset-0 w-full h-full group"
+          >
+            <img
+              src={`https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg`}
+              srcSet={`https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg 480w, https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg 1280w`}
+              alt="Kleia Demo"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+              <span className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/95 flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
+                <Play className="h-7 w-7 sm:h-8 sm:w-8 text-primary fill-primary ml-1" />
+              </span>
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );
