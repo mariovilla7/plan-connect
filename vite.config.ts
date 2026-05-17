@@ -24,21 +24,14 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: (id) => {
           if (!id.includes("node_modules")) return;
+          // Only split things that don't depend on React being loaded first.
           if (id.includes("gsap")) return "gsap";
-          if (id.includes("react-i18next") || id.includes("/i18next")) return "i18n";
-          if (id.includes("@radix-ui")) return "radix";
-          if (id.includes("@tanstack")) return "tanstack";
-          if (id.includes("react-helmet")) return "helmet";
-          if (id.includes("@supabase") || id.includes("posthog")) return "vendor-async";
+          if (id.includes("/i18next") || id.includes("i18next-browser-languagedetector")) return "i18n";
           if (id.includes("lucide-react")) return "icons";
-          if (
-            id.includes("/react/") ||
-            id.includes("/react-dom/") ||
-            id.includes("/scheduler/") ||
-            id.includes("react-router")
-          ) {
-            return "react";
-          }
+          if (id.includes("posthog") || id.includes("@supabase")) return "vendor-async";
+          // Everything else (react, react-dom, radix, tanstack, helmet, react-i18next,
+          // react-router, etc.) goes into a single vendor chunk so React is always
+          // initialized before any consumer touches React.createContext.
           return "vendor";
         },
       },
