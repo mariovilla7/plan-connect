@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -18,22 +17,33 @@ export default function Imsolutions() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  // Load Tally embed script so the iframe auto-resizes (dynamicHeight=1)
+  // Load Tally embed script lazily after page load (defers third-party JS)
   useEffect(() => {
     const SRC = "https://tally.so/widgets/embed.js";
     const load = () => {
-      const w = window as any;
-      if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+      if (document.querySelector(`script[src="${SRC}"]`)) {
+        const w = window as any;
+        if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = SRC;
+      script.async = true;
+      script.onload = () => {
+        const w = window as any;
+        if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+      };
+      document.body.appendChild(script);
     };
-    if (document.querySelector(`script[src="${SRC}"]`)) {
-      load();
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = SRC;
-    script.onload = load;
-    script.onerror = load;
-    document.body.appendChild(script);
+    const schedule = () => {
+      const ric = (window as any).requestIdleCallback as
+        | ((cb: () => void, opts?: { timeout: number }) => number)
+        | undefined;
+      if (ric) ric(load, { timeout: 3000 });
+      else setTimeout(load, 1500);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
   }, []);
 
 
@@ -225,14 +235,10 @@ export default function Imsolutions() {
             </div>
           </div>
 
-          <AnimatePresence>
+          
             {mobileMenuOpen && (
-              <motion.div
+              <div
                 className="lg:hidden bg-[#FFFFFC] border-t border-gray-200 py-8 mt-4 overflow-hidden"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 <div className="max-w-7xl mx-auto px-6 flex flex-col space-y-6">
                   {(["projects", "about", "contact"] as const).map((id) => (
@@ -245,9 +251,9 @@ export default function Imsolutions() {
                     </button>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
+          
         </header>
 
         {/* Hero */}
@@ -267,15 +273,11 @@ export default function Imsolutions() {
               </button>
             </div>
             <div className="lg:w-1/2 flex justify-center">
-              <motion.img
+              <img
                 src={heroImg}
                 alt="i'm solutions team - Ivelina and Mario"
                 loading="lazy"
                 className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto mx-auto block"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true, margin: "-100px" }}
               />
             </div>
           </div>
@@ -284,15 +286,11 @@ export default function Imsolutions() {
         {/* Projects */}
         <section id="projects" className="w-full px-4 lg:px-16 xl:px-0 py-16 lg:py-32">
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 lg:gap-16">
-            <motion.h2
+            <h2
               className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
             >
               {t("projects.title")}
-            </motion.h2>
+            </h2>
 
             <div className="w-full bg-[#F4F2EC] rounded-3xl p-6 sm:p-10 lg:p-16 flex flex-col lg:flex-row items-center gap-8 lg:gap-20 shadow-sm border border-black/5">
               <button
@@ -300,23 +298,15 @@ export default function Imsolutions() {
                 className="w-full lg:w-1/2 flex justify-center items-center group focus:outline-none"
                 aria-label={t("projects.kleia.cta")}
               >
-                <motion.img
+                <img
                   src={kleiaLogo}
                   alt="Kleia — Plataforma para nutricionistas"
                   loading="lazy"
                   className="w-full max-w-[260px] md:max-w-xs lg:max-w-sm h-auto mx-auto block transition-transform duration-300 group-hover:scale-[1.03]"
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true, margin: "-100px" }}
                 />
               </button>
-              <motion.div
+              <div
                 className="lg:w-1/2"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true, margin: "-100px" }}
               >
                 <h3 className="font-gill-sans font-bold text-xl lg:text-2xl text-black mb-4">
                   {t("projects.kleia.title")}
@@ -345,19 +335,15 @@ export default function Imsolutions() {
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
                 </button>
-              </motion.div>
+              </div>
             </div>
 
             <div className="w-full flex justify-center mt-8 lg:mt-16">
-              <motion.img
+              <img
                 src={projectsImg}
                 alt="Ilustración Kleia — colaboración nutricionista y paciente"
                 loading="lazy"
                 className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-auto mx-auto block"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true, margin: "-100px" }}
               />
             </div>
           </div>
@@ -366,35 +352,23 @@ export default function Imsolutions() {
         {/* About */}
         <section id="about" className="w-full px-4 lg:px-16 xl:px-0 py-16 lg:py-32">
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 lg:gap-16">
-            <motion.h2
+            <h2
               className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
             >
               {t("about.title")}
-            </motion.h2>
+            </h2>
 
             <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-32">
               <div className="lg:w-1/2 flex justify-center items-center">
-                <motion.img
+                <img
                   src={aboutImg}
                   alt="About i'm solutions - Ivelina and Mario"
                   loading="lazy"
                   className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto block"
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true, margin: "-100px" }}
                 />
               </div>
-              <motion.div
+              <div
                 className="lg:w-1/2 space-y-4 font-gill-sans text-base leading-[140%] tracking-[-0.48px] text-black"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true, margin: "-100px" }}
               >
                 <p>{t("about.content.intro")}</p>
                 <p>{t("about.content.founding")}</p>
@@ -403,7 +377,7 @@ export default function Imsolutions() {
                 <p className="font-bold">{t("about.content.mission")}</p>
                 <p className="font-bold whitespace-pre-line">{t("about.content.philosophy").split("\\n").join("\n")}</p>
                 <p className="font-bold text-lg">{t("about.content.cta")}</p>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -411,15 +385,11 @@ export default function Imsolutions() {
         {/* Contact */}
         <section id="contact" className="w-full px-4 lg:px-16 xl:px-0 py-16 lg:py-32">
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 lg:gap-16">
-            <motion.h2
+            <h2
               className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
             >
               {t("contact.title")}
-            </motion.h2>
+            </h2>
 
             <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-32">
               <div className="lg:w-1/2 w-full">
@@ -436,15 +406,11 @@ export default function Imsolutions() {
                 />
               </div>
               <div className="lg:w-1/2 flex justify-center items-center">
-                <motion.img
+                <img
                   src={contactImg}
                   alt="Contact i'm solutions"
                   loading="lazy"
                   className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto block"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true, margin: "-100px" }}
                 />
               </div>
             </div>

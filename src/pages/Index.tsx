@@ -7,8 +7,8 @@ import { Helmet } from "react-helmet-async";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroLoader from "@/components/IntroLoader";
-import SupportBot from "@/components/SupportBot";
-import CookieBanner from "@/components/CookieBanner";
+const SupportBot = React.lazy(() => import("@/components/SupportBot"));
+const CookieBanner = React.lazy(() => import("@/components/CookieBanner"));
 import FeatureCard from "@/components/FeatureCard";
 import { Button } from "@/components/ui/button";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -741,8 +741,10 @@ export default function Index() {
         </main>
         <Footer />
       </div>
-      <SupportBot />
-      <CookieBanner />
+      <React.Suspense fallback={null}>
+        <SupportBot />
+        <CookieBanner />
+      </React.Suspense>
     </>
   );
 }
