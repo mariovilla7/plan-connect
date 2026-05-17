@@ -438,7 +438,7 @@ function FeaturesSection() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {items.map((f, i) => (
-          <FeatureCard key={i} title={f.title} desc={f.desc} image={featureImages[i] || featureImages[0]} />
+          <FeatureCard key={i} title={f.title} desc={f.desc} media={featureMedia[i] || featureMedia[0]} />
         ))}
       </div>
     </div>
