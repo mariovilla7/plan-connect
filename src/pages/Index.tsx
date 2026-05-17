@@ -28,7 +28,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── CONFIGURACIÓN DE ENLACES ─────────────────────────────────────────────────
 const WA_NUMBER = "359896676923";
-const LOGIN_URL = "https://mariovilla7-kleia-771e0ab2.vercel.app/demo";
+const LOGIN_URL = "kleia.imsolutions.studio";
 const currentYear = new Date().getFullYear();
 
 function buildWaUrl(message: string) {
@@ -44,7 +44,6 @@ const navLinkIds = [
   { key: "pricing", id: "seccion-precio" },
   { key: "faq", id: "seccion-faq" },
 ] as const;
-
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -121,7 +120,11 @@ function Navbar() {
           >
             {t("kleia.nav.login")}
           </Button>
-          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)} aria-label={t("kleia.nav.menu")}>
+          <button
+            className="lg:hidden flex flex-col gap-1.5 p-2"
+            onClick={() => setOpen(!open)}
+            aria-label={t("kleia.nav.menu")}
+          >
             <span
               className={`block w-5 h-0.5 bg-foreground transition-transform ${open ? "rotate-45 translate-y-2" : ""}`}
             />
@@ -419,9 +422,7 @@ function JourneySection() {
   return (
     <div className="max-w-[1280px] mx-auto text-center">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading mb-3">{t("kleia.journey.title")}</h2>
-      <p className="text-muted-foreground text-base md:text-lg max-w-lg mx-auto mb-16">
-        {t("kleia.journey.subtitle")}
-      </p>
+      <p className="text-muted-foreground text-base md:text-lg max-w-lg mx-auto mb-16">{t("kleia.journey.subtitle")}</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
         {steps.map((step, idx) => {
           const Icon = journeyIcons[idx] || ClipboardList;
@@ -461,9 +462,7 @@ function FeaturesSection() {
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">{t("kleia.features.title")}</h2>
-        <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-          {t("kleia.features.subtitle")}
-        </p>
+        <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">{t("kleia.features.subtitle")}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {items.map((f, i) => (
@@ -483,9 +482,7 @@ function PricingSection() {
     <div className="max-w-[1280px] mx-auto px-4">
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-3">{t("kleia.pricing.title")}</h2>
-        <p className="text-muted-foreground max-w-lg mx-auto">
-          {t("kleia.pricing.subtitle")}
-        </p>
+        <p className="text-muted-foreground max-w-lg mx-auto">{t("kleia.pricing.subtitle")}</p>
       </div>
       <div className="flex flex-col items-center">
         <div
@@ -571,16 +568,10 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
-          <Link
-            to="/legal"
-            className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
-          >
+          <Link to="/legal" className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors">
             {t("kleia.footer.privacy")}
           </Link>
-          <Link
-            to="/legal"
-            className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors"
-          >
+          <Link to="/legal" className="text-xs text-muted-foreground uppercase hover:text-primary transition-colors">
             {t("kleia.footer.terms")}
           </Link>
           <a
@@ -625,7 +616,10 @@ function KleiaSeo() {
       <html lang={lang} />
       <title>{seo.title}</title>
       <meta name="description" content={seo.desc} />
-      <meta name="keywords" content="Kleia, software para nutricionistas, planes nutricionales, nutrition software, meal planning, dietitian software, AI nutrition, plan clínico, WhatsApp nutricionista, i'm solutions" />
+      <meta
+        name="keywords"
+        content="Kleia, software para nutricionistas, planes nutricionales, nutrition software, meal planning, dietitian software, AI nutrition, plan clínico, WhatsApp nutricionista, i'm solutions"
+      />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <link rel="canonical" href={url} />
       <link rel="alternate" hrefLang="es" href={url} />
@@ -643,59 +637,61 @@ function KleiaSeo() {
       <meta name="twitter:description" content={seo.desc} />
       <meta name="theme-color" content="#4956F3" />
       <meta name="apple-mobile-web-app-title" content="Kleia" />
-      <script type="application/ld+json">{JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "SoftwareApplication",
-            "@id": url + "#software",
-            name: "Kleia",
-            description: seo.desc,
-            url,
-            applicationCategory: "HealthApplication",
-            applicationSubCategory: "Clinical nutrition planning",
-            operatingSystem: "Web",
-            inLanguage: ["es", "en", "bg"],
-            audience: { "@type": "Audience", audienceType: "Nutritionists, dietitians, health professionals" },
-            offers: {
-              "@type": "Offer",
-              price: "0",
-              priceCurrency: "EUR",
-              availability: "https://schema.org/LimitedAvailability",
-              description: "14-day free trial · Founder Plan, limited spots",
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "SoftwareApplication",
+              "@id": url + "#software",
+              name: "Kleia",
+              description: seo.desc,
+              url,
+              applicationCategory: "HealthApplication",
+              applicationSubCategory: "Clinical nutrition planning",
+              operatingSystem: "Web",
+              inLanguage: ["es", "en", "bg"],
+              audience: { "@type": "Audience", audienceType: "Nutritionists, dietitians, health professionals" },
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "EUR",
+                availability: "https://schema.org/LimitedAvailability",
+                description: "14-day free trial · Founder Plan, limited spots",
+              },
+              creator: {
+                "@type": "Organization",
+                name: "i'm solutions",
+                url: "https://www.imsolutions.studio/",
+              },
+              featureList: [
+                "Clinical plan generation in minutes",
+                "Automatic kcal/macro/micro recalculation",
+                "Smart food substitutions",
+                "Automatic shopping lists",
+                "PDF export and WhatsApp delivery",
+                "Unlimited patient history",
+                "Smart recipe book",
+              ],
             },
-            creator: {
-              "@type": "Organization",
-              name: "i'm solutions",
-              url: "https://www.imsolutions.studio/",
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: "https://www.imsolutions.studio/" },
+                { "@type": "ListItem", position: 2, name: "Kleia", item: url },
+              ],
             },
-            featureList: [
-              "Clinical plan generation in minutes",
-              "Automatic kcal/macro/micro recalculation",
-              "Smart food substitutions",
-              "Automatic shopping lists",
-              "PDF export and WhatsApp delivery",
-              "Unlimited patient history",
-              "Smart recipe book",
-            ],
-          },
-          {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.imsolutions.studio/" },
-              { "@type": "ListItem", position: 2, name: "Kleia", item: url },
-            ],
-          },
-          {
-            "@type": "FAQPage",
-            mainEntity: faqItems.map((it) => ({
-              "@type": "Question",
-              name: it.q,
-              acceptedAnswer: { "@type": "Answer", text: it.a },
-            })),
-          },
-        ],
-      })}</script>
+            {
+              "@type": "FAQPage",
+              mainEntity: faqItems.map((it) => ({
+                "@type": "Question",
+                name: it.q,
+                acceptedAnswer: { "@type": "Answer", text: it.a },
+              })),
+            },
+          ],
+        })}
+      </script>
     </Helmet>
   );
 }
