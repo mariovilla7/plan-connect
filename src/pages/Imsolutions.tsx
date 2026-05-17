@@ -17,22 +17,33 @@ export default function Imsolutions() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  // Load Tally embed script so the iframe auto-resizes (dynamicHeight=1)
+  // Load Tally embed script lazily after page load (defers third-party JS)
   useEffect(() => {
     const SRC = "https://tally.so/widgets/embed.js";
     const load = () => {
-      const w = window as any;
-      if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+      if (document.querySelector(`script[src="${SRC}"]`)) {
+        const w = window as any;
+        if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = SRC;
+      script.async = true;
+      script.onload = () => {
+        const w = window as any;
+        if (typeof w.Tally !== "undefined") w.Tally.loadEmbeds();
+      };
+      document.body.appendChild(script);
     };
-    if (document.querySelector(`script[src="${SRC}"]`)) {
-      load();
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = SRC;
-    script.onload = load;
-    script.onerror = load;
-    document.body.appendChild(script);
+    const schedule = () => {
+      const ric = (window as any).requestIdleCallback as
+        | ((cb: () => void, opts?: { timeout: number }) => number)
+        | undefined;
+      if (ric) ric(load, { timeout: 3000 });
+      else setTimeout(load, 1500);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
   }, []);
 
 
