@@ -741,8 +741,10 @@ export default function Index() {
         </main>
         <Footer />
       </div>
-      <SupportBot />
-      <CookieBanner />
+      <React.Suspense fallback={null}>
+        <SupportBot />
+        <CookieBanner />
+      </React.Suspense>
     </>
   );
 }
