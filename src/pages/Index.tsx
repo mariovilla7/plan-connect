@@ -1,11 +1,5 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
-import heroMockup from "@/assets/hero image.png";
-import gifPrecision from "@/assets/precision-clinica.gif";
-import gifSustituciones from "@/assets/sustituciones-inteligentes.gif";
-import gifListas from "@/assets/listas-compra.gif";
-import gifEducacion from "@/assets/educacion-sin-esfuerzo.gif";
-import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
-import gifContexto from "@/assets/Planes con contexto local (1).gif";
+import heroMockup from "@/assets/hero-image.webp";
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -232,8 +226,13 @@ function Hero() {
           <img
             src={heroMockup}
             alt="Kleia app mockup"
+            width={1530}
+            height={1028}
             className="w-full max-w-[616px] h-auto object-cover rounded-2xl relative z-10"
             loading="eager"
+            decoding="async"
+            // @ts-expect-error fetchpriority is a valid HTML attr
+            fetchpriority="high"
           />
         </div>
       </div>
@@ -364,6 +363,7 @@ function ExpertsSection() {
 function VideoSection() {
   const { t } = useTranslation();
   const YOUTUBE_VIDEO_ID = "EBNTbZ50Z4s";
+  const [activated, setActivated] = useState(false);
 
   return (
     <div className="max-w-[1024px] mx-auto text-center py-12 px-4">
@@ -372,14 +372,37 @@ function VideoSection() {
       </h2>
 
       <div className="relative rounded-[24px] sm:rounded-[40px] overflow-hidden bg-black border border-white/10 shadow-2xl aspect-video">
-        <iframe
-          className="w-full h-full absolute inset-0"
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
-          title="Kleia Demo"
-          frameBorder={0}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+        {activated ? (
+          <iframe
+            className="w-full h-full absolute inset-0"
+            src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=0&playsinline=1&enablejsapi=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+            title="Kleia Demo"
+            frameBorder={0}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setActivated(true)}
+            aria-label="Reproducir vídeo de Kleia"
+            className="absolute inset-0 w-full h-full group"
+          >
+            <img
+              src={`https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg`}
+              srcSet={`https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg 480w, https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg 1280w`}
+              alt="Kleia Demo"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+              <span className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/95 flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
+                <Play className="h-7 w-7 sm:h-8 sm:w-8 text-primary fill-primary ml-1" />
+              </span>
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -420,7 +443,14 @@ function JourneySection() {
 }
 
 // ─── S5 · FEATURES ────────────────────────────────────────────────────────────
-const featureImages = [gifPrecision, gifContexto, gifSustituciones, gifListas, gifEducacion, gifEntrega];
+const featureMedia = [
+  "precision-clinica",
+  "contexto-local",
+  "sustituciones-inteligentes",
+  "listas-compra",
+  "educacion-sin-esfuerzo",
+  "entrega-agil-whatsapp",
+];
 
 type FeatureItem = { title: string; desc: string };
 
@@ -437,7 +467,7 @@ function FeaturesSection() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {items.map((f, i) => (
-          <FeatureCard key={i} title={f.title} desc={f.desc} image={featureImages[i] || featureImages[0]} />
+          <FeatureCard key={i} title={f.title} desc={f.desc} media={featureMedia[i] || featureMedia[0]} />
         ))}
       </div>
     </div>
