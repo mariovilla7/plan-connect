@@ -414,7 +414,14 @@ function JourneySection() {
 }
 
 // ─── S5 · FEATURES ────────────────────────────────────────────────────────────
-const featureImages = [gifPrecision, gifContexto, gifSustituciones, gifListas, gifEducacion, gifEntrega];
+const featureMedia = [
+  "precision-clinica",
+  "contexto-local",
+  "sustituciones-inteligentes",
+  "listas-compra",
+  "educacion-sin-esfuerzo",
+  "entrega-agil-whatsapp",
+];
 
 type FeatureItem = { title: string; desc: string };
 
