@@ -226,8 +226,13 @@ function Hero() {
           <img
             src={heroMockup}
             alt="Kleia app mockup"
+            width={1530}
+            height={1028}
             className="w-full max-w-[616px] h-auto object-cover rounded-2xl relative z-10"
             loading="eager"
+            decoding="async"
+            // @ts-expect-error fetchpriority is a valid HTML attr
+            fetchpriority="high"
           />
         </div>
       </div>
