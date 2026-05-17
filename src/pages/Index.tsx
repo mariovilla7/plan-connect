@@ -1,11 +1,5 @@
 import kleiaLogo from "@/assets/kleia-logo.svg";
-import heroMockup from "@/assets/hero image.png";
-import gifPrecision from "@/assets/precision-clinica.gif";
-import gifSustituciones from "@/assets/sustituciones-inteligentes.gif";
-import gifListas from "@/assets/listas-compra.gif";
-import gifEducacion from "@/assets/educacion-sin-esfuerzo.gif";
-import gifEntrega from "@/assets/entrega-agil-whatsapp.gif";
-import gifContexto from "@/assets/Planes con contexto local (1).gif";
+import heroMockup from "@/assets/hero-image.webp";
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
