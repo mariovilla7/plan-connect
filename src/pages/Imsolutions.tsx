@@ -228,10 +228,6 @@ export default function Imsolutions() {
             {mobileMenuOpen && (
               <div
                 className="lg:hidden bg-[#FFFFFC] border-t border-gray-200 py-8 mt-4 overflow-hidden"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 <div className="max-w-7xl mx-auto px-6 flex flex-col space-y-6">
                   {(["projects", "about", "contact"] as const).map((id) => (
@@ -271,10 +267,6 @@ export default function Imsolutions() {
                 alt="i'm solutions team - Ivelina and Mario"
                 loading="lazy"
                 className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto mx-auto block"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true, margin: "-100px" }}
               />
             </div>
           </div>
@@ -285,10 +277,6 @@ export default function Imsolutions() {
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 lg:gap-16">
             <h2
               className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
             >
               {t("projects.title")}
             </h2>
@@ -304,18 +292,10 @@ export default function Imsolutions() {
                   alt="Kleia — Plataforma para nutricionistas"
                   loading="lazy"
                   className="w-full max-w-[260px] md:max-w-xs lg:max-w-sm h-auto mx-auto block transition-transform duration-300 group-hover:scale-[1.03]"
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true, margin: "-100px" }}
                 />
               </button>
               <div
                 className="lg:w-1/2"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true, margin: "-100px" }}
               >
                 <h3 className="font-gill-sans font-bold text-xl lg:text-2xl text-black mb-4">
                   {t("projects.kleia.title")}
@@ -353,10 +333,6 @@ export default function Imsolutions() {
                 alt="Ilustración Kleia — colaboración nutricionista y paciente"
                 loading="lazy"
                 className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-auto mx-auto block"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true, margin: "-100px" }}
               />
             </div>
           </div>
@@ -367,10 +343,6 @@ export default function Imsolutions() {
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 lg:gap-16">
             <h2
               className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
             >
               {t("about.title")}
             </h2>
@@ -382,18 +354,10 @@ export default function Imsolutions() {
                   alt="About i'm solutions - Ivelina and Mario"
                   loading="lazy"
                   className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto block"
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true, margin: "-100px" }}
                 />
               </div>
               <div
                 className="lg:w-1/2 space-y-4 font-gill-sans text-base leading-[140%] tracking-[-0.48px] text-black"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true, margin: "-100px" }}
               >
                 <p>{t("about.content.intro")}</p>
                 <p>{t("about.content.founding")}</p>
@@ -412,10 +376,6 @@ export default function Imsolutions() {
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 lg:gap-16">
             <h2
               className="font-gill-sans font-bold text-3xl lg:text-7xl leading-[120%] tracking-[-0.96px] lg:tracking-[-2.16px] text-black text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
             >
               {t("contact.title")}
             </h2>
@@ -440,10 +400,6 @@ export default function Imsolutions() {
                   alt="Contact i'm solutions"
                   loading="lazy"
                   className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto block"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true, margin: "-100px" }}
                 />
               </div>
             </div>
