@@ -1,18 +1,19 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Play } from "lucide-react";
 
 interface FeatureCardProps {
   title: string;
   desc: string;
-  image: string;
+  /** Base name (without extension) of the media file in /public/media/ */
+  media: string;
 }
 
-export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
+export default function FeatureCard({ title, desc, media }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [inView, setInView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [staticFrame, setStaticFrame] = useState<string | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Detect mobile
   useEffect(() => {
@@ -22,34 +23,13 @@ export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Capture first frame of GIF as static image
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      try {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          setStaticFrame(canvas.toDataURL("image/png"));
-        }
-      } catch {
-        // fallback: no static frame available
-      }
-    };
-    img.src = image;
-  }, [image]);
-
   // IntersectionObserver for mobile only
   useEffect(() => {
     if (!isMobile) {
       setInView(false);
       return;
     }
-    const el = ref.current;
+    const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
@@ -59,37 +39,48 @@ export default function FeatureCard({ title, desc, image }: FeatureCardProps) {
     return () => obs.disconnect();
   }, [isMobile]);
 
-  // Desktop: hover only. Mobile: inView only.
   const isActive = isMobile ? inView : isHovered;
+
+  // Play/pause based on isActive
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (isActive) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+      try { v.currentTime = 0; } catch { /* noop */ }
+    }
+  }, [isActive]);
+
+  const mp4 = `/media/${media}.mp4`;
+  const webm = `/media/${media}.webm`;
+  const poster = `/media/${media}-poster.jpg`;
 
   return (
     <div
-      ref={ref}
+      ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="feature-card bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer relative"
     >
       <div className="aspect-[16/10] bg-[hsl(213,27%,95%)] rounded-2xl mx-6 mt-6 md:mx-8 md:mt-8 overflow-hidden relative">
-        {isActive ? (
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-opacity duration-500 opacity-100"
-          />
-        ) : (
-          <div className="w-full h-full bg-[hsl(213,27%,95%)] flex items-center justify-center relative">
-            {staticFrame ? (
-              <img
-                src={staticFrame}
-                alt={title}
-                className="w-full h-full object-cover opacity-70"
-              />
-            ) : (
-              <div className="w-full h-full bg-[hsl(213,27%,95%)]" />
-            )}
-            <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 flex items-center justify-center shadow-sm transition-opacity duration-300">
-              <Play className="h-3.5 w-3.5 text-primary fill-primary ml-0.5" />
-            </div>
+        <video
+          ref={videoRef}
+          poster={poster}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={title}
+          className="w-full h-full object-cover"
+        >
+          <source src={webm} type="video/webm" />
+          <source src={mp4} type="video/mp4" />
+        </video>
+        {!isActive && (
+          <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 flex items-center justify-center shadow-sm pointer-events-none">
+            <Play className="h-3.5 w-3.5 text-primary fill-primary ml-0.5" />
           </div>
         )}
       </div>
