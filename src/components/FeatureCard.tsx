@@ -32,26 +32,43 @@ export default function FeatureCard({ title, desc, media }: FeatureCardProps) {
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.6 }
+      ([entry]) => setInView(entry.intersectionRatio >= 0.4),
+      { threshold: [0, 0.4, 0.6, 1] }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [isMobile]);
 
-  const isActive = isMobile ? inView : isHovered;
+  const isActive = isMobile ? (inView || isHovered) : isHovered;
 
   // Play/pause based on isActive
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     if (isActive) {
-      v.play().catch(() => {});
+      const p = v.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          setTimeout(() => v.play().catch(() => {}), 50);
+        });
+      }
     } else {
       v.pause();
-      try { v.currentTime = 0; } catch { /* noop */ }
     }
   }, [isActive]);
+
+  const handleTap = () => {
+    if (!isMobile) return;
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      setIsHovered(true);
+      v.play().catch(() => {});
+    } else {
+      setIsHovered(false);
+      v.pause();
+    }
+  };
 
   const mp4 = `/media/${media}.mp4`;
   const webm = `/media/${media}.webm`;
@@ -62,6 +79,7 @@ export default function FeatureCard({ title, desc, media }: FeatureCardProps) {
       ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleTap}
       className="feature-card bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer relative"
     >
       <div className="aspect-[16/10] bg-[hsl(213,27%,95%)] rounded-2xl mx-6 mt-6 md:mx-8 md:mt-8 overflow-hidden relative">
@@ -71,12 +89,12 @@ export default function FeatureCard({ title, desc, media }: FeatureCardProps) {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-label={title}
           className="w-full h-full object-cover"
         >
-          <source src={webm} type="video/webm" />
           <source src={mp4} type="video/mp4" />
+          <source src={webm} type="video/webm" />
         </video>
         {!isActive && (
           <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 flex items-center justify-center shadow-sm pointer-events-none">
