@@ -145,6 +145,7 @@
         { "q": "¿Puedo cancelar cuando quiera?", "a": "Sí. Durante el piloto podés cancelar en cualquier momento sin penalidades." },
         { "q": "¿Kleia reemplaza mi criterio profesional?", "a": "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente." },
         { "q": "¿Cuándo estará disponible para todos?", "a": "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp." }
+        { "q": "¿Mis cliente deben descargarse una app?", "a": "No. Kleia no necesita una descarga por parte de los clientes, ni nutricionistas." }
       ]
     },
     "footer": {
