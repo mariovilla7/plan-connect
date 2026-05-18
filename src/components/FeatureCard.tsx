@@ -10,7 +10,7 @@ interface FeatureCardProps {
 
 export default function FeatureCard({ title, desc, media }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [inView, setInView] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,52 +23,51 @@ export default function FeatureCard({ title, desc, media }: FeatureCardProps) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // IntersectionObserver for mobile only
+  // On mobile: pause + reset when card scrolls out of view
   useEffect(() => {
-    if (!isMobile) {
-      setInView(false);
-      return;
-    }
+    if (!isMobile) return;
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => setInView(entry.intersectionRatio >= 0.4),
-      { threshold: [0, 0.4, 0.6, 1] }
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          const v = videoRef.current;
+          if (v && !v.paused) v.pause();
+          setIsPlaying(false);
+        }
+      },
+      { threshold: 0 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [isMobile]);
 
-  const isActive = isMobile ? (inView || isHovered) : isHovered;
+  const isActive = isMobile ? isPlaying : isHovered;
 
-  // Play/pause based on isActive
+  // Desktop: hover-driven play/pause
   useEffect(() => {
+    if (isMobile) return;
     const v = videoRef.current;
     if (!v) return;
-    if (isActive) {
-      const p = v.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {
-          setTimeout(() => v.play().catch(() => {}), 50);
-        });
-      }
+    if (isHovered) {
+      v.play().catch(() => {});
     } else {
       v.pause();
     }
-  }, [isActive]);
+  }, [isHovered, isMobile]);
 
   const handleTap = () => {
     if (!isMobile) return;
     const v = videoRef.current;
     if (!v) return;
     if (v.paused) {
-      setIsHovered(true);
-      v.play().catch(() => {});
+      v.play().then(() => setIsPlaying(true)).catch(() => {});
     } else {
-      setIsHovered(false);
       v.pause();
+      setIsPlaying(false);
     }
   };
+
 
   const mp4 = `/media/${media}.mp4`;
   const webm = `/media/${media}.webm`;
