@@ -28,6 +28,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Suspense fallback={<div style={{ minHeight: "100vh", background: "#FFFFFC" }} />}>
             <Routes>
               <Route path="/" element={<Imsolutions />} />
