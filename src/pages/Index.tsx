@@ -478,6 +478,8 @@ function FeaturesSection() {
 function PricingSection() {
   const { t } = useTranslation();
   const features = (t("kleia.pricing.features", { returnObjects: true }) as string[]) || [];
+  const config = (t("kleia.pricing.config", { returnObjects: true }) as string[]) || [];
+  const quote = (t("kleia.pricing.quote", { returnObjects: true }) as string[]) || [];
   const openWhatsApp = () => window.open(buildWaUrl(t("kleia.wa.message")), "_blank");
   return (
     <div className="max-w-[1280px] mx-auto px-4">
@@ -808,6 +810,9 @@ export default function Index() {
           </section>
           <section id="seccion-precio" className="py-20 px-4 bg-[hsl(220,33%,97%)]">
             <PricingSection />
+          </section>
+          <section id="seccion-personalizacion" className="py-20 px-4 bg-white">
+            <CustomSection />
           </section>
           <section id="seccion-faq" className="py-20 px-4 bg-white">
             <FAQSection />
