@@ -42,6 +42,7 @@ const navLinkIds = [
   { key: "journey", id: "seccion-jornada" },
   { key: "features", id: "seccion-features" },
   { key: "pricing", id: "seccion-precio" },
+  { key: "custom", id: "seccion-personalizacion" },
   { key: "faq", id: "seccion-faq" },
 ] as const;
 
@@ -201,7 +202,7 @@ function Hero() {
             {t("kleia.hero.badge")}
           </span>
           <h1 className="text-[34px] sm:text-5xl md:text-[52px] lg:text-[60px] font-bold font-heading leading-[1.1] tracking-tight sm:tracking-[-1.5px] md:tracking-[-2.5px] break-words [text-wrap:balance]">
-            {t("kleia.hero.title1")} <br /> {t("kleia.hero.title2")} <br />
+            {t("kleia.hero.title1")} <br />
             <span className="text-primary">{t("kleia.hero.title3")}</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-[512px] leading-relaxed">
@@ -477,6 +478,8 @@ function FeaturesSection() {
 function PricingSection() {
   const { t } = useTranslation();
   const features = (t("kleia.pricing.features", { returnObjects: true }) as string[]) || [];
+  const config = (t("kleia.pricing.config", { returnObjects: true }) as string[]) || [];
+  const quote = (t("kleia.pricing.quote", { returnObjects: true }) as string[]) || [];
   const openWhatsApp = () => window.open(buildWaUrl(t("kleia.wa.message")), "_blank");
   return (
     <div className="max-w-[1280px] mx-auto px-4">
@@ -494,11 +497,12 @@ function PricingSection() {
           </div>
           <h3 className="text-xl font-bold font-heading mb-1">{t("kleia.pricing.planName")}</h3>
           <p className="text-sm text-white/60 mb-8">{t("kleia.pricing.planTagline")}</p>
-          <div className="flex items-end gap-2 mb-8">
-            <span className="text-2xl text-white/50 line-through">70€</span>
+          <div className="flex items-end gap-2 mb-1">
             <span className="text-5xl font-bold">20€</span>
             <span className="text-base text-white/60 pb-2">{t("kleia.pricing.perMonth")}</span>
           </div>
+          <p className="text-sm text-white/80 mb-1">{t("kleia.pricing.annual")}</p>
+          <p className="text-xs text-white/60 mb-8">{t("kleia.pricing.vat")}</p>
           <ul className="space-y-4 mb-10">
             {features.map((f, i) => (
               <li key={i} className="flex items-center gap-3 text-sm">
@@ -513,9 +517,85 @@ function PricingSection() {
             {t("kleia.pricing.cta")}
           </button>
         </div>
-        <div className="mt-8 bg-primary/10 border border-primary/20 rounded-full px-6 py-2 text-primary font-bold text-[11px] uppercase tracking-wider">
+        <div className="mt-8 bg-primary/10 border border-primary/20 rounded-full px-6 py-2 text-primary font-bold text-[11px] uppercase tracking-wider text-center">
           {t("kleia.pricing.trialBadge")}
         </div>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
+          <div className="bg-white rounded-3xl p-6 border border-border/40">
+            <h3 className="font-bold font-heading mb-4">{t("kleia.pricing.configTitle")}</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              {config.map((c, i) => (
+                <li key={i} className="flex gap-2"><Check className="h-4 w-4 text-primary shrink-0 mt-0.5" /> {c}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-white rounded-3xl p-6 border border-border/40">
+            <h3 className="font-bold font-heading mb-4">{t("kleia.pricing.quoteTitle")}</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground mb-4">
+              {quote.map((c, i) => (
+                <li key={i} className="flex gap-2"><ChevronRight className="h-4 w-4 text-primary shrink-0 mt-0.5" /> {c}</li>
+              ))}
+            </ul>
+            <p className="text-xs text-muted-foreground">{t("kleia.pricing.quoteNote")}</p>
+          </div>
+        </div>
+        <button
+          onClick={() => scrollTo("seccion-personalizacion")}
+          className="mt-8 text-primary font-bold font-heading underline underline-offset-4"
+        >
+          {t("kleia.custom.formTitle")} →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── PERSONALIZACIÓN ──────────────────────────────────────────────────────────
+type Level = { name: string; desc: string; price: string };
+const TALLY_SRC = "https://tally.so/widgets/embed.js";
+
+function CustomSection() {
+  const { t } = useTranslation();
+  const levels = (t("kleia.custom.levels", { returnObjects: true }) as Level[]) || [];
+  useEffect(() => {
+    const w = window as any;
+    if (document.querySelector(`script[src="${TALLY_SRC}"]`)) {
+      w.Tally?.loadEmbeds();
+      return;
+    }
+    const s = document.createElement("script");
+    s.src = TALLY_SRC;
+    s.async = true;
+    s.onload = () => w.Tally?.loadEmbeds();
+    document.body.appendChild(s);
+  }, []);
+  return (
+    <div className="max-w-[1100px] mx-auto px-4">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-4 [text-wrap:balance]">{t("kleia.custom.title")}</h2>
+        <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">{t("kleia.custom.subtitle")}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+        {levels.map((l, i) => (
+          <div key={i} className="rounded-3xl p-6 border border-border/40 bg-[hsl(220,33%,97%)] flex flex-col">
+            <span className="text-primary font-bold text-sm mb-2">0{i + 1}</span>
+            <h3 className="font-bold font-heading text-lg mb-2">{l.name}</h3>
+            <p className="text-sm text-muted-foreground mb-4 flex-1">{l.desc}</p>
+            <span className="text-xs font-semibold text-primary uppercase tracking-wide">{l.price}</span>
+          </div>
+        ))}
+      </div>
+      <div className="max-w-2xl mx-auto bg-[hsl(220,33%,97%)] rounded-3xl p-6 sm:p-10">
+        <h3 className="text-2xl font-bold font-heading mb-2">{t("kleia.custom.formTitle")}</h3>
+        <p className="text-sm text-muted-foreground mb-6">{t("kleia.custom.formNote")}</p>
+        <iframe
+          data-tally-src="https://tally.so/embed/mBvvde?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+          loading="lazy"
+          width="100%"
+          height="400"
+          frameBorder={0}
+          title={t("kleia.custom.formTitle")}
+        />
       </div>
     </div>
   );
@@ -730,6 +810,9 @@ export default function Index() {
           </section>
           <section id="seccion-precio" className="py-20 px-4 bg-[hsl(220,33%,97%)]">
             <PricingSection />
+          </section>
+          <section id="seccion-personalizacion" className="py-20 px-4 bg-white">
+            <CustomSection />
           </section>
           <section id="seccion-faq" className="py-20 px-4 bg-white">
             <FAQSection />

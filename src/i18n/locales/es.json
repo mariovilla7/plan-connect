@@ -71,15 +71,16 @@
       "pricing": "Precio",
       "faq": "Preguntas Frecuentes",
       "login": "Iniciar sesión",
-      "menu": "Menú"
+      "menu": "Menú",
+      "custom": "Personalización"
     },
     "hero": {
-      "badge": "Para nutricionistas independientes · sin perder el criterio profesional",
-      "title1": "Deja de pensar",
-      "title2": "en menús.",
-      "title3": "Termina tu día con todos los planes enviados.",
-      "subtitle": "Genera planes clínicos en minutos. Envía un PDF listo por WhatsApp — sin copiar y pegar.",
-      "ctaPrimary": "Pruébalo Gratis",
+      "badge": "Para nutricionistas independientes y clínicas",
+      "title1": "Tu forma de trabajar.",
+      "title2": "",
+      "title3": "Automatizada.",
+      "subtitle": "Kleia automatiza la elaboración y entrega de planes respetando tu método, tus plantillas y tus recetas. Tú mantienes el criterio clínico.",
+      "ctaPrimary": "Prueba 14 días gratis",
       "ctaSecondary": "Ver Demo"
     },
     "experts": {
@@ -175,11 +176,11 @@
       ]
     },
     "pricing": {
-      "title": "Crecimiento sin Límites",
-      "subtitle": "Transparencia total, sin costes ocultos. Oferta limitada de lanzamiento.",
-      "badge": "Plan Fundador · 10 Plazas",
-      "planName": "Plan Fundador",
-      "planTagline": "La potencia total para expertos.",
+      "title": "Precio claro, sin sorpresas",
+      "subtitle": "Una suscripción con todo lo que Kleia hace hoy. La configuración a medida se presupuesta aparte y siempre antes de empezar.",
+      "badge": "Precio fundador",
+      "planName": "Suscripción Kleia",
+      "planTagline": "Todas las funciones disponibles hoy.",
       "perMonth": "/mes",
       "features": [
         "Acceso a Kleia (web, sin instalación)",
@@ -191,8 +192,24 @@
         "Recetario inteligente",
         "Soporte dedicado durante el piloto"
       ],
-      "cta": "Elegir Plan Fundador",
-      "trialBadge": "✨ Prueba gratis de 14 días · Sin permanencia"
+      "cta": "Empezar prueba gratis",
+      "trialBadge": "✨ 14 días gratis · Sin tarjeta · Sin permanencia",
+      "annual": "o 192 €/año (ahorras 2 meses)",
+      "vat": "IVA incluido",
+      "configTitle": "Qué puedes configurar",
+      "config": [
+        "Tus plantillas y documentos",
+        "Tu catálogo de alimentos",
+        "Tus recetas",
+        "Reglas que la app ya soporta"
+      ],
+      "quoteTitle": "Qué requiere presupuesto",
+      "quote": [
+        "Migraciones de datos complejas",
+        "Integraciones con otras herramientas",
+        "Desarrollo de funciones nuevas"
+      ],
+      "quoteNote": "Te indicamos el coste antes de empezar. Nada se cobra sin tu aprobación."
     },
     "faq": {
       "title": "Preguntas Frecuentes",
@@ -214,12 +231,20 @@
           "a": "No. Kleia automatiza la parte mecánica, pero tú decides qué es mejor para cada paciente."
         },
         {
-          "q": "¿Cuándo estará disponible para todos?",
-          "a": "Estamos en piloto cerrado con 10 plazas. Si quieres ser de los primeros, escríbenos por WhatsApp."
-        },
-        {
           "q": "¿Mis cliente deben descargarse una app?",
           "a": "No. Kleia no necesita una descarga por parte de los clientes, ni nutricionistas."
+        },
+        {
+          "q": "¿La personalización está incluida en la suscripción?",
+          "a": "La suscripción incluye todas las funciones actuales. La configuración de tu método, importaciones o integraciones se presupuestan aparte, y siempre te decimos el coste antes de empezar."
+        },
+        {
+          "q": "¿El precio depende de mi especialidad o de cuántos pacientes tengo?",
+          "a": "No. El precio de la configuración depende del alcance del trabajo, el tiempo necesario y la complejidad, no de tu especialidad."
+        },
+        {
+          "q": "¿Los precios incluyen IVA?",
+          "a": "Sí, 20 €/mes y 192 €/año son precios con IVA incluido."
         }
       ]
     },
@@ -231,6 +256,29 @@
     },
     "wa": {
       "message": "Hola! Me interesa conocer más sobre Kleia y agendar una demo. ¿Podemos hablar?"
+    },
+    "custom": {
+      "title": "Cada consulta trabaja de forma diferente",
+      "subtitle": "Cuéntanos cómo elaboras tus planes, qué herramientas utilizas y qué tareas quieres automatizar. Te propondremos una configuración adaptada a tus necesidades y te indicaremos el coste antes de empezar.",
+      "levels": [
+        {
+          "name": "Usar Kleia",
+          "desc": "Usa las funciones existentes desde el primer día, sin adaptaciones.",
+          "price": "Incluido en la suscripción"
+        },
+        {
+          "name": "Configurar mi método",
+          "desc": "Te ayudamos con plantillas, documentos, catálogo de alimentos, recetas o reglas que ya soporta Kleia.",
+          "price": "Presupuesto según alcance"
+        },
+        {
+          "name": "Adaptar o integrar Kleia",
+          "desc": "Migraciones complejas, integraciones externas o desarrollo nuevo.",
+          "price": "Presupuesto tras revisión"
+        }
+      ],
+      "formTitle": "Cuéntanos cómo trabajas",
+      "formNote": "Respondemos con una propuesta preliminar. Si hace falta desarrollo, el presupuesto definitivo requiere una revisión. Enviar el formulario no te compromete a nada."
     }
   },
   "legal": {
