@@ -71,15 +71,16 @@
       "pricing": "Pricing",
       "faq": "FAQ",
       "login": "Sign in",
-      "menu": "Menu"
+      "menu": "Menu",
+      "custom": "Customization"
     },
     "hero": {
-      "badge": "For independent nutritionists · without losing professional judgment",
-      "title1": "Stop thinking",
-      "title2": "about menus.",
-      "title3": "End your day with every plan sent.",
-      "subtitle": "Generate clinical plans in minutes. Send a ready-to-use PDF via WhatsApp — no copy & paste.",
-      "ctaPrimary": "Try it Free",
+      "badge": "For independent nutritionists and clinics",
+      "title1": "Your way of working.",
+      "title2": "",
+      "title3": "Automated.",
+      "subtitle": "Kleia automates building and delivering plans while respecting your method, templates and recipes. You keep the clinical judgement.",
+      "ctaPrimary": "Try 14 days free",
       "ctaSecondary": "Watch Demo"
     },
     "experts": {
@@ -175,11 +176,11 @@
       ]
     },
     "pricing": {
-      "title": "Growth without Limits",
-      "subtitle": "Full transparency, no hidden costs. Limited launch offer.",
-      "badge": "Founder Plan · 10 Spots",
-      "planName": "Founder Plan",
-      "planTagline": "Full power for experts.",
+      "title": "Clear pricing, no surprises",
+      "subtitle": "One subscription with everything Kleia does today. Custom setup is quoted separately and always before we start.",
+      "badge": "Founder price",
+      "planName": "Kleia Subscription",
+      "planTagline": "Every feature available today.",
       "perMonth": "/month",
       "features": [
         "Access to Kleia (web, no install)",
@@ -191,8 +192,24 @@
         "Smart recipe book",
         "Dedicated support during the pilot"
       ],
-      "cta": "Choose Founder Plan",
-      "trialBadge": "✨ 14-day free trial · No commitment"
+      "cta": "Start free trial",
+      "trialBadge": "✨ 14 days free · No card · No commitment",
+      "annual": "or €192/year (2 months free)",
+      "vat": "VAT included",
+      "configTitle": "What you can configure",
+      "config": [
+        "Your templates and documents",
+        "Your food catalogue",
+        "Your recipes",
+        "Rules the app already supports"
+      ],
+      "quoteTitle": "What needs a quote",
+      "quote": [
+        "Complex data migrations",
+        "Integrations with other tools",
+        "New feature development"
+      ],
+      "quoteNote": "We tell you the cost before starting. Nothing is charged without your approval."
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -205,18 +222,29 @@
           "q": "What about my patients' data?",
           "a": "The data is yours. It is used under clinical encryption and never shared."
         },
-        { "q": "Can I cancel anytime?", "a": "Yes. During the pilot you can cancel anytime with no penalty." },
+        {
+          "q": "Can I cancel anytime?",
+          "a": "Yes. During the pilot you can cancel anytime with no penalty."
+        },
         {
           "q": "Does Kleia replace my professional judgment?",
           "a": "No. Kleia automates the mechanical part, but you decide what is best for each patient."
         },
         {
-          "q": "When will it be available for everyone?",
-          "a": "We are in a closed pilot with 10 spots. If you want to be among the first, message us on WhatsApp."
-        },
-        {
           "q": "Do my clients need to download an app?",
           "a": "No. Kleia doesn't require clients or nutritionists to download anything."
+        },
+        {
+          "q": "Is customization included in the subscription?",
+          "a": "The subscription includes all current features. Setting up your method, imports or integrations are quoted separately, and we always tell you the cost first."
+        },
+        {
+          "q": "Does the price depend on my specialty or patient count?",
+          "a": "No. Setup pricing depends on the scope, time required and complexity, not your specialty."
+        },
+        {
+          "q": "Do prices include VAT?",
+          "a": "Yes, €20/month and €192/year include VAT."
         }
       ]
     },
@@ -228,6 +256,29 @@
     },
     "wa": {
       "message": "Hi! I'm interested in learning more about Kleia and scheduling a demo. Can we talk?"
+    },
+    "custom": {
+      "title": "Every practice works differently",
+      "subtitle": "Tell us how you build your plans, which tools you use and which tasks you want to automate. We'll propose a setup tailored to you and tell you the cost before starting.",
+      "levels": [
+        {
+          "name": "Use Kleia",
+          "desc": "Use the existing features from day one, no adaptation needed.",
+          "price": "Included in subscription"
+        },
+        {
+          "name": "Set up my method",
+          "desc": "We help with templates, documents, food catalogue, recipes or rules Kleia already supports.",
+          "price": "Quoted by scope"
+        },
+        {
+          "name": "Adapt or integrate Kleia",
+          "desc": "Complex migrations, external integrations or new development.",
+          "price": "Quoted after review"
+        }
+      ],
+      "formTitle": "Tell us how you work",
+      "formNote": "We reply with a preliminary proposal. If development is needed, the final quote requires a review. Sending the form commits you to nothing."
     }
   },
   "legal": {
